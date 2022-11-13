@@ -1,0 +1,23 @@
+/* 
+  Localizable.strings
+  Athlete Zone
+
+  Created by Jan Prokorát on 07.11.2022.
+  
+*/
+
+//Menu
+"Home" = "Haus";
+"Library" = "Bibliothek";
+"Profile" = "Profil";
+"Settings" = "Einstellungen";
+
+//Exercise
+"Work" = "Arbeit";
+"Rest" = "Pause";
+"Series" = "Serien";
+"Rounds" = "Runden";
+"ResetTime" = "Reset";
+
+//Settings
+"Language" = "Sprache";
