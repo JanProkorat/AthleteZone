@@ -9,18 +9,15 @@ import SwiftUI
 
 struct LibraryScene: View {
     
-    @StateObject var router: ViewRouter
-
     var body: some View {
         SceneView(header: AnyView(LibraryHeaderBar()),
-                  content: AnyView(LibraryContent()), isFooterVisible: true,
-                  router: router)
+                  content: AnyView(LibraryContent()), isFooterVisible: true)
         
     }
 }
 
 struct LibraryScene_Previews: PreviewProvider {
     static var previews: some View {
-        LibraryScene(router: ViewRouter(currentTab: .library))
+        LibraryScene()
     }
 }

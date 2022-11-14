@@ -10,18 +10,22 @@ import SwiftUI
 struct TimePicker: View {
     
     let textColor: String
+    var onValueChange: ((_ value: Int) -> Void)?
     
-    init(textColor: String) {
-        self.textColor = textColor
-    }
-
     private var hours = Array(0...23)
     private var minutes = Array(0...59)
     private var seconds = Array(0...59)
     
-    @State private var selectedHours = 22
-    @State private var selectedMins = 12
-    @State private var selectedSecs = 42
+    @State var selectedHours: Int = 0
+    @State var selectedMins: Int = 0
+    @State var selectedSecs: Int = 0
+    
+    init(textColor: String, interval: Int) {
+        self.textColor = textColor
+        self._selectedHours = State<Int>(initialValue: interval.toHours())
+        self._selectedMins = State<Int>(initialValue: interval.toMinutes())
+        self._selectedSecs = State<Int>(initialValue:interval.toSeconds());
+    }
     
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
@@ -39,8 +43,6 @@ struct TimePicker: View {
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(Color(Colors.Menu), lineWidth: 3)
                             .foregroundColor(Color(Backgrounds.WorkBackground))
-
-                       
                     }
                     
                 )
@@ -99,7 +101,15 @@ struct TimePicker: View {
 
         }
         .padding([.leading, .trailing], 10)
-
+        .onChange(of: selectedHours, perform: { newValue in
+            constructTimeInterval()
+        })
+        .onChange(of: selectedMins, perform: { newValue in
+            constructTimeInterval()
+        })
+        .onChange(of: selectedSecs, perform: { newValue in
+            constructTimeInterval()
+        })
 
         
     }
@@ -107,6 +117,21 @@ struct TimePicker: View {
 
 struct TimePicker_Previews: PreviewProvider {
     static var previews: some View {
-        TimePicker(textColor: Colors.Work)
+        TimePicker(textColor: Colors.Work, interval: 61)
+    }
+}
+
+extension TimePicker {
+    func onValueChange(_ handler: @escaping (_ value: Int) -> Void) -> TimePicker {
+        var new = self
+        new.onValueChange = handler
+        return new
+    }
+    
+    func constructTimeInterval(){
+        if onValueChange != nil {
+            let interval = self.selectedHours * 3600 + self.selectedMins * 60 + self.selectedSecs
+            onValueChange!(interval)
+        }
     }
 }

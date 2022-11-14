@@ -47,6 +47,6 @@ struct ActivityPicker: View {
 
 struct ActivityPicker_Previews: PreviewProvider {
     static var previews: some View {
-        ActivityPicker(title: "Work", color: Colors.Work, backgroundColor: Backgrounds.WorkBackground, picker: AnyView(TimePicker(textColor: Colors.Work)))
+        ActivityPicker(title: "Work", color: Colors.Work, backgroundColor: Backgrounds.WorkBackground, picker: AnyView(TimePicker(textColor: Colors.Work, interval: 40)))
     }
 }

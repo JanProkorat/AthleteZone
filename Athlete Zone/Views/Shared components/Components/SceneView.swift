@@ -13,7 +13,7 @@ struct SceneView: View {
     var content: (AnyView)
 
     var isFooterVisible: Bool
-    @StateObject var router: ViewRouter
+    @EnvironmentObject var router: ViewRouter
 
     var body: some View {
         GeometryReader { geometry in
@@ -53,6 +53,8 @@ struct SceneView: View {
 struct SceneView_Previews: PreviewProvider {
     static var previews: some View {
         SceneView(header: AnyView(ExerciseHeaderBar()),
-                  content: AnyView(ExerciseContent(workout: WorkOut())), isFooterVisible: true, router: ViewRouter())
+                  content: AnyView(ExerciseContent()), isFooterVisible: true)
+        .environmentObject(ViewRouter())
+
     }
 }

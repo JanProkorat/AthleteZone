@@ -29,7 +29,6 @@
 		7E32D47C2916BA74008FB390 /* ActivityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E32D47B2916BA74008FB390 /* ActivityButton.swift */; };
 		7E32D4822916C9D7008FB390 /* CounterText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E32D4812916C9D7008FB390 /* CounterText.swift */; };
 		7E32D4852916CADC008FB390 /* LibraryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E32D4842916CADC008FB390 /* LibraryScene.swift */; };
-		7E32D4872916D2BC008FB390 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E32D4862916D2BC008FB390 /* View.swift */; };
 		7E33B661291435BE009E4C1C /* Athlete_ZoneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E33B660291435BE009E4C1C /* Athlete_ZoneApp.swift */; };
 		7E33B663291435BE009E4C1C /* ExerciseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E33B662291435BE009E4C1C /* ExerciseScene.swift */; };
 		7E33B66F291439A8009E4C1C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E33B66E291439A8009E4C1C /* Assets.xcassets */; };
@@ -39,7 +38,7 @@
 		7E669B4E291C2F0100529298 /* ActivityPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E669B4D291C2F0100529298 /* ActivityPicker.swift */; };
 		7E669B50291C494400529298 /* NumberPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E669B4F291C494400529298 /* NumberPicker.swift */; };
 		7E669B52291CDF0800529298 /* WorkOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E669B51291CDF0800529298 /* WorkOut.swift */; };
-		7E9728A6291B8D7F00D63064 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9728A5291B8D7F00D63064 /* Sheet.swift */; };
+		7EA6C8B8292119A000EEF5DA /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA6C8B7292119A000EEF5DA /* Int.swift */; };
 		7EB1A0442917A76C008A6CF7 /* ContentScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1A0432917A76C008A6CF7 /* ContentScene.swift */; };
 		7ED59F76291555A50077DF39 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7ED59F6C291555990077DF39 /* Lato-Thin.ttf */; };
 		7ED59F77291555A50077DF39 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7ED59F6D2915559B0077DF39 /* Lato-Black.ttf */; };
@@ -83,7 +82,6 @@
 		7E32D47F2916C456008FB390 /* Athlete-Zone-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Athlete-Zone-Info.plist"; sourceTree = SOURCE_ROOT; };
 		7E32D4812916C9D7008FB390 /* CounterText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterText.swift; sourceTree = "<group>"; };
 		7E32D4842916CADC008FB390 /* LibraryScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryScene.swift; sourceTree = "<group>"; };
-		7E32D4862916D2BC008FB390 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		7E33B65D291435BE009E4C1C /* Athlete Zone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Athlete Zone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E33B660291435BE009E4C1C /* Athlete_ZoneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Athlete_ZoneApp.swift; sourceTree = "<group>"; };
 		7E33B662291435BE009E4C1C /* ExerciseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseScene.swift; sourceTree = "<group>"; };
@@ -94,7 +92,7 @@
 		7E669B4D291C2F0100529298 /* ActivityPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityPicker.swift; sourceTree = "<group>"; };
 		7E669B4F291C494400529298 /* NumberPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberPicker.swift; sourceTree = "<group>"; };
 		7E669B51291CDF0800529298 /* WorkOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOut.swift; sourceTree = "<group>"; };
-		7E9728A5291B8D7F00D63064 /* Sheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
+		7EA6C8B7292119A000EEF5DA /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		7EB1A0432917A76C008A6CF7 /* ContentScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentScene.swift; sourceTree = "<group>"; };
 		7ED59F6C291555990077DF39 /* Lato-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Thin.ttf"; sourceTree = "<group>"; };
 		7ED59F6D2915559B0077DF39 /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
@@ -276,8 +274,7 @@
 		7E32D4882916D2C4008FB390 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				7E32D4862916D2BC008FB390 /* View.swift */,
-				7E9728A5291B8D7F00D63064 /* Sheet.swift */,
+				7EA6C8B7292119A000EEF5DA /* Int.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -434,12 +431,11 @@
 				7E1F9AE929190801006CA3AA /* SettingsScene.swift in Sources */,
 				7E1F9AFF2919812A006CA3AA /* ProfileHeaderBar.swift in Sources */,
 				7E1F9B172919AD20006CA3AA /* CircularProgressBar.swift in Sources */,
-				7E32D4872916D2BC008FB390 /* View.swift in Sources */,
 				7E1F9AFA2919253B006CA3AA /* LibraryHeaderBar.swift in Sources */,
 				7E33B663291435BE009E4C1C /* ExerciseScene.swift in Sources */,
 				7E32D4852916CADC008FB390 /* LibraryScene.swift in Sources */,
-				7E9728A6291B8D7F00D63064 /* Sheet.swift in Sources */,
 				7E1F9AF7291922CE006CA3AA /* ExerciseContent.swift in Sources */,
+				7EA6C8B8292119A000EEF5DA /* Int.swift in Sources */,
 				7E1F9AE62919060D006CA3AA /* ProfileScene.swift in Sources */,
 				7E32D46F29168504008FB390 /* MenuBar.swift in Sources */,
 				7E669B50291C494400529298 /* NumberPicker.swift in Sources */,

@@ -27,7 +27,7 @@ struct ActivityView: View {
                     .foregroundColor(Color(color))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            Text(GetFormatedValue(interval: interval, type: type))
+            Text(interval.toFormattedValue(type: type))
                 .font(.custom("Lato-Black", size: 20))
                 .bold()
                 .foregroundColor(Color(color))
@@ -54,22 +54,5 @@ struct ActivityView: View {
 struct ActivityView_Previews: PreviewProvider {
     static var previews: some View {
         ActivityView(image: Icons.Play, color: Colors.Menu, activity: "Work", interval: 40, type: .time)
-    }
-}
-
-extension ActivityView{
-    func GetFormatedValue(interval: Int, type: LabelType) -> String {
-        switch type {
-        case .time:
-            let formatter = DateComponentsFormatter()
-            formatter.zeroFormattingBehavior = .pad
-            formatter.allowedUnits = [.minute, .second]
-            if interval >= 3600 {
-                formatter.allowedUnits.insert(.hour)
-            }
-            return formatter.string(from: TimeInterval(interval))!
-        case .number:
-            return "\(interval)x"
-        }
     }
 }

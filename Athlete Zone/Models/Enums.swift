@@ -11,8 +11,8 @@ enum Tab {
   case home, library, profile, setting, exerciseRun
 }
 
-enum Sheet: Identifiable {
-    case work, rest, rounds, series, reset, save, donate
+enum ActivitySheet: Identifiable {
+    case work, rest, rounds, series, reset
       
       var id: Int {
         hashValue

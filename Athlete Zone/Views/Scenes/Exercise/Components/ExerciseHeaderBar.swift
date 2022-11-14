@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ExerciseHeaderBar: View {
-//    @EnvironmentObject var viewModel: WorkOutViewModel
+    @EnvironmentObject var viewModel: WorkOutViewModel
     
     var onSectionChangeTab: (() -> Void)?
     
@@ -32,7 +32,7 @@ struct ExerciseHeaderBar: View {
                     .foregroundColor(Color(Colors.MainText))
             }
                 
-                Text("tmp")
+                Text("\(viewModel.selectedWorkOut.name)")
                     .font(.custom("Lato-Black", size: 40))
                     .bold()
                     .foregroundColor(Color(Colors.MainText))
@@ -58,6 +58,7 @@ struct ExerciseHeaderBar: View {
 struct ExerciseHeaderBar_Previews: PreviewProvider {
     static var previews: some View {
         ExerciseHeaderBar()
+            .environmentObject(WorkOutViewModel())
     }
 }
 

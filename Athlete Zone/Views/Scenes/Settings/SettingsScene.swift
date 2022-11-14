@@ -9,17 +9,14 @@ import SwiftUI
 
 struct SettingsScene: View {
     
-    @StateObject var router: ViewRouter
-
     var body: some View {
         SceneView(header: AnyView(SettingsHeaderBar()),
-                  content: AnyView(SettingsContent()), isFooterVisible: true,
-                  router: router)
+                  content: AnyView(SettingsContent()), isFooterVisible: true)
     }
 }
 
 struct SettingsScene_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsScene(router: ViewRouter(currentTab: .setting))
+        SettingsScene()
     }
 }

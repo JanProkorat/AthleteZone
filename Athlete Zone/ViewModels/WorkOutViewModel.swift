@@ -7,6 +7,7 @@
 
 import Foundation
 
-//class WorkOutViewModel: ObservableObject {
-//    var selectedWorkOut: WorkOut = WorkOut()
-//}
+class WorkOutViewModel: ObservableObject {
+    @Published var selectedWorkOut: WorkOut = WorkOut()
+
+}

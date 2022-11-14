@@ -10,19 +10,22 @@ import SwiftUI
 struct NumberPicker: View {
     
     let textColor: String
-    
-    init(textColor: String) {
+    var onValueChange: ((_ value: Int) -> Void)?
+
+    @State private var selectedValue = 1
+
+    init(textColor: String, value: Int) {
         self.textColor = textColor
+        self._selectedValue = State<Int>(initialValue: value)
     }
 
-    private var numbers = Array(1...50)
+    private var numbers = Array(0...50)
     
-    @State private var selectedNumber = 1
 
     var body: some View {
         VStack(alignment: .center) {
-            Picker(selection: $selectedNumber, label: Text("Number")) {
-                ForEach((0 ..< self.numbers.count).reversed(), id: \.self) {
+            Picker(selection: $selectedValue, label: Text("Number")) {
+                ForEach((1 ..< self.numbers.count).reversed(), id: \.self) {
                     Text("\(self.numbers[$0])")
                         .foregroundColor(Color(textColor))
                         .font(.custom("Lato-Black", size: 30))
@@ -45,13 +48,25 @@ struct NumberPicker: View {
         }
         .padding([.top], 25)
         .padding([.leading, .trailing], 10)
-
+        .onChange(of: selectedValue, perform: { newValue in
+            if self.onValueChange != nil{
+                self.onValueChange!(self.selectedValue)
+            }
+        })
 
     }
 }
 
 struct NumberPicker_Previews: PreviewProvider {
     static var previews: some View {
-        NumberPicker(textColor: Colors.Rounds)
+        NumberPicker(textColor: Colors.Rounds, value: 5)
+    }
+}
+
+extension NumberPicker {
+    func onValueChange(_ handler: @escaping (_ value: Int) -> Void) -> NumberPicker {
+        var new = self
+        new.onValueChange = handler
+        return new
     }
 }
