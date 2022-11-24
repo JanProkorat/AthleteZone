@@ -8,19 +8,33 @@
 import Foundation
 
 enum Tab {
-  case home, library, profile, setting, exerciseRun
+    case home, library, profile, setting, exerciseRun, editExercise
 }
 
 enum ActivitySheet: Identifiable {
     case work, rest, rounds, series, reset
-      
-      var id: Int {
+    
+    var id: Int {
         hashValue
-      }
+    }
+}
+
+enum ActivityType: String, CustomStringConvertible {
+    var description: String {
+        return self.rawValue
+    }
+    
+    case work = "Work"
+    case rest = "Rest"
+    case reset = "Reset time"
 }
 
 enum LabelType {
     case time, number
+}
+
+enum InputType {
+    case time, number, text
 }
 
 enum Language: String, CaseIterable {

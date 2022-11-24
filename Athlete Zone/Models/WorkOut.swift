@@ -11,11 +11,23 @@ struct WorkOut {
     var id: Int = 0
     
     var name: String = "Title"
-    var work: Int = 30  // Time in num of secs
-    var rest: Int = 60  // Time in num of secs
-    var series: Int = 6
-    var rounds: Int = 1
-    var reset: Int = 60  // Time in num of secs
+    var work: Int = 5  // Time in num of secs
+    var rest: Int = 5  // Time in num of secs
+    var series: Int = 2
+    var rounds: Int = 2
+    var reset: Int = 5  // Time in num of secs
+    
+    init(){
+    }
+    
+    init(name: String, work: Int, rest: Int, series: Int, rounds: Int, reset: Int) {
+        self.name = name
+        self.work = work
+        self.rest = rest
+        self.series = series
+        self.rounds = rounds
+        self.reset = reset
+    }
     
     var timeOverview: Int {
         return ((work * series) + (rest * (series - 1)) + reset) * rounds

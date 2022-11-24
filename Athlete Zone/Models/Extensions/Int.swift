@@ -9,6 +9,14 @@ import Foundation
 
 extension Int {
     
+    func isIven() -> Bool {
+        return self % 2 == 0
+    }
+    
+    func isOdd() -> Bool {
+        return self % 2 != 0
+    }
+    
     func toHours() -> Int {
             return self / 3600
         }

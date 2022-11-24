@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ExerciseHeaderBar: View {
     @EnvironmentObject var viewModel: WorkOutViewModel
-    
+    @EnvironmentObject var router: ViewRouter
+
     var onSectionChangeTab: (() -> Void)?
     
     var body: some View {
@@ -42,7 +43,8 @@ struct ExerciseHeaderBar: View {
             HStack(alignment: .top, spacing: 5.0){
                 IconButton(id: "save", image: Icons.Save, color: Colors.MainText, width: 50, height: 45)
                     .onTab {
-                        print("save pressed")
+                        viewModel.setWorkOutToEdit(viewModel.selectedWorkOut)
+                        router.currentTab = .editExercise
                     }
                 IconButton(id: "donate", image: Icons.Donate, color: Colors.MainText, width: 50, height: 45)
                     .onTab {

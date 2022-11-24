@@ -26,6 +26,8 @@ struct ContentScene: View {
                     SettingsScene()
                 case .exerciseRun:
                     ExerciseRunScene()
+                case .editExercise:
+                    ExerciseEditScene()
                 }
             }
             .environmentObject(router)
@@ -37,5 +39,7 @@ struct ContentScene: View {
 struct ContentScene_Previews: PreviewProvider {
     static var previews: some View {
         ContentScene(router: ViewRouter())
+            .environmentObject(WorkOutViewModel())
+            .environmentObject(ViewRouter())
     }
 }

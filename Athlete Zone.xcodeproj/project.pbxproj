@@ -34,6 +34,8 @@
 		7E33B66F291439A8009E4C1C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E33B66E291439A8009E4C1C /* Assets.xcassets */; };
 		7E395BCB291D58A20025F943 /* SettingsContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E395BCA291D58A20025F943 /* SettingsContent.swift */; };
 		7E3E38162920E8DF0084D37B /* WorkOutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3E38152920E8DF0084D37B /* WorkOutViewModel.swift */; };
+		7E5CC56429300A750081017E /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 7E5CC56329300A750081017E /* Realm */; };
+		7E5CC56629300A750081017E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7E5CC56529300A750081017E /* RealmSwift */; };
 		7E669B4C291C195500529298 /* TimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E669B4B291C195500529298 /* TimePicker.swift */; };
 		7E669B4E291C2F0100529298 /* ActivityPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E669B4D291C2F0100529298 /* ActivityPicker.swift */; };
 		7E669B50291C494400529298 /* NumberPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E669B4F291C494400529298 /* NumberPicker.swift */; };
@@ -54,6 +56,14 @@
 		7ED59F842915599B0077DF39 /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED59F832915599B0077DF39 /* IconButton.swift */; };
 		7ED59F8829156D550077DF39 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED59F8729156D550077DF39 /* ActivityView.swift */; };
 		7ED59F8A291587A30077DF39 /* SelectedMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED59F89291587A30077DF39 /* SelectedMenuItem.swift */; };
+		7EEA2D012923899A002C9227 /* WorkFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEA2D002923899A002C9227 /* WorkFlowViewModel.swift */; };
+		7EEA2D03292389A8002C9227 /* WorkFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEA2D02292389A8002C9227 /* WorkFlow.swift */; };
+		7EF389232923EF5B008420C2 /* ExerciseEditScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF389222923EF5B008420C2 /* ExerciseEditScene.swift */; };
+		7EF389262923EFBC008420C2 /* ExerciseEditBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF389252923EFBC008420C2 /* ExerciseEditBar.swift */; };
+		7EF389282923F1D2008420C2 /* ExerciseEditContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF389272923F1D2008420C2 /* ExerciseEditContent.swift */; };
+		7EF3892A2924016E008420C2 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF389292924016E008420C2 /* ActionButton.swift */; };
+		7EF3892C292401EF008420C2 /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF3892B292401EF008420C2 /* ActionView.swift */; };
+		7EF3892E2924C71E008420C2 /* EditField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF3892D2924C71E008420C2 /* EditField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -108,6 +118,14 @@
 		7ED59F832915599B0077DF39 /* IconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
 		7ED59F8729156D550077DF39 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		7ED59F89291587A30077DF39 /* SelectedMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedMenuItem.swift; sourceTree = "<group>"; };
+		7EEA2D002923899A002C9227 /* WorkFlowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkFlowViewModel.swift; sourceTree = "<group>"; };
+		7EEA2D02292389A8002C9227 /* WorkFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkFlow.swift; sourceTree = "<group>"; };
+		7EF389222923EF5B008420C2 /* ExerciseEditScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseEditScene.swift; sourceTree = "<group>"; };
+		7EF389252923EFBC008420C2 /* ExerciseEditBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseEditBar.swift; sourceTree = "<group>"; };
+		7EF389272923F1D2008420C2 /* ExerciseEditContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseEditContent.swift; sourceTree = "<group>"; };
+		7EF389292924016E008420C2 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		7EF3892B292401EF008420C2 /* ActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
+		7EF3892D2924C71E008420C2 /* EditField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +133,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E5CC56629300A750081017E /* RealmSwift in Frameworks */,
+				7E5CC56429300A750081017E /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,9 +223,11 @@
 		7E32D46929167DC0008FB390 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				7E32D4882916D2C4008FB390 /* Extensions */,
 				7E32D46C29167EE3008FB390 /* Constants.swift */,
 				7E32D47029168600008FB390 /* Enums.swift */,
 				7E669B51291CDF0800529298 /* WorkOut.swift */,
+				7EEA2D02292389A8002C9227 /* WorkFlow.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -231,6 +253,7 @@
 		7E32D47429169173008FB390 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				7EF389212923EF01008420C2 /* Edit Exercise */,
 				7E32D47329169138008FB390 /* Exercise */,
 				7E1F9B0C29199E16006CA3AA /* Exercise Running */,
 				7E32D4832916CA82008FB390 /* Library */,
@@ -256,7 +279,6 @@
 		7E32D476291691E7008FB390 /* Shared components */ = {
 			isa = PBXGroup;
 			children = (
-				7E32D4882916D2C4008FB390 /* Extensions */,
 				7E1F9AED2919194A006CA3AA /* Components */,
 			);
 			path = "Shared components";
@@ -315,6 +337,7 @@
 			isa = PBXGroup;
 			children = (
 				7E3E38152920E8DF0084D37B /* WorkOutViewModel.swift */,
+				7EEA2D002923899A002C9227 /* WorkFlowViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -336,6 +359,27 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		7EF389212923EF01008420C2 /* Edit Exercise */ = {
+			isa = PBXGroup;
+			children = (
+				7EF389242923EF77008420C2 /* Components */,
+				7EF389222923EF5B008420C2 /* ExerciseEditScene.swift */,
+			);
+			path = "Edit Exercise";
+			sourceTree = "<group>";
+		};
+		7EF389242923EF77008420C2 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				7EF389252923EFBC008420C2 /* ExerciseEditBar.swift */,
+				7EF389272923F1D2008420C2 /* ExerciseEditContent.swift */,
+				7EF389292924016E008420C2 /* ActionButton.swift */,
+				7EF3892B292401EF008420C2 /* ActionView.swift */,
+				7EF3892D2924C71E008420C2 /* EditField.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -352,6 +396,10 @@
 			dependencies = (
 			);
 			name = "Athlete Zone";
+			packageProductDependencies = (
+				7E5CC56329300A750081017E /* Realm */,
+				7E5CC56529300A750081017E /* RealmSwift */,
+			);
 			productName = "Athlete Zone";
 			productReference = 7E33B65D291435BE009E4C1C /* Athlete Zone.app */;
 			productType = "com.apple.product-type.application";
@@ -382,6 +430,9 @@
 				Base,
 			);
 			mainGroup = 7E33B654291435BE009E4C1C;
+			packageReferences = (
+				7E5CC56229300A750081017E /* XCRemoteSwiftPackageReference "realm-swift" */,
+			);
 			productRefGroup = 7E33B65E291435BE009E4C1C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -423,6 +474,7 @@
 				7E32D4822916C9D7008FB390 /* CounterText.swift in Sources */,
 				7E1F9AEF29191991006CA3AA /* SceneView.swift in Sources */,
 				7EB1A0442917A76C008A6CF7 /* ContentScene.swift in Sources */,
+				7EF3892E2924C71E008420C2 /* EditField.swift in Sources */,
 				7E1F9B0E29199F73006CA3AA /* ExerciseRunScene.swift in Sources */,
 				7E1F9B112919A034006CA3AA /* ExerciseRunHeaderBar.swift in Sources */,
 				7ED59F842915599B0077DF39 /* IconButton.swift in Sources */,
@@ -430,10 +482,13 @@
 				7E1F9AFC291927FE006CA3AA /* LibraryContent.swift in Sources */,
 				7E1F9AE929190801006CA3AA /* SettingsScene.swift in Sources */,
 				7E1F9AFF2919812A006CA3AA /* ProfileHeaderBar.swift in Sources */,
+				7EEA2D012923899A002C9227 /* WorkFlowViewModel.swift in Sources */,
 				7E1F9B172919AD20006CA3AA /* CircularProgressBar.swift in Sources */,
 				7E1F9AFA2919253B006CA3AA /* LibraryHeaderBar.swift in Sources */,
 				7E33B663291435BE009E4C1C /* ExerciseScene.swift in Sources */,
 				7E32D4852916CADC008FB390 /* LibraryScene.swift in Sources */,
+				7EF389262923EFBC008420C2 /* ExerciseEditBar.swift in Sources */,
+				7EEA2D03292389A8002C9227 /* WorkFlow.swift in Sources */,
 				7E1F9AF7291922CE006CA3AA /* ExerciseContent.swift in Sources */,
 				7EA6C8B8292119A000EEF5DA /* Int.swift in Sources */,
 				7E1F9AE62919060D006CA3AA /* ProfileScene.swift in Sources */,
@@ -444,15 +499,19 @@
 				7ED59F8829156D550077DF39 /* ActivityView.swift in Sources */,
 				7E32D46D29167EE3008FB390 /* Constants.swift in Sources */,
 				7E1F9B152919A508006CA3AA /* DescriptionLabel.swift in Sources */,
+				7EF3892C292401EF008420C2 /* ActionView.swift in Sources */,
 				7E669B4C291C195500529298 /* TimePicker.swift in Sources */,
 				7E669B52291CDF0800529298 /* WorkOut.swift in Sources */,
 				7E669B4E291C2F0100529298 /* ActivityPicker.swift in Sources */,
+				7EF389282923F1D2008420C2 /* ExerciseEditContent.swift in Sources */,
 				7E395BCB291D58A20025F943 /* SettingsContent.swift in Sources */,
 				7ED59F8A291587A30077DF39 /* SelectedMenuItem.swift in Sources */,
 				7E32D47129168600008FB390 /* Enums.swift in Sources */,
 				7E32D47C2916BA74008FB390 /* ActivityButton.swift in Sources */,
 				7E33B661291435BE009E4C1C /* Athlete_ZoneApp.swift in Sources */,
 				7E1F9B132919A2E3006CA3AA /* ExerciseRunContent.swift in Sources */,
+				7EF389232923EF5B008420C2 /* ExerciseEditScene.swift in Sources */,
+				7EF3892A2924016E008420C2 /* ActionButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -680,6 +739,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7E5CC56229300A750081017E /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7E5CC56329300A750081017E /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7E5CC56229300A750081017E /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		7E5CC56529300A750081017E /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7E5CC56229300A750081017E /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7E33B655291435BE009E4C1C /* Project object */;
 }

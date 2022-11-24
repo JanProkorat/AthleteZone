@@ -8,12 +8,15 @@
 import Foundation
 
 struct Icons {
+    static let Actions_forward = "Actions_forward"
+    static let Actions_pause = "Actions_pause"
     static let Add = "Add"
     static let ArrowDown = "Arrow_down"
     static let Avatar = "Avatar"
     static let AvatarActive = "Avatar_active"
     static let Book = "Book"
     static let BookActive = "Book_active"
+    static let Clear = "Clear"
     static let Donate = "Donate"
     static let FlagCZ = "CZ"
     static let FlagDE = "DE"
@@ -41,6 +44,7 @@ struct Pictures {
 
 struct Colors {
     static let Action = "Action"
+    static let Braun = "Braun"
     static let DarkBlue = "Dark_blue"
     static let MainText = "Main_text"
     static let MenuText = "Menu_text"

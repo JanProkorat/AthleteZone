@@ -53,6 +53,6 @@ struct ActivityView: View {
 
 struct ActivityView_Previews: PreviewProvider {
     static var previews: some View {
-        ActivityView(image: Icons.Play, color: Colors.Menu, activity: "Work", interval: 40, type: .time)
+        ActivityView(image: Icons.Play, color: Colors.Work, activity: "Work", interval: 40, type: .time)
     }
 }

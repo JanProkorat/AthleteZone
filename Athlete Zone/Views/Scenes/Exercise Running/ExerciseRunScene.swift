@@ -9,12 +9,12 @@ import SwiftUI
 
 struct ExerciseRunScene: View {
         
-    let workOut: WorkOut = WorkOut()
     @EnvironmentObject var router: ViewRouter
+    @EnvironmentObject var viewModel: WorkOutViewModel
 
     var body: some View {
-        SceneView(header: AnyView(ExerciseRunHeaderBar(title: workOut.name)),
-                  content: AnyView(ExerciseRunContent().onQuitTab{
+        SceneView(header: AnyView(ExerciseRunHeaderBar(title: viewModel.selectedWorkOut.name)),
+                  content: AnyView(ExerciseRunContent(workOut: viewModel.selectedWorkOut).onQuitTab{
             router.currentTab = .home
         }), isFooterVisible: false)
     }
@@ -24,5 +24,6 @@ struct ExerciseRunScene_Previews: PreviewProvider {
     static var previews: some View {
         ExerciseRunScene()
             .environmentObject(ViewRouter())
+            .environmentObject(WorkOutViewModel())
     }
 }
