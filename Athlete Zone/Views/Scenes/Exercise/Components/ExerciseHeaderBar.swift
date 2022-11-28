@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct ExerciseHeaderBar: View {
-    @EnvironmentObject var viewModel: WorkOutViewModel
-    @EnvironmentObject var router: ViewRouter
 
     var onSectionChangeTab: (() -> Void)?
+    var onSaveTab: (() -> Void)?
+    
+    let name: String
     
     var body: some View {
         HStack(){
@@ -33,7 +34,7 @@ struct ExerciseHeaderBar: View {
                     .foregroundColor(Color(Colors.MainText))
             }
                 
-                Text("\(viewModel.selectedWorkOut.name)")
+                Text(name)
                     .font(.custom("Lato-Black", size: 40))
                     .bold()
                     .foregroundColor(Color(Colors.MainText))
@@ -43,8 +44,9 @@ struct ExerciseHeaderBar: View {
             HStack(alignment: .top, spacing: 5.0){
                 IconButton(id: "save", image: Icons.Save, color: Colors.MainText, width: 50, height: 45)
                     .onTab {
-                        viewModel.setWorkOutToEdit(viewModel.selectedWorkOut)
-                        router.currentTab = .editExercise
+                        if self.onSaveTab != nil {
+                            self.onSaveTab!()
+                        }
                     }
                 IconButton(id: "donate", image: Icons.Donate, color: Colors.MainText, width: 50, height: 45)
                     .onTab {
@@ -59,13 +61,18 @@ struct ExerciseHeaderBar: View {
 
 struct ExerciseHeaderBar_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseHeaderBar()
+        ExerciseHeaderBar(name: "Title")
             .environmentObject(WorkOutViewModel())
     }
 }
 
 extension ExerciseHeaderBar {
     func onSectionChangeTab(action: @escaping (() -> Void)) -> ExerciseHeaderBar {
-        ExerciseHeaderBar(onSectionChangeTab: action)
+        ExerciseHeaderBar(onSectionChangeTab: action, name: self.name)
     }
+    
+    func onSaveTab(action: @escaping (() -> Void)) -> ExerciseHeaderBar {
+        ExerciseHeaderBar(onSaveTab: action, name: self.name)
+    }
+    
 }

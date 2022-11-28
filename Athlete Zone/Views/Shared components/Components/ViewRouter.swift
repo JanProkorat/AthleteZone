@@ -13,6 +13,7 @@ class ViewRouter: ObservableObject {
     @Published var activeHomeSheet: ActivitySheet?
     @Published var activeEditSheet: ActivitySheet?
 
+
     init(currentTab: Tab) {
         self.currentTab = currentTab
     }
@@ -29,6 +30,4 @@ class ViewRouter: ObservableObject {
     func setActiveEditSheet(_ sheet: ActivitySheet){
         self.activeEditSheet = sheet
     }
-    
-
 }

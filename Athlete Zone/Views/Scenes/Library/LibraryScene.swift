@@ -9,9 +9,18 @@ import SwiftUI
 
 struct LibraryScene: View {
     
+    @State var isModalActive = false
+    
     var body: some View {
         SceneView(header: AnyView(LibraryHeaderBar()),
-                  content: AnyView(LibraryContent()), isFooterVisible: true)
+                  content: AnyView(LibraryContent().onEditTab {
+            isModalActive = true
+        }), isFooterVisible: true)
+        .fullScreenCover(isPresented: $isModalActive, content: {
+            ExerciseEditScene().onCloseTab {
+                isModalActive = false
+            }
+        })
         
     }
 }
@@ -19,5 +28,7 @@ struct LibraryScene: View {
 struct LibraryScene_Previews: PreviewProvider {
     static var previews: some View {
         LibraryScene()
+            .environmentObject(WorkOutViewModel())
+            .environmentObject(ViewRouter())
     }
 }

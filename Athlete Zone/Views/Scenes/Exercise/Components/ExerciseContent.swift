@@ -12,6 +12,7 @@ struct ExerciseContent: View {
     @EnvironmentObject var viewModel: WorkOutViewModel
     @EnvironmentObject var router: ViewRouter
 
+    
     var body: some View {
         VStack(alignment: .center, spacing: 5){
             ActivityButton(innerComponent: ActivityView(image: Icons.Play, color: Colors.Work, activity: "Work", interval: viewModel.selectedWorkOut.work, type: .time))
@@ -45,7 +46,6 @@ struct ExerciseContent: View {
                             self.router.currentTab = .exerciseRun
                         }
                         .padding(.bottom)
-                    
                 }
             }
         }

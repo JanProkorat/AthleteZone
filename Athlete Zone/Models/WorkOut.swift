@@ -6,21 +6,31 @@
 //
 
 import Foundation
+import RealmSwift
 
-struct WorkOut {
-    var id: Int = 0
+struct WorkOut: Identifiable {
+    var _id: ObjectId?
+    var id: UInt64?
     
-    var name: String = "Title"
-    var work: Int = 5  // Time in num of secs
-    var rest: Int = 5  // Time in num of secs
-    var series: Int = 2
-    var rounds: Int = 2
-    var reset: Int = 5  // Time in num of secs
+    var name: String
+    var work: Int
+    var rest: Int
+    var series: Int
+    var rounds: Int
+    var reset: Int
     
     init(){
+        self.id = nil
+        self.name = "Title"
+        self.work = 5
+        self.rest = 5
+        self.series = 1
+        self.rounds = 1
+        self.reset = 5
     }
     
     init(name: String, work: Int, rest: Int, series: Int, rounds: Int, reset: Int) {
+        self.id = nil
         self.name = name
         self.work = work
         self.rest = rest
@@ -58,4 +68,28 @@ struct WorkOut {
     }
     
     
+}
+
+extension WorkOut: Persistable {
+    public init(managedObject: WorkOutObject) {
+        _id = managedObject._id
+        name = managedObject.name
+        work = managedObject.work
+        rest = managedObject.rest
+        series = managedObject.series
+        rounds = managedObject.rounds
+        reset = managedObject.reset
+    }
+    
+    public func managedObject() -> WorkOutObject {
+        let workout = WorkOutObject()
+        workout._id = _id ?? ObjectId()
+        workout.name = name
+        workout.work = work
+        workout.rest = rest
+        workout.series = series
+        workout.rounds = rounds
+        workout.reset = reset
+        return workout
+    }
 }

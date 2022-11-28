@@ -25,6 +25,7 @@ struct Icons {
     static let Home = "Home"
     static let HomeActive = "Home_active"
     static let Check = "Check"
+    static let Menu = "Menu"
     static let Pause = "Pause"
     static let Play = "Play"
     static let Repeat = "Repeat"

@@ -12,11 +12,21 @@ struct ExerciseScene: View {
     @EnvironmentObject var viewModel: WorkOutViewModel
     @EnvironmentObject var router: ViewRouter
     
+    @State var isModalActive = false
+
     var body: some View {
         SceneView(
-            header: AnyView(ExerciseHeaderBar()),
+            header: AnyView(ExerciseHeaderBar(name: viewModel.selectedWorkOut.name).onSaveTab {
+                viewModel.setWorkOutToEdit(viewModel.selectedWorkOut)
+                isModalActive = true
+            }),
             content: AnyView(ExerciseContent()),
             isFooterVisible: true)
+        .fullScreenCover(isPresented: $isModalActive, content: {
+            ExerciseEditScene().onCloseTab {
+                isModalActive = false
+            }
+        })
         .sheet(item: $router.activeHomeSheet) { activitySheet in
             switch activitySheet{
             case .work:

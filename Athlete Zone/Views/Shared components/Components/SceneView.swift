@@ -52,7 +52,7 @@ struct SceneView: View {
 
 struct SceneView_Previews: PreviewProvider {
     static var previews: some View {
-        SceneView(header: AnyView(ExerciseHeaderBar()),
+        SceneView(header: AnyView(ExerciseHeaderBar(name: "name")),
                   content: AnyView(ExerciseContent()), isFooterVisible: true)
         .environmentObject(ViewRouter())
 

@@ -12,10 +12,16 @@ struct ExerciseEditScene: View {
     @EnvironmentObject var viewModel: WorkOutViewModel
     @EnvironmentObject var router: ViewRouter
     
+    var onCloseTab: (() -> Void)?
+
     var body: some View {
         SceneView(
-            header: AnyView(ExerciseEditBar(isEditing: viewModel.workOutToEdit.id != 0)),
-            content: AnyView(ExerciseEditContent()),
+            header: AnyView(ExerciseEditBar(isEditing: self.viewModel.workOutToEdit._id != nil)),
+            content: AnyView(ExerciseEditContent().onCloseTab {
+                if self.onCloseTab != nil {
+                    self.onCloseTab!()
+                }
+            }),
             isFooterVisible: false)
         .sheet(item: $router.activeEditSheet) { activitySheet in
             switch activitySheet{
@@ -45,5 +51,13 @@ struct ExerciseEditScene_Previews: PreviewProvider {
             .environmentObject(WorkOutViewModel())
             .environmentObject(ViewRouter())
 
+    }
+}
+
+extension ExerciseEditScene {
+    func onCloseTab(_ handler: @escaping () -> Void) -> ExerciseEditScene {
+        var new = self
+        new.onCloseTab = handler
+        return new
     }
 }

@@ -67,8 +67,6 @@ struct MenuBar: View {
                             }
                         case .exerciseRun:
                             break
-                        case .editExercise:
-                            break
                         }
                     }
                     .padding()

@@ -12,6 +12,7 @@ struct ExerciseEditContent: View {
     @EnvironmentObject var viewModel: WorkOutViewModel
     @EnvironmentObject var router: ViewRouter
     
+    var onCloseTab: (() -> Void)?
     
     var body: some View {
         GeometryReader{geo in
@@ -77,9 +78,17 @@ struct ExerciseEditContent: View {
                 
                 VStack(spacing: 5) {
                     ActionButton(innerComponent: ActionView(text: "Save", color: Colors.Rounds, backgoundColor: nil, image: Icons.Check, height: geo.size.height * 0.20 / 2, cornerRadius: nil))
+                        .onTab {
+                            viewModel.setSelectedWorkOut(viewModel.saveWorkOut())
+                            if self.onCloseTab != nil {
+                                self.onCloseTab!()
+                            }
+                        }
                     ActionButton(innerComponent: ActionView(text: "Cancel", color: Colors.Work, backgoundColor: nil, image: Icons.Clear, height: geo.size.height * 0.20 / 2, cornerRadius: nil))
                         .onTab{
-                            router.currentTab = .home
+                            if self.onCloseTab != nil {
+                                self.onCloseTab!()
+                            }
                         }
                 }
                 .frame(height: geo.size.height * 0.25, alignment: .top)
@@ -94,6 +103,14 @@ struct ExerciseEditContent_Previews: PreviewProvider {
         ExerciseEditContent()
             .environmentObject(WorkOutViewModel())
             .environmentObject(ViewRouter())
+    }
+}
+
+extension ExerciseEditContent {
+    func onCloseTab(_ handler: @escaping () -> Void) -> ExerciseEditContent {
+        var new = self
+        new.onCloseTab = handler
+        return new
     }
 }
 

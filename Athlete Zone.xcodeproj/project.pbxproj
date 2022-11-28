@@ -36,6 +36,9 @@
 		7E3E38162920E8DF0084D37B /* WorkOutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3E38152920E8DF0084D37B /* WorkOutViewModel.swift */; };
 		7E5CC56429300A750081017E /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 7E5CC56329300A750081017E /* Realm */; };
 		7E5CC56629300A750081017E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7E5CC56529300A750081017E /* RealmSwift */; };
+		7E5CC56929300C730081017E /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CC56829300C730081017E /* RealmManager.swift */; };
+		7E5CC56B293017AE0081017E /* WorkOutObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CC56A293017AE0081017E /* WorkOutObject.swift */; };
+		7E5CC56E29301A8C0081017E /* Persistable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CC56D29301A8C0081017E /* Persistable.swift */; };
 		7E669B4C291C195500529298 /* TimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E669B4B291C195500529298 /* TimePicker.swift */; };
 		7E669B4E291C2F0100529298 /* ActivityPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E669B4D291C2F0100529298 /* ActivityPicker.swift */; };
 		7E669B50291C494400529298 /* NumberPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E669B4F291C494400529298 /* NumberPicker.swift */; };
@@ -58,6 +61,9 @@
 		7ED59F8A291587A30077DF39 /* SelectedMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED59F89291587A30077DF39 /* SelectedMenuItem.swift */; };
 		7EEA2D012923899A002C9227 /* WorkFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEA2D002923899A002C9227 /* WorkFlowViewModel.swift */; };
 		7EEA2D03292389A8002C9227 /* WorkFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEA2D02292389A8002C9227 /* WorkFlow.swift */; };
+		7EEE480D293373010034E95C /* WorkOutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEE480C293373010034E95C /* WorkOutListView.swift */; };
+		7EEE480F2933786B0034E95C /* ListViewText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEE480E2933786B0034E95C /* ListViewText.swift */; };
+		7EEE481129339B0B0034E95C /* UICollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEE481029339B0B0034E95C /* UICollectionReusableView.swift */; };
 		7EF389232923EF5B008420C2 /* ExerciseEditScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF389222923EF5B008420C2 /* ExerciseEditScene.swift */; };
 		7EF389262923EFBC008420C2 /* ExerciseEditBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF389252923EFBC008420C2 /* ExerciseEditBar.swift */; };
 		7EF389282923F1D2008420C2 /* ExerciseEditContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF389272923F1D2008420C2 /* ExerciseEditContent.swift */; };
@@ -98,6 +104,9 @@
 		7E33B66E291439A8009E4C1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "Athlete Zone/Assets.xcassets"; sourceTree = SOURCE_ROOT; };
 		7E395BCA291D58A20025F943 /* SettingsContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsContent.swift; sourceTree = "<group>"; };
 		7E3E38152920E8DF0084D37B /* WorkOutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutViewModel.swift; sourceTree = "<group>"; };
+		7E5CC56829300C730081017E /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		7E5CC56A293017AE0081017E /* WorkOutObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutObject.swift; sourceTree = "<group>"; };
+		7E5CC56D29301A8C0081017E /* Persistable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistable.swift; sourceTree = "<group>"; };
 		7E669B4B291C195500529298 /* TimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePicker.swift; sourceTree = "<group>"; };
 		7E669B4D291C2F0100529298 /* ActivityPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityPicker.swift; sourceTree = "<group>"; };
 		7E669B4F291C494400529298 /* NumberPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberPicker.swift; sourceTree = "<group>"; };
@@ -120,6 +129,9 @@
 		7ED59F89291587A30077DF39 /* SelectedMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedMenuItem.swift; sourceTree = "<group>"; };
 		7EEA2D002923899A002C9227 /* WorkFlowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkFlowViewModel.swift; sourceTree = "<group>"; };
 		7EEA2D02292389A8002C9227 /* WorkFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkFlow.swift; sourceTree = "<group>"; };
+		7EEE480C293373010034E95C /* WorkOutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutListView.swift; sourceTree = "<group>"; };
+		7EEE480E2933786B0034E95C /* ListViewText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewText.swift; sourceTree = "<group>"; };
+		7EEE481029339B0B0034E95C /* UICollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionReusableView.swift; sourceTree = "<group>"; };
 		7EF389222923EF5B008420C2 /* ExerciseEditScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseEditScene.swift; sourceTree = "<group>"; };
 		7EF389252923EFBC008420C2 /* ExerciseEditBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseEditBar.swift; sourceTree = "<group>"; };
 		7EF389272923F1D2008420C2 /* ExerciseEditContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseEditContent.swift; sourceTree = "<group>"; };
@@ -179,6 +191,8 @@
 			children = (
 				7E1F9AF92919253B006CA3AA /* LibraryHeaderBar.swift */,
 				7E1F9AFB291927FE006CA3AA /* LibraryContent.swift */,
+				7EEE480C293373010034E95C /* WorkOutListView.swift */,
+				7EEE480E2933786B0034E95C /* ListViewText.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -223,6 +237,8 @@
 		7E32D46929167DC0008FB390 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				7E5CC56C29301A6D0081017E /* Protocols */,
+				7E5CC56729300C5B0081017E /* Realm */,
 				7E32D4882916D2C4008FB390 /* Extensions */,
 				7E32D46C29167EE3008FB390 /* Constants.swift */,
 				7E32D47029168600008FB390 /* Enums.swift */,
@@ -297,6 +313,7 @@
 			isa = PBXGroup;
 			children = (
 				7EA6C8B7292119A000EEF5DA /* Int.swift */,
+				7EEE481029339B0B0034E95C /* UICollectionReusableView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -340,6 +357,23 @@
 				7EEA2D002923899A002C9227 /* WorkFlowViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		7E5CC56729300C5B0081017E /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				7E5CC56829300C730081017E /* RealmManager.swift */,
+				7E5CC56A293017AE0081017E /* WorkOutObject.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
+		7E5CC56C29301A6D0081017E /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				7E5CC56D29301A8C0081017E /* Persistable.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		7ED59F6B2915556D0077DF39 /* Fonts */ = {
@@ -471,6 +505,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E1F9AE32918EA4A006CA3AA /* ViewRouter.swift in Sources */,
+				7EEE481129339B0B0034E95C /* UICollectionReusableView.swift in Sources */,
 				7E32D4822916C9D7008FB390 /* CounterText.swift in Sources */,
 				7E1F9AEF29191991006CA3AA /* SceneView.swift in Sources */,
 				7EB1A0442917A76C008A6CF7 /* ContentScene.swift in Sources */,
@@ -479,16 +514,20 @@
 				7E1F9B112919A034006CA3AA /* ExerciseRunHeaderBar.swift in Sources */,
 				7ED59F842915599B0077DF39 /* IconButton.swift in Sources */,
 				7E1F9AF129191D5E006CA3AA /* ExerciseHeaderBar.swift in Sources */,
+				7E5CC56E29301A8C0081017E /* Persistable.swift in Sources */,
 				7E1F9AFC291927FE006CA3AA /* LibraryContent.swift in Sources */,
 				7E1F9AE929190801006CA3AA /* SettingsScene.swift in Sources */,
 				7E1F9AFF2919812A006CA3AA /* ProfileHeaderBar.swift in Sources */,
 				7EEA2D012923899A002C9227 /* WorkFlowViewModel.swift in Sources */,
 				7E1F9B172919AD20006CA3AA /* CircularProgressBar.swift in Sources */,
 				7E1F9AFA2919253B006CA3AA /* LibraryHeaderBar.swift in Sources */,
+				7E5CC56B293017AE0081017E /* WorkOutObject.swift in Sources */,
 				7E33B663291435BE009E4C1C /* ExerciseScene.swift in Sources */,
+				7EEE480D293373010034E95C /* WorkOutListView.swift in Sources */,
 				7E32D4852916CADC008FB390 /* LibraryScene.swift in Sources */,
 				7EF389262923EFBC008420C2 /* ExerciseEditBar.swift in Sources */,
 				7EEA2D03292389A8002C9227 /* WorkFlow.swift in Sources */,
+				7E5CC56929300C730081017E /* RealmManager.swift in Sources */,
 				7E1F9AF7291922CE006CA3AA /* ExerciseContent.swift in Sources */,
 				7EA6C8B8292119A000EEF5DA /* Int.swift in Sources */,
 				7E1F9AE62919060D006CA3AA /* ProfileScene.swift in Sources */,
@@ -500,6 +539,7 @@
 				7E32D46D29167EE3008FB390 /* Constants.swift in Sources */,
 				7E1F9B152919A508006CA3AA /* DescriptionLabel.swift in Sources */,
 				7EF3892C292401EF008420C2 /* ActionView.swift in Sources */,
+				7EEE480F2933786B0034E95C /* ListViewText.swift in Sources */,
 				7E669B4C291C195500529298 /* TimePicker.swift in Sources */,
 				7E669B52291CDF0800529298 /* WorkOut.swift in Sources */,
 				7E669B4E291C2F0100529298 /* ActivityPicker.swift in Sources */,

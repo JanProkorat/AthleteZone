@@ -26,8 +26,6 @@ struct ContentScene: View {
                     SettingsScene()
                 case .exerciseRun:
                     ExerciseRunScene()
-                case .editExercise:
-                    ExerciseEditScene()
                 }
             }
             .environmentObject(router)

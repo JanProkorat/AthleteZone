@@ -8,7 +8,7 @@
 import Foundation
 
 enum Tab {
-    case home, library, profile, setting, exerciseRun, editExercise
+    case home, library, profile, setting, exerciseRun
 }
 
 enum ActivitySheet: Identifiable {
