@@ -8,22 +8,25 @@
 import SwiftUI
 
 struct ContentScene: View {
-    
     @StateObject var router: ViewRouter
     @StateObject var workOutViewModel = WorkOutViewModel()
-    
+
     var body: some View {
-        GeometryReader { geometry in
-            VStack() {
+        GeometryReader { _ in
+            VStack {
                 switch router.currentTab {
                 case .home:
                     ExerciseScene()
+
                 case .library:
                     LibraryScene()
+
                 case .profile:
                     ProfileScene()
+
                 case .setting:
                     SettingsScene()
+
                 case .exerciseRun:
                     ExerciseRunScene()
                 }

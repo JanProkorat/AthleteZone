@@ -8,15 +8,12 @@
 import SwiftUI
 
 struct ActivityButton: View {
-    
     let innerComponent: ActivityView
     var onTab: (() -> Void)?
-    
+
     var body: some View {
         Button(action: {
-            if self.onTab != nil{
-                self.onTab!()
-            }
+            self.performAction(onTab)
         }, label: {
             innerComponent
         })
@@ -26,7 +23,15 @@ struct ActivityButton: View {
 
 struct ActivityButton_Previews: PreviewProvider {
     static var previews: some View {
-        ActivityButton(innerComponent: ActivityView(image: Icons.Play, color: Colors.Work, activity: "Work", interval: 40, type: .time))
+        ActivityButton(
+            innerComponent: ActivityView(
+                image: Icons.Play,
+                color: Colors.Work,
+                activity: "Work",
+                interval: 40,
+                type: .time
+            )
+        )
     }
 }
 

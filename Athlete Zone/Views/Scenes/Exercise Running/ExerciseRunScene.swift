@@ -8,15 +8,26 @@
 import SwiftUI
 
 struct ExerciseRunScene: View {
-        
     @EnvironmentObject var router: ViewRouter
     @EnvironmentObject var viewModel: WorkOutViewModel
 
     var body: some View {
-        SceneView(header: AnyView(ExerciseRunHeaderBar(title: viewModel.selectedWorkOut.name)),
-                  content: AnyView(ExerciseRunContent(workOut: viewModel.selectedWorkOut).onQuitTab{
-            router.currentTab = .home
-        }), isFooterVisible: false)
+        SceneView(
+            header: AnyView(
+                ExerciseRunHeaderBar(
+                    title: viewModel.selectedWorkOut.name
+                )
+            ),
+            content: AnyView(
+                ExerciseRunContent(
+                    workOut: viewModel.selectedWorkOut
+                )
+                .onQuitTab {
+                    router.currentTab = .home
+                }
+            ),
+            isFooterVisible: false
+        )
     }
 }
 

@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct DescriptionLabel: View {
-    
     let title: String
     let color: String
-    
+
     var body: some View {
         Text(title)
             .frame(maxWidth: .infinity, alignment: .center)
@@ -20,7 +19,7 @@ struct DescriptionLabel: View {
             .foregroundColor(Color(color))
             .padding(.trailing)
             .background(
-                ZStack{
+                ZStack {
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(Color(Colors.DarkBlue), lineWidth: 3)
                         .frame(height: 60)

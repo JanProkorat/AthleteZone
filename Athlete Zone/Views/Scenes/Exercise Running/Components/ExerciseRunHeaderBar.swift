@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct ExerciseRunHeaderBar: View {
-    
     let title: String
-    
+
     var body: some View {
         Text(title)
             .font(.custom("Lato-Black", size: 40))

@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct SettingsContent: View {
-    
     @AppStorage("language") private var language: Language = .en
-    
+
     var body: some View {
         VStack(spacing: 5) {
-            HStack(alignment: .center, spacing: 5){
+            HStack(alignment: .center, spacing: 5) {
                 Text("Language")
                     .frame(height: 80)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -21,26 +20,44 @@ struct SettingsContent: View {
                     .font(.custom("Lato-Bold", size: 25))
                     .padding(.leading)
                 HStack(alignment: .center, spacing: 5) {
-                    IconButton(id: "\(Language.cze)", image: Icons.FlagCZ, color: "", width: 40, height: 35, selected: self.language == Language.cze)
-                        .onTab{
-                            self.language = Language.cze
-                        }
-                    IconButton(id: "\(Language.de)", image: Icons.FlagDE, color: "", width: 40, height: 35, selected: self.language == Language.de)
-                        .onTab{
-                            self.language = Language.de
-                        }
-                        .padding(.leading)
-                        
-                    IconButton(id: "\(Language.en)", image: Icons.FlagGB, color: "", width: 40, height: 35, selected: self.language == Language.en)
-                        .onTab{
-                            self.language = Language.en
-                        }
-                        .padding(.leading)
-                        
+                    IconButton(
+                        id: "\(Language.cze)",
+                        image: Icons.FlagCZ,
+                        color: "",
+                        width: 40,
+                        height: 35,
+                        selected: self.language == Language.cze
+                    )
+                    .onTab {
+                        self.language = Language.cze
+                    }
+                    IconButton(
+                        id: "\(Language.de)",
+                        image: Icons.FlagDE,
+                        color: "",
+                        width: 40,
+                        height: 35,
+                        selected: self.language == Language.de
+                    )
+                    .onTab {
+                        self.language = Language.de
+                    }
+                    .padding(.leading)
 
+                    IconButton(
+                        id: "\(Language.en)",
+                        image: Icons.FlagGB,
+                        color: "",
+                        width: 40,
+                        height: 35,
+                        selected: self.language == Language.en
+                    )
+                    .onTab {
+                        self.language = Language.en
+                    }
+                    .padding(.leading)
                 }
                 .padding()
-
             }
             .background(
                 RoundedRectangle(cornerRadius: 20)

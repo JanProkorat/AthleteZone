@@ -8,17 +8,15 @@
 import SwiftUI
 
 struct ActivityView: View {
-    
     let image: String
     let color: String
     let activity: LocalizedStringKey
     let interval: Int
     let type: LabelType
-    
-    
+
     var body: some View {
-        HStack(){
-            HStack(){
+        HStack {
+            HStack {
                 IconButton(id: "\(activity)Icon", image: image, color: color, width: 50, height: 45)
                     .padding(.leading, 10)
                 Text(activity)
@@ -32,22 +30,18 @@ struct ActivityView: View {
                 .bold()
                 .foregroundColor(Color(color))
                 .padding(.trailing)
-            
         }
         .background(
-            ZStack{
+            ZStack {
                 RoundedRectangle(cornerRadius: 20)
                     .frame(height: 60)
                     .foregroundColor(Color("\(color)_background"))
             }
-            
-            
         )
         .frame(minWidth: 0, maxWidth: .infinity)
         .frame(height: 60)
         .padding([.leading, .trailing], 10)
         .padding([.top, .bottom], 3)
-        
     }
 }
 

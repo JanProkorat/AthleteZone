@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ProfileScene: View {
-        
     var body: some View {
         SceneView(header: AnyView(ProfileHeaderBar()),
                   content: AnyView(LibraryContent()), isFooterVisible: true)

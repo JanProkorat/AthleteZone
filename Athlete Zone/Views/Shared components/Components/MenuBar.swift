@@ -8,24 +8,23 @@
 import SwiftUI
 
 struct MenuBar: View {
-    
     let activeTab: Tab
-    
+
     var onHomeTab: (() -> Void)?
     var onLibraryTab: (() -> Void)?
     var onProfileTab: (() -> Void)?
     var onSettingsTab: (() -> Void)?
-    
+
     let icons = [
         MenuBarItem(id: Tab.home, icon: Icons.Home, activeIcon: Icons.HomeActive, activeText: "Home"),
         MenuBarItem(id: Tab.library, icon: Icons.Book, activeIcon: Icons.BookActive, activeText: "Library"),
         MenuBarItem(id: Tab.profile, icon: Icons.Avatar, activeIcon: Icons.AvatarActive, activeText: "Profile"),
-        MenuBarItem(id: Tab.setting, icon: Icons.Setting, activeIcon: Icons.SettingActive, activeText: "Settings"),
+        MenuBarItem(id: Tab.setting, icon: Icons.Setting, activeIcon: Icons.SettingActive, activeText: "Settings")
     ]
-    
+
     var body: some View {
-        HStack(alignment: .center, spacing: 5){
-            ForEach(icons){ icon in
+        HStack(alignment: .center, spacing: 5) {
+            ForEach(icons) { icon in
                 getMenuItem(icon)
             }
         }
@@ -35,36 +34,31 @@ struct MenuBar: View {
                 .foregroundColor(Color(Colors.Menu))
                 .frame(height: 70)
                 .cornerRadius(35)
-                .padding([.leading, .trailing],10)
+                .padding([.leading, .trailing], 10)
         )
     }
-    
-    
+
     func getMenuItem(_ item: MenuBarItem) -> some View {
-        return Group{
+        return Group {
             if item.id == self.activeTab {
                 SelectedMenuItem(height: 40, icon: item.activeIcon, text: item.activeText)
                     .frame(maxWidth: 110)
-            }else{
+            } else {
                 IconButton(id: "\(item.id)BarItem", image: item.icon, color: Colors.MenuText, width: 40, height: 40)
-                    .onTab{
-                        switch item.id{
+                    .onTab {
+                        switch item.id {
                         case .home:
-                            if self.onHomeTab != nil {
-                                self.onHomeTab!()
-                            }
+                            self.performAction(onHomeTab)
+
                         case .library:
-                            if self.onLibraryTab != nil {
-                                self.onLibraryTab!()
-                            }
+                            self.performAction(onLibraryTab)
+
                         case .profile:
-                            if self.onProfileTab != nil {
-                                self.onProfileTab!()
-                            }
+                            self.performAction(onProfileTab)
+
                         case .setting:
-                            if self.onSettingsTab != nil {
-                                self.onSettingsTab!()
-                            }
+                            self.performAction(onSettingsTab)
+
                         case .exerciseRun:
                             break
                         }
@@ -73,7 +67,6 @@ struct MenuBar: View {
             }
         }
     }
-    
 }
 
 struct MenuBar_Previews: PreviewProvider {
@@ -82,37 +75,35 @@ struct MenuBar_Previews: PreviewProvider {
     }
 }
 
-struct MenuBarItem : Identifiable {
+struct MenuBarItem: Identifiable {
     let id: Tab
     let icon: String
     let activeIcon: String
     let activeText: LocalizedStringKey
 }
 
-extension MenuBar{
+extension MenuBar {
     func onHomeTab(_ handler: @escaping () -> Void) -> MenuBar {
         var new = self
         new.onHomeTab = handler
         return new
     }
-    
+
     func onLibraryTab(_ handler: @escaping () -> Void) -> MenuBar {
         var new = self
         new.onLibraryTab = handler
         return new
     }
-    
+
     func onProfileTab(_ handler: @escaping () -> Void) -> MenuBar {
         var new = self
         new.onProfileTab = handler
         return new
     }
-    
+
     func onSettingsTab(_ handler: @escaping () -> Void) -> MenuBar {
         var new = self
         new.onSettingsTab = handler
         return new
     }
-    
-    
 }

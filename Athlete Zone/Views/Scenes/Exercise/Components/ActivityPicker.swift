@@ -8,16 +8,15 @@
 import SwiftUI
 
 struct ActivityPicker: View {
-    
     let title: String
     let color: String
     let backgroundColor: String
-    
+
     let picker: AnyView
-    
+
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
-            ZStack(){
+            ZStack {
                 RoundedRectangle(cornerRadius: 20)
                     .stroke(Color(Colors.DarkBlue), lineWidth: 3)
                     .foregroundColor(Color(backgroundColor))
@@ -32,21 +31,24 @@ struct ActivityPicker: View {
             .padding(.top, 30)
             .padding([.leading, .trailing], 10)
             .frame(maxHeight: 80)
-            
+
             picker
                 .frame(maxHeight: .infinity)
                 .padding(.top, 20)
-
         }
         .frame(maxHeight: .infinity)
         .background(Color(Backgrounds.Background))
         .presentationDetents([.medium])
-
     }
 }
 
 struct ActivityPicker_Previews: PreviewProvider {
     static var previews: some View {
-        ActivityPicker(title: "Work", color: Colors.Work, backgroundColor: Backgrounds.WorkBackground, picker: AnyView(TimePicker(textColor: Colors.Work, interval: 40)))
+        ActivityPicker(
+            title: "Work",
+            color: Colors.Work,
+            backgroundColor: Backgrounds.WorkBackground,
+            picker: AnyView(TimePicker(textColor: Colors.Work, interval: 40))
+        )
     }
 }

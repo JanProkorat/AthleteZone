@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct CircularProgressBar: View {
-    
     let color: String
     let progress: Double
 
@@ -32,9 +31,7 @@ struct CircularProgressBar: View {
                 .padding(20)
                 .rotationEffect(.degrees(-90))
                 .animation(.easeIn, value: progress)
-
         }
-        
     }
 }
 

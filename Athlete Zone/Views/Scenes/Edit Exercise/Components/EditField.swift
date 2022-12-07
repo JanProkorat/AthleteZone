@@ -8,20 +8,19 @@
 import SwiftUI
 
 struct EditField: View {
-    
     @State private var nameValue: String = ""
-    
+
     var value: String = ""
     let label: String
     let labelSize: CGFloat
     let fieldSize: CGFloat
     let color: String
     let type: InputType
-    
+
     init(value: String, label: String, labelSize: CGFloat, fieldSize: CGFloat, color: String, type: InputType) {
         if type == .text {
             self.nameValue = value
-        }else{
+        } else {
             self.value = value
         }
         self.label = label
@@ -30,12 +29,12 @@ struct EditField: View {
         self.color = color
         self.type = type
     }
-    
+
     var onTab: (() -> Void)?
     var onNameChange: ((_ value: String) -> Void)?
 
     var body: some View {
-        VStack(alignment: .center, spacing: 5){
+        VStack(alignment: .center, spacing: 5) {
             Text(label)
                 .font(.custom("Lato-Black", size: labelSize))
                 .bold()
@@ -43,34 +42,38 @@ struct EditField: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding([.trailing, .top])
                 .padding(.leading, 25)
-            
+
             switch type {
             case .text:
                 TextField("Enter \(label)...", text: $nameValue)
                     .textFieldStyle(TextInputStyle(height: self.fieldSize))
                     .frame(height: fieldSize)
                     .padding(.bottom)
+
             default:
-                ActionButton(innerComponent: ActionView(text: value, color: Colors.MainText, backgoundColor: Backgrounds.Background, image: nil, height: fieldSize, cornerRadius: 10))
-                    .onTab{
-                        if self.onTab != nil{
-                            self.onTab!()
-                        }
+                ActionButton(
+                    innerComponent: ActionView(
+                        text: value,
+                        color: Colors.MainText,
+                        backgoundColor: Backgrounds.Background,
+                        image: nil,
+                        height: fieldSize,
+                        cornerRadius: 10))
+                    .onTab {
+                        self.performAction(self.onTab)
                     }
                     .padding([.leading, .trailing, .bottom])
             }
         }
         .onChange(of: self.nameValue) { newValue in
-            if self.onNameChange != nil {
-                self.onNameChange!(newValue)
-            }
+            self.performAction(self.onNameChange, value: newValue)
         }
     }
 }
 
 struct EditField_Previews: PreviewProvider {
     static var previews: some View {
-        VStack(){
+        VStack {
             EditField(value: "title", label: "Name", labelSize: 30, fieldSize: 30, color: Colors.Work, type: .text)
             EditField(value: "00:30", label: "Work", labelSize: 30, fieldSize: 30, color: Colors.Work, type: .time)
             EditField(value: "1x", label: "Rounds", labelSize: 30, fieldSize: 30, color: Colors.Work, type: .number)
@@ -78,10 +81,9 @@ struct EditField_Previews: PreviewProvider {
     }
 }
 
-
 struct TextInputStyle: TextFieldStyle {
     let height: CGFloat
-    
+
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
             .padding()
@@ -99,11 +101,10 @@ extension EditField {
         new.onTab = handler
         return new
     }
-    
+
     func onNameChange(_ handler: @escaping (_ value: String) -> Void) -> EditField {
         var new = self
         new.onNameChange = handler
         return new
     }
 }
-

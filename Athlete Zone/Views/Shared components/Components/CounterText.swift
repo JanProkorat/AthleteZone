@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct CounterText: View {
-    
     let text: String
     let size: CGFloat
-    
+
     var body: some View {
         Text(text)
             .font(.custom("Lato-Italic", size: size))

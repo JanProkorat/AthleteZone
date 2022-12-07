@@ -8,9 +8,8 @@
 import SwiftUI
 
 @main
-struct Athlete_ZoneApp: App {
-    
-    @StateObject var router: ViewRouter = ViewRouter()
+struct AthleteZoneApp: App {
+    @StateObject var router = ViewRouter()
     @AppStorage("language") private var language: Language = .en
 
     var body: some Scene {

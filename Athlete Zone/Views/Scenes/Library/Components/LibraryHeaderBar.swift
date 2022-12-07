@@ -9,14 +9,12 @@ import SwiftUI
 
 struct LibraryHeaderBar: View {
     var body: some View {
-        HStack(alignment: .top, spacing: 5.0){
+        HStack(alignment: .top, spacing: 5.0) {
             Menu {
-                Button(action: {
-                }, label: {
+                Button(action: {}, label: {
                     Label("Trainings", systemImage: "paperplane")
                 })
-                Button(action: {
-                }, label: {
+                Button(action: {}, label: {
                     Label("Workouts", systemImage: "paperplane")
                 })
             }
@@ -26,7 +24,7 @@ struct LibraryHeaderBar: View {
                     .scaledToFit()
                     .foregroundColor(Color(Colors.MainText))
             }
-            
+
             Text("Library")
                 .font(.custom("Lato-Black", size: 40))
                 .bold()

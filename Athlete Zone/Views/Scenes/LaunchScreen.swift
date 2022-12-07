@@ -15,11 +15,10 @@ struct LaunchScreen: View {
                 .scaledToFill()
                 .foregroundColor(Color(Backgrounds.Background))
                 .edgesIgnoringSafeArea(.all)
-            
+
             Image(Pictures.Logo)
         }
     }
-    
 }
 
 struct LaunchScreen_Previews: PreviewProvider {

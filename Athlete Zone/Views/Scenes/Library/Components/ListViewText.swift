@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct ListViewText: View {
-    
     let text: String
     let color: String
-    
+
     var body: some View {
         Text(text)
             .font(.custom("Lato-Black", size: 20))

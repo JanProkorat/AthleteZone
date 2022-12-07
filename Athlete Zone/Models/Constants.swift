@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct Icons {
-    static let Actions_forward = "Actions_forward"
-    static let Actions_pause = "Actions_pause"
+enum Icons {
+    static let ActionsForward = "Actions_forward"
+    static let ActionsPause = "Actions_pause"
     static let Add = "Add"
     static let ArrowDown = "Arrow_down"
     static let Avatar = "Avatar"
@@ -38,12 +38,12 @@ struct Icons {
     static let Trash = "Trash"
 }
 
-struct Pictures {
+enum Pictures {
     static let Logo = "Logo"
     static let Welcome = "Welcome"
 }
 
-struct Colors {
+enum Colors {
     static let Action = "Action"
     static let Braun = "Braun"
     static let DarkBlue = "Dark_blue"
@@ -56,13 +56,12 @@ struct Colors {
     static let Rounds = "Rounds"
     static let Series = "Series"
     static let Work = "Work"
-    
+
     static let Pink = "Pink"
     static let Yellow = "Yellow"
-
 }
 
-struct Backgrounds{
+enum Backgrounds {
     static let Background = "Background"
     static let ResetBackground = "Reset_background"
     static let RestBackground = "Rest_background"

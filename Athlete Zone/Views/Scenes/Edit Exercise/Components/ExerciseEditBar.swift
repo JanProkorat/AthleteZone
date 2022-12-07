@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct ExerciseEditBar: View {
-    
-    var isEditing: Bool = false
-    
+    var isEditing = false
+
     var body: some View {
         Text("\(!isEditing ? "Add" : "Edit") Exercise")
             .font(.custom("Lato-Black", size: 40))

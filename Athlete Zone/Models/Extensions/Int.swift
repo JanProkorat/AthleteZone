@@ -8,37 +8,36 @@
 import Foundation
 
 extension Int {
-    
     func isIven() -> Bool {
-        return self % 2 == 0
+        return self.isMultiple(of: 2)
     }
-    
+
     func isOdd() -> Bool {
-        return self % 2 != 0
+        return !self.isMultiple(of: 2)
     }
-    
+
     func toHours() -> Int {
-            return self / 3600
-        }
-    
+        return self / 3600
+    }
+
     func toMinutes() -> Int {
-            return (self % 3600) / 60
-        }
-    
+        return (self % 3600) / 60
+    }
+
     func toSeconds() -> Int {
-            return (self % 3600) % 60
-        }
-    
+        return (self % 3600) % 60
+    }
+
     func toFormattedValue(type: LabelType) -> String {
         switch type {
         case .time:
             return self.toFormattedTime()
+
         case .number:
             return "\(self)x"
         }
-        
     }
-    
+
     func toFormattedTime() -> String {
         let formatter = DateComponentsFormatter()
         formatter.zeroFormattingBehavior = .pad

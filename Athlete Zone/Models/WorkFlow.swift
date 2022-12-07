@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct WorkFlow{
+struct WorkFlow {
     var interval: Int
     let type: ActivityType
     let round: Int
     let serie: Int
     let originalInterval: Int
-    
+
     init(interval: Int, type: ActivityType, round: Int, serie: Int) {
         self.interval = interval
         self.type = type
@@ -21,11 +21,11 @@ struct WorkFlow{
         self.serie = serie
         self.originalInterval = interval
     }
-    
-    mutating func setInterval(_ interval: Int){
+
+    mutating func setInterval(_ interval: Int) {
         self.interval = interval
     }
-    
+
     func getProgress() -> Double {
         return Double(self.originalInterval - self.interval) / Double(self.originalInterval)
     }

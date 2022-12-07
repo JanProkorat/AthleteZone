@@ -8,10 +8,7 @@
 import SwiftUI
 
 protocol Scene {
-    
-    var Header: AnyView? { get }
-    var Content: AnyView? { get }
-    var Footer: AnyView? { get }
-
-
+    var header: AnyView? { get }
+    var content: AnyView? { get }
+    var footer: AnyView? { get }
 }

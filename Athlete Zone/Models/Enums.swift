@@ -13,7 +13,7 @@ enum Tab {
 
 enum ActivitySheet: Identifiable {
     case work, rest, rounds, series, reset
-    
+
     var id: Int {
         hashValue
     }
@@ -21,9 +21,9 @@ enum ActivitySheet: Identifiable {
 
 enum ActivityType: String, CustomStringConvertible {
     var description: String {
-        return self.rawValue
+        self.rawValue
     }
-    
+
     case work = "Work"
     case rest = "Rest"
     case reset = "Reset time"
