@@ -27,7 +27,7 @@ class WorkOut: Object, Identifiable {
         reset = 0
     }
 
-    init(name: String, work: Int, rest: Int, series: Int, rounds: Int, reset: Int) {
+    init(_ name: String, _ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int) {
         self.name = name
         self.work = work
         self.rest = rest

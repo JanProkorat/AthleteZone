@@ -10,10 +10,7 @@ import SwiftUI
 struct MenuBar: View {
     let activeTab: Tab
 
-    var onHomeTab: (() -> Void)?
-    var onLibraryTab: (() -> Void)?
-    var onProfileTab: (() -> Void)?
-    var onSettingsTab: (() -> Void)?
+    var onRouteTab: ((_ routeToGo: Tab) -> Void)?
 
     let icons = [
         MenuBarItem(id: Tab.home, icon: Icons.Home, activeIcon: Icons.HomeActive, activeText: "Home"),
@@ -24,9 +21,7 @@ struct MenuBar: View {
 
     var body: some View {
         HStack(alignment: .center, spacing: 5) {
-            ForEach(icons) { icon in
-                getMenuItem(icon)
-            }
+            ForEach(icons) { getMenuItem($0) }
         }
         .frame(maxWidth: .infinity)
         .background(
@@ -45,24 +40,7 @@ struct MenuBar: View {
                     .frame(maxWidth: 110)
             } else {
                 IconButton(id: "\(item.id)BarItem", image: item.icon, color: Colors.MenuText, width: 40, height: 40)
-                    .onTab {
-                        switch item.id {
-                        case .home:
-                            self.performAction(onHomeTab)
-
-                        case .library:
-                            self.performAction(onLibraryTab)
-
-                        case .profile:
-                            self.performAction(onProfileTab)
-
-                        case .setting:
-                            self.performAction(onSettingsTab)
-
-                        case .exerciseRun:
-                            break
-                        }
-                    }
+                    .onTab { self.performAction(onRouteTab, value: item.id) }
                     .padding()
             }
         }
@@ -83,27 +61,9 @@ struct MenuBarItem: Identifiable {
 }
 
 extension MenuBar {
-    func onHomeTab(_ handler: @escaping () -> Void) -> MenuBar {
+    func onRouteTab(_ handler: @escaping (_ routeToGo: Tab) -> Void) -> MenuBar {
         var new = self
-        new.onHomeTab = handler
-        return new
-    }
-
-    func onLibraryTab(_ handler: @escaping () -> Void) -> MenuBar {
-        var new = self
-        new.onLibraryTab = handler
-        return new
-    }
-
-    func onProfileTab(_ handler: @escaping () -> Void) -> MenuBar {
-        var new = self
-        new.onProfileTab = handler
-        return new
-    }
-
-    func onSettingsTab(_ handler: @escaping () -> Void) -> MenuBar {
-        var new = self
-        new.onSettingsTab = handler
+        new.onRouteTab = handler
         return new
     }
 }

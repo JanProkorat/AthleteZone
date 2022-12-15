@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ExerciseEditBar: View {
+struct WorkOutEditHeader: View {
     var isEditing = false
 
     var body: some View {
@@ -22,6 +22,6 @@ struct ExerciseEditBar: View {
 
 struct ExerciseEditHeader_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseEditBar(isEditing: false)
+        WorkOutEditHeader(isEditing: false)
     }
 }

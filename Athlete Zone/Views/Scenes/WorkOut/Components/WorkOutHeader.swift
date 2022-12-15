@@ -7,11 +7,15 @@
 
 import SwiftUI
 
-struct ExerciseHeaderBar: View {
+struct WorkOutHeader: View {
     var onSectionChangeTab: (() -> Void)?
     var onSaveTab: (() -> Void)?
 
     let name: String
+
+    init(_ name: String) {
+        self.name = name
+    }
 
     var body: some View {
         HStack {
@@ -55,17 +59,21 @@ struct ExerciseHeaderBar: View {
 
 struct ExerciseHeaderBar_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseHeaderBar(name: "Title")
+        WorkOutHeader("Title")
             .environmentObject(WorkOutViewModel())
     }
 }
 
-extension ExerciseHeaderBar {
-    func onSectionChangeTab(action: @escaping (() -> Void)) -> ExerciseHeaderBar {
-        ExerciseHeaderBar(onSectionChangeTab: action, name: self.name)
+extension WorkOutHeader {
+    func onSectionChangeTab(action: @escaping (() -> Void)) -> WorkOutHeader {
+        var new = self
+        new.onSectionChangeTab = action
+        return new
     }
 
-    func onSaveTab(action: @escaping (() -> Void)) -> ExerciseHeaderBar {
-        ExerciseHeaderBar(onSaveTab: action, name: self.name)
+    func onSaveTab(action: @escaping (() -> Void)) -> WorkOutHeader {
+        var new = self
+        new.onSaveTab = action
+        return new
     }
 }

@@ -24,22 +24,22 @@ class RealmManager: ObservableObject {
     public func add<T: Object>(_ value: T) {
         do {
             try realm.write {
-                realm.add(value)
+                realm.add(value, update: .modified)
             }
         } catch {
             print(error.localizedDescription)
         }
     }
 
-    public func create<T: Object>(_ value: T, type: T.Type) {
-        do {
-            try realm.write {
-                realm.create(T.self, value: value, update: .error)
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
+//    public func create<T: Object>(_ value: T, type: T.Type) {
+//        do {
+//            try realm.write {
+//                realm.create(T.self, value: value, update: .error)
+//            }
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+//    }
 
     public func load<T: Object>(entity: T.Type, primaryKey: ObjectId) -> T? {
         return realm.object(ofType: T.self, forPrimaryKey: primaryKey)

@@ -26,7 +26,7 @@ struct ExerciseRunScene: View {
                     router.currentTab = .home
                 }
             ),
-            isFooterVisible: false
+            footer: nil
         )
     }
 }

@@ -16,7 +16,7 @@ struct ContentScene: View {
             VStack {
                 switch router.currentTab {
                 case .home:
-                    ExerciseScene()
+                    WorkOutScene()
 
                 case .library:
                     LibraryScene()

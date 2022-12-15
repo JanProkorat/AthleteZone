@@ -7,9 +7,26 @@
 
 import SwiftUI
 
-struct ExerciseContent: View {
-    @EnvironmentObject var viewModel: WorkOutViewModel
+struct WorkOutContent: View {
     @EnvironmentObject var router: ViewRouter
+
+    var work = 0
+    var rest = 0
+    var series = 0
+    var rounds = 0
+    var reset = 0
+
+    private var timeOverview: Int {
+        ((work * series) + (rest * (series - 1)) + reset) * rounds
+    }
+
+    init(_ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int) {
+        self.work = work
+        self.rest = rest
+        self.series = series
+        self.rounds = rounds
+        self.reset = reset
+    }
 
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
@@ -18,7 +35,7 @@ struct ExerciseContent: View {
                     image: Icons.Play,
                     color: Colors.Work,
                     activity: "Work",
-                    interval: viewModel.selectedWorkOut.work,
+                    interval: work,
                     type: .time
                 )
             )
@@ -30,7 +47,7 @@ struct ExerciseContent: View {
                     image: Icons.Pause,
                     color: Colors.Rest,
                     activity: "Rest",
-                    interval: viewModel.selectedWorkOut.rest,
+                    interval: rest,
                     type: .time
                 )
             )
@@ -41,7 +58,7 @@ struct ExerciseContent: View {
                     image: Icons.Forward,
                     color: Colors.Series,
                     activity: "Series",
-                    interval: viewModel.selectedWorkOut.series,
+                    interval: series,
                     type: .number
                 )
             )
@@ -52,7 +69,7 @@ struct ExerciseContent: View {
                     image: Icons.Repeat,
                     color: Colors.Rounds,
                     activity: "Rounds",
-                    interval: viewModel.selectedWorkOut.rounds,
+                    interval: rounds,
                     type: .number
                 )
             )
@@ -63,7 +80,7 @@ struct ExerciseContent: View {
                     image: Icons.Time,
                     color: Colors.Reset,
                     activity: "ResetTime",
-                    interval: viewModel.selectedWorkOut.reset,
+                    interval: reset,
                     type: .time
                 )
             )
@@ -72,7 +89,7 @@ struct ExerciseContent: View {
             GeometryReader { geometry in
                 VStack(alignment: .center, spacing: 5) {
                     HStack(alignment: .center) {
-                        Text(viewModel.selectedWorkOut.timeOverview.toFormattedTime())
+                        Text(timeOverview.toFormattedTime())
                             .scaledToFill()
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .font(.custom("Lato-Black", size: geometry.size.height * 0.25))
@@ -97,7 +114,7 @@ struct ExerciseContent: View {
 
 struct ExerciseContent_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseContent()
+        WorkOutContent(40, 60, 3, 2, 60)
             .environmentObject(WorkOutViewModel())
             .environmentObject(ViewRouter())
     }

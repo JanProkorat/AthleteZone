@@ -7,31 +7,40 @@
 
 import SwiftUI
 
-struct ExerciseEditContent: View {
-    @EnvironmentObject var viewModel: WorkOutViewModel
+struct WorkOutEditContent: View {
     @EnvironmentObject var router: ViewRouter
 
-    var onCloseTab: (() -> Void)?
+    var onNameChange: ((_ value: String) -> Void)?
+
+    var name = ""
+    var work = 0
+    var rest = 0
+    var series = 0
+    var rounds = 0
+    var reset = 0
+
+    init(_ name: String, _ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int) {
+        self.name = name
+        self.work = work
+        self.rest = rest
+        self.series = series
+        self.rounds = rounds
+        self.reset = reset
+    }
 
     var body: some View {
         GeometryReader { geo in
             VStack(spacing: 15) {
                 VStack(alignment: .leading, spacing: 5) {
                     EditField(
-                        value: viewModel.workOutToEdit.name,
+                        value: name,
                         label: "Name",
                         labelSize: geo.size.height * 0.04,
                         fieldSize: geo.size.height * 0.1,
                         color: Colors.MainText,
                         type: .text
                     )
-                    .onNameChange { value in
-                        self.viewModel.updateProperty(
-                            self.viewModel.workOutToEdit,
-                            propertyName: "name",
-                            value: value
-                        )
-                    }
+                    .onNameChange { self.performAction(self.onNameChange, value: $0) }
                 }
                 .frame(alignment: .leading)
                 .frame(maxWidth: .infinity)
@@ -43,7 +52,7 @@ struct ExerciseEditContent: View {
                 VStack(alignment: .leading, spacing: 5) {
                     HStack(alignment: .center, spacing: 5) {
                         EditField(
-                            value: viewModel.workOutToEdit.work.toFormattedTime(),
+                            value: work.toFormattedTime(),
                             label: "Work",
                             labelSize: geo.size.height * 0.04,
                             fieldSize: geo.size.height * 0.07,
@@ -53,7 +62,7 @@ struct ExerciseEditContent: View {
                         .onTab { self.router.setActiveEditSheet(.work) }
 
                         EditField(
-                            value: viewModel.workOutToEdit.rounds.toFormattedValue(type: .number),
+                            value: rounds.toFormattedValue(type: .number),
                             label: "Rounds",
                             labelSize: geo.size.height * 0.04,
                             fieldSize: geo.size.height * 0.07,
@@ -67,17 +76,17 @@ struct ExerciseEditContent: View {
 
                     HStack(alignment: .center, spacing: 5) {
                         EditField(
-                            value: viewModel.workOutToEdit.rest.toFormattedTime(),
+                            value: rest.toFormattedTime(),
                             label: "Rest",
                             labelSize: geo.size.height * 0.04,
                             fieldSize: geo.size.height * 0.07,
-                            color: Colors.Work,
+                            color: Colors.Rest,
                             type: .time
                         )
                         .onTab { self.router.setActiveEditSheet(.rest) }
 
                         EditField(
-                            value: viewModel.workOutToEdit.reset.toFormattedTime(),
+                            value: reset.toFormattedTime(),
                             label: "Reset",
                             labelSize: geo.size.height * 0.04,
                             fieldSize: geo.size.height * 0.07,
@@ -91,7 +100,7 @@ struct ExerciseEditContent: View {
 
                     HStack(alignment: .center, spacing: 5) {
                         EditField(
-                            value: viewModel.workOutToEdit.series.toFormattedValue(type: .number),
+                            value: series.toFormattedValue(type: .number),
                             label: "Series",
                             labelSize: geo.size.height * 0.04,
                             fieldSize: geo.size.height * 0.07,
@@ -106,48 +115,12 @@ struct ExerciseEditContent: View {
                     .frame(height: geo.size.height * 0.55 * 0.25)
                     .padding(.top, 10)
                 }
-                .frame(height: geo.size.height * 0.5, alignment: .top)
+                .frame(height: geo.size.height * 0.72, alignment: .top)
                 .frame(maxWidth: .infinity)
                 .background(
                     RoundedRectangle(cornerRadius: 20)
                         .foregroundColor(Color(Colors.Menu))
                 )
-
-                VStack(spacing: 5) {
-                    ActionButton(
-                        innerComponent: ActionView(
-                            text: "Save",
-                            color: Colors.Rounds,
-                            backgoundColor: nil,
-                            image: Icons.Check,
-                            height: geo.size.height * 0.20 / 2,
-                            cornerRadius: nil
-                        )
-                    )
-                    .onTab {
-                        viewModel.setIsEditing(false)
-                        viewModel.saveWorkOut()
-                        if router.currentTab == .home {
-                            viewModel.setSelectedWorkOut(viewModel.workOutToEdit)
-                        }
-                        self.performAction(onCloseTab)
-                    }
-                    ActionButton(
-                        innerComponent: ActionView(
-                            text: "Cancel",
-                            color: Colors.Work,
-                            backgoundColor: nil,
-                            image: Icons.Clear,
-                            height: geo.size.height * 0.20 / 2,
-                            cornerRadius: nil
-                        )
-                    )
-                    .onTab {
-                        viewModel.setIsEditing(false)
-                        self.performAction(self.onCloseTab)
-                    }
-                }
-                .frame(height: geo.size.height * 0.25, alignment: .top)
             }
         }
         .padding([.leading, .trailing, .top])
@@ -156,16 +129,16 @@ struct ExerciseEditContent: View {
 
 struct ExerciseEditContent_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseEditContent()
+        WorkOutEditContent("Title", 30, 15, 7, 2, 45)
             .environmentObject(WorkOutViewModel())
             .environmentObject(ViewRouter())
     }
 }
 
-extension ExerciseEditContent {
-    func onCloseTab(_ handler: @escaping () -> Void) -> ExerciseEditContent {
+extension WorkOutEditContent {
+    func onNameChange(_ handler: @escaping (_ value: String) -> Void) -> WorkOutEditContent {
         var new = self
-        new.onCloseTab = handler
+        new.onNameChange = handler
         return new
     }
 }
