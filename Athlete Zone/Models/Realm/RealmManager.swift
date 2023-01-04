@@ -12,7 +12,7 @@ class RealmManager: ObservableObject {
     private(set) var realm: Realm!
 
     init() {
-        let config = Realm.Configuration(schemaVersion: 5)
+        let config = Realm.Configuration(schemaVersion: 6)
         Realm.Configuration.defaultConfiguration = config
         do {
             self.realm = try Realm()
@@ -30,16 +30,6 @@ class RealmManager: ObservableObject {
             print(error.localizedDescription)
         }
     }
-
-//    public func create<T: Object>(_ value: T, type: T.Type) {
-//        do {
-//            try realm.write {
-//                realm.create(T.self, value: value, update: .error)
-//            }
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-//    }
 
     public func load<T: Object>(entity: T.Type, primaryKey: ObjectId) -> T? {
         return realm.object(ofType: T.self, forPrimaryKey: primaryKey)

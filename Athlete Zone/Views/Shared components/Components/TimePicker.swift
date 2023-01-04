@@ -39,13 +39,13 @@ struct TimePicker: View {
                 .background(
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color(Colors.Menu), lineWidth: 3)
-                            .foregroundColor(Color(Backgrounds.WorkBackground))
+                            .stroke(Color(ComponentColor.menu.rawValue), lineWidth: 3)
+                            .foregroundColor(Color(Background.work.rawValue))
                     }
                 )
                 .pickerStyle(InlinePickerStyle())
                 Text(":")
-                    .foregroundColor(Color(Colors.Work))
+                    .foregroundColor(Color(ComponentColor.work.rawValue))
                     .font(.custom("Lato-Black", size: 60))
 
                 Picker(selection: $selectedMins, label: Text("Mins")) {
@@ -58,13 +58,13 @@ struct TimePicker: View {
                 .background(
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color(Colors.Menu), lineWidth: 3)
-                            .foregroundColor(Color(Backgrounds.WorkBackground))
+                            .stroke(Color(ComponentColor.menu.rawValue), lineWidth: 3)
+                            .foregroundColor(Color(Background.work.rawValue))
                     }
                 )
                 .pickerStyle(InlinePickerStyle())
                 Text(":")
-                    .foregroundColor(Color(Colors.Work))
+                    .foregroundColor(Color(ComponentColor.work.rawValue))
                     .font(.custom("Lato-Black", size: 60))
 
                 Picker(selection: $selectedSecs, label: Text("Secs")) {
@@ -77,8 +77,8 @@ struct TimePicker: View {
                 .background(
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color(Colors.Menu), lineWidth: 3)
-                            .foregroundColor(Color(Backgrounds.WorkBackground))
+                            .stroke(Color(ComponentColor.menu.rawValue), lineWidth: 3)
+                            .foregroundColor(Color(Background.work.rawValue))
                     }
                 )
                 .pickerStyle(InlinePickerStyle())
@@ -101,7 +101,7 @@ struct TimePicker: View {
 
 struct TimePicker_Previews: PreviewProvider {
     static var previews: some View {
-        TimePicker(textColor: Colors.Work, interval: 61)
+        TimePicker(textColor: ComponentColor.work.rawValue, interval: 61)
     }
 }
 

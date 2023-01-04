@@ -13,108 +13,111 @@ struct WorkOutListView: View {
     var onEditTab: (() -> Void)?
     var onDeleteTab: (() -> Void)?
 
+    let fieldConfig: [[ActivityType]] = [.work, .rounds, .rest, .series, .reset].chunked(into: 2)
+
     var body: some View {
-        VStack {
-            HStack {
-                Text(workOut.name)
-                    .font(.custom("Lato-Black", size: 35))
-                    .bold()
-                    .foregroundColor(Color(Colors.MainText))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.trailing)
-                    .padding(.top, 25)
-                    .padding(.leading, 30)
-                Menu {
-                    Button(action: {
-                        performAction(onEditTab)
-                    }, label: {
-                        Label("Edit", systemImage: "pencil")
-                    })
+        GeometryReader { reader in
+            VStack {
+                HStack(alignment: .center) {
+                    TitleText(text: workOut.name)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading, 30)
+                    Menu {
+                        Button(action: {
+                            performAction(onEditTab)
+                        }, label: {
+                            Label("Edit", systemImage: "pencil")
+                        })
 
-                    Button(role: .destructive, action: {
-                        performAction(onDeleteTab)
-                    }, label: {
-                        Label("Delete", systemImage: "trash")
-                    })
-                } label: {
-                    Image(Icons.Menu)
-                        .foregroundColor(Color(Colors.MainText))
-                        .frame(width: 40, height: 34)
-                        .padding(.trailing, 20)
-                        .padding(.top)
+                        Button(role: .destructive, action: {
+                            performAction(onDeleteTab)
+                        }, label: {
+                            Label("Delete", systemImage: "trash")
+                        })
+                    } label: {
+                        Image(Icons.Menu)
+                            .foregroundColor(Color(ComponentColor.mainText.rawValue))
+                            .frame(width: 40, height: 34)
+                            .padding(.trailing, 20)
+                    }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top, 5)
+
+                ForEach(fieldConfig, id: \.first?.id) { chunk in
+                    HStack {
+                        listViewItem(item: chunk.first!, width: reader.size.width * 0.8 * 0.5)
+                        listViewItem(item: chunk.count > 1 ? chunk.last! : nil, width: reader.size.width * 0.8 * 0.4)
+                    }
+                    .padding(.bottom, chunk.count > 1 ? 1 : 10)
+                    .frame(maxWidth: reader.size.width * 0.8, alignment: .leading)
+                }
+
+//                listViewItem(
+//                    text: "Created:",
+//                    value: workOut.formattedCreatedDate,
+//                    color: ComponentColor.mainText,
+//                    width: reader.size.width * 0.7
+//                )
+//                .padding()
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-
-            HStack {
-                HStack {
-                    ListViewText(text: "Work:", color: Colors.Work)
-                    ListViewText(text: workOut.work.toFormattedTime(), color: Colors.Work)
-                        .padding(.leading, 3)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading)
-
-                HStack {
-                    ListViewText(text: "Rounds:", color: Colors.Rounds)
-                    ListViewText(text: workOut.rounds.toFormattedValue(type: .number), color: Colors.Rounds)
-                        .padding(.leading, 3)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading, 20)
-            }
-            .padding(.top, 1)
-            .padding(.leading, 25)
-            .frame(maxWidth: .infinity, alignment: .leading)
-
-            HStack {
-                HStack {
-                    ListViewText(text: "Rest:", color: Colors.Rest)
-                    ListViewText(text: workOut.rest.toFormattedTime(), color: Colors.Rest)
-                        .padding(.leading, 3)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading)
-
-                HStack {
-                    ListViewText(text: "Reset:", color: Colors.Reset)
-                    ListViewText(text: workOut.series.toFormattedValue(type: .time), color: Colors.Reset)
-                        .padding(.leading, 3)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading, 20)
-            }
-            .padding(.top, 1)
-            .padding(.leading, 25)
-            .frame(maxWidth: .infinity, alignment: .leading)
-
-            HStack {
-                HStack {
-                    ListViewText(text: "Series:", color: Colors.Series)
-                    ListViewText(text: workOut.series.toFormattedValue(type: .number), color: Colors.Series)
-                        .padding(.leading, 3)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading)
-
-                HStack {
-                    ListViewText(text: "Total:", color: Colors.MainText)
-                    ListViewText(text: workOut.timeOverview.toFormattedTime(), color: Colors.MainText)
-                        .padding(.leading, 3)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading, 20)
-            }
-            .padding(.top, 1)
-            .padding(.leading, 25)
-            .padding(.bottom)
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .foregroundColor(Color(Background.work.rawValue))
+            )
         }
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .foregroundColor(Color(Backgrounds.WorkBackground))
-                .padding([.top, .leading, .trailing])
-        )
+    }
+
+    @ViewBuilder
+    func listViewItem(item: ActivityType?, width: CGFloat) -> some View {
+        HStack {
+            ListViewText(
+                text: item == nil ? "Total:" : "\(item!.rawValue):",
+                color: item == nil ? ComponentColor.mainText :
+                    ComponentColor.allCases.first(where: { $0.rawValue == item!.rawValue })!
+            )
+            ListViewText(
+                text: item == nil ? self.workOut.timeOverview.toFormattedTime() : getValueByType(item!),
+                color: item == nil ? ComponentColor.mainText :
+                    ComponentColor.allCases.first(where: { $0.rawValue == item!.rawValue })!
+            )
+        }
+        .frame(width: width, alignment: .leading)
+    }
+
+    @ViewBuilder
+    func listViewItem(text: String, value: String, color: ComponentColor, width: CGFloat) -> some View {
+        HStack {
+            ListViewText(
+                text: text,
+                color: color
+            )
+
+            ListViewText(
+                text: value,
+                color: color
+            )
+        }
+        .frame(width: width, alignment: .center)
+    }
+
+    func getValueByType(_ type: ActivityType) -> String {
+        switch type {
+        case .work:
+            return workOut.work.toFormattedTime()
+
+        case .rest:
+            return workOut.rest.toFormattedTime()
+
+        case .series:
+            return workOut.series.toFormattedValue(type: .number)
+
+        case .rounds:
+            return workOut.rounds.toFormattedValue(type: .number)
+
+        case .reset:
+            return workOut.reset.toFormattedTime()
+        }
     }
 }
 

@@ -11,6 +11,7 @@ struct WorkOutEditContent: View {
     @EnvironmentObject var router: ViewRouter
 
     var onNameChange: ((_ value: String) -> Void)?
+    var onEditFieldTab: ((_ value: ActivityType) -> Void)?
 
     var name = ""
     var work = 0
@@ -28,6 +29,8 @@ struct WorkOutEditContent: View {
         self.reset = reset
     }
 
+    let editFieldConfig = ActivityType.allCases.chunked(into: 2)
+
     var body: some View {
         GeometryReader { geo in
             VStack(spacing: 15) {
@@ -35,95 +38,82 @@ struct WorkOutEditContent: View {
                     EditField(
                         value: name,
                         label: "Name",
-                        labelSize: geo.size.height * 0.04,
+                        labelSize: geo.size.height * 0.05,
                         fieldSize: geo.size.height * 0.1,
-                        color: Colors.MainText,
+                        color: ComponentColor.mainText,
                         type: .text
                     )
                     .onNameChange { self.performAction(self.onNameChange, value: $0) }
+                    .padding(.top)
                 }
                 .frame(alignment: .leading)
                 .frame(maxWidth: .infinity)
                 .background(
                     RoundedRectangle(cornerRadius: 20)
-                        .foregroundColor(Color(Colors.Menu))
+                        .foregroundColor(Color(ComponentColor.menu.rawValue))
                 )
 
-                VStack(alignment: .leading, spacing: 5) {
-                    HStack(alignment: .center, spacing: 5) {
-                        EditField(
-                            value: work.toFormattedTime(),
-                            label: "Work",
-                            labelSize: geo.size.height * 0.04,
-                            fieldSize: geo.size.height * 0.07,
-                            color: Colors.Work,
-                            type: .time
-                        )
-                        .onTab { self.router.setActiveEditSheet(.work) }
+                VStack(spacing: 0) {
+                    ForEach(editFieldConfig, id: \.first?.id) { chunk in
+                        HStack {
+                            EditField(
+                                value: getValueByType(chunk.first!),
+                                label: chunk.first!.rawValue,
+                                labelSize: geo.size.height * 0.05,
+                                fieldSize: geo.size.height * 0.1,
+                                color: ComponentColor.allCases
+                                    .first(where: { chunk.first!.rawValue.contains($0.rawValue) })!,
+                                type: .time
+                            )
+                            .onTab { performAction(self.onEditFieldTab, value: chunk.first!) }
+                            .frame(maxWidth: geo.size.width * 0.5)
 
-                        EditField(
-                            value: rounds.toFormattedValue(type: .number),
-                            label: "Rounds",
-                            labelSize: geo.size.height * 0.04,
-                            fieldSize: geo.size.height * 0.07,
-                            color: Colors.Rounds,
-                            type: .number
-                        )
-                        .onTab { self.router.setActiveEditSheet(.rounds) }
+                            if chunk.count > 1 {
+                                EditField(
+                                    value: getValueByType(chunk.last!),
+                                    label: chunk.last!.rawValue,
+                                    labelSize: geo.size.height * 0.05,
+                                    fieldSize: geo.size.height * 0.1,
+                                    color: ComponentColor.allCases
+                                        .first(where: { chunk.last!.rawValue.contains($0.rawValue) })!,
+                                    type: .time
+                                )
+                                .onTab { performAction(self.onEditFieldTab, value: chunk.last!) }
+                                .frame(maxWidth: geo.size.width * 0.5)
+                            }
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding([.top, .bottom], 10)
                     }
-                    .frame(height: geo.size.height * 0.55 * 0.25)
-                    .padding(.top)
-
-                    HStack(alignment: .center, spacing: 5) {
-                        EditField(
-                            value: rest.toFormattedTime(),
-                            label: "Rest",
-                            labelSize: geo.size.height * 0.04,
-                            fieldSize: geo.size.height * 0.07,
-                            color: Colors.Rest,
-                            type: .time
-                        )
-                        .onTab { self.router.setActiveEditSheet(.rest) }
-
-                        EditField(
-                            value: reset.toFormattedTime(),
-                            label: "Reset",
-                            labelSize: geo.size.height * 0.04,
-                            fieldSize: geo.size.height * 0.07,
-                            color: Colors.Reset,
-                            type: .time
-                        )
-                        .onTab { self.router.setActiveEditSheet(.reset) }
-                    }
-                    .frame(height: geo.size.height * 0.55 * 0.25)
-                    .padding(.top, 10)
-
-                    HStack(alignment: .center, spacing: 5) {
-                        EditField(
-                            value: series.toFormattedValue(type: .number),
-                            label: "Series",
-                            labelSize: geo.size.height * 0.04,
-                            fieldSize: geo.size.height * 0.07,
-                            color: Colors.Series,
-                            type: .number
-                        )
-                        .onTab { self.router.setActiveEditSheet(.series) }
-
-                        VStack(alignment: .leading, spacing: 5) {}
-                            .frame(maxWidth: .infinity)
-                    }
-                    .frame(height: geo.size.height * 0.55 * 0.25)
-                    .padding(.top, 10)
                 }
-                .frame(height: geo.size.height * 0.72, alignment: .top)
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .background(
                     RoundedRectangle(cornerRadius: 20)
-                        .foregroundColor(Color(Colors.Menu))
+                        .foregroundColor(Color(ComponentColor.menu.rawValue))
                 )
             }
+            .frame(maxHeight: .infinity, alignment: .top)
         }
-        .padding([.leading, .trailing, .top])
+        .padding(.top)
+    }
+
+    func getValueByType(_ type: ActivityType) -> String {
+        switch type {
+        case .work:
+            return work.toFormattedTime()
+
+        case .rest:
+            return rest.toFormattedTime()
+
+        case .series:
+            return series.toFormattedValue(type: .number)
+
+        case .rounds:
+            return rounds.toFormattedValue(type: .number)
+
+        case .reset:
+            return reset.toFormattedTime()
+        }
     }
 }
 
@@ -141,6 +131,12 @@ extension WorkOutEditContent {
         new.onNameChange = handler
         return new
     }
+
+    func onEditFieldTab(_ handler: @escaping (_ value: ActivityType) -> Void) -> WorkOutEditContent {
+        var new = self
+        new.onEditFieldTab = handler
+        return new
+    }
 }
 
 struct TextFieldClearButton: ViewModifier {
@@ -155,7 +151,7 @@ struct TextFieldClearButton: ViewModifier {
                     action: { self.text = "" },
                     label: {
                         Image(systemName: "clear")
-                            .foregroundColor(Color(Colors.MainText))
+                            .foregroundColor(Color(ComponentColor.mainText.rawValue))
                     }
                 )
             }

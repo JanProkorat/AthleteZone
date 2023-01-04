@@ -27,12 +27,14 @@ struct ContentScene: View {
                 case .setting:
                     SettingsScene()
 
-                case .exerciseRun:
-                    ExerciseRunScene()
+                case .workoutRun:
+                    WorkOutRunScene()
                 }
             }
             .environmentObject(router)
             .environmentObject(workOutViewModel)
+            .animation(.easeInOut, value: router.currentTab)
+            .background(Color(Background.background.rawValue))
         }
     }
 }

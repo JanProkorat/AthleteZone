@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ActivityView: View {
     let image: String
-    let color: String
+    let color: ComponentColor
     let activity: LocalizedStringKey
     let interval: Int
     let type: LabelType
@@ -22,13 +22,13 @@ struct ActivityView: View {
                 Text(activity)
                     .font(.custom("Lato-Black", size: 20))
                     .bold()
-                    .foregroundColor(Color(color))
+                    .foregroundColor(Color(color.rawValue))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             Text(interval.toFormattedValue(type: type))
                 .font(.custom("Lato-Black", size: 20))
                 .bold()
-                .foregroundColor(Color(color))
+                .foregroundColor(Color(color.rawValue))
                 .padding(.trailing)
         }
         .background(
@@ -40,13 +40,13 @@ struct ActivityView: View {
         )
         .frame(minWidth: 0, maxWidth: .infinity)
         .frame(height: 60)
-        .padding([.leading, .trailing], 10)
         .padding([.top, .bottom], 3)
     }
 }
 
 struct ActivityView_Previews: PreviewProvider {
     static var previews: some View {
-        ActivityView(image: Icons.Play, color: Colors.Work, activity: "Work", interval: 40, type: .time)
+        ActivityView(image: Icons.Play, color: ComponentColor.work,
+                     activity: "Work", interval: 40, type: .time)
     }
 }

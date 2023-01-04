@@ -11,12 +11,14 @@ struct ProfileScene: View {
     @EnvironmentObject var router: ViewRouter
 
     var body: some View {
-        SceneView(header: AnyView(ProfileHeaderBar()),
-                  content: AnyView(LibraryContent()),
-                  footer: AnyView(
-                      MenuBar(activeTab: router.currentTab)
-                          .onRouteTab { router.currentTab = $0 }
-                  ))
+        BaseView {
+            ProfileHeaderBar()
+        } content: {
+            LibraryContent()
+        } footer: {
+            MenuBar(activeTab: router.currentTab)
+                .onRouteTab { router.currentTab = $0 }
+        }
     }
 }
 

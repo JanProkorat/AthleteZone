@@ -9,8 +9,6 @@ import SwiftUI
 
 class ViewRouter: ObservableObject {
     @Published var currentTab: Tab = .home
-    @Published var activeHomeSheet: ActivitySheet?
-    @Published var activeEditSheet: ActivitySheet?
 
     init(currentTab: Tab) {
         self.currentTab = currentTab
@@ -18,13 +16,5 @@ class ViewRouter: ObservableObject {
 
     init() {
         self.currentTab = .home
-    }
-
-    func setActiveHomeSheet(_ sheet: ActivitySheet) {
-        self.activeHomeSheet = sheet
-    }
-
-    func setActiveEditSheet(_ sheet: ActivitySheet) {
-        self.activeEditSheet = sheet
     }
 }

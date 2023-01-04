@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct WorkOutContent: View {
-    @EnvironmentObject var router: ViewRouter
-
     var work = 0
     var rest = 0
     var series = 0
     var rounds = 0
     var reset = 0
+
+    var onTab: ((_ type: ActivityType) -> Void)?
+    var onStartTab: (() -> Void)?
 
     private var timeOverview: Int {
         ((work * series) + (rest * (series - 1)) + reset) * rounds
@@ -28,94 +29,97 @@ struct WorkOutContent: View {
         self.reset = reset
     }
 
+    var buttons = [
+        WorkOutButtonConfig(id: .work, image: Icons.Play, color: .work, type: .time),
+        WorkOutButtonConfig(id: .rest, image: Icons.Pause, color: .rest, type: .time),
+        WorkOutButtonConfig(id: .series, image: Icons.Forward, color: .series, type: .number),
+        WorkOutButtonConfig(id: .rounds, image: Icons.Repeat, color: .rounds, type: .number),
+        WorkOutButtonConfig(id: .reset, image: Icons.Time, color: .reset, type: .time)
+    ]
+
     var body: some View {
-        VStack(alignment: .center, spacing: 5) {
-            ActivityButton(
-                innerComponent: ActivityView(
-                    image: Icons.Play,
-                    color: Colors.Work,
-                    activity: "Work",
-                    interval: work,
-                    type: .time
-                )
-            )
-            .onTab { router.setActiveHomeSheet(.work) }
-            .padding(.top, 5)
-
-            ActivityButton(
-                innerComponent: ActivityView(
-                    image: Icons.Pause,
-                    color: Colors.Rest,
-                    activity: "Rest",
-                    interval: rest,
-                    type: .time
-                )
-            )
-            .onTab { router.setActiveHomeSheet(.rest) }
-
-            ActivityButton(
-                innerComponent: ActivityView(
-                    image: Icons.Forward,
-                    color: Colors.Series,
-                    activity: "Series",
-                    interval: series,
-                    type: .number
-                )
-            )
-            .onTab { router.setActiveHomeSheet(.series) }
-
-            ActivityButton(
-                innerComponent: ActivityView(
-                    image: Icons.Repeat,
-                    color: Colors.Rounds,
-                    activity: "Rounds",
-                    interval: rounds,
-                    type: .number
-                )
-            )
-            .onTab { router.setActiveHomeSheet(.rounds) }
-
-            ActivityButton(
-                innerComponent: ActivityView(
-                    image: Icons.Time,
-                    color: Colors.Reset,
-                    activity: "ResetTime",
-                    interval: reset,
-                    type: .time
-                )
-            )
-            .onTab { router.setActiveHomeSheet(.reset) }
-
-            GeometryReader { geometry in
-                VStack(alignment: .center, spacing: 5) {
-                    HStack(alignment: .center) {
-                        Text(timeOverview.toFormattedTime())
-                            .scaledToFill()
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .font(.custom("Lato-Black", size: geometry.size.height * 0.25))
+        GeometryReader { geo in
+            VStack {
+                VStack(alignment: .center, spacing: 3) {
+                    ForEach(buttons, id: \.id) { button in
+                        ActivitySelect(
+                            image: button.image,
+                            color: button.color.rawValue,
+                            activity: button.id,
+                            interval: getInterval(button.id),
+                            type: button.type,
+                            height: geo.size.height * 0.45 * 0.2
+                        )
+                        .onTab {
+                            performAction(self.onTab, value: button.id)
+                        }
                     }
-                    .frame(maxWidth: .infinity, maxHeight: geometry.size.height * 0.5)
-                    IconButton(
-                        id: "startWorkout",
-                        image: Icons.Start,
-                        color: Colors.Action,
-                        width: geometry.size.height * 0.5,
-                        height: geometry.size.height * 0.5
-                    )
-                    .onTab {
-                        self.router.currentTab = .exerciseRun
-                    }
-                    .padding(.bottom)
                 }
+                .frame(height: geo.size.height * 0.5, alignment: .top)
+                .frame(maxWidth: .infinity)
+
+                VStack(alignment: .center, spacing: 3) {
+                    HStack(alignment: .center) {
+                        CounterText(
+                            text: timeOverview.toFormattedValue(type: .time),
+                            size: geo.size.height * 0.2
+                        )
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: geo.size.height * 0.2)
+                    Button {
+                        performAction(onStartTab)
+                    } label: {
+                        Image(Icons.Start)
+                            .resizable()
+                            .scaledToFill()
+                            .foregroundColor(Color(ComponentColor.action.rawValue))
+                            .frame(maxWidth: geo.size.height * 0.3, maxHeight: geo.size.height * 0.3)
+                    }
+                }
+                .frame(height: geo.size.height * 0.5)
+                .frame(maxWidth: .infinity)
             }
         }
     }
 }
 
-struct ExerciseContent_Previews: PreviewProvider {
+struct WorkOutContent_Previews: PreviewProvider {
     static var previews: some View {
         WorkOutContent(40, 60, 3, 2, 60)
             .environmentObject(WorkOutViewModel())
             .environmentObject(ViewRouter())
+    }
+}
+
+extension WorkOutContent {
+    func onTab(action: @escaping ((_ type: ActivityType) -> Void)) -> WorkOutContent {
+        var new = self
+        new.onTab = action
+        return new
+    }
+
+    func onStartTab(action: @escaping (() -> Void)) -> WorkOutContent {
+        var new = self
+        new.onStartTab = action
+        return new
+    }
+
+    func getInterval(_ type: ActivityType) -> Int {
+        switch type {
+        case .work:
+            return work
+
+        case .rest:
+            return rest
+
+        case .series:
+            return series
+
+        case .rounds:
+            return rounds
+
+        case .reset:
+            return reset
+        }
     }
 }

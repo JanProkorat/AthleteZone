@@ -10,7 +10,8 @@ import SwiftUI
 @main
 struct AthleteZoneApp: App {
     @StateObject var router = ViewRouter()
-    @AppStorage("language") private var language: Language = .en
+    @AppStorage(DefaultItem.language.rawValue) private var language: Language = .en
+    @Environment(\.scenePhase) var scenePhase
 
     var body: some Scene {
         WindowGroup {

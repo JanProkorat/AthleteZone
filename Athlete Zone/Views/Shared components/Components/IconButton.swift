@@ -11,7 +11,7 @@ struct IconButton: View, Identifiable {
     let id: String
 
     let image: String
-    let color: String
+    let color: ComponentColor
     let width: CGFloat
     let height: CGFloat
     var selected: Bool?
@@ -25,10 +25,10 @@ struct IconButton: View, Identifiable {
             Image(image)
                 .resizable()
                 .scaledToFit()
-                .foregroundColor(Color(color))
+                .foregroundColor(Color(color.rawValue))
                 .overlay(
                     RoundedRectangle(cornerRadius: 5)
-                        .stroke(Color(self.selected ?? false ? Colors.Action : ""), lineWidth: 4)
+                        .stroke(Color(self.selected ?? false ? ComponentColor.action.rawValue : ""), lineWidth: 4)
                         .frame(width: 40, height: 34)
                 )
 
@@ -42,7 +42,7 @@ struct IconButton_Previews: PreviewProvider {
         IconButton(
             id: "arrowDown",
             image: Icons.ArrowDown,
-            color: Colors.MainText,
+            color: ComponentColor.mainText,
             width: 50,
             height: 45,
             selected: true

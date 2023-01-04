@@ -13,95 +13,72 @@ struct WorkOutEditScene: View {
     var onCloseTab: (() -> Void)?
     var onSaveTab: ((_ workout: WorkOut) -> Void)?
 
+    @State var activeSheetType: ActivityType?
+
     @State var name = ""
     @State var work = 0
     @State var rest = 0
     @State var series = 0
     @State var rounds = 0
     @State var reset = 0
-    var isEditing = false
+    @Binding var isEditing: Bool
 
-    init(_ name: String, _ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int, _ isEditing: Bool? = nil) {
+    init(_ name: String, _ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int, _ isEditing: Binding<Bool>) {
+        print(isEditing)
         self._name = State(initialValue: name)
         self._work = State(initialValue: work)
         self._rest = State(initialValue: rest)
         self._series = State(initialValue: series)
         self._rounds = State(initialValue: rounds)
         self._reset = State(initialValue: reset)
-        self.isEditing = isEditing ?? false
+        _isEditing = isEditing
     }
 
     var body: some View {
-        SceneView(
-            header: AnyView(WorkOutEditHeader(isEditing: isEditing)),
-            content: AnyView(
+        BaseView(
+            header: {
+                WorkOutEditHeader(isEditing: isEditing)
+            },
+            content: {
                 WorkOutEditContent(name, work, rest, series, rounds, reset)
                     .onNameChange { name = $0 }
-            ),
-            footer: AnyView(
+                    .onEditFieldTab { activeSheetType = $0 }
+            },
+            footer: {
                 WorkOutEditFooter()
                     .onCloseTab { performAction(self.onCloseTab) }
                     .onSaveTab {
                         performAction(self.onSaveTab, value: WorkOut(name, work, rest, series, rounds, reset))
                     }
-            )
+            }
         )
-        .sheet(item: $router.activeEditSheet) { activitySheet in
-            switch activitySheet {
-            case .work:
-                ActivityPicker(
-                    title: "Work",
-                    color: Colors.Work,
-                    backgroundColor: Backgrounds.WorkBackground,
-                    picker: AnyView(
-                        TimePicker(textColor: Colors.Work, interval: work)
-                            .onValueChange { work = $0 }
-                    )
-                )
+        .sheet(item: $activeSheetType) { activitySheet in
+            IntervalPicker(
+                title: activitySheet.rawValue,
+                color: ComponentColor.allCases.first(where: { activitySheet.rawValue.contains($0.rawValue) })!,
+                backgroundColor: Background.allCases.first(where: { $0.rawValue.contains(activitySheet.rawValue) })!
+            ) {
+                switch activitySheet {
+                case .work:
+                    TimePicker(textColor: ComponentColor.work.rawValue, interval: work)
+                        .onValueChange { work = $0 }
 
-            case .rest:
-                ActivityPicker(
-                    title: "Rest",
-                    color: Colors.Rest,
-                    backgroundColor: Backgrounds.RestBackground,
-                    picker: AnyView(
-                        TimePicker(textColor: Colors.Rest, interval: rest)
-                            .onValueChange { rest = $0 }
-                    )
-                )
+                case .rest:
+                    TimePicker(textColor: ComponentColor.rest.rawValue, interval: rest)
+                        .onValueChange { rest = $0 }
 
-            case .series:
-                ActivityPicker(
-                    title: "Series",
-                    color: Colors.Series,
-                    backgroundColor: Backgrounds.SeriesBackground,
-                    picker: AnyView(
-                        NumberPicker(textColor: Colors.Series, value: series)
-                            .onValueChange { series = $0 }
-                    )
-                )
+                case .series:
+                    NumberPicker(textColor: ComponentColor.series.rawValue, value: series)
+                        .onValueChange { series = $0 }
 
-            case .rounds:
-                ActivityPicker(
-                    title: "Rounds",
-                    color: Colors.Rounds,
-                    backgroundColor: Backgrounds.RoundsBackground,
-                    picker: AnyView(
-                        NumberPicker(textColor: Colors.Rounds, value: rounds)
-                            .onValueChange { rounds = $0 }
-                    )
-                )
+                case .rounds:
+                    NumberPicker(textColor: ComponentColor.rounds.rawValue, value: rounds)
+                        .onValueChange { rounds = $0 }
 
-            case .reset:
-                ActivityPicker(
-                    title: "Reset",
-                    color: Colors.Reset,
-                    backgroundColor: Backgrounds.ResetBackground,
-                    picker: AnyView(
-                        TimePicker(textColor: Colors.Reset, interval: reset)
-                            .onValueChange { reset = $0 }
-                    )
-                )
+                case .reset:
+                    TimePicker(textColor: ComponentColor.reset.rawValue, interval: reset)
+                        .onValueChange { reset = $0 }
+                }
             }
         }
     }
@@ -109,7 +86,7 @@ struct WorkOutEditScene: View {
 
 struct ExerciseEditScene_Previews: PreviewProvider {
     static var previews: some View {
-        WorkOutEditScene("title", 40, 60, 2, 8, 120)
+        WorkOutEditScene("title", 40, 60, 2, 8, 120, .constant(true))
             .environmentObject(WorkOutViewModel())
             .environmentObject(ViewRouter())
     }

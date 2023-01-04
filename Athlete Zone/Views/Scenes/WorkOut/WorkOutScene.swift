@@ -5,9 +5,13 @@
 //  Created by Jan Prokorát on 03.11.2022.
 //
 
+import RealmSwift
 import SwiftUI
 
 struct WorkOutScene: View {
+    @AppStorage(DefaultItem.selectedWorkoutId.rawValue) private var selectedItemId: String = ""
+    @Environment(\.scenePhase) var scenePhase
+
     @EnvironmentObject var viewModel: WorkOutViewModel
     @EnvironmentObject var router: ViewRouter
 
@@ -19,90 +23,70 @@ struct WorkOutScene: View {
     @State var rounds = 0
     @State var reset = 0
 
+    @State var activeSheetType: ActivityType?
+
     var body: some View {
-        SceneView(
-            header: AnyView(
+        BaseView(
+            header: {
                 WorkOutHeader(name)
-                    .onSaveTab {
-                        isModalActive = true
-                    }
-            ),
-            content: AnyView(WorkOutContent(work, rest, series, rounds, reset)),
-            footer: AnyView(
+                    .onSaveTab { isModalActive = true }
+            },
+            content: {
+                WorkOutContent(work, rest, series, rounds, reset)
+                    .onTab { self.activeSheetType = $0 }
+                    .onStartTab { router.currentTab = .workoutRun }
+            },
+            footer: {
                 MenuBar(activeTab: router.currentTab)
                     .onRouteTab { router.currentTab = $0 }
-            )
+            }
         )
         .onAppear { setValues() }
+        .onChange(of: scenePhase) { newPhase in
+            if (newPhase == .inactive || newPhase == .background) && viewModel.selectedWorkOut != nil {
+                selectedItemId = viewModel.selectedWorkOut!._id.stringValue
+            }
+        }
         .onChange(of: isModalActive, perform: { newValue in
             if !newValue {
                 setValues()
             }
         })
         .fullScreenCover(isPresented: $isModalActive, content: {
-            WorkOutEditScene(name, work, rest, series, rounds, reset)
+            WorkOutEditScene(name, work, rest, series, rounds, reset, .constant(false))
                 .onCloseTab { isModalActive = false }
                 .onSaveTab { value in
                     viewModel.saveWorkOut(value)
                     isModalActive = false
                 }
         })
-        .sheet(item: $router.activeHomeSheet) { activitySheet in
-            switch activitySheet {
-            case .work:
-                ActivityPicker(
-                    title: "Work",
-                    color: Colors.Work,
-                    backgroundColor: Backgrounds.WorkBackground,
-                    picker: AnyView(
-                        TimePicker(textColor: Colors.Work, interval: work)
-                            .onValueChange { work = $0 }
-                    )
-                )
+        .sheet(item: $activeSheetType) { activitySheet in
+            IntervalPicker(
+                title: activitySheet.rawValue,
+                color: ComponentColor.allCases.first(where: { activitySheet.rawValue.contains($0.rawValue) })!,
+                backgroundColor: Background.allCases.first(where: { $0.rawValue.contains(activitySheet.rawValue) })!
+            ) {
+                switch activitySheet {
+                case .work:
+                    TimePicker(textColor: ComponentColor.work.rawValue, interval: work)
+                        .onValueChange { work = $0 }
 
-            case .rest:
-                ActivityPicker(
-                    title: "Rest",
-                    color: Colors.Rest,
-                    backgroundColor: Backgrounds.RestBackground,
-                    picker: AnyView(
-                        TimePicker(textColor: Colors.Rest, interval: rest)
-                            .onValueChange { rest = $0 }
-                    )
-                )
+                case .rest:
+                    TimePicker(textColor: ComponentColor.rest.rawValue, interval: rest)
+                        .onValueChange { rest = $0 }
 
-            case .series:
-                ActivityPicker(
-                    title: "Series",
-                    color: Colors.Series,
-                    backgroundColor: Backgrounds.SeriesBackground,
-                    picker: AnyView(
-                        NumberPicker(textColor: Colors.Series, value: series)
-                            .onValueChange { series = $0 }
-                    )
-                )
+                case .series:
+                    NumberPicker(textColor: ComponentColor.series.rawValue, value: series)
+                        .onValueChange { series = $0 }
 
-            case .rounds:
-                ActivityPicker(
-                    title: "Rounds",
-                    color: Colors.Rounds,
-                    backgroundColor: Backgrounds.RoundsBackground,
-                    picker: AnyView(
-                        NumberPicker(textColor: Colors.Rounds, value: rounds)
-                            .onValueChange { rounds = $0 }
-                    )
-                )
+                case .rounds:
+                    NumberPicker(textColor: ComponentColor.rounds.rawValue, value: rounds)
+                        .onValueChange { rounds = $0 }
 
-            case .reset:
-                ActivityPicker(
-                    title: "Reset",
-                    color: Colors.Reset,
-                    backgroundColor: Backgrounds.ResetBackground,
-                    picker: AnyView(
-                        TimePicker(textColor: Colors.Reset, interval: reset)
-                            .onValueChange { reset = $0 }
-                    )
-                )
+                case .reset:
+                    TimePicker(textColor: ComponentColor.reset.rawValue, interval: reset)
+                        .onValueChange { reset = $0 }
+                }
             }
         }
     }
@@ -118,11 +102,30 @@ struct WorkOutScene_Previews: PreviewProvider {
 
 extension WorkOutScene {
     func setValues() {
-        name = viewModel.selectedWorkOut.name
-        work = viewModel.selectedWorkOut.work
-        rest = viewModel.selectedWorkOut.rest
-        series = viewModel.selectedWorkOut.series
-        rounds = viewModel.selectedWorkOut.rounds
-        reset = viewModel.selectedWorkOut.reset
+        var selectedWorkout: WorkOut?
+        if let workout = viewModel.selectedWorkOut {
+            selectedWorkout = workout
+        } else if !selectedItemId.isEmpty {
+            do {
+                let dbWorkout = try viewModel.loadWorkoutById(ObjectId(string: selectedItemId))
+                if let workout = dbWorkout {
+                    selectedWorkout = workout
+                    viewModel.setSelectedWorkOut(selectedWorkout!)
+                } else {
+                    selectedWorkout = WorkOut()
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
+        } else {
+            selectedWorkout = WorkOut()
+            viewModel.setSelectedWorkOut(selectedWorkout!)
+        }
+        name = selectedWorkout!.name
+        work = selectedWorkout!.work
+        rest = selectedWorkout!.rest
+        series = selectedWorkout!.series
+        rounds = selectedWorkout!.rounds
+        reset = selectedWorkout!.reset
     }
 }

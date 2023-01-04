@@ -32,8 +32,8 @@ struct NumberPicker: View {
             .background(
                 ZStack {
                     RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color(Colors.Menu), lineWidth: 3)
-                        .foregroundColor(Color(Backgrounds.WorkBackground))
+                        .stroke(Color(ComponentColor.menu.rawValue), lineWidth: 3)
+                        .foregroundColor(Color(Background.work.rawValue))
                 }
             )
             .pickerStyle(InlinePickerStyle())
@@ -50,7 +50,7 @@ struct NumberPicker: View {
 
 struct NumberPicker_Previews: PreviewProvider {
     static var previews: some View {
-        NumberPicker(textColor: Colors.Rounds, value: 5)
+        NumberPicker(textColor: ComponentColor.rounds.rawValue, value: 5)
     }
 }
 

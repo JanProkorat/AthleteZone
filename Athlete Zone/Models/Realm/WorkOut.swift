@@ -11,20 +11,22 @@ import RealmSwift
 class WorkOut: Object, Identifiable {
     @Persisted(primaryKey: true) var _id: ObjectId
 
-    @Persisted var name: String = ""
-    @Persisted var work: Int = 0
-    @Persisted var rest: Int = 0
-    @Persisted var series: Int = 0
-    @Persisted var rounds: Int = 0
-    @Persisted var reset: Int = 0
+    @objc @Persisted var name: String
+    @objc @Persisted var work: Int
+    @objc @Persisted var rest: Int
+    @objc @Persisted var series: Int
+    @objc @Persisted var rounds: Int
+    @objc @Persisted var reset: Int
+    @objc @Persisted var createdDate: Date
 
     override init() {
         name = "Title"
-        work = 0
-        rest = 0
-        series = 0
-        rounds = 0
-        reset = 0
+        work = 30
+        rest = 60
+        series = 3
+        rounds = 2
+        reset = 60
+        createdDate = Date()
     }
 
     init(_ name: String, _ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int) {
@@ -34,10 +36,17 @@ class WorkOut: Object, Identifiable {
         self.series = series
         self.rounds = rounds
         self.reset = reset
+        createdDate = Date()
     }
 
-    var timeOverview: Int {
+    @objc var timeOverview: Int {
         ((work * series) + (rest * (series - 1)) + reset) * rounds
+    }
+
+    @objc var formattedCreatedDate: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        return dateFormatter.string(from: createdDate)
     }
 
     func setName(_ name: String) {

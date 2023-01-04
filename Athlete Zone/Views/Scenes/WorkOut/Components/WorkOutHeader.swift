@@ -19,40 +19,26 @@ struct WorkOutHeader: View {
 
     var body: some View {
         HStack {
-            HStack(alignment: .top, spacing: 5.0) {
-                Menu {
-                    Button(action: {}, label: {
-                        Label("Trainings", systemImage: "paperplane")
-                    })
-                    Button(action: {}, label: {
-                        Label("Workouts", systemImage: "paperplane")
-                    })
-                }
-            label: {
-                    Image(Icons.ArrowDown)
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundColor(Color(Colors.MainText))
-                }
+            HStack(alignment: .center) {
+//                Image(Icons.ArrowDown)
+//                    .resizable()
+//                    .scaledToFill()
+//                    .foregroundColor(Color(ComponentColor.mainText.rawValue))
+//                    .frame(maxWidth: 55, maxHeight: 50)
 
-                Text(name)
-                    .font(.custom("Lato-Black", size: 40))
-                    .bold()
-                    .foregroundColor(Color(Colors.MainText))
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                TitleText(text: name)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            HStack(alignment: .top, spacing: 5.0) {
-                IconButton(id: "save", image: Icons.Save, color: Colors.MainText, width: 50, height: 45)
-                    .onTab {
-                        self.performAction(onSaveTab)
-                    }
-                IconButton(id: "donate", image: Icons.Donate, color: Colors.MainText, width: 50, height: 45)
-                    .onTab {
-                        print("donate pressed")
-                    }
+
+            Button {
+                performAction(self.onSaveTab)
+            } label: {
+                Image(Icons.Save)
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(Color(ComponentColor.mainText.rawValue))
+                    .frame(maxHeight: 50)
             }
-            .frame(alignment: .trailing)
         }
     }
 }

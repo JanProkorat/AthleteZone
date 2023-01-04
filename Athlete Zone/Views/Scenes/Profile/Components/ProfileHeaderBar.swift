@@ -12,7 +12,7 @@ struct ProfileHeaderBar: View {
         Text("User Profile")
             .font(.custom("Lato-Black", size: 40))
             .bold()
-            .foregroundColor(Color(Colors.MainText))
+            .foregroundColor(Color(ComponentColor.mainText.rawValue))
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

@@ -28,7 +28,7 @@ struct ActionButton_Previews: PreviewProvider {
         ActionButton(
             innerComponent: ActionView(
                 text: "Save",
-                color: Colors.Rounds,
+                color: ComponentColor.rounds,
                 backgoundColor: nil,
                 image: Icons.Check,
                 height: 60,

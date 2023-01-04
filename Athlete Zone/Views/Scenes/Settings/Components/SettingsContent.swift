@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsContent: View {
-    @AppStorage("language") private var language: Language = .en
+    @AppStorage(DefaultItem.language.rawValue) private var language: Language = .en
 
     var body: some View {
         VStack(spacing: 5) {
@@ -16,14 +16,14 @@ struct SettingsContent: View {
                 Text("Language")
                     .frame(height: 80)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .foregroundColor(Color(Colors.MainText))
+                    .foregroundColor(Color(ComponentColor.mainText.rawValue))
                     .font(.custom("Lato-Bold", size: 25))
                     .padding(.leading)
                 HStack(alignment: .center, spacing: 5) {
                     IconButton(
                         id: "\(Language.cze)",
                         image: Icons.FlagCZ,
-                        color: "",
+                        color: .none,
                         width: 40,
                         height: 35,
                         selected: self.language == Language.cze
@@ -34,7 +34,7 @@ struct SettingsContent: View {
                     IconButton(
                         id: "\(Language.de)",
                         image: Icons.FlagDE,
-                        color: "",
+                        color: .none,
                         width: 40,
                         height: 35,
                         selected: self.language == Language.de
@@ -47,7 +47,7 @@ struct SettingsContent: View {
                     IconButton(
                         id: "\(Language.en)",
                         image: Icons.FlagGB,
-                        color: "",
+                        color: .none,
                         width: 40,
                         height: 35,
                         selected: self.language == Language.en
@@ -61,10 +61,9 @@ struct SettingsContent: View {
             }
             .background(
                 RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(Color(Colors.Menu))
+                    .foregroundColor(Color(ComponentColor.menu.rawValue))
             )
             .frame(maxWidth: .infinity)
-            .padding([.leading, .trailing], 10)
             .padding(.top, 20)
             Spacer()
         }

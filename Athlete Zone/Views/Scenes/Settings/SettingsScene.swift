@@ -11,13 +11,17 @@ struct SettingsScene: View {
     @EnvironmentObject var router: ViewRouter
 
     var body: some View {
-        SceneView(
-            header: AnyView(SettingsHeaderBar()),
-            content: AnyView(SettingsContent()),
-            footer: AnyView(
+        BaseView(
+            header: {
+                SettingsHeader()
+            },
+            content: {
+                SettingsContent()
+            },
+            footer: {
                 MenuBar(activeTab: router.currentTab)
                     .onRouteTab { router.currentTab = $0 }
-            )
+            }
         )
     }
 }

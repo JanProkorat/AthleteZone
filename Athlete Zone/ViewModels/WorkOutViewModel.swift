@@ -9,11 +9,15 @@ import Foundation
 import RealmSwift
 
 class WorkOutViewModel: ObservableObject {
-    @Published var selectedWorkOut = WorkOut("Title", 40, 60, 3, 2, 60)
+    @Published var selectedWorkOut: WorkOut?
+
+    init(selectedWorkOut: WorkOut? = nil) {
+        self.selectedWorkOut = selectedWorkOut
+    }
 
     let realmManager = RealmManager()
 
-    func setSelectedWorkOut(_ workout: WorkOut) {
+    func setSelectedWorkOut(_ workout: WorkOut?) {
         selectedWorkOut = workout
     }
 
@@ -37,17 +41,21 @@ class WorkOutViewModel: ObservableObject {
         }
     }
 
-    func updateProperty<T>(_ workout: WorkOut, propertyName: String, value: T) {
-        do {
-            try realmManager.realm.write {
-                if let intValue = value as? String {
-                    workout[propertyName] = intValue
-                } else if let intValue = value as? Int {
-                    workout[propertyName] = intValue
-                }
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
+//    func updateProperty<T>(_ workout: WorkOut, propertyName: String, value: T) {
+//        do {
+//            try realmManager.realm.write {
+//                if let intValue = value as? String {
+//                    workout[propertyName] = intValue
+//                } else if let intValue = value as? Int {
+//                    workout[propertyName] = intValue
+//                }
+//            }
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+//    }
+
+    func loadWorkoutById(_ id: ObjectId) -> WorkOut? {
+        return realmManager.load(entity: WorkOut.self, primaryKey: id)
     }
 }

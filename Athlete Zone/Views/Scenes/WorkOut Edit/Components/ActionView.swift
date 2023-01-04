@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ActionView: View {
     let text: String
-    let color: String
+    let color: ComponentColor
     let backgoundColor: String?
     let image: String?
     let height: CGFloat
@@ -22,13 +22,13 @@ struct ActionView: View {
                     Image(image)
                         .resizable()
                         .scaledToFit()
-                        .foregroundColor(Color(color))
+                        .foregroundColor(Color(color.rawValue))
                         .frame(width: 40, height: 40)
                 }
 
                 Text(text)
                     .font(.custom("Lato-Black", size: height * 0.5))
-                    .foregroundColor(Color(color))
+                    .foregroundColor(Color(color.rawValue))
                     .bold()
             }
             .frame(maxWidth: .infinity)
@@ -49,7 +49,7 @@ struct ActionView_Previews: PreviewProvider {
     static var previews: some View {
         ActionView(
             text: "Save",
-            color: Colors.Rounds,
+            color: ComponentColor.rounds,
             backgoundColor: nil,
             image: Icons.Check,
             height: 60,

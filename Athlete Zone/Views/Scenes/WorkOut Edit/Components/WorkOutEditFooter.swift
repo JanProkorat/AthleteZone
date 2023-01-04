@@ -16,10 +16,10 @@ struct WorkOutEditFooter: View {
             ActionButton(
                 innerComponent: ActionView(
                     text: "Save",
-                    color: Colors.Rounds,
-                    backgoundColor: nil,
+                    color: ComponentColor.rounds,
+                    backgoundColor: ComponentColor.menu.rawValue,
                     image: Icons.Check,
-                    height: 55,
+                    height: 60,
                     cornerRadius: nil
                 )
             )
@@ -28,8 +28,8 @@ struct WorkOutEditFooter: View {
             ActionButton(
                 innerComponent: ActionView(
                     text: "Cancel",
-                    color: Colors.Work,
-                    backgoundColor: nil,
+                    color: ComponentColor.work,
+                    backgoundColor: ComponentColor.menu.rawValue,
                     image: Icons.Clear,
                     height: 60,
                     cornerRadius: nil
@@ -37,7 +37,6 @@ struct WorkOutEditFooter: View {
             )
             .onTab { self.performAction(self.onCloseTab) }
         }
-        .padding([.leading, .trailing])
     }
 }
 

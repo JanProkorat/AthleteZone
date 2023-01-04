@@ -15,14 +15,10 @@ class WorkFlowViewModel: ObservableObject {
     @Published var seriesCount = 0
     @Published var roundsCount = 0
 
-    init(workOut: WorkOut) {
-        createWorkFlow(workOut: workOut)
-        selectedFlow = flow[selectedFlowIndex]
+    func createWorkFlow(workOut: WorkOut) {
         seriesCount = workOut.series
         roundsCount = workOut.rounds
-    }
 
-    private func createWorkFlow(workOut: WorkOut) {
         var serie = 1
         for rd in 1 ... workOut.rounds {
             for jj in 1 ... (workOut.series + (workOut.series - 1)) {
@@ -36,5 +32,7 @@ class WorkFlowViewModel: ObservableObject {
             flow.append(WorkFlow(interval: workOut.rounds, type: .reset, round: rd, serie: flow[flow.count - 1].serie))
             serie = 1
         }
+
+        selectedFlow = flow[selectedFlowIndex]
     }
 }

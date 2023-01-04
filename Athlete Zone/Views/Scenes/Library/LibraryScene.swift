@@ -19,28 +19,31 @@ struct LibraryScene: View {
     }
 
     var body: some View {
-        SceneView(
-            header: AnyView(
+        BaseView(
+            header: {
                 LibraryHeader()
                     .onAddTab {
                         workOutToEdit = WorkOut()
                     }
-            ),
-            content: AnyView(
+            },
+            content: {
                 LibraryContent()
                     .onEditTab {
                         isEditing = true
                         workOutToEdit = $0
                     }
-            ),
-            footer: AnyView(
+            },
+            footer: {
                 MenuBar(activeTab: router.currentTab)
                     .onRouteTab { router.currentTab = $0 }
-            )
+            }
         )
         .fullScreenCover(item: $workOutToEdit, content: { value in
-            WorkOutEditScene(value.name, value.work, value.rest, value.series, value.rounds, value.reset, isEditing)
-                .onCloseTab { workOutToEdit = nil }
+            WorkOutEditScene(value.name, value.work, value.rest, value.series, value.rounds, value.reset, $isEditing)
+                .onCloseTab {
+                    workOutToEdit = nil
+                    isEditing = false
+                }
                 .onSaveTab { value in
                     switch isEditing {
                     case true:

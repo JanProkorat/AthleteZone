@@ -14,10 +14,10 @@ struct EditField: View {
     let label: String
     let labelSize: CGFloat
     let fieldSize: CGFloat
-    let color: String
+    let color: ComponentColor
     let type: InputType
 
-    init(value: String, label: String, labelSize: CGFloat, fieldSize: CGFloat, color: String, type: InputType) {
+    init(value: String, label: String, labelSize: CGFloat, fieldSize: CGFloat, color: ComponentColor, type: InputType) {
         if type == .text {
             self.nameValue = value
         } else {
@@ -38,9 +38,8 @@ struct EditField: View {
             Text(label)
                 .font(.custom("Lato-Black", size: labelSize))
                 .bold()
-                .foregroundColor(Color(color))
+                .foregroundColor(Color(color.rawValue))
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding([.trailing, .top])
                 .padding(.leading, 25)
 
             switch type {
@@ -48,21 +47,20 @@ struct EditField: View {
                 TextField("Enter \(label)...", text: $nameValue)
                     .textFieldStyle(TextInputStyle(height: self.fieldSize))
                     .frame(height: fieldSize)
-                    .padding(.bottom)
 
             default:
                 ActionButton(
                     innerComponent: ActionView(
                         text: value,
-                        color: Colors.MainText,
-                        backgoundColor: Backgrounds.Background,
+                        color: ComponentColor.mainText,
+                        backgoundColor: Background.background.rawValue,
                         image: nil,
                         height: fieldSize,
                         cornerRadius: 10))
                     .onTab {
                         self.performAction(self.onTab)
                     }
-                    .padding([.leading, .trailing, .bottom])
+                    .padding([.leading, .trailing])
             }
         }
         .onChange(of: self.nameValue) { newValue in
@@ -74,9 +72,9 @@ struct EditField: View {
 struct EditField_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            EditField(value: "title", label: "Name", labelSize: 30, fieldSize: 30, color: Colors.Work, type: .text)
-            EditField(value: "00:30", label: "Work", labelSize: 30, fieldSize: 30, color: Colors.Work, type: .time)
-            EditField(value: "1x", label: "Rounds", labelSize: 30, fieldSize: 30, color: Colors.Work, type: .number)
+            EditField(value: "title", label: "Name", labelSize: 30, fieldSize: 30, color: .work, type: .text)
+            EditField(value: "00:30", label: "Work", labelSize: 30, fieldSize: 30, color: .work, type: .time)
+            EditField(value: "1x", label: "Rounds", labelSize: 30, fieldSize: 30, color: .work, type: .number)
         }
     }
 }
@@ -89,7 +87,7 @@ struct TextInputStyle: TextFieldStyle {
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: 10)
-                    .foregroundColor(Color(Backgrounds.Background))
+                    .foregroundColor(Color(Background.background.rawValue))
                     .frame(height: height * 0.7)
             ).padding()
     }
