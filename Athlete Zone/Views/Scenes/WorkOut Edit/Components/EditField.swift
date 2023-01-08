@@ -16,6 +16,7 @@ struct EditField: View {
     let fieldSize: CGFloat
     let color: ComponentColor
     let type: InputType
+    let placeholder: String
 
     init(value: String, label: String, labelSize: CGFloat, fieldSize: CGFloat, color: ComponentColor, type: InputType) {
         if type == .text {
@@ -28,6 +29,7 @@ struct EditField: View {
         self.fieldSize = fieldSize
         self.color = color
         self.type = type
+        self.placeholder = "Enter \(label)..."
     }
 
     var onTab: (() -> Void)?
@@ -35,7 +37,7 @@ struct EditField: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
-            Text(label)
+            Text(LocalizedStringKey(label))
                 .font(.custom("Lato-Black", size: labelSize))
                 .bold()
                 .foregroundColor(Color(color.rawValue))
@@ -44,7 +46,7 @@ struct EditField: View {
 
             switch type {
             case .text:
-                TextField("Enter \(label)...", text: $nameValue)
+                TextField(LocalizedStringKey(placeholder), text: $nameValue)
                     .textFieldStyle(TextInputStyle(height: self.fieldSize))
                     .frame(height: fieldSize)
 
@@ -72,7 +74,7 @@ struct EditField: View {
 struct EditField_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            EditField(value: "title", label: "Name", labelSize: 30, fieldSize: 30, color: .work, type: .text)
+            EditField(value: "", label: "Name", labelSize: 30, fieldSize: 30, color: .work, type: .text)
             EditField(value: "00:30", label: "Work", labelSize: 30, fieldSize: 30, color: .work, type: .time)
             EditField(value: "1x", label: "Rounds", labelSize: 30, fieldSize: 30, color: .work, type: .number)
         }

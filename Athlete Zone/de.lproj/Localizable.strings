@@ -6,18 +6,54 @@
   
 */
 
+//Actions
+"Save" = "Speichern";
+"Cancel" = "Abbrechen";
+"Delete" = "Löschen";
+"Edit" = "Bearbeiten";
+
 //Menu
 "Home" = "Haus";
 "Library" = "Bibliothek";
 "Profile" = "Profil";
 "Settings" = "Einstellungen";
 
-//Exercise
+//Workout
 "Work" = "Arbeit";
 "Rest" = "Pause";
 "Series" = "Serien";
 "Rounds" = "Runden";
 "ResetTime" = "Reset";
+"Created date" = "Erstellungsdatum";
+"Workout length" = "Workoutsdauer";
+"Name" = "Name";
+
+//Library
+"No workouts to display." = "Es werden keine Workouts angezeigt.";
+"Sort by" = "Sortieren nach";
+"Sort order" = "Sortierfolge";
+"Search ..." = "Suchen ...";
+"Ascending" = "Aufsteigend";
+"Descending" = "Absteigend";
+"Work:" = "Arbeit:";
+"Rest:" = "Pause:";
+"Series:" = "Serien:";
+"Rounds:" = "Runden:";
+"Reset:" = "Reset:";
+"Total:" = "Gesamt:";
 
 //Settings
 "Language" = "Sprache";
+"Enable sounds" = "Töne aktivieren";
+
+//Workout edit
+"Add workout" = "Workout hinzufügen";
+"Edit workout" = "Workout bearbeiten";
+"Enter Name..." = "Namen angeben...";
+
+//Workout run
+"Round %lld/%lld" = "Runde %lld/%lld";
+"Exercise %lld/%lld" = "Übung %lld/%lld";
+"Get ready!" = "Bereite dich!";
+"Previous exercise" = "Vorherige Übung";
+"Quit workout" = "Workout beenden";

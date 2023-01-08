@@ -9,21 +9,29 @@ import Foundation
 
 struct WorkFlow {
     var interval: Int
-    let type: ActivityType
+    let type: WorkFlowType
     let round: Int
     let serie: Int
     let originalInterval: Int
+    var color: ComponentColor
 
-    init(interval: Int, type: ActivityType, round: Int, serie: Int) {
+    init(interval: Int, type: WorkFlowType, round: Int, serie: Int) {
         self.interval = interval
         self.type = type
         self.round = round
         self.serie = serie
         self.originalInterval = interval
-    }
+        self.color = .yellow
+        switch type {
+        case .work:
+            self.color = .pink
 
-    mutating func setInterval(_ interval: Int) {
-        self.interval = interval
+        case .rest:
+            self.color = .yellow
+
+        default:
+            self.color = .braun
+        }
     }
 
     func getProgress() -> Double {

@@ -34,7 +34,10 @@ struct WorkOutScene: View {
             content: {
                 WorkOutContent(work, rest, series, rounds, reset)
                     .onTab { self.activeSheetType = $0 }
-                    .onStartTab { router.currentTab = .workoutRun }
+                    .onStartTab {
+                        viewModel.setSelectedWorkOut(WorkOut(name, work, rest, series, rounds, reset))
+                        router.currentTab = .workoutRun
+                    }
             },
             footer: {
                 MenuBar(activeTab: router.currentTab)
@@ -113,6 +116,7 @@ extension WorkOutScene {
                     viewModel.setSelectedWorkOut(selectedWorkout!)
                 } else {
                     selectedWorkout = WorkOut()
+                    viewModel.setSelectedWorkOut(selectedWorkout)
                 }
             } catch {
                 print(error.localizedDescription)

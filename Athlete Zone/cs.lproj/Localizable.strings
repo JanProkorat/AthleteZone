@@ -6,6 +6,12 @@
   
 */
 
+//Actions
+"Save" = "Uložit";
+"Cancel" = "Zrušit";
+"Delete" = "Smazat";
+"Edit" = "Upravit";
+
 //Menu
 "Home" = "Domov";
 "Library" = "Knihovna";
@@ -14,13 +20,42 @@
 
 //Exercise
 "Work" = "Práce";
-"Rest" = "Odpočinek";
+"Rest" = "Pauza";
 "Series" = "Série";
 "Rounds" = "Kola";
-"ResetTime" = "Pauza";
+"ResetTime" = "Reset";
+"Created date" = "Datum vytvoření";
+"Workout length" = "Délka workoutu";
+"Name" = "Jméno";
+
+//Library
+"No workouts to display." = "Žádné workouty k zobrazení";
+"Sort by" = "Řadit podle";
+"Sort order" = "Směr řazení";
+"Search ..." = "Hledat ...";
+"Ascending" = "Vzestupně";
+"Descending" = "Sestupně";
+"Work:" = "Práce:";
+"Rest:" = "Pauza:";
+"Series:" = "Série:";
+"Rounds:" = "Kola:";
+"Reset:" = "Reset:";
+"Total:" = "Celkem:";
 
 //Settings
 "Language" = "Jazyk";
+"Enable sounds" = "Povolit zvuky";
 
+//Workout edit
+"Add workout" = "Přidat workout";
+"Edit workout" = "Upravit workout";
+"Enter Name..." = "Zadejte název...";
+
+//Workout run
+"Round %lld/%lld" = "Kolo %lld/%lld";
+"Exercise %lld/%lld" = "Cvik %lld/%lld";
+"Get ready!" = "Připrav se!";
+"Previous exercise" = "Předchozí cvik";
+"Quit workout" = "Ukončit workout";
 
 

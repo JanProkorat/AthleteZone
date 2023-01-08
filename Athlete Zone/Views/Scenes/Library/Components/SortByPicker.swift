@@ -18,7 +18,8 @@ struct SortByPicker: View {
                 Button(action: {
                     selectedProperty = property
                 }, label: {
-                    Label(property.rawValue, systemImage: selectedProperty == property ? "checkmark" : "")
+                    Label(LocalizedStringKey(property.rawValue),
+                          systemImage: selectedProperty == property ? "checkmark" : "")
                 })
             }
 

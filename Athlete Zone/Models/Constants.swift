@@ -38,9 +38,11 @@ enum Icons {
     static let Trash = "Trash"
 }
 
-enum Pictures {
-    static let Logo = "Logo"
-    static let Welcome = "Welcome"
+enum Picture: String {
+    case logo = "Logo"
+    case background = "Background"
+    case background2 = "Background2"
+    case welcome = "Welcome"
 }
 
 enum ComponentColor: String, CaseIterable {
@@ -73,6 +75,11 @@ enum Background: String, CaseIterable {
 }
 
 enum DefaultItem: String {
-    case language
-    case selectedWorkoutId
+    case language, selectedWorkoutId, soundsEnabled
+}
+
+enum Sound: String {
+    case beep
+    case gong
+    case fanfare
 }

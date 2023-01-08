@@ -26,13 +26,13 @@ struct WorkOutListView: View {
                         Button(action: {
                             performAction(onEditTab)
                         }, label: {
-                            Label("Edit", systemImage: "pencil")
+                            Label(LocalizedStringKey("Edit"), systemImage: "pencil")
                         })
 
                         Button(role: .destructive, action: {
                             performAction(onDeleteTab)
                         }, label: {
-                            Label("Delete", systemImage: "trash")
+                            Label(LocalizedStringKey("Delete"), systemImage: "trash")
                         })
                     } label: {
                         Image(Icons.Menu)

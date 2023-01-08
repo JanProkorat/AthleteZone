@@ -24,7 +24,6 @@ struct WorkOutEditScene: View {
     @Binding var isEditing: Bool
 
     init(_ name: String, _ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int, _ isEditing: Binding<Bool>) {
-        print(isEditing)
         self._name = State(initialValue: name)
         self._work = State(initialValue: work)
         self._rest = State(initialValue: rest)

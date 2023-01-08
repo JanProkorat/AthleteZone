@@ -18,7 +18,7 @@ struct WorkOutContent: View {
     var onStartTab: (() -> Void)?
 
     private var timeOverview: Int {
-        ((work * series) + (rest * (series - 1)) + reset) * rounds
+        (((work * series) + (rest * (series - 1)) + reset) * rounds) - reset
     }
 
     init(_ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int) {

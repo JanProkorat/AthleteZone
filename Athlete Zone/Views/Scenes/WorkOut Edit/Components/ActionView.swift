@@ -26,7 +26,7 @@ struct ActionView: View {
                         .frame(width: 40, height: 40)
                 }
 
-                Text(text)
+                Text(LocalizedStringKey(text))
                     .font(.custom("Lato-Black", size: height * 0.5))
                     .foregroundColor(Color(color.rawValue))
                     .bold()

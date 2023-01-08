@@ -56,6 +56,7 @@ struct LibraryContent: View {
                             .onEditTab {
                                 self.performAction(onEditTab, value: workout.thaw()!)
                             }
+                            .padding([.leading, .trailing], 2)
                     }
                     .padding(.bottom, 150)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
@@ -107,6 +108,7 @@ struct LibraryContent_Previews: PreviewProvider {
         LibraryContent()
             .environmentObject(WorkOutViewModel())
             .environmentObject(ViewRouter())
+            .environment(\.locale, .init(identifier: "cze"))
     }
 }
 

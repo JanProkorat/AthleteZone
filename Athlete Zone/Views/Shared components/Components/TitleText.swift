@@ -22,7 +22,7 @@ struct TitleText: View {
     }
 
     var body: some View {
-        Text(text)
+        Text(LocalizedStringKey(text))
             .font(.largeTitle)
             .foregroundColor(Color(ComponentColor.mainText.rawValue))
             .frame(maxWidth: .infinity, alignment: alignment)

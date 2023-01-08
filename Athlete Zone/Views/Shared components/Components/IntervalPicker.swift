@@ -29,7 +29,7 @@ struct IntervalPicker<Picker: View>: View {
                     .foregroundColor(Color(backgroundColor.rawValue))
                 RoundedRectangle(cornerRadius: 20)
                     .foregroundColor(Color(backgroundColor.rawValue))
-                Text(title)
+                Text(LocalizedStringKey(title))
                     .font(.system(size: 40))
                     .foregroundColor(Color(color.rawValue))
                     .frame(maxWidth: .infinity, alignment: .center)

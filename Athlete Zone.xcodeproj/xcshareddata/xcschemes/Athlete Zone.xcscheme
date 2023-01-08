@@ -33,7 +33,7 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7EAC717B29658E79004CEBA7"
+               BlueprintIdentifier = "7E3D4CA129689A8700B54852"
                BuildableName = "Athlete ZoneTests.xctest"
                BlueprintName = "Athlete ZoneTests"
                ReferencedContainer = "container:Athlete Zone.xcodeproj">

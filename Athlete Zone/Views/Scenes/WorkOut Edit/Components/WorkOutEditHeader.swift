@@ -11,7 +11,7 @@ struct WorkOutEditHeader: View {
     var isEditing = false
 
     var body: some View {
-        TitleText(text: "\(!isEditing ? "Add" : "Edit") Exercise")
+        TitleText(text: "\(!isEditing ? "Add" : "Edit") workout", alignment: .center)
     }
 }
 

@@ -23,7 +23,7 @@ struct WorkOutRunFooter: View {
             }
         } label: {
             if self.viewModel.selectedFlowIndex > 0 || !isRunning {
-                Text(isRunning ? "Previous exercise" : "Quit exercise")
+                Text(LocalizedStringKey(isRunning ? "Previous exercise" : "Quit workout"))
                     .font(.custom("Lato-ThinItalic", size: 20))
                     .bold()
             }

@@ -31,7 +31,7 @@ struct ActivitySelect: View {
                         .padding(.leading, 10)
                         .padding([.top, .bottom], 2)
 
-                    Text(activity.rawValue)
+                    Text(LocalizedStringKey(activity.rawValue))
                         .font(.custom("Lato-Black", size: 20))
                         .bold()
                         .foregroundColor(Color(color))

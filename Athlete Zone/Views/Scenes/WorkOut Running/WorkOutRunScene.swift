@@ -22,7 +22,7 @@ struct WorkOutRunScene: View {
             content: {
                 WorkOutRunContent()
                     .onQuitTab { router.currentTab = .home }
-                    .onisRunningChange {
+                    .onIsRunningChange {
                         isRunning.toggle()
                     }
                     .environmentObject(workFlowViewModel)
@@ -44,5 +44,6 @@ struct WorkOutRunScene_Previews: PreviewProvider {
         WorkOutRunScene()
             .environmentObject(ViewRouter())
             .environmentObject(WorkOutViewModel(selectedWorkOut: WorkOut()))
+            .environment(\.locale, .init(identifier: "cze"))
     }
 }

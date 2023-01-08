@@ -64,5 +64,6 @@ struct LibraryScene_Previews: PreviewProvider {
         LibraryScene()
             .environmentObject(WorkOutViewModel())
             .environmentObject(ViewRouter())
+            .environment(\.locale, .init(identifier: "cze"))
     }
 }

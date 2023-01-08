@@ -32,69 +32,65 @@ struct WorkOutEditContent: View {
     let editFieldConfig = ActivityType.allCases.chunked(into: 2)
 
     var body: some View {
-        GeometryReader { geo in
-            VStack(spacing: 15) {
-                VStack(alignment: .leading, spacing: 5) {
-                    EditField(
-                        value: name,
-                        label: "Name",
-                        labelSize: geo.size.height * 0.05,
-                        fieldSize: geo.size.height * 0.1,
-                        color: ComponentColor.mainText,
-                        type: .text
-                    )
-                    .onNameChange { self.performAction(self.onNameChange, value: $0) }
-                    .padding(.top)
-                }
-                .frame(alignment: .leading)
-                .frame(maxWidth: .infinity)
-                .background(
-                    RoundedRectangle(cornerRadius: 20)
-                        .foregroundColor(Color(ComponentColor.menu.rawValue))
+        VStack(spacing: 15) {
+            VStack(alignment: .leading, spacing: 5) {
+                EditField(
+                    value: name,
+                    label: "Name",
+                    labelSize: 23,
+                    fieldSize: 50,
+                    color: ComponentColor.mainText,
+                    type: .text
                 )
+                .onNameChange { self.performAction(self.onNameChange, value: $0) }
+                .padding([.top, .bottom])
+            }
+            .frame(alignment: .leading)
+            .frame(maxWidth: .infinity)
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .foregroundColor(Color(ComponentColor.menu.rawValue))
+            )
 
-                VStack(spacing: 0) {
-                    ForEach(editFieldConfig, id: \.first?.id) { chunk in
-                        HStack {
+            VStack(spacing: 0) {
+                ForEach(editFieldConfig, id: \.first?.id) { chunk in
+                    HStack {
+                        EditField(
+                            value: getValueByType(chunk.first!),
+                            label: chunk.first!.rawValue,
+                            labelSize: 23,
+                            fieldSize: 40,
+                            color: ComponentColor.allCases
+                                .first(where: { chunk.first!.rawValue.contains($0.rawValue) })!,
+                            type: .time
+                        )
+                        .onTab { performAction(self.onEditFieldTab, value: chunk.first!) }
+
+                        if chunk.count > 1 {
                             EditField(
-                                value: getValueByType(chunk.first!),
-                                label: chunk.first!.rawValue,
-                                labelSize: geo.size.height * 0.05,
-                                fieldSize: geo.size.height * 0.1,
+                                value: getValueByType(chunk.last!),
+                                label: chunk.last!.rawValue,
+                                labelSize: 20,
+                                fieldSize: 40,
                                 color: ComponentColor.allCases
-                                    .first(where: { chunk.first!.rawValue.contains($0.rawValue) })!,
+                                    .first(where: { chunk.last!.rawValue.contains($0.rawValue) })!,
                                 type: .time
                             )
-                            .onTab { performAction(self.onEditFieldTab, value: chunk.first!) }
-                            .frame(maxWidth: geo.size.width * 0.5)
-
-                            if chunk.count > 1 {
-                                EditField(
-                                    value: getValueByType(chunk.last!),
-                                    label: chunk.last!.rawValue,
-                                    labelSize: geo.size.height * 0.05,
-                                    fieldSize: geo.size.height * 0.1,
-                                    color: ComponentColor.allCases
-                                        .first(where: { chunk.last!.rawValue.contains($0.rawValue) })!,
-                                    type: .time
-                                )
-                                .onTab { performAction(self.onEditFieldTab, value: chunk.last!) }
-                                .frame(maxWidth: geo.size.width * 0.5)
-                            }
+                            .onTab { performAction(self.onEditFieldTab, value: chunk.last!) }
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding([.top, .bottom], 10)
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding([.top, .bottom], 10)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                .background(
-                    RoundedRectangle(cornerRadius: 20)
-                        .foregroundColor(Color(ComponentColor.menu.rawValue))
-                )
             }
-            .frame(maxHeight: .infinity, alignment: .top)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .foregroundColor(Color(ComponentColor.menu.rawValue))
+            )
         }
-        .padding(.top)
+        .frame(maxHeight: .infinity, alignment: .top)
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 
     func getValueByType(_ type: ActivityType) -> String {

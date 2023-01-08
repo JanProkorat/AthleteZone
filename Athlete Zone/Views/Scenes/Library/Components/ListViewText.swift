@@ -12,9 +12,10 @@ struct ListViewText: View {
     let color: ComponentColor
 
     var body: some View {
-        Text(text)
+        Text(LocalizedStringKey(text))
             .font(.custom("Lato-Black", size: 20))
             .foregroundColor(Color(color.rawValue))
+            .scaledToFill()
     }
 }
 

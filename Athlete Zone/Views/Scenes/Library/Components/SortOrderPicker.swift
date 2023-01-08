@@ -18,7 +18,7 @@ struct SortOrderPicker: View {
                 Button(action: {
                     selectedOrder = order
                 }, label: {
-                    Label(order.rawValue, systemImage: selectedOrder == order ? "checkmark" : "")
+                    Label(LocalizedStringKey(order.rawValue), systemImage: selectedOrder == order ? "checkmark" : "")
                 })
             }
 

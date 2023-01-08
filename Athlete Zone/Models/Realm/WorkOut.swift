@@ -40,7 +40,7 @@ class WorkOut: Object, Identifiable {
     }
 
     @objc var timeOverview: Int {
-        ((work * series) + (rest * (series - 1)) + reset) * rounds
+        (((work * series) + (rest * (series - 1)) + reset) * rounds) - reset
     }
 
     @objc var formattedCreatedDate: String {

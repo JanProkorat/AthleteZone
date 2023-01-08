@@ -10,32 +10,47 @@ import SwiftUI
 struct ContentScene: View {
     @StateObject var router: ViewRouter
     @StateObject var workOutViewModel = WorkOutViewModel()
+    @StateObject var launchScreenState = LaunchScreenStateManager()
 
     var body: some View {
         GeometryReader { _ in
-            VStack {
-                switch router.currentTab {
-                case .home:
-                    WorkOutScene()
+            ZStack {
+                content
 
-                case .library:
-                    LibraryScene()
-
-                case .profile:
-                    ProfileScene()
-
-                case .setting:
-                    SettingsScene()
-
-                case .workoutRun:
-                    WorkOutRunScene()
+                if launchScreenState.state != .finished {
+                    LaunchScreenView()
                 }
             }
-            .environmentObject(router)
-            .environmentObject(workOutViewModel)
-            .animation(.easeInOut, value: router.currentTab)
-            .background(Color(Background.background.rawValue))
+            .environmentObject(launchScreenState)
+            .onAppear {
+                self.launchScreenState.dismiss()
+            }
         }
+    }
+
+    @ViewBuilder
+    private var content: some View {
+        VStack {
+            switch router.currentTab {
+            case .home:
+                WorkOutScene()
+
+            case .library:
+                LibraryScene()
+
+            case .profile:
+                ProfileScene()
+
+            case .setting:
+                SettingsScene()
+
+            case .workoutRun:
+                WorkOutRunScene()
+            }
+        }
+        .environmentObject(router)
+        .environmentObject(workOutViewModel)
+        .animation(.easeInOut, value: router.currentTab)
     }
 }
 

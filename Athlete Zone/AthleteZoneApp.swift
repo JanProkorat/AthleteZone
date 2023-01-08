@@ -17,6 +17,7 @@ struct AthleteZoneApp: App {
         WindowGroup {
             ContentScene(router: router)
                 .environment(\.locale, .init(identifier: "\(language)"))
+                .environment(\.colorScheme, .dark)
         }
     }
 }

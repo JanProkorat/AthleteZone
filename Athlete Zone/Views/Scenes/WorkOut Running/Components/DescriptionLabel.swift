@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DescriptionLabel: View {
-    let title: String
+    let title: LocalizedStringKey
     let color: ComponentColor
 
     var body: some View {

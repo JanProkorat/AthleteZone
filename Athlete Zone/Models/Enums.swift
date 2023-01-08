@@ -11,11 +11,7 @@ enum Tab {
     case home, library, profile, setting, workoutRun
 }
 
-enum ActivityType: String, CustomStringConvertible, Identifiable, CaseIterable {
-    var description: String {
-        self.rawValue
-    }
-
+enum ActivityType: String, Identifiable, CaseIterable {
     var id: Int {
         hashValue
     }
@@ -25,6 +21,19 @@ enum ActivityType: String, CustomStringConvertible, Identifiable, CaseIterable {
     case series = "Series"
     case rounds = "Rounds"
     case reset = "Reset"
+}
+
+enum WorkFlowType: String {
+    case preparation = "Get ready!"
+    case work = "Work"
+    case rest = "Rest"
+    case series = "Series"
+    case rounds = "Rounds"
+    case reset = "Reset"
+}
+
+enum WorkFlowState {
+    case running, paused, finished
 }
 
 enum LabelType {

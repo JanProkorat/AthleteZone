@@ -41,20 +41,6 @@ class WorkOutViewModel: ObservableObject {
         }
     }
 
-//    func updateProperty<T>(_ workout: WorkOut, propertyName: String, value: T) {
-//        do {
-//            try realmManager.realm.write {
-//                if let intValue = value as? String {
-//                    workout[propertyName] = intValue
-//                } else if let intValue = value as? Int {
-//                    workout[propertyName] = intValue
-//                }
-//            }
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-//    }
-
     func loadWorkoutById(_ id: ObjectId) -> WorkOut? {
         return realmManager.load(entity: WorkOut.self, primaryKey: id)
     }
