@@ -10,34 +10,44 @@ import SwiftUI
 struct WorkOutRunFooter: View {
     @EnvironmentObject var viewModel: WorkFlowViewModel
 
-    var isRunning: Bool
-
     var onQuitTab: (() -> Void)?
 
     var body: some View {
         Button {
-            if !isRunning {
+            if viewModel.state != .running {
                 self.performAction(onQuitTab)
             } else {
                 self.viewModel.selectedFlowIndex -= 1
             }
         } label: {
-            if self.viewModel.selectedFlowIndex > 0 || !isRunning {
-                Text(LocalizedStringKey(isRunning ? "Previous exercise" : "Quit workout"))
-                    .font(.custom("Lato-ThinItalic", size: 20))
-                    .bold()
-            }
+            Text(LocalizedStringKey(getLabel()))
+                .font(.custom("Lato-ThinItalic", size: 20))
+                .bold()
         }
         .padding(.top, 10)
         .frame(height: 20)
         .frame(maxWidth: .infinity, alignment: .center)
         .foregroundColor(Color(ComponentColor.mainText.rawValue))
     }
+
+    func getLabel() -> String {
+        if viewModel.selectedFlowIndex > 0 {
+            switch viewModel.state {
+            case .paused:
+                return "Quit workout"
+            case .finished:
+                return "Quit workout"
+            default:
+                return "Previous exercise"
+            }
+        }
+        return viewModel.state == .paused ? "Quit workout" : ""
+    }
 }
 
 struct WorkOutRunFooter_Previews: PreviewProvider {
     static var previews: some View {
-        WorkOutRunFooter(isRunning: true)
+        WorkOutRunFooter()
             .environmentObject(WorkFlowViewModel())
             .environmentObject(ViewRouter())
             .environmentObject(WorkOutViewModel())

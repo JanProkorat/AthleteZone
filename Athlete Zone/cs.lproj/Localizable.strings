@@ -44,7 +44,8 @@
 
 //Settings
 "Language" = "Jazyk";
-"Enable sounds" = "Povolit zvuky";
+"Sounds" = "Zvuky";
+"Haptics (Watch only)" = "Vibrace (Jen hodinky)";
 
 //Workout edit
 "Add workout" = "Přidat workout";
@@ -58,4 +59,7 @@
 "Previous exercise" = "Předchozí cvik";
 "Quit workout" = "Ukončit workout";
 
+//Watch
+"Filters" = "Filtry";
+"Actions" = "Akce";
 

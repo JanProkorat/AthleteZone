@@ -42,6 +42,7 @@ struct BaseView<Header: View, Content: View, Footer: View>: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .background(Color(Background.background.rawValue))
+            .environment(\.colorScheme, .dark)
         }
     }
 }

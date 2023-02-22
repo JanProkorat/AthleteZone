@@ -30,7 +30,7 @@ struct ActionButton_Previews: PreviewProvider {
                 text: "Save",
                 color: ComponentColor.rounds,
                 backgoundColor: nil,
-                image: Icons.Check,
+                image: Icons.check.rawValue,
                 height: 60,
                 cornerRadius: nil
             )

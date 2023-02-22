@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class WorkOut: Object, Identifiable {
+public class WorkOut: Object, Identifiable, Codable {
     @Persisted(primaryKey: true) var _id: ObjectId
 
     @objc @Persisted var name: String
@@ -71,5 +71,32 @@ class WorkOut: Object, Identifiable {
 
     func setReset(_ reset: Int) {
         self.reset = reset
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case name, work, rest, series, rounds, reset, createdDate, _id
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(name, forKey: .name)
+        try container.encode(work, forKey: .work)
+        try container.encode(rest, forKey: .rest)
+        try container.encode(series, forKey: .series)
+        try container.encode(rounds, forKey: .rounds)
+        try container.encode(reset, forKey: .reset)
+        try container.encode(createdDate, forKey: .createdDate)
+        try container.encode(_id, forKey: ._id)
+    }
+
+    func encode() -> String {
+        do {
+            let encodedData = try JSONEncoder().encode(self)
+            let jsonString = String(data: encodedData, encoding: .utf8)
+            return jsonString ?? ""
+        } catch {
+            print(error)
+            return ""
+        }
     }
 }

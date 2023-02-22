@@ -25,7 +25,7 @@ struct ActivityButton_Previews: PreviewProvider {
     static var previews: some View {
         ActivityButton(
             innerComponent: ActivityView(
-                image: Icons.Play,
+                image: Icons.play.rawValue,
                 color: ComponentColor.work,
                 activity: "Work",
                 interval: 40,

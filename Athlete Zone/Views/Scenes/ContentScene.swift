@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ContentScene: View {
-    @StateObject var router: ViewRouter
-    @StateObject var workOutViewModel = WorkOutViewModel()
+    @EnvironmentObject var router: ViewRouter
+    @EnvironmentObject var workOutViewModel: WorkOutViewModel
     @StateObject var launchScreenState = LaunchScreenStateManager()
 
     var body: some View {
@@ -50,13 +50,14 @@ struct ContentScene: View {
         }
         .environmentObject(router)
         .environmentObject(workOutViewModel)
+        .background(Color(Background.background.rawValue))
         .animation(.easeInOut, value: router.currentTab)
     }
 }
 
 struct ContentScene_Previews: PreviewProvider {
     static var previews: some View {
-        ContentScene(router: ViewRouter())
+        ContentScene()
             .environmentObject(WorkOutViewModel())
             .environmentObject(ViewRouter())
     }

@@ -33,7 +33,7 @@ struct WorkOutHeader: View {
             Button {
                 performAction(self.onSaveTab)
             } label: {
-                Image(Icons.Save)
+                Image(Icons.save.rawValue)
                     .resizable()
                     .scaledToFit()
                     .foregroundColor(Color(ComponentColor.mainText.rawValue))

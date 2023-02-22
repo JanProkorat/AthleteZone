@@ -44,7 +44,9 @@ struct WorkOutScene: View {
                     .onRouteTab { router.currentTab = $0 }
             }
         )
-        .onAppear { setValues() }
+        .onAppear {
+            setValues()
+        }
         .onChange(of: scenePhase) { newPhase in
             if (newPhase == .inactive || newPhase == .background) && viewModel.selectedWorkOut != nil {
                 selectedItemId = viewModel.selectedWorkOut!._id.stringValue

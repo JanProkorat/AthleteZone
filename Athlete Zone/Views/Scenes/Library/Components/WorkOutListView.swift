@@ -35,7 +35,7 @@ struct WorkOutListView: View {
                             Label(LocalizedStringKey("Delete"), systemImage: "trash")
                         })
                     } label: {
-                        Image(Icons.Menu)
+                        Image(Icons.menu.rawValue)
                             .foregroundColor(Color(ComponentColor.mainText.rawValue))
                             .frame(width: 40, height: 34)
                             .padding(.trailing, 20)

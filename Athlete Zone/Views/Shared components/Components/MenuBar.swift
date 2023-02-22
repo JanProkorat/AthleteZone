@@ -13,10 +13,10 @@ struct MenuBar: View {
     var onRouteTab: ((_ routeToGo: Tab) -> Void)?
 
     let icons = [
-        MenuBarItem(id: Tab.home, icon: Icons.Home, activeIcon: Icons.HomeActive),
-        MenuBarItem(id: Tab.library, icon: Icons.Book, activeIcon: Icons.BookActive),
+        MenuBarItem(id: Tab.home, icon: Icons.home.rawValue, activeIcon: Icons.homeActive.rawValue),
+        MenuBarItem(id: Tab.library, icon: Icons.book.rawValue, activeIcon: Icons.bookActive.rawValue),
         //        MenuBarItem(id: Tab.profile, icon: Icons.Avatar, activeIcon: Icons.AvatarActive, activeText: "Profile"),
-        MenuBarItem(id: Tab.setting, icon: Icons.Setting, activeIcon: Icons.SettingActive)
+        MenuBarItem(id: Tab.setting, icon: Icons.setting.rawValue, activeIcon: Icons.settingActive.rawValue)
     ]
 
     var body: some View {
@@ -34,7 +34,7 @@ struct MenuBar: View {
                                         : ComponentColor.menuText.rawValue))
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 5)
-                                        .stroke(Color(item.id == activeTab ? ComponentColor.action.rawValue : ""),
+                                        .stroke(item.id == activeTab ? Color(ComponentColor.action.rawValue) : Color(.clear),
                                                 lineWidth: 0)
                                         .frame(width: 40, height: 40)
                                 )
@@ -42,7 +42,7 @@ struct MenuBar: View {
                         })
                         .frame(width: 40, height: 40)
                     )
-                    .foregroundColor(Color(item.id == activeTab ? ComponentColor.menuItemSelected.rawValue : ""))
+                    .foregroundColor(item.id == activeTab ? Color(ComponentColor.menuItemSelected.rawValue) : Color(.clear))
                     .frame(
                         maxHeight: 40 + 10,
                         alignment: .center

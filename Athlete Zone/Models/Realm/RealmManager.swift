@@ -35,8 +35,18 @@ class RealmManager: ObservableObject {
         return realm.object(ofType: T.self, forPrimaryKey: primaryKey)
     }
 
-    func load<T: Object>(entity: T.Type) -> Results<T> {
-        return realm.objects(entity)
+    func load<T: Object>(entity: T.Type) -> [T] {
+        var objects: [T] = []
+        let queue = DispatchQueue(label: "realmQueue", qos: .background)
+        queue.sync {
+            do {
+                let realm = try Realm()
+                objects = Array(realm.objects(entity.self))
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return objects
     }
 
     func delete(entity: Object) {

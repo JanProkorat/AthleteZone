@@ -18,7 +18,7 @@ struct WorkOutEditFooter: View {
                     text: "Save",
                     color: ComponentColor.rounds,
                     backgoundColor: ComponentColor.menu.rawValue,
-                    image: Icons.Check,
+                    image: Icons.check.rawValue,
                     height: 60,
                     cornerRadius: nil
                 )
@@ -30,7 +30,7 @@ struct WorkOutEditFooter: View {
                     text: "Cancel",
                     color: ComponentColor.work,
                     backgoundColor: ComponentColor.menu.rawValue,
-                    image: Icons.Clear,
+                    image: Icons.clear.rawValue,
                     height: 60,
                     cornerRadius: nil
                 )

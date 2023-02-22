@@ -35,6 +35,7 @@ struct LibraryContent: View {
             }
             .padding([.leading, .trailing], 5)
             .padding(.bottom, 10)
+
             let library = searchText.isEmpty ?
                 workOutLibrary.sorted(using: sortDescriptor) :
                 workOutLibrary
@@ -51,6 +52,7 @@ struct LibraryContent: View {
                                 if viewModel.selectedWorkOut!._id == workout._id {
                                     viewModel.setSelectedWorkOut(nil)
                                 }
+                                viewModel.removeFromWatch(workout._id)
                                 $workOutLibrary.remove(workout)
                             }
                             .onEditTab {

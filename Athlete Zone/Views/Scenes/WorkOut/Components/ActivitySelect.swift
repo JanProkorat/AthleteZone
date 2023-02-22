@@ -61,7 +61,7 @@ struct ActivitySelect: View {
 
 struct ActivitySelect_Previews: PreviewProvider {
     static var previews: some View {
-        ActivitySelect(image: Icons.Play, color: ComponentColor.work.rawValue,
+        ActivitySelect(image: Icons.play.rawValue, color: ComponentColor.work.rawValue,
                        activity: .work, interval: 40, type: .time, height: 50)
     }
 }

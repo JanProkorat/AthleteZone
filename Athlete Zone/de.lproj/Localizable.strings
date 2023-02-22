@@ -44,7 +44,8 @@
 
 //Settings
 "Language" = "Sprache";
-"Enable sounds" = "Töne aktivieren";
+"Sounds" = "Töne";
+"Haptics (Watch only)" = "Haptik (nur Uhr)";
 
 //Workout edit
 "Add workout" = "Workout hinzufügen";
@@ -57,3 +58,7 @@
 "Get ready!" = "Bereite dich!";
 "Previous exercise" = "Vorherige Übung";
 "Quit workout" = "Workout beenden";
+
+//Watch
+"Filters" = "Filter";
+"Actions" = "Aktionen";

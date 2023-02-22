@@ -65,8 +65,8 @@ private_over_fileprivate:
   validate_extensions: true
   severity: error
 
-force_unwrapping:
-  severity: error
+#force_unwrapping:
+#  severity: error
 
 redundant_type_annotation: error
 

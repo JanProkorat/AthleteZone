@@ -17,7 +17,7 @@ struct LibraryHeader: View {
             Button {
                 self.performAction(onAddTab)
             } label: {
-                Image(Icons.Add)
+                Image(Icons.add.rawValue)
                     .resizable()
                     .scaledToFit()
                     .foregroundColor(Color(ComponentColor.mainText.rawValue))

@@ -14,7 +14,7 @@ struct IconButton: View, Identifiable {
     let color: ComponentColor
     let width: CGFloat
     let height: CGFloat
-    var selected: Bool?
+    var selected = false
 
     var onTab: (() -> Void)?
 
@@ -28,7 +28,7 @@ struct IconButton: View, Identifiable {
                 .foregroundColor(Color(color.rawValue))
                 .overlay(
                     RoundedRectangle(cornerRadius: 5)
-                        .stroke(Color(self.selected ?? false ? ComponentColor.action.rawValue : ""), lineWidth: 4)
+                        .stroke(self.selected ? Color(ComponentColor.action.rawValue) : Color(.clear), lineWidth: 4)
                         .frame(width: 40, height: 34)
                 )
 
@@ -41,7 +41,7 @@ struct IconButton_Previews: PreviewProvider {
     static var previews: some View {
         IconButton(
             id: "arrowDown",
-            image: Icons.ArrowDown,
+            image: Icons.arrowDown.rawValue,
             color: ComponentColor.mainText,
             width: 50,
             height: 45,

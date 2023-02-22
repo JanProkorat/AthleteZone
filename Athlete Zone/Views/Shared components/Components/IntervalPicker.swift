@@ -22,7 +22,7 @@ struct IntervalPicker<Picker: View>: View {
     }
 
     var body: some View {
-        VStack(alignment: .center, spacing: 5) {
+        BaseView {
             ZStack {
                 RoundedRectangle(cornerRadius: 20)
                     .stroke(Color(ComponentColor.darkBlue.rawValue), lineWidth: 3)
@@ -34,17 +34,16 @@ struct IntervalPicker<Picker: View>: View {
                     .foregroundColor(Color(color.rawValue))
                     .frame(maxWidth: .infinity, alignment: .center)
             }
-            .padding(.top, 30)
+            .padding(.top, 50)
             .padding([.leading, .trailing], 10)
             .frame(maxHeight: 80)
 
+        } content: {
             picker
                 .frame(maxHeight: .infinity)
                 .padding(.top, 20)
-        }
-        .frame(maxHeight: .infinity)
-        .background(Color(Background.background.rawValue))
-        .presentationDetents([.medium])
+        } footer: {}
+            .presentationDetents([.medium])
     }
 }
 

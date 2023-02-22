@@ -11,7 +11,7 @@ enum Tab {
     case home, library, profile, setting, workoutRun
 }
 
-enum ActivityType: String, Identifiable, CaseIterable {
+enum ActivityType: String, Identifiable, CaseIterable, Encodable {
     var id: Int {
         hashValue
     }
@@ -33,7 +33,7 @@ enum WorkFlowType: String {
 }
 
 enum WorkFlowState {
-    case running, paused, finished
+    case ready, running, paused, finished, quit
 }
 
 enum LabelType {
@@ -44,7 +44,7 @@ enum InputType {
     case time, number, text
 }
 
-enum Language: String, CaseIterable {
+enum Language: String, Equatable, CaseIterable {
     case cze, de, en
 }
 
@@ -70,4 +70,15 @@ enum SortByProperty: String, CaseIterable, Identifiable {
     case reset = "Reset"
     case createdDate = "Created date"
     case workoutLength = "Workout length"
+}
+
+enum Section: String {
+    case workout = "Workout"
+    case training = "Training"
+}
+
+enum LaunchScreenStep {
+    case firstStep
+    case secondStep
+    case finished
 }

@@ -30,11 +30,11 @@ struct WorkOutContent: View {
     }
 
     var buttons = [
-        WorkOutButtonConfig(id: .work, image: Icons.Play, color: .work, type: .time),
-        WorkOutButtonConfig(id: .rest, image: Icons.Pause, color: .rest, type: .time),
-        WorkOutButtonConfig(id: .series, image: Icons.Forward, color: .series, type: .number),
-        WorkOutButtonConfig(id: .rounds, image: Icons.Repeat, color: .rounds, type: .number),
-        WorkOutButtonConfig(id: .reset, image: Icons.Time, color: .reset, type: .time)
+        WorkOutButtonConfig(id: .work, image: Icons.play.rawValue, color: .work, type: .time),
+        WorkOutButtonConfig(id: .rest, image: Icons.pause.rawValue, color: .rest, type: .time),
+        WorkOutButtonConfig(id: .series, image: Icons.forward.rawValue, color: .series, type: .number),
+        WorkOutButtonConfig(id: .rounds, image: Icons.repeatIcon.rawValue, color: .rounds, type: .number),
+        WorkOutButtonConfig(id: .reset, image: Icons.time.rawValue, color: .reset, type: .time)
     ]
 
     var body: some View {
@@ -69,7 +69,7 @@ struct WorkOutContent: View {
                     Button {
                         performAction(onStartTab)
                     } label: {
-                        Image(Icons.Start)
+                        Image(Icons.start.rawValue)
                             .resizable()
                             .scaledToFill()
                             .foregroundColor(Color(ComponentColor.action.rawValue))

@@ -12,8 +12,6 @@ struct WorkOutRunScene: View {
     @EnvironmentObject var viewModel: WorkOutViewModel
     @StateObject var workFlowViewModel = WorkFlowViewModel()
 
-    @State var isRunning = true
-
     var body: some View {
         BaseView(
             header: {
@@ -22,19 +20,25 @@ struct WorkOutRunScene: View {
             content: {
                 WorkOutRunContent()
                     .onQuitTab { router.currentTab = .home }
-                    .onIsRunningChange {
-                        isRunning.toggle()
-                    }
                     .environmentObject(workFlowViewModel)
             },
             footer: {
-                WorkOutRunFooter(isRunning: isRunning)
+                WorkOutRunFooter()
                     .onQuitTab { router.currentTab = .home }
                     .environmentObject(workFlowViewModel)
             }
         )
         .onAppear {
             workFlowViewModel.createWorkFlow(workOut: viewModel.selectedWorkOut!)
+        }
+        .onChange(of: workFlowViewModel.state) { newValue in
+            switch newValue {
+            case .running:
+                UIApplication.shared.isIdleTimerDisabled = true
+
+            default:
+                UIApplication.shared.isIdleTimerDisabled = false
+            }
         }
     }
 }

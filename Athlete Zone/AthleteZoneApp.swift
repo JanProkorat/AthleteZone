@@ -10,14 +10,18 @@ import SwiftUI
 @main
 struct AthleteZoneApp: App {
     @StateObject var router = ViewRouter()
-    @AppStorage(DefaultItem.language.rawValue) private var language: Language = .en
+    @StateObject var workOutViewModel = WorkOutViewModel()
+    @StateObject var appStorageManager = AppStorageManager.shared
+
     @Environment(\.scenePhase) var scenePhase
 
     var body: some Scene {
         WindowGroup {
-            ContentScene(router: router)
-                .environment(\.locale, .init(identifier: "\(language)"))
+            ContentScene()
+                .environment(\.locale, .init(identifier: "\(appStorageManager.language)"))
                 .environment(\.colorScheme, .dark)
+                .environmentObject(router)
+                .environmentObject(workOutViewModel)
         }
     }
 }

@@ -5,7 +5,9 @@
 //  Created by Jan Prokorát on 15.11.2022.
 //
 
+import Combine
 import Foundation
+import SwiftUI
 
 class WorkFlowViewModel: ObservableObject {
     @Published var flow: [WorkFlow] = .init()
@@ -15,11 +17,46 @@ class WorkFlowViewModel: ObservableObject {
     @Published var seriesCount = 0
     @Published var roundsCount = 0
 
+    @Published var state: WorkFlowState = .ready
+    @Published var appStorageManager = AppStorageManager.shared
+
     var isLastRunning: Bool {
         selectedFlow != nil &&
             selectedFlow!.type == .work &&
             selectedFlow!.round == roundsCount &&
             selectedFlow!.serie == seriesCount
+    }
+
+    private var timer: Timer?
+    private var soundManager: SoundProtocol?
+    private var hapticManager: HapticProtocol?
+
+    private var selectedIndexCancellable: AnyCancellable?
+    private var stateCancellable: AnyCancellable?
+    private var flowIntervalSoundCancellable: AnyCancellable?
+    private var flowIntervalHpticsCancellable: AnyCancellable?
+
+    init() {
+        soundManager = SoundManager()
+
+        #if os(watchOS)
+        hapticManager = HapticManager()
+        #endif
+
+        stateCancellable = $state.sink { self.updateTimerOnStateChange($0) }
+        selectedIndexCancellable = $selectedFlowIndex.sink { self.updateFlowOnIndexChange($0) }
+
+        flowIntervalSoundCancellable = $selectedFlow.sink { newValue in
+            if self.appStorageManager.soundsEnabled {
+                self.playSound(newValue)
+            }
+        }
+
+        flowIntervalHpticsCancellable = $selectedFlow.sink { newValue in
+            if self.appStorageManager.hapticsEnabled {
+                self.playHaptic(newValue)
+            }
+        }
     }
 
     func createWorkFlow(workOut: WorkOut) {
@@ -35,7 +72,7 @@ class WorkFlowViewModel: ObservableObject {
                 if interval != 0 {
                     flow.append(
                         WorkFlow(
-                            interval: interval,
+                            interval: interval - 1,
                             type: serie.isOdd() ? .work : .rest,
                             round: round,
                             serie: serieCount
@@ -60,5 +97,95 @@ class WorkFlowViewModel: ObservableObject {
         }
 
         selectedFlow = flow[selectedFlowIndex]
+    }
+
+    func setState(_ state: WorkFlowState) {
+        self.state = state
+    }
+}
+
+// MARK: Timer extension
+
+extension WorkFlowViewModel {
+    func startTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+            if self?.selectedFlow != nil {
+                self?.updateInterval()
+            }
+        }
+    }
+
+    func stopTimer() {
+        timer?.invalidate()
+    }
+
+    func updateInterval() {
+        if selectedFlow != nil {
+            if selectedFlow!.interval > 0 {
+                selectedFlow!.interval -= 1
+            } else {
+                selectedFlowIndex += 1
+            }
+        }
+    }
+
+    func updateFlowOnIndexChange(_ newFlowIndex: Int) {
+        if newFlowIndex < flow.count {
+            selectedFlow = flow[newFlowIndex]
+        } else if isLastRunning {
+            setState(.finished)
+        }
+    }
+
+    func updateTimerOnStateChange(_ newState: WorkFlowState) {
+        switch newState {
+        case .paused:
+            stopTimer()
+
+        case .finished:
+            stopTimer()
+
+        case .running:
+            startTimer()
+
+        default:
+            break
+        }
+    }
+}
+
+// MARK: Sound extension
+
+extension WorkFlowViewModel {
+    func playSound(_ worflow: WorkFlow?) {
+        if let flow = worflow {
+            if flow.interval > 0 {
+                if flow.interval <= 3 {
+                    soundManager?.playSound(sound: .beep)
+                }
+            } else {
+                if isLastRunning {
+                    soundManager?.playSound(sound: .fanfare)
+                } else {
+                    soundManager?.playSound(sound: .gong)
+                }
+            }
+        }
+    }
+}
+
+// MARK: Haptic extensio
+
+extension WorkFlowViewModel {
+    func playHaptic(_ worflow: WorkFlow?) {
+        if let flow = worflow {
+            if flow.interval > 0 {
+                if flow.interval <= 3 {
+                    hapticManager?.playHaptic()
+                }
+            } else {
+                hapticManager?.playFinishHaptic()
+            }
+        }
     }
 }
