@@ -62,3 +62,9 @@
 //Watch
 "Filters" = "Filter";
 "Actions" = "Aktionen";
+
+//Notifications
+"Don't forget to workout today" = "Vergessen Sie nicht, heute zu trainieren!";
+"Don't forget to crush your workout today!" = "Vergisst nicht, ihnen Training heute zu beenden!";
+"Time to sweat it out - your workout is waiting!" = "Zeit zum Schwitzen – ihr Workout wartet!";
+"Get up, get moving, get your workout in!" = "Aufstehen, bewegen, trainieren!";

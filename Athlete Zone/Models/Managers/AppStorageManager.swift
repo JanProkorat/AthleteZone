@@ -14,4 +14,5 @@ class AppStorageManager: ObservableObject {
     @AppStorage(DefaultItem.language.rawValue) var language: Language = .en
     @AppStorage(DefaultItem.soundsEnabled.rawValue) var soundsEnabled = true
     @AppStorage(DefaultItem.hapticsEnabled.rawValue) var hapticsEnabled = true
+    @AppStorage(DefaultItem.notificationsEnabled.rawValue) var notificationsEnabled = false
 }

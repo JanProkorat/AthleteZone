@@ -22,6 +22,11 @@ struct AthleteZoneApp: App {
                 .environment(\.colorScheme, .dark)
                 .environmentObject(router)
                 .environmentObject(workOutViewModel)
+                .onAppear {
+                    if appStorageManager.notificationsEnabled {
+                        self.workOutViewModel.handleNotifications(true)
+                    }
+                }
         }
     }
 }

@@ -113,6 +113,8 @@
 		7EEE480D293373010034E95C /* WorkOutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEE480C293373010034E95C /* WorkOutListView.swift */; };
 		7EEE480F2933786B0034E95C /* ListViewText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEE480E2933786B0034E95C /* ListViewText.swift */; };
 		7EEE481129339B0B0034E95C /* UICollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEE481029339B0B0034E95C /* UICollectionReusableView.swift */; };
+		7EF13C9329A7DFFE00CB4F22 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF13C9229A7DFFE00CB4F22 /* NotificationManager.swift */; };
+		7EF13C9429A7F2C800CB4F22 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E33B66E291439A8009E4C1C /* Assets.xcassets */; };
 		7EF389232923EF5B008420C2 /* WorkOutEditScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF389222923EF5B008420C2 /* WorkOutEditScene.swift */; };
 		7EF389262923EFBC008420C2 /* WorkOutEditHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF389252923EFBC008420C2 /* WorkOutEditHeader.swift */; };
 		7EF389282923F1D2008420C2 /* WorkOutEditContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF389272923F1D2008420C2 /* WorkOutEditContent.swift */; };
@@ -239,6 +241,7 @@
 		7EEE480C293373010034E95C /* WorkOutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutListView.swift; sourceTree = "<group>"; };
 		7EEE480E2933786B0034E95C /* ListViewText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewText.swift; sourceTree = "<group>"; };
 		7EEE481029339B0B0034E95C /* UICollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionReusableView.swift; sourceTree = "<group>"; };
+		7EF13C9229A7DFFE00CB4F22 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		7EF389222923EF5B008420C2 /* WorkOutEditScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutEditScene.swift; sourceTree = "<group>"; };
 		7EF389252923EFBC008420C2 /* WorkOutEditHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutEditHeader.swift; sourceTree = "<group>"; };
 		7EF389272923F1D2008420C2 /* WorkOutEditContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutEditContent.swift; sourceTree = "<group>"; };
@@ -370,14 +373,13 @@
 		7E32D46929167DC0008FB390 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				7EF13C9129A7DFC000CB4F22 /* Managers */,
 				7EE7809029991D8800DEC1A4 /* Protocols */,
 				7E32D4882916D2C4008FB390 /* Extensions */,
 				7E5CC56729300C5B0081017E /* Realm */,
 				7EC8C4912940DBE200FFB47C /* Structs */,
 				7E32D46C29167EE3008FB390 /* Constants.swift */,
 				7E32D47029168600008FB390 /* Enums.swift */,
-				7EE7808D29991C3C00DEC1A4 /* SoundManager.swift */,
-				7E03709929A25E5B00261B2A /* AppStorageManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -660,6 +662,16 @@
 			path = "Shared Assets";
 			sourceTree = "<group>";
 		};
+		7EF13C9129A7DFC000CB4F22 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				7EE7808D29991C3C00DEC1A4 /* SoundManager.swift */,
+				7E03709929A25E5B00261B2A /* AppStorageManager.swift */,
+				7EF13C9229A7DFFE00CB4F22 /* NotificationManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		7EF389212923EF01008420C2 /* WorkOut Edit */ = {
 			isa = PBXGroup;
 			children = (
@@ -782,6 +794,7 @@
 				7EE47B5429407B61000FC098 /* .swiftformat in Resources */,
 				7E1F9B0529198603006CA3AA /* Localizable.strings in Resources */,
 				7EE47B5029407901000FC098 /* .swiftlint.yml in Resources */,
+				7EF13C9429A7F2C800CB4F22 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -844,6 +857,7 @@
 				7E1F9AFC291927FE006CA3AA /* LibraryContent.swift in Sources */,
 				7E6B9D3C295B9DAC00D7D0FB /* SortOrderPicker.swift in Sources */,
 				7E1F9AE929190801006CA3AA /* SettingsScene.swift in Sources */,
+				7EF13C9329A7DFFE00CB4F22 /* NotificationManager.swift in Sources */,
 				7E06670E299FD11E00FCF8C5 /* HapticProtocol.swift in Sources */,
 				7E1F9AFF2919812A006CA3AA /* ProfileHeaderBar.swift in Sources */,
 				7EEA2D012923899A002C9227 /* WorkFlowViewModel.swift in Sources */,

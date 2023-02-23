@@ -13,6 +13,7 @@ class WorkOutViewModel: ObservableObject {
     @Published var selectedWorkOut: WorkOut?
     @Published var connectivityManager = WatchConnectivityManager.shared
     @Published var appStorageManager = AppStorageManager.shared
+    @Published var notificationManager = NotificationManager()
 
     private let realmManager = RealmManager()
 
@@ -64,5 +65,13 @@ class WorkOutViewModel: ObservableObject {
 
     func shareHapticsEnabled(_ enabled: Bool) {
         connectivityManager.sendValue([DefaultItem.hapticsEnabled.rawValue: enabled])
+    }
+
+    func handleNotifications(_ isEnabled: Bool) {
+        if isEnabled {
+            notificationManager.allowNotifications()
+        } else {
+            notificationManager.removeNotification()
+        }
     }
 }

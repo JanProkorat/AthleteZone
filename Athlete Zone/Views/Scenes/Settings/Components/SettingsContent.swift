@@ -22,11 +22,16 @@ struct SettingsContent: View {
                 Toggle("", isOn: appStorageManager.$soundsEnabled)
                     .frame(width: 0)
                     .padding(.trailing, 30)
-
             })
 
             SettingsItem(title: "Haptics (Watch only)", content: {
                 Toggle("", isOn: appStorageManager.$hapticsEnabled)
+                    .frame(width: 0)
+                    .padding(.trailing, 30)
+            })
+
+            SettingsItem(title: "Remind me workout", content: {
+                Toggle("", isOn: appStorageManager.$notificationsEnabled)
                     .frame(width: 0)
                     .padding(.trailing, 30)
             })
@@ -42,6 +47,7 @@ struct SettingsContent: View {
         .onChange(of: appStorageManager.hapticsEnabled) { newValue in
             self.viewModel.shareHapticsEnabled(newValue)
         }
+        .onChange(of: appStorageManager.notificationsEnabled) { self.viewModel.handleNotifications($0) }
     }
 }
 

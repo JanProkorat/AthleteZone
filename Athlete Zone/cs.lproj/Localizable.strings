@@ -63,3 +63,10 @@
 "Filters" = "Filtry";
 "Actions" = "Akce";
 
+
+//Notifications
+"Don't forget to workout today" = "Nezapomeňte si dnes zacvičit!";
+"Don't forget to crush your workout today!" = "Nezapomeň se dnes pořádně zničit!";
+"Time to sweat it out - your workout is waiting!" = "Čas to vypotit - Váš dnešní workout čeká";
+"Get up, get moving, get your workout in!" = "Vstaňte, začněte se hýbat, zacvičte si!";
+
