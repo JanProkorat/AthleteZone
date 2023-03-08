@@ -19,7 +19,7 @@ struct LibraryView: View {
                     Button {
                         viewModel.setSelectedWorkOut(workout)
                     } label: {
-                        ListItemView(name: workout.name, workOutTime: workout.timeOverview.toFormattedTime())
+                        ListItemView(name: workout.name, workOutTime: workout.workoutLength.toFormattedTime())
                     }
                     .listRowInsets(EdgeInsets(top: 2, leading: 2, bottom: 0, trailing: 2))
                 }

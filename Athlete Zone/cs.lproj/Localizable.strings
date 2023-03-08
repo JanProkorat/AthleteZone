@@ -11,6 +11,7 @@
 "Cancel" = "Zrušit";
 "Delete" = "Smazat";
 "Edit" = "Upravit";
+"Close" = "Zavřít";
 
 //Menu
 "Home" = "Domov";
@@ -46,6 +47,7 @@
 "Language" = "Jazyk";
 "Sounds" = "Zvuky";
 "Haptics (Watch only)" = "Vibrace (Jen hodinky)";
+"Allow notifications" = "Povolit notifikace";
 
 //Workout edit
 "Add workout" = "Přidat workout";

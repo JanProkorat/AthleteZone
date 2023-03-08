@@ -77,7 +77,7 @@ struct WorkOutListView: View {
                     ComponentColor.allCases.first(where: { $0.rawValue == item!.rawValue })!
             )
             ListViewText(
-                text: item == nil ? self.workOut.timeOverview.toFormattedTime() : getValueByType(item!),
+                text: item == nil ? self.workOut.workoutLength.toFormattedTime() : getValueByType(item!),
                 color: item == nil ? ComponentColor.mainText :
                     ComponentColor.allCases.first(where: { $0.rawValue == item!.rawValue })!
             )

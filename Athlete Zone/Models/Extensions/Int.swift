@@ -34,8 +34,12 @@ extension Int {
             return self.toFormattedTime()
 
         case .number:
-            return "\(self)x"
+            return self.toFormattedNumber()
         }
+    }
+
+    func toFormattedNumber() -> String {
+        return "\(self)x"
     }
 
     func toFormattedTime() -> String {
@@ -46,5 +50,17 @@ extension Int {
             formatter.allowedUnits.insert(.hour)
         }
         return formatter.string(from: TimeInterval(self))!
+    }
+
+    func toInterval(mins: Int, secs: Int) -> Int {
+        return self * 3600 + mins * 60 + secs
+    }
+
+    func toInterval(hours: Int, secs: Int) -> Int {
+        return hours * 3600 + self * 60 + secs
+    }
+
+    func toInterval(hours: Int, mins: Int) -> Int {
+        return hours * 3600 + mins * 60 + self
     }
 }

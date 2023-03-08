@@ -30,5 +30,6 @@ struct SettingsScene_Previews: PreviewProvider {
     static var previews: some View {
         SettingsScene()
             .environmentObject(ViewRouter())
+            .environmentObject(SettingsViewModel())
     }
 }

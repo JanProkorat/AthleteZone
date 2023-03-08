@@ -78,7 +78,7 @@ struct WorkOutRunContent_Previews: PreviewProvider {
         WorkOutRunContent()
             .environmentObject(WorkFlowViewModel())
             .environmentObject(ViewRouter())
-            .environmentObject(WorkOutViewModel(selectedWorkOut: WorkOut()))
+            .environmentObject(WorkOutViewModel())
     }
 }
 

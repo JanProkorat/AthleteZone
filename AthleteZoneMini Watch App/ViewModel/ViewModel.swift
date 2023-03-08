@@ -68,7 +68,7 @@ class ViewModel: ObservableObject {
             result = library.sorted { $0.createdDate > $1.createdDate }
 
         case .workoutLength:
-            result = library.sorted { $0.timeOverview > $1.timeOverview }
+            result = library.sorted { $0.workoutLength > $1.workoutLength }
         }
 
         return sortOrder == .ascending ? result.reversed() : result

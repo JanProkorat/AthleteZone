@@ -11,6 +11,7 @@
 "Cancel" = "Cancel";
 "Delete" = "Delete";
 "Edit" = "Edit";
+"Close" = "Close";
 
 //Menu
 "Home" = "Home";
@@ -40,6 +41,7 @@
 "Language" = "Language";
 "Sounds" = "Sounds";
 "Haptics (Watch only)" = "Haptics (Watch only)";
+"Allow notifications" = "Allow notifications";
 
 //Workout edit
 "Add workout" = "Add workout";

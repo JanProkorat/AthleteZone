@@ -7,71 +7,30 @@
 
 import Combine
 import Foundation
-import RealmSwift
+import SwiftUI
 
-class WorkOutViewModel: ObservableObject {
-    @Published var selectedWorkOut: WorkOut?
-    @Published var connectivityManager = WatchConnectivityManager.shared
-    @Published var appStorageManager = AppStorageManager.shared
-    @Published var notificationManager = NotificationManager()
+class WorkOutViewModel: WorkOutCommonViewModel, ObservableObject {
+    @ObservedObject var selectedWorkoutManager = SelectedWorkoutManager.shared
 
     private let realmManager = RealmManager()
 
-    init(selectedWorkOut: WorkOut? = nil) {
-        self.selectedWorkOut = selectedWorkOut
-    }
+    private var selectedWorkoutCancellable: AnyCancellable?
 
-    func setSelectedWorkOut(_ workout: WorkOut?) {
-        selectedWorkOut = workout
-    }
+    override init() {
+        super.init()
 
-    func saveWorkOut(_ workOut: WorkOut) {
-        realmManager.add(workOut)
-        selectedWorkOut = workOut
-        connectivityManager.sendValue(["workout_add": workOut.encode()])
-    }
-
-    func update(workOutToEdit: WorkOut, updatedWorkOut: WorkOut) {
-        do {
-            try realmManager.realm.write {
-                workOutToEdit.name = updatedWorkOut.name
-                workOutToEdit.work = updatedWorkOut.work
-                workOutToEdit.rest = updatedWorkOut.rest
-                workOutToEdit.series = updatedWorkOut.series
-                workOutToEdit.rounds = updatedWorkOut.rounds
-                workOutToEdit.reset = updatedWorkOut.reset
+        selectedWorkoutCancellable = selectedWorkoutManager.$selectedWorkout.sink(receiveValue: { newValue in
+            if let workout = newValue {
+                self.setValues(workout)
+                self.selectedWorkoutManager.selectedWorkout = nil
             }
-            connectivityManager.sendValue(["workout_edit": workOutToEdit.encode()])
-        } catch {
-            print(error.localizedDescription)
-        }
+        })
     }
 
-    func removeFromWatch(_ id: ObjectId) {
-        connectivityManager.sendValue(["workout_remove": id.stringValue])
-    }
-
-    func loadWorkoutById(_ id: ObjectId) -> WorkOut? {
-        return realmManager.load(entity: WorkOut.self, primaryKey: id)
-    }
-
-    func shareLanguage(_ language: Language) {
-        connectivityManager.sendValue([DefaultItem.language.rawValue: language.rawValue])
-    }
-
-    func shareSoundsEnabled(_ enabled: Bool) {
-        connectivityManager.sendValue([DefaultItem.soundsEnabled.rawValue: enabled])
-    }
-
-    func shareHapticsEnabled(_ enabled: Bool) {
-        connectivityManager.sendValue([DefaultItem.hapticsEnabled.rawValue: enabled])
-    }
-
-    func handleNotifications(_ isEnabled: Bool) {
-        if isEnabled {
-            notificationManager.allowNotifications()
-        } else {
-            notificationManager.removeNotification()
+    func loadWorkoutById(_ id: String) {
+        let workout = realmManager.load(entity: WorkOut.self, primaryKey: id)
+        if workout != nil {
+            setValues(workout!)
         }
     }
 }

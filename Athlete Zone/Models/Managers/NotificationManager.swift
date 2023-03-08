@@ -43,7 +43,7 @@ class NotificationManager: ObservableObject {
     func setupNotification() {
         let content = UNMutableNotificationContent()
         content.title = "Athlete Zone"
-        content.subtitle = NSLocalizedString(messages.randomElement() ?? "", comment: "")
+        content.body = NSLocalizedString(messages.randomElement() ?? "", comment: "")
         content.sound = UNNotificationSound.default
 
         var dateComponents = DateComponents()

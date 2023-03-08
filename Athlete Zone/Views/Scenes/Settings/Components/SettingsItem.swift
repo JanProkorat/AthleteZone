@@ -23,7 +23,7 @@ struct SettingsItem<Content: View>: View {
                 .frame(height: 80)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundColor(Color(ComponentColor.mainText.rawValue))
-                .font(.title)
+                .font(.title2)
                 .padding(.leading)
                 .lineLimit(1)
 

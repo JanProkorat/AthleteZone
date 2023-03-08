@@ -8,15 +8,16 @@
 import SwiftUI
 
 struct WorkOutEditHeader: View {
-    var isEditing = false
+    @EnvironmentObject var viewModel: WorkOutEditViewModel
 
     var body: some View {
-        TitleText(text: "\(!isEditing ? "Add" : "Edit") workout", alignment: .center)
+        TitleText(text: "\(viewModel._id == nil ? "Add" : "Edit") workout", alignment: .center)
     }
 }
 
 struct ExerciseEditHeader_Previews: PreviewProvider {
     static var previews: some View {
-        WorkOutEditHeader(isEditing: false)
+        WorkOutEditHeader()
+            .environmentObject(WorkOutEditViewModel())
     }
 }

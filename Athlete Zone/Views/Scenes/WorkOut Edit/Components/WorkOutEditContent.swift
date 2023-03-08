@@ -8,75 +8,24 @@
 import SwiftUI
 
 struct WorkOutEditContent: View {
-    @EnvironmentObject var router: ViewRouter
+    @EnvironmentObject var viewModel: WorkOutEditViewModel
 
     var onNameChange: ((_ value: String) -> Void)?
     var onEditFieldTab: ((_ value: ActivityType) -> Void)?
-
-    var name = ""
-    var work = 0
-    var rest = 0
-    var series = 0
-    var rounds = 0
-    var reset = 0
-
-    init(_ name: String, _ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int) {
-        self.name = name
-        self.work = work
-        self.rest = rest
-        self.series = series
-        self.rounds = rounds
-        self.reset = reset
-    }
 
     let editFieldConfig = ActivityType.allCases.chunked(into: 2)
 
     var body: some View {
         VStack(spacing: 15) {
-            VStack(alignment: .leading, spacing: 5) {
-                EditField(
-                    value: name,
-                    label: "Name",
-                    labelSize: 23,
-                    fieldSize: 50,
-                    color: ComponentColor.mainText,
-                    type: .text
-                )
-                .onNameChange { self.performAction(self.onNameChange, value: $0) }
-                .padding([.top, .bottom])
-            }
-            .frame(alignment: .leading)
-            .frame(maxWidth: .infinity)
-            .background(
-                RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(Color(ComponentColor.menu.rawValue))
-            )
+            nameSection
 
             VStack(spacing: 0) {
                 ForEach(editFieldConfig, id: \.first?.id) { chunk in
                     HStack {
-                        EditField(
-                            value: getValueByType(chunk.first!),
-                            label: chunk.first!.rawValue,
-                            labelSize: 23,
-                            fieldSize: 40,
-                            color: ComponentColor.allCases
-                                .first(where: { chunk.first!.rawValue.contains($0.rawValue) })!,
-                            type: .time
-                        )
-                        .onTab { performAction(self.onEditFieldTab, value: chunk.first!) }
+                        editField(for: chunk.first!)
 
                         if chunk.count > 1 {
-                            EditField(
-                                value: getValueByType(chunk.last!),
-                                label: chunk.last!.rawValue,
-                                labelSize: 20,
-                                fieldSize: 40,
-                                color: ComponentColor.allCases
-                                    .first(where: { chunk.last!.rawValue.contains($0.rawValue) })!,
-                                type: .time
-                            )
-                            .onTab { performAction(self.onEditFieldTab, value: chunk.last!) }
+                            editField(for: chunk.last!)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -84,40 +33,81 @@ struct WorkOutEditContent: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .background(
-                RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(Color(ComponentColor.menu.rawValue))
-            )
+            .roundedBackground(cornerRadius: 20)
+            .padding(.bottom)
         }
         .frame(maxHeight: .infinity, alignment: .top)
         .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 
+    @ViewBuilder
+    var nameSection: some View {
+        VStack(alignment: .leading, spacing: 5) {
+            EditField(label: "Name", labelSize: 23, color: ComponentColor.mainText) {
+                TextInput(text: $viewModel.name)
+            }
+            .padding([.top, .bottom])
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .roundedBackground(cornerRadius: 20)
+    }
+
+    @ViewBuilder
+    func editField(for type: ActivityType) -> some View {
+        let label = type.rawValue
+        let labelSize: CGFloat = 23
+        let color = ComponentColor.allCases.first(where: { label.contains($0.rawValue) })!
+
+        EditField(label: label, labelSize: labelSize, color: color) {
+            ActionButton {
+                ActionView(
+                    text: self.getValueByType(type),
+                    color: ComponentColor.mainText,
+                    backgoundColor: Background.background.rawValue,
+                    image: nil,
+                    height: 40,
+                    cornerRadius: 10
+                )
+                .overlay(
+                    HStack {
+                        if self.getValueByType(type) == "00:00" {
+                            Image(systemName: "exclamationmark.circle")
+                                .foregroundColor(.red)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .padding(.trailing, 10)
+                )
+            }
+            .onTab { performAction(self.onEditFieldTab, value: type) }
+            .padding([.leading, .trailing])
+        }
+    }
+
     func getValueByType(_ type: ActivityType) -> String {
         switch type {
         case .work:
-            return work.toFormattedTime()
+            return viewModel.work.toFormattedTime()
 
         case .rest:
-            return rest.toFormattedTime()
+            return viewModel.rest.toFormattedTime()
 
         case .series:
-            return series.toFormattedValue(type: .number)
+            return viewModel.series.toFormattedNumber()
 
         case .rounds:
-            return rounds.toFormattedValue(type: .number)
+            return viewModel.rounds.toFormattedNumber()
 
         case .reset:
-            return reset.toFormattedTime()
+            return viewModel.reset.toFormattedTime()
         }
     }
 }
 
 struct ExerciseEditContent_Previews: PreviewProvider {
     static var previews: some View {
-        WorkOutEditContent("Title", 30, 15, 7, 2, 45)
-            .environmentObject(WorkOutViewModel())
-            .environmentObject(ViewRouter())
+        WorkOutEditContent()
+            .environmentObject(WorkOutEditViewModel())
     }
 }
 
@@ -135,22 +125,16 @@ extension WorkOutEditContent {
     }
 }
 
-struct TextFieldClearButton: ViewModifier {
-    @Binding var text: String
+struct TextInputStyle: TextFieldStyle {
+    let height: CGFloat
 
-    func body(content: Content) -> some View {
-        HStack {
-            content
-
-            if !text.isEmpty {
-                Button(
-                    action: { self.text = "" },
-                    label: {
-                        Image(systemName: "clear")
-                            .foregroundColor(Color(ComponentColor.mainText.rawValue))
-                    }
-                )
-            }
-        }
+    func _body(configuration: TextField<Self._Label>) -> some View {
+        configuration
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .foregroundColor(Color(Background.background.rawValue))
+                    .frame(height: height * 0.7)
+            ).padding()
     }
 }

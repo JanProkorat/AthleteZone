@@ -20,4 +20,12 @@ extension View {
             localAction(value)
         }
     }
+
+    func roundedBackground(cornerRadius: CGFloat) -> some View {
+        return self
+            .background(
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .foregroundColor(Color(ComponentColor.menu.rawValue))
+            )
+    }
 }

@@ -16,6 +16,7 @@ struct AthleteZoneMiniWatchAppApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(viewModel)
+                .environment(\.colorScheme, .dark)
                 .environment(\.locale, .init(identifier: "\(appStorageManager.language)"))
         }
     }

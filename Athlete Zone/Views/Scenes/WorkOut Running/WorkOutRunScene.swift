@@ -9,29 +9,29 @@ import SwiftUI
 
 struct WorkOutRunScene: View {
     @EnvironmentObject var router: ViewRouter
-    @EnvironmentObject var viewModel: WorkOutViewModel
-    @StateObject var workFlowViewModel = WorkFlowViewModel()
+    @EnvironmentObject var viewModel: WorkFlowViewModel
 
     var body: some View {
         BaseView(
             header: {
-                WorkOutRunHeader(title: viewModel.selectedWorkOut!.name)
+                WorkOutRunHeader(title: viewModel.workoutName)
             },
             content: {
                 WorkOutRunContent()
-                    .onQuitTab { router.currentTab = .home }
-                    .environmentObject(workFlowViewModel)
+                    .onQuitTab {
+                        viewModel.onQuitTab()
+                        router.currentTab = .home
+                    }
             },
             footer: {
                 WorkOutRunFooter()
-                    .onQuitTab { router.currentTab = .home }
-                    .environmentObject(workFlowViewModel)
+                    .onQuitTab {
+                        viewModel.onQuitTab()
+                        router.currentTab = .home
+                    }
             }
         )
-        .onAppear {
-            workFlowViewModel.createWorkFlow(workOut: viewModel.selectedWorkOut!)
-        }
-        .onChange(of: workFlowViewModel.state) { newValue in
+        .onChange(of: viewModel.state) { newValue in
             switch newValue {
             case .running:
                 UIApplication.shared.isIdleTimerDisabled = true
@@ -47,7 +47,7 @@ struct WorkOutRunScene_Previews: PreviewProvider {
     static var previews: some View {
         WorkOutRunScene()
             .environmentObject(ViewRouter())
-            .environmentObject(WorkOutViewModel(selectedWorkOut: WorkOut()))
+            .environmentObject(WorkFlowViewModel())
             .environment(\.locale, .init(identifier: "cze"))
     }
 }

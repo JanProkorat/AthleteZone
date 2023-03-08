@@ -51,6 +51,7 @@ enum ComponentColor: String, CaseIterable {
     case action = "Action"
     case braun = "Braun"
     case darkBlue = "Dark_blue"
+    case grey = "Grey"
     case mainText = "Main_text"
     case menuText = "Menu_text"
     case menuItemSelected = "Menu_item_selected"
@@ -72,6 +73,7 @@ enum ComponentColor: String, CaseIterable {
 
 enum Background: String, CaseIterable {
     case background = "Background"
+    case sheetBackground = "Sheet_background"
     case reset = "Reset_background"
     case rest = "Rest_background"
     case rounds = "Rounds_background"

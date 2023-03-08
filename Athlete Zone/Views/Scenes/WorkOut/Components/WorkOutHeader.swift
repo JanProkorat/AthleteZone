@@ -8,14 +8,10 @@
 import SwiftUI
 
 struct WorkOutHeader: View {
+    @EnvironmentObject var viewModel: WorkOutViewModel
+
     var onSectionChangeTab: (() -> Void)?
     var onSaveTab: (() -> Void)?
-
-    let name: String
-
-    init(_ name: String) {
-        self.name = name
-    }
 
     var body: some View {
         HStack {
@@ -26,7 +22,7 @@ struct WorkOutHeader: View {
 //                    .foregroundColor(Color(ComponentColor.mainText.rawValue))
 //                    .frame(maxWidth: 55, maxHeight: 50)
 
-                TitleText(text: name)
+                TitleText(text: viewModel.name)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -45,19 +41,19 @@ struct WorkOutHeader: View {
 
 struct ExerciseHeaderBar_Previews: PreviewProvider {
     static var previews: some View {
-        WorkOutHeader("Title")
+        WorkOutHeader()
             .environmentObject(WorkOutViewModel())
     }
 }
 
 extension WorkOutHeader {
-    func onSectionChangeTab(action: @escaping (() -> Void)) -> WorkOutHeader {
+    func onSectionChangeTab(action: @escaping () -> Void) -> WorkOutHeader {
         var new = self
         new.onSectionChangeTab = action
         return new
     }
 
-    func onSaveTab(action: @escaping (() -> Void)) -> WorkOutHeader {
+    func onSaveTab(action: @escaping () -> Void) -> WorkOutHeader {
         var new = self
         new.onSaveTab = action
         return new

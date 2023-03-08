@@ -26,7 +26,16 @@ struct WorkOutView: View {
         .environmentObject(workFlowViewModel)
         .onAppear {
             if let workout = viewModel.selectedWorkOut {
-                workFlowViewModel.createWorkFlow(workOut: workout)
+                workFlowViewModel.selectedFlowIndex = 0
+                workFlowViewModel.state = .ready
+                workFlowViewModel.createWorkFlow(
+                    workout.name,
+                    workout.work,
+                    workout.rest,
+                    workout.series,
+                    workout.rounds,
+                    workout.reset
+                )
             }
         }
         .onChange(of: workFlowViewModel.state) { newValue in

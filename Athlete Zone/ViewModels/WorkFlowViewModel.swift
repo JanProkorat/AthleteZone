@@ -13,6 +13,7 @@ class WorkFlowViewModel: ObservableObject {
     @Published var flow: [WorkFlow] = .init()
     @Published var selectedFlow: WorkFlow?
 
+    @Published var workoutName = ""
     @Published var selectedFlowIndex = 0
     @Published var seriesCount = 0
     @Published var roundsCount = 0
@@ -59,16 +60,17 @@ class WorkFlowViewModel: ObservableObject {
         }
     }
 
-    func createWorkFlow(workOut: WorkOut) {
-        seriesCount = workOut.series
-        roundsCount = workOut.rounds
+    func createWorkFlow(_ name: String, _ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int) {
+        workoutName = name
+        seriesCount = series
+        roundsCount = rounds
 
         flow.append(WorkFlow(interval: 10, type: .preparation, round: 1, serie: 1))
         var serieCount = 1
         var interval = 0
-        for round in 1 ... workOut.rounds {
-            for serie in 1 ... (workOut.series + (workOut.series - 1)) {
-                interval = serie.isOdd() ? workOut.work : workOut.rest
+        for round in 1 ... rounds {
+            for serie in 1 ... (series + (series - 1)) {
+                interval = serie.isOdd() ? work : rest
                 if interval != 0 {
                     flow.append(
                         WorkFlow(
@@ -83,10 +85,10 @@ class WorkFlowViewModel: ObservableObject {
                     serieCount += 1
                 }
             }
-            if round < workOut.rounds {
+            if round < rounds {
                 flow.append(
                     WorkFlow(
-                        interval: workOut.reset,
+                        interval: reset,
                         type: .reset,
                         round: round,
                         serie: flow[flow.count - 1].serie
@@ -101,6 +103,10 @@ class WorkFlowViewModel: ObservableObject {
 
     func setState(_ state: WorkFlowState) {
         self.state = state
+    }
+
+    func onQuitTab() {
+        selectedFlowIndex = 0
     }
 }
 

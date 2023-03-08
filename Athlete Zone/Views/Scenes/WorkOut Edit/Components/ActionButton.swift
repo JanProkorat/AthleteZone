@@ -7,9 +7,13 @@
 
 import SwiftUI
 
-struct ActionButton: View {
-    let innerComponent: ActionView
+struct ActionButton<Content: View>: View {
+    let content: Content
     var onTab: (() -> Void)?
+
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+    }
 
     var body: some View {
         Button(action: {
@@ -17,7 +21,7 @@ struct ActionButton: View {
                 onTab()
             }
         }, label: {
-            innerComponent
+            content
         })
         .frame(maxWidth: .infinity)
     }
@@ -25,8 +29,8 @@ struct ActionButton: View {
 
 struct ActionButton_Previews: PreviewProvider {
     static var previews: some View {
-        ActionButton(
-            innerComponent: ActionView(
+        ActionButton {
+            ActionView(
                 text: "Save",
                 color: ComponentColor.rounds,
                 backgoundColor: nil,
@@ -34,7 +38,7 @@ struct ActionButton_Previews: PreviewProvider {
                 height: 60,
                 cornerRadius: nil
             )
-        )
+        }
     }
 }
 

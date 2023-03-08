@@ -11,6 +11,7 @@
 "Cancel" = "Abbrechen";
 "Delete" = "Löschen";
 "Edit" = "Bearbeiten";
+"Close" = "Schließen";
 
 //Menu
 "Home" = "Haus";
@@ -46,6 +47,7 @@
 "Language" = "Sprache";
 "Sounds" = "Töne";
 "Haptics (Watch only)" = "Haptik (nur Uhr)";
+"Allow notifications" = "Benachrichtigungen zulassen";
 
 //Workout edit
 "Add workout" = "Workout hinzufügen";

@@ -8,99 +8,81 @@
 import SwiftUI
 
 struct WorkOutEditScene: View {
-    @EnvironmentObject var router: ViewRouter
-
-    var onCloseTab: (() -> Void)?
-    var onSaveTab: ((_ workout: WorkOut) -> Void)?
+    var onCloseTab: ((_ newWorkoutId: String?) -> Void)?
 
     @State var activeSheetType: ActivityType?
+    @ObservedObject var viewModel: WorkOutEditViewModel
 
-    @State var name = ""
-    @State var work = 0
-    @State var rest = 0
-    @State var series = 0
-    @State var rounds = 0
-    @State var reset = 0
-    @Binding var isEditing: Bool
-
-    init(_ name: String, _ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int, _ isEditing: Binding<Bool>) {
-        self._name = State(initialValue: name)
-        self._work = State(initialValue: work)
-        self._rest = State(initialValue: rest)
-        self._series = State(initialValue: series)
-        self._rounds = State(initialValue: rounds)
-        self._reset = State(initialValue: reset)
-        _isEditing = isEditing
+    init(name: String, work: Int, rest: Int, series: Int, rounds: Int, reset: Int, _id: String? = nil) {
+        viewModel = WorkOutEditViewModel(
+            name: name,
+            work: work,
+            rest: rest,
+            series: series,
+            rounds: rounds,
+            reset: reset,
+            _id: _id
+        )
     }
 
     var body: some View {
         BaseView(
             header: {
-                WorkOutEditHeader(isEditing: isEditing)
+                WorkOutEditHeader()
             },
             content: {
-                WorkOutEditContent(name, work, rest, series, rounds, reset)
-                    .onNameChange { name = $0 }
+                WorkOutEditContent()
                     .onEditFieldTab { activeSheetType = $0 }
             },
             footer: {
                 WorkOutEditFooter()
-                    .onCloseTab { performAction(self.onCloseTab) }
+                    .onCloseTab { performAction(self.onCloseTab, value: nil) }
                     .onSaveTab {
-                        performAction(self.onSaveTab, value: WorkOut(name, work, rest, series, rounds, reset))
+                        viewModel.save()
+                        performAction(self.onCloseTab, value: viewModel._id)
                     }
             }
         )
+        .environmentObject(viewModel)
         .sheet(item: $activeSheetType) { activitySheet in
+            let color = ComponentColor.allCases.first(where: { activitySheet.rawValue.contains($0.rawValue) })!
             IntervalPicker(
                 title: activitySheet.rawValue,
-                color: ComponentColor.allCases.first(where: { activitySheet.rawValue.contains($0.rawValue) })!,
+                color: color,
                 backgroundColor: Background.allCases.first(where: { $0.rawValue.contains(activitySheet.rawValue) })!
             ) {
                 switch activitySheet {
                 case .work:
-                    TimePicker(textColor: ComponentColor.work.rawValue, interval: work)
-                        .onValueChange { work = $0 }
+                    TimePicker(textColor: color, interval: $viewModel.work)
 
                 case .rest:
-                    TimePicker(textColor: ComponentColor.rest.rawValue, interval: rest)
-                        .onValueChange { rest = $0 }
+                    TimePicker(textColor: color, interval: $viewModel.rest)
 
                 case .series:
-                    NumberPicker(textColor: ComponentColor.series.rawValue, value: series)
-                        .onValueChange { series = $0 }
+                    NumberPicker(textColor: color, value: $viewModel.series)
 
                 case .rounds:
-                    NumberPicker(textColor: ComponentColor.rounds.rawValue, value: rounds)
-                        .onValueChange { rounds = $0 }
+                    NumberPicker(textColor: color, value: $viewModel.rounds)
 
                 case .reset:
-                    TimePicker(textColor: ComponentColor.reset.rawValue, interval: reset)
-                        .onValueChange { reset = $0 }
+                    TimePicker(textColor: color, interval: $viewModel.reset)
                 }
             }
+            .presentationDetents([.fraction(0.4)])
         }
     }
 }
 
 struct ExerciseEditScene_Previews: PreviewProvider {
     static var previews: some View {
-        WorkOutEditScene("title", 40, 60, 2, 8, 120, .constant(true))
-            .environmentObject(WorkOutViewModel())
-            .environmentObject(ViewRouter())
+        WorkOutEditScene(name: "Title", work: 30, rest: 60, series: 2, rounds: 1, reset: 120)
     }
 }
 
 extension WorkOutEditScene {
-    func onCloseTab(_ handler: @escaping () -> Void) -> WorkOutEditScene {
+    func onCloseTab(_ handler: @escaping (_ newWorkoutId: String?) -> Void) -> WorkOutEditScene {
         var new = self
         new.onCloseTab = handler
-        return new
-    }
-
-    func onSaveTab(_ handler: @escaping (_ value: WorkOut) -> Void) -> WorkOutEditScene {
-        var new = self
-        new.onSaveTab = handler
         return new
     }
 }

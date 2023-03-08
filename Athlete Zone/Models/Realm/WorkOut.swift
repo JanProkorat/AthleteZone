@@ -8,16 +8,17 @@
 import Foundation
 import RealmSwift
 
+@objcMembers
 public class WorkOut: Object, Identifiable, Codable {
     @Persisted(primaryKey: true) var _id: ObjectId
 
-    @objc @Persisted var name: String
-    @objc @Persisted var work: Int
-    @objc @Persisted var rest: Int
-    @objc @Persisted var series: Int
-    @objc @Persisted var rounds: Int
-    @objc @Persisted var reset: Int
-    @objc @Persisted var createdDate: Date
+    @Persisted var name: String
+    @Persisted var work: Int
+    @Persisted var rest: Int
+    @Persisted var series: Int
+    @Persisted var rounds: Int
+    @Persisted var reset: Int
+    @Persisted var createdDate: Date
 
     override init() {
         name = "Title"
@@ -39,38 +40,18 @@ public class WorkOut: Object, Identifiable, Codable {
         createdDate = Date()
     }
 
-    @objc var timeOverview: Int {
+    var workoutLength: Int {
         (((work * series) + (rest * (series - 1)) + reset) * rounds) - reset
     }
 
-    @objc var formattedCreatedDate: String {
+    var formattedCreatedDate: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
         return dateFormatter.string(from: createdDate)
     }
 
-    func setName(_ name: String) {
-        self.name = name
-    }
-
-    func setWork(_ work: Int) {
-        self.work = work
-    }
-
-    func setRest(_ rest: Int) {
-        self.rest = rest
-    }
-
-    func setSeries(_ series: Int) {
-        self.series = series
-    }
-
-    func setRounds(_ rounds: Int) {
-        self.rounds = rounds
-    }
-
-    func setReset(_ reset: Int) {
-        self.reset = reset
+    override public static func ignoredProperties() -> [String] {
+        return ["objectWillChange"]
     }
 
     enum CodingKeys: String, CodingKey {
@@ -89,7 +70,7 @@ public class WorkOut: Object, Identifiable, Codable {
         try container.encode(_id, forKey: ._id)
     }
 
-    func encode() -> String {
+    public func encode() -> String {
         do {
             let encodedData = try JSONEncoder().encode(self)
             let jsonString = String(data: encodedData, encoding: .utf8)

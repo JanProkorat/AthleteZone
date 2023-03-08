@@ -10,8 +10,8 @@ import SwiftUI
 @main
 struct AthleteZoneApp: App {
     @StateObject var router = ViewRouter()
-    @StateObject var workOutViewModel = WorkOutViewModel()
     @StateObject var appStorageManager = AppStorageManager.shared
+    var notificationManager = NotificationManager()
 
     @Environment(\.scenePhase) var scenePhase
 
@@ -21,10 +21,10 @@ struct AthleteZoneApp: App {
                 .environment(\.locale, .init(identifier: "\(appStorageManager.language)"))
                 .environment(\.colorScheme, .dark)
                 .environmentObject(router)
-                .environmentObject(workOutViewModel)
+                .environmentObject(appStorageManager)
                 .onAppear {
                     if appStorageManager.notificationsEnabled {
-                        self.workOutViewModel.handleNotifications(true)
+                        self.notificationManager.allowNotifications()
                     }
                 }
         }

@@ -9,28 +9,21 @@ import RealmSwift
 import SwiftUI
 
 struct LibraryScene: View {
-    @State var isEditing: Bool
-    @State var workOutToEdit: WorkOut?
     @EnvironmentObject var router: ViewRouter
-    @EnvironmentObject var viewModel: WorkOutViewModel
-
-    init() {
-        isEditing = false
-    }
+    @EnvironmentObject var viewModel: LibraryViewModel
+    @State private var isEditing = false
 
     var body: some View {
         BaseView(
             header: {
                 LibraryHeader()
-                    .onAddTab {
-                        workOutToEdit = WorkOut()
-                    }
+                    .onAddTab { viewModel.workoutToEdit = WorkOut() }
             },
             content: {
                 LibraryContent()
                     .onEditTab {
-                        isEditing = true
-                        workOutToEdit = $0
+                        self.isEditing = true
+                        viewModel.workoutToEdit = $0
                     }
             },
             footer: {
@@ -38,22 +31,17 @@ struct LibraryScene: View {
                     .onRouteTab { router.currentTab = $0 }
             }
         )
-        .fullScreenCover(item: $workOutToEdit, content: { value in
-            WorkOutEditScene(value.name, value.work, value.rest, value.series, value.rounds, value.reset, $isEditing)
-                .onCloseTab {
-                    workOutToEdit = nil
-                    isEditing = false
-                }
-                .onSaveTab { value in
-                    switch isEditing {
-                    case true:
-                        isEditing = false
-                        viewModel.update(workOutToEdit: workOutToEdit!, updatedWorkOut: value)
-
-                    case false:
-                        viewModel.saveWorkOut(value)
+        .fullScreenCover(item: $viewModel.workoutToEdit, content: { value in
+            WorkOutEditScene(name: value.name, work: value.work, rest: value.rest, series: value.series,
+                             rounds: value.rounds, reset: value.reset, _id: isEditing ? value._id.stringValue : nil)
+                .onCloseTab { editedId in
+                    if let id = editedId {
+                        if id == viewModel.selectedWorkoutManager.selectedWorkout?._id.stringValue {
+                            viewModel.setSelectedWorkOut(id)
+                        }
                     }
-                    workOutToEdit = nil
+                    viewModel.workoutToEdit = nil
+                    isEditing = false
                 }
         })
     }
@@ -63,7 +51,7 @@ struct LibraryScene_Previews: PreviewProvider {
     static var previews: some View {
         LibraryScene()
             .environmentObject(WorkOutViewModel())
+            .environmentObject(LibraryViewModel())
             .environmentObject(ViewRouter())
-            .environment(\.locale, .init(identifier: "cze"))
     }
 }

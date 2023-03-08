@@ -35,15 +35,15 @@ struct BaseView<Header: View, Content: View, Footer: View>: View {
                     .padding(.top, 5)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-                Spacer()
                 footer
-                    .padding(10)
+                    .padding([.leading, .trailing], 10)
                     .frame(maxWidth: .infinity)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .background(Color(Background.background.rawValue))
             .environment(\.colorScheme, .dark)
         }
+        .ignoresSafeArea(.keyboard, edges: [.bottom])
     }
 }
 

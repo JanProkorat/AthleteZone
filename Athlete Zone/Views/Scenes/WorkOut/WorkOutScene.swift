@@ -9,33 +9,22 @@ import RealmSwift
 import SwiftUI
 
 struct WorkOutScene: View {
-    @AppStorage(DefaultItem.selectedWorkoutId.rawValue) private var selectedItemId: String = ""
-    @Environment(\.scenePhase) var scenePhase
-
     @EnvironmentObject var viewModel: WorkOutViewModel
     @EnvironmentObject var router: ViewRouter
 
     @State var isModalActive = false
-    @State var name = ""
-    @State var work = 0
-    @State var rest = 0
-    @State var series = 0
-    @State var rounds = 0
-    @State var reset = 0
-
     @State var activeSheetType: ActivityType?
 
     var body: some View {
         BaseView(
             header: {
-                WorkOutHeader(name)
+                WorkOutHeader()
                     .onSaveTab { isModalActive = true }
             },
             content: {
-                WorkOutContent(work, rest, series, rounds, reset)
+                WorkOutContent()
                     .onTab { self.activeSheetType = $0 }
                     .onStartTab {
-                        viewModel.setSelectedWorkOut(WorkOut(name, work, rest, series, rounds, reset))
                         router.currentTab = .workoutRun
                     }
             },
@@ -44,24 +33,13 @@ struct WorkOutScene: View {
                     .onRouteTab { router.currentTab = $0 }
             }
         )
-        .onAppear {
-            setValues()
-        }
-        .onChange(of: scenePhase) { newPhase in
-            if (newPhase == .inactive || newPhase == .background) && viewModel.selectedWorkOut != nil {
-                selectedItemId = viewModel.selectedWorkOut!._id.stringValue
-            }
-        }
-        .onChange(of: isModalActive, perform: { newValue in
-            if !newValue {
-                setValues()
-            }
-        })
         .fullScreenCover(isPresented: $isModalActive, content: {
-            WorkOutEditScene(name, work, rest, series, rounds, reset, .constant(false))
-                .onCloseTab { isModalActive = false }
-                .onSaveTab { value in
-                    viewModel.saveWorkOut(value)
+            WorkOutEditScene(name: viewModel.name, work: viewModel.work, rest: viewModel.rest, series: viewModel.series,
+                             rounds: viewModel.rounds, reset: viewModel.reset)
+                .onCloseTab { newObjectId in
+                    if newObjectId != nil {
+                        viewModel.loadWorkoutById(newObjectId!)
+                    }
                     isModalActive = false
                 }
         })
@@ -73,26 +51,22 @@ struct WorkOutScene: View {
             ) {
                 switch activitySheet {
                 case .work:
-                    TimePicker(textColor: ComponentColor.work.rawValue, interval: work)
-                        .onValueChange { work = $0 }
+                    TimePicker(textColor: ComponentColor.work, interval: $viewModel.work)
 
                 case .rest:
-                    TimePicker(textColor: ComponentColor.rest.rawValue, interval: rest)
-                        .onValueChange { rest = $0 }
+                    TimePicker(textColor: ComponentColor.rest, interval: $viewModel.rest)
 
                 case .series:
-                    NumberPicker(textColor: ComponentColor.series.rawValue, value: series)
-                        .onValueChange { series = $0 }
+                    NumberPicker(textColor: ComponentColor.series, value: $viewModel.series)
 
                 case .rounds:
-                    NumberPicker(textColor: ComponentColor.rounds.rawValue, value: rounds)
-                        .onValueChange { rounds = $0 }
+                    NumberPicker(textColor: ComponentColor.rounds, value: $viewModel.rounds)
 
                 case .reset:
-                    TimePicker(textColor: ComponentColor.reset.rawValue, interval: reset)
-                        .onValueChange { reset = $0 }
+                    TimePicker(textColor: ComponentColor.reset, interval: $viewModel.reset)
                 }
             }
+            .presentationDetents([.fraction(0.4)])
         }
     }
 }
@@ -102,36 +76,6 @@ struct WorkOutScene_Previews: PreviewProvider {
         WorkOutScene()
             .environmentObject(WorkOutViewModel())
             .environmentObject(ViewRouter())
-    }
-}
-
-extension WorkOutScene {
-    func setValues() {
-        var selectedWorkout: WorkOut?
-        if let workout = viewModel.selectedWorkOut {
-            selectedWorkout = workout
-        } else if !selectedItemId.isEmpty {
-            do {
-                let dbWorkout = try viewModel.loadWorkoutById(ObjectId(string: selectedItemId))
-                if let workout = dbWorkout {
-                    selectedWorkout = workout
-                    viewModel.setSelectedWorkOut(selectedWorkout!)
-                } else {
-                    selectedWorkout = WorkOut()
-                    viewModel.setSelectedWorkOut(selectedWorkout)
-                }
-            } catch {
-                print(error.localizedDescription)
-            }
-        } else {
-            selectedWorkout = WorkOut()
-            viewModel.setSelectedWorkOut(selectedWorkout!)
-        }
-        name = selectedWorkout!.name
-        work = selectedWorkout!.work
-        rest = selectedWorkout!.rest
-        series = selectedWorkout!.series
-        rounds = selectedWorkout!.rounds
-        reset = selectedWorkout!.reset
+            .environmentObject(AppStorageManager())
     }
 }

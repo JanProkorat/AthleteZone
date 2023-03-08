@@ -20,4 +20,12 @@ extension String {
             throw NSError(domain: "Error decoding string", code: 0, userInfo: nil)
         }
     }
+
+    func toPascalCase() -> String {
+        let input = lowercased()
+        let words = input.components(separatedBy: CharacterSet.alphanumerics.inverted)
+        let capitalizedWords = words.map { $0.capitalized }
+        let joinedWords = capitalizedWords.joined()
+        return joinedWords.prefix(1).lowercased() + joinedWords.dropFirst()
+    }
 }

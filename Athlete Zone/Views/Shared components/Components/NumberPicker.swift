@@ -8,24 +8,23 @@
 import SwiftUI
 
 struct NumberPicker: View {
-    let textColor: String
-    var onValueChange: ((_ value: Int) -> Void)?
+    let textColor: ComponentColor
 
-    @State private var selectedValue = 1
-
-    init(textColor: String, value: Int) {
-        self.textColor = textColor
-        self._selectedValue = State<Int>(initialValue: value)
-    }
+    @Binding var value: Int
 
     private var numbers = Array(0 ... 50)
 
+    init(textColor: ComponentColor, value: Binding<Int>) {
+        self.textColor = textColor
+        self._value = value
+    }
+
     var body: some View {
         VStack(alignment: .center) {
-            Picker(selection: $selectedValue, label: Text("Number")) {
+            Picker(selection: $value, label: Text("Number")) {
                 ForEach((1 ..< self.numbers.count).reversed(), id: \.self) {
                     Text("\(self.numbers[$0])")
-                        .foregroundColor(Color(textColor))
+                        .foregroundColor(Color(textColor.rawValue))
                         .font(.custom("Lato-Black", size: 30))
                 }
             }
@@ -42,22 +41,12 @@ struct NumberPicker: View {
         }
         .padding([.top], 25)
         .padding([.leading, .trailing], 10)
-        .onChange(of: selectedValue, perform: { _ in
-            self.performAction(onValueChange, value: self.selectedValue)
-        })
     }
 }
 
 struct NumberPicker_Previews: PreviewProvider {
     static var previews: some View {
-        NumberPicker(textColor: ComponentColor.rounds.rawValue, value: 5)
-    }
-}
-
-extension NumberPicker {
-    func onValueChange(_ handler: @escaping (_ value: Int) -> Void) -> NumberPicker {
-        var new = self
-        new.onValueChange = handler
-        return new
+        let bind = Binding.constant(25)
+        NumberPicker(textColor: ComponentColor.rounds, value: bind)
     }
 }

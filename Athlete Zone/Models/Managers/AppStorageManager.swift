@@ -11,6 +11,7 @@ import SwiftUI
 class AppStorageManager: ObservableObject {
     static let shared = AppStorageManager()
 
+    @AppStorage(DefaultItem.selectedWorkoutId.rawValue) var selectedItemId: String = ""
     @AppStorage(DefaultItem.language.rawValue) var language: Language = .en
     @AppStorage(DefaultItem.soundsEnabled.rawValue) var soundsEnabled = true
     @AppStorage(DefaultItem.hapticsEnabled.rawValue) var hapticsEnabled = true

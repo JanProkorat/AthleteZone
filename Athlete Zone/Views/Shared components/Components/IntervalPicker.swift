@@ -9,20 +9,19 @@ import SwiftUI
 
 struct IntervalPicker<Picker: View>: View {
     let picker: Picker
-
     let title: String
     let color: ComponentColor
     let backgroundColor: Background
 
     init(title: String, color: ComponentColor, backgroundColor: Background, @ViewBuilder picker: () -> Picker) {
-        self.picker = picker()
         self.title = title
         self.color = color
         self.backgroundColor = backgroundColor
+        self.picker = picker()
     }
 
     var body: some View {
-        BaseView {
+        VStack(spacing: 0) {
             ZStack {
                 RoundedRectangle(cornerRadius: 20)
                     .stroke(Color(ComponentColor.darkBlue.rawValue), lineWidth: 3)
@@ -30,27 +29,27 @@ struct IntervalPicker<Picker: View>: View {
                 RoundedRectangle(cornerRadius: 20)
                     .foregroundColor(Color(backgroundColor.rawValue))
                 Text(LocalizedStringKey(title))
-                    .font(.system(size: 40))
+                    .font(.title)
                     .foregroundColor(Color(color.rawValue))
                     .frame(maxWidth: .infinity, alignment: .center)
             }
-            .padding(.top, 50)
+            .padding(.top, 20)
             .padding([.leading, .trailing], 10)
             .frame(maxHeight: 80)
 
-        } content: {
             picker
                 .frame(maxHeight: .infinity)
-                .padding(.top, 20)
-        } footer: {}
-            .presentationDetents([.medium])
+        }
+        .background(Color(Background.sheetBackground.rawValue))
+        .environment(\.colorScheme, .dark)
     }
 }
 
 struct ActivityPicker_Previews: PreviewProvider {
     static var previews: some View {
         IntervalPicker(title: "Work", color: ComponentColor.work, backgroundColor: Background.work) {
-            TimePicker(textColor: ComponentColor.work.rawValue, interval: 40)
+            let bindingInt = Binding.constant(40)
+            TimePicker(textColor: ComponentColor.work, interval: bindingInt)
         }
     }
 }

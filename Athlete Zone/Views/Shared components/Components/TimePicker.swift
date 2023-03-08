@@ -8,114 +8,75 @@
 import SwiftUI
 
 struct TimePicker: View {
-    let textColor: String
-    var onValueChange: ((_ value: Int) -> Void)?
+    let textColor: ComponentColor
+    @Binding var interval: Int
 
-    private var hours = Array(0...23)
-    private var minutes = Array(0...59)
-    private var seconds = Array(0...59)
+    private let hours = Array(0...23)
+    private let minutes = Array(0...59)
+    private let seconds = Array(0...59)
 
     @State var selectedHours: Int = 0
     @State var selectedMins: Int = 0
     @State var selectedSecs: Int = 0
 
-    init(textColor: String, interval: Int) {
+    init(textColor: ComponentColor, interval: Binding<Int>) {
         self.textColor = textColor
-        self._selectedHours = State<Int>(initialValue: interval.toHours())
-        self._selectedMins = State<Int>(initialValue: interval.toMinutes())
-        self._selectedSecs = State<Int>(initialValue: interval.toSeconds())
+        self._interval = interval
+        self._selectedHours = State<Int>(initialValue: interval.wrappedValue.toHours())
+        self._selectedMins = State<Int>(initialValue: interval.wrappedValue.toMinutes())
+        self._selectedSecs = State<Int>(initialValue: interval.wrappedValue.toSeconds())
     }
 
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
             HStack(alignment: .center, spacing: 5) {
-                Picker(selection: $selectedHours, label: Text("Hours")) {
-                    ForEach((0 ..< self.hours.count).reversed(), id: \.self) {
-                        Text("\(self.hours[$0])")
-                            .foregroundColor(Color(textColor))
-                            .font(.custom("Lato-Black", size: 30))
-                    }
-                }
-                .background(
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color(ComponentColor.menu.rawValue), lineWidth: 3)
-                            .foregroundColor(Color(Background.work.rawValue))
-                    }
-                )
-                .pickerStyle(InlinePickerStyle())
-                Text(":")
-                    .foregroundColor(Color(ComponentColor.work.rawValue))
-                    .font(.custom("Lato-Black", size: 60))
+                picker(selectedValue: $selectedHours, range: hours, label: "Hours")
+                divider
 
-                Picker(selection: $selectedMins, label: Text("Mins")) {
-                    ForEach((0 ..< self.minutes.count).reversed(), id: \.self) {
-                        Text("\(self.minutes[$0])")
-                            .foregroundColor(Color(textColor))
-                            .font(.custom("Lato-Black", size: 30))
-                    }
-                }
-                .background(
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color(ComponentColor.menu.rawValue), lineWidth: 3)
-                            .foregroundColor(Color(Background.work.rawValue))
-                    }
-                )
-                .pickerStyle(InlinePickerStyle())
-                Text(":")
-                    .foregroundColor(Color(ComponentColor.work.rawValue))
-                    .font(.custom("Lato-Black", size: 60))
+                picker(selectedValue: $selectedMins, range: minutes, label: "Mins")
+                divider
 
-                Picker(selection: $selectedSecs, label: Text("Secs")) {
-                    ForEach((0 ..< self.seconds.count).reversed(), id: \.self) {
-                        Text("\(self.seconds[$0])")
-                            .foregroundColor(Color(textColor))
-                            .font(.custom("Lato-Black", size: 30))
-                    }
-                }
-                .background(
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color(ComponentColor.menu.rawValue), lineWidth: 3)
-                            .foregroundColor(Color(Background.work.rawValue))
-                    }
-                )
-                .pickerStyle(InlinePickerStyle())
+                picker(selectedValue: $selectedSecs, range: seconds, label: "Secs")
             }
             .padding([.top], 25)
             Spacer()
         }
         .padding([.leading, .trailing], 10)
-        .onChange(of: selectedHours, perform: { _ in
-            constructTimeInterval()
-        })
-        .onChange(of: selectedMins, perform: { _ in
-            constructTimeInterval()
-        })
-        .onChange(of: selectedSecs, perform: { _ in
-            constructTimeInterval()
-        })
+    }
+
+    @ViewBuilder
+    private func picker(selectedValue: Binding<Int>, range: [Int], label: String) -> some View {
+        Picker(selection: selectedValue, label: Text(label)) {
+            ForEach((0 ..< range.count).reversed(), id: \.self) {
+                Text("\(range[$0])")
+                    .foregroundColor(Color(textColor.rawValue))
+                    .font(.custom("Lato-Black", size: 30))
+            }
+        }
+        .background(
+            ZStack {
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(Color(ComponentColor.menu.rawValue), lineWidth: 3)
+                    .foregroundColor(Color(Background.work.rawValue))
+            }
+        )
+        .pickerStyle(InlinePickerStyle())
+        .onChange(of: selectedValue.wrappedValue) { _ in
+            interval = selectedHours * 3600 + selectedMins * 60 + selectedSecs
+        }
+    }
+
+    @ViewBuilder
+    private var divider: some View {
+        Text(":")
+            .foregroundColor(Color(ComponentColor.work.rawValue))
+            .font(.custom("Lato-Black", size: 60))
     }
 }
 
 struct TimePicker_Previews: PreviewProvider {
     static var previews: some View {
-        TimePicker(textColor: ComponentColor.work.rawValue, interval: 61)
-    }
-}
-
-extension TimePicker {
-    func onValueChange(_ handler: @escaping (_ value: Int) -> Void) -> TimePicker {
-        var new = self
-        new.onValueChange = handler
-        return new
-    }
-
-    func constructTimeInterval() {
-        self.performAction(
-            self.onValueChange,
-            value: self.selectedHours * 3600 + self.selectedMins * 60 + self.selectedSecs
-        )
+        let bindingInt = Binding.constant(61)
+        TimePicker(textColor: ComponentColor.work, interval: bindingInt)
     }
 }

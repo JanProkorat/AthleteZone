@@ -31,8 +31,15 @@ class RealmManager: ObservableObject {
         }
     }
 
-    public func load<T: Object>(entity: T.Type, primaryKey: ObjectId) -> T? {
-        return realm.object(ofType: T.self, forPrimaryKey: primaryKey)
+    public func load<T: Object>(entity: T.Type, primaryKey: String) -> T? {
+        do {
+            let objectId = try ObjectId(string: primaryKey)
+            return realm.object(ofType: T.self, forPrimaryKey: objectId)
+
+        } catch {
+            print(error.localizedDescription)
+            return nil
+        }
     }
 
     func load<T: Object>(entity: T.Type) -> [T] {
@@ -67,5 +74,26 @@ class RealmManager: ObservableObject {
         } catch {
             print(error.localizedDescription)
         }
+    }
+
+    func update(_ id: String, _ name: String, _ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int) -> WorkOut? {
+        var result: WorkOut?
+        do {
+            let objectId = try ObjectId(string: id)
+            try realm.write {
+                let workout = realm.objects(WorkOut.self).first { $0._id == objectId }
+                workout?.name = name
+                workout?.work = work
+                workout?.rest = rest
+                workout?.series = series
+                workout?.rounds = rounds
+                workout?.reset = reset
+                result = workout
+            }
+        } catch {
+            print(error.localizedDescription)
+            return nil
+        }
+        return result
     }
 }
