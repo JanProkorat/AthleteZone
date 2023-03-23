@@ -100,8 +100,8 @@ extension WatchConnectivityManager: WCSessionDelegate {
     }
 
     func loadReplyData() -> String {
-        let realmManager = RealmManager()
-        let data = realmManager.load(entity: WorkOut.self)
+        let realmManager = WorkoutRealmManager()
+        let data = realmManager.load()
         return data.toJSONString() ?? ""
     }
 

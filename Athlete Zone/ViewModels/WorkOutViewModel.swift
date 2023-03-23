@@ -12,11 +12,12 @@ import SwiftUI
 class WorkOutViewModel: WorkOutCommonViewModel, ObservableObject {
     @ObservedObject var selectedWorkoutManager = SelectedWorkoutManager.shared
 
-    private let realmManager = RealmManager()
+    var realmManager: WorkOutRealmManagerProtocol?
 
     private var selectedWorkoutCancellable: AnyCancellable?
 
     override init() {
+        realmManager = WorkoutRealmManager()
         super.init()
 
         selectedWorkoutCancellable = selectedWorkoutManager.$selectedWorkout.sink(receiveValue: { newValue in
@@ -28,7 +29,7 @@ class WorkOutViewModel: WorkOutCommonViewModel, ObservableObject {
     }
 
     func loadWorkoutById(_ id: String) {
-        let workout = realmManager.load(entity: WorkOut.self, primaryKey: id)
+        let workout = realmManager!.load(primaryKey: id)
         if workout != nil {
             setValues(workout!)
         }

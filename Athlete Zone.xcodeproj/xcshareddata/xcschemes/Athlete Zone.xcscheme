@@ -39,6 +39,17 @@
                ReferencedContainer = "container:Athlete Zone.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "7E17246229CA123300B90E31"
+               BuildableName = "Athlete Zone Tests.xctest"
+               BlueprintName = "Athlete Zone Tests"
+               ReferencedContainer = "container:Athlete Zone.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

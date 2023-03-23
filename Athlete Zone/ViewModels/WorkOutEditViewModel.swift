@@ -8,7 +8,7 @@
 import Foundation
 
 class WorkOutEditViewModel: WorkOutCommonViewModel, ObservableObject {
-    private let realmManager = RealmManager()
+    var realmManager = WorkoutRealmManager()
     @Published var connectivityManager = WatchConnectivityManager.shared
 
     func save() {
@@ -18,7 +18,7 @@ class WorkOutEditViewModel: WorkOutCommonViewModel, ObservableObject {
             _id = workout._id.stringValue
             connectivityManager.sendValue(["workout_add": workout.encode()])
         } else {
-            let workout = realmManager.update(_id!, name, work, rest, series, rounds, reset)
+            let workout = realmManager.update(entity: WorkOut(_id!, name, work, rest, series, rounds, reset))
             if workout != nil {
                 connectivityManager.sendValue(["workout_edit": workout!.encode()])
             }

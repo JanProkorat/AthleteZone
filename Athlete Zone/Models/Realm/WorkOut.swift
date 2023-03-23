@@ -40,6 +40,22 @@ public class WorkOut: Object, Identifiable, Codable {
         createdDate = Date()
     }
 
+    init(_ id: String, _ name: String, _ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int) {
+        super.init()
+        self.name = name
+        self.work = work
+        self.rest = rest
+        self.series = series
+        self.rounds = rounds
+        self.reset = reset
+
+        do {
+            _id = try ObjectId(string: id)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
     var workoutLength: Int {
         (((work * series) + (rest * (series - 1)) + reset) * rounds) - reset
     }

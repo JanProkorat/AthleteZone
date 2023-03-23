@@ -28,7 +28,7 @@ class WorkFlowViewModel: ObservableObject {
             selectedFlow!.serie == seriesCount
     }
 
-    private var timer: Timer?
+    var timer: Timer?
     private var soundManager: SoundProtocol?
     private var hapticManager: HapticProtocol?
 

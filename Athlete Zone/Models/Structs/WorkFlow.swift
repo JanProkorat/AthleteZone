@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WorkFlow {
+struct WorkFlow: Equatable {
     var interval: Int
     let type: WorkFlowType
     let round: Int

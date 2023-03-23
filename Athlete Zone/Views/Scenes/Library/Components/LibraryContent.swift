@@ -65,8 +65,8 @@ struct LibraryContent: View {
 struct LibraryContent_Previews: PreviewProvider {
     static var previews: some View {
         LibraryContent()
-            .environmentObject(LibraryViewModel())
             .environmentObject(WorkOutViewModel())
+            .environmentObject(LibraryViewModel())
             .environmentObject(ViewRouter())
     }
 }
