@@ -72,7 +72,7 @@ enum SortByProperty: String, CaseIterable, Identifiable {
     case workoutLength = "Workout length"
 }
 
-enum Section: String {
+enum Section: String, CaseIterable {
     case workout = "Workout"
     case training = "Training"
 }

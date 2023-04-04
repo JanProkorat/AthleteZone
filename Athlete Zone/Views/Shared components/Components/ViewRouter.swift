@@ -9,12 +9,5 @@ import SwiftUI
 
 class ViewRouter: ObservableObject {
     @Published var currentTab: Tab = .home
-
-    init(currentTab: Tab) {
-        self.currentTab = currentTab
-    }
-
-    init() {
-        self.currentTab = .home
-    }
+    @Published var currentSection: Section = .workout
 }

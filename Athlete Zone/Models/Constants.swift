@@ -36,6 +36,7 @@ enum Icons: String, CaseIterable {
     case stop = "Stop"
     case time = "Time"
     case trash = "Trash"
+    case bars = "Bars"
 }
 
 enum Picture: String {
