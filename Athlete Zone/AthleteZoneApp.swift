@@ -25,8 +25,7 @@ struct AthleteZoneApp: App {
                     WorkOutContentScene()
 
                 case .training:
-//                    TrainingContentScene()
-                    Text("")
+                    TrainingContentScene()
                 }
 
                 if launchScreenStateManager.state != .finished {

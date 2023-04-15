@@ -53,8 +53,8 @@
 		7E395BCB291D58A20025F943 /* SettingsContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E395BCA291D58A20025F943 /* SettingsContent.swift */; };
 		7E3E38162920E8DF0084D37B /* WorkOutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3E38152920E8DF0084D37B /* WorkOutViewModel.swift */; };
 		7E3EDCD4295DB5130047EB25 /* SortByPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3EDCD3295DB5130047EB25 /* SortByPicker.swift */; };
+		7E40798129DCAF9500FE7F02 /* TrainingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E40798029DCAF9500FE7F02 /* TrainingViewModel.swift */; };
 		7E431FCB29D63C440063C9DC /* TrainingRunScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E431FCA29D63C440063C9DC /* TrainingRunScene.swift */; };
-		7E431FCD29D63C590063C9DC /* TrainingRunReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E431FCC29D63C590063C9DC /* TrainingRunReducer.swift */; };
 		7E43E47E294F76AD0095559B /* WorkOutRunFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E43E47D294F76AD0095559B /* WorkOutRunFooter.swift */; };
 		7E43E4802950856C0095559B /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E43E47F2950856C0095559B /* Array.swift */; };
 		7E45DB5529AFCDA500296355 /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E45DB5429AFCDA500296355 /* LibraryViewModel.swift */; };
@@ -72,7 +72,6 @@
 		7E5C1EE529CD8EB5000B4C90 /* TrainingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5C1EE429CD8EB5000B4C90 /* TrainingScene.swift */; };
 		7E5C1EE829CD9094000B4C90 /* TrainingHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5C1EE729CD9094000B4C90 /* TrainingHeader.swift */; };
 		7E5C1EEA29CD90A3000B4C90 /* TrainingContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5C1EE929CD90A3000B4C90 /* TrainingContent.swift */; };
-		7E5C1EF629CDA72D000B4C90 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 7E5C1EF529CDA72D000B4C90 /* ComposableArchitecture */; };
 		7E5CC56429300A750081017E /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 7E5CC56329300A750081017E /* Realm */; };
 		7E5CC56629300A750081017E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7E5CC56529300A750081017E /* RealmSwift */; };
 		7E5CC56929300C730081017E /* WorkoutRealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CC56829300C730081017E /* WorkoutRealmManager.swift */; };
@@ -151,8 +150,6 @@
 		7EF3892E2924C71E008420C2 /* EditField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF3892D2924C71E008420C2 /* EditField.swift */; };
 		7EF7C71C296EBB4100DC1AF2 /* Athlete Zone Mini.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 7ED73575296B76C300E1A305 /* Athlete Zone Mini.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		7EF9157A29CF011000F20870 /* LibraryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF9157929CF011000F20870 /* LibraryState.swift */; };
-		7EF9158029D0A37000F20870 /* TrainingReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF9157F29D0A37000F20870 /* TrainingReducer.swift */; };
-		7EF9158229D0AE2F00F20870 /* TrainingContentReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF9158129D0AE2F00F20870 /* TrainingContentReducer.swift */; };
 		7EF9158429D0FB5500F20870 /* Collapsible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF9158329D0FB5500F20870 /* Collapsible.swift */; };
 		7EF98A5D2970BBF3009EC003 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E32D47029168600008FB390 /* Enums.swift */; };
 /* End PBXBuildFile section */
@@ -234,8 +231,8 @@
 		7E395BCA291D58A20025F943 /* SettingsContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsContent.swift; sourceTree = "<group>"; };
 		7E3E38152920E8DF0084D37B /* WorkOutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutViewModel.swift; sourceTree = "<group>"; };
 		7E3EDCD3295DB5130047EB25 /* SortByPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortByPicker.swift; sourceTree = "<group>"; };
+		7E40798029DCAF9500FE7F02 /* TrainingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingViewModel.swift; sourceTree = "<group>"; };
 		7E431FCA29D63C440063C9DC /* TrainingRunScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingRunScene.swift; sourceTree = "<group>"; };
-		7E431FCC29D63C590063C9DC /* TrainingRunReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingRunReducer.swift; sourceTree = "<group>"; };
 		7E43E47D294F76AD0095559B /* WorkOutRunFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutRunFooter.swift; sourceTree = "<group>"; };
 		7E43E47F2950856C0095559B /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		7E45DB5429AFCDA500296355 /* LibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
@@ -312,8 +309,6 @@
 		7EF3892B292401EF008420C2 /* ActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
 		7EF3892D2924C71E008420C2 /* EditField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditField.swift; sourceTree = "<group>"; };
 		7EF9157929CF011000F20870 /* LibraryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryState.swift; sourceTree = "<group>"; };
-		7EF9157F29D0A37000F20870 /* TrainingReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingReducer.swift; sourceTree = "<group>"; };
-		7EF9158129D0AE2F00F20870 /* TrainingContentReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingContentReducer.swift; sourceTree = "<group>"; };
 		7EF9158329D0FB5500F20870 /* Collapsible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collapsible.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -334,7 +329,6 @@
 			files = (
 				7E5CC56629300A750081017E /* RealmSwift in Frameworks */,
 				7E5CC56429300A750081017E /* Realm in Frameworks */,
-				7E5C1EF629CDA72D000B4C90 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,7 +605,6 @@
 			isa = PBXGroup;
 			children = (
 				7E431FCA29D63C440063C9DC /* TrainingRunScene.swift */,
-				7E431FCC29D63C590063C9DC /* TrainingRunReducer.swift */,
 			);
 			path = "Training Run";
 			sourceTree = "<group>";
@@ -637,7 +630,6 @@
 				7E431FC929D63C280063C9DC /* Training Run */,
 				7E5C1EE329CD8E98000B4C90 /* Training */,
 				7E5C1EDD29CC68D2000B4C90 /* TrainingContentScene.swift */,
-				7EF9158129D0AE2F00F20870 /* TrainingContentReducer.swift */,
 			);
 			path = Training;
 			sourceTree = "<group>";
@@ -647,7 +639,7 @@
 			children = (
 				7E5C1EE629CD901A000B4C90 /* components */,
 				7E5C1EE429CD8EB5000B4C90 /* TrainingScene.swift */,
-				7EF9157F29D0A37000F20870 /* TrainingReducer.swift */,
+				7E40798029DCAF9500FE7F02 /* TrainingViewModel.swift */,
 			);
 			path = Training;
 			sourceTree = "<group>";
@@ -901,7 +893,6 @@
 			packageProductDependencies = (
 				7E5CC56329300A750081017E /* Realm */,
 				7E5CC56529300A750081017E /* RealmSwift */,
-				7E5C1EF529CDA72D000B4C90 /* ComposableArchitecture */,
 			);
 			productName = "Athlete Zone";
 			productReference = 7E33B65D291435BE009E4C1C /* Athlete Zone.app */;
@@ -965,7 +956,6 @@
 				7E5CC56229300A750081017E /* XCRemoteSwiftPackageReference "realm-swift" */,
 				7E3D4CAB29689B0E00B54852 /* XCRemoteSwiftPackageReference "ViewInspector" */,
 				7E5C1EC929CC4EF3000B4C90 /* XCRemoteSwiftPackageReference "Nimble" */,
-				7E5C1EF429CDA72D000B4C90 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = 7E33B65E291435BE009E4C1C /* Products */;
 			projectDirPath = "";
@@ -1064,7 +1054,6 @@
 				7E5C1EE529CD8EB5000B4C90 /* TrainingScene.swift in Sources */,
 				7E6FBFC6296E10D6006519B0 /* WatchConnectivityManager.swift in Sources */,
 				7E1F9B0E29199F73006CA3AA /* WorkOutRunScene.swift in Sources */,
-				7E431FCD29D63C590063C9DC /* TrainingRunReducer.swift in Sources */,
 				7E55C95529D576D8003EAFFF /* TrainingWorkoutListItem.swift in Sources */,
 				7E45DB5529AFCDA500296355 /* LibraryViewModel.swift in Sources */,
 				7E17247E29CA13AB00B90E31 /* RealmManagerProtocol.swift in Sources */,
@@ -1083,7 +1072,6 @@
 				7E06670E299FD11E00FCF8C5 /* HapticProtocol.swift in Sources */,
 				7E1F9AFF2919812A006CA3AA /* ProfileHeaderBar.swift in Sources */,
 				7EEA2D012923899A002C9227 /* WorkFlowViewModel.swift in Sources */,
-				7EF9158029D0A37000F20870 /* TrainingReducer.swift in Sources */,
 				7EE7808E29991C3C00DEC1A4 /* SoundManager.swift in Sources */,
 				7E1F9B172919AD20006CA3AA /* CircularProgressBar.swift in Sources */,
 				7E1F9AFA2919253B006CA3AA /* LibraryHeader.swift in Sources */,
@@ -1092,6 +1080,7 @@
 				7EEE480D293373010034E95C /* WorkOutListView.swift in Sources */,
 				7E32D4852916CADC008FB390 /* LibraryScene.swift in Sources */,
 				7EF389262923EFBC008420C2 /* WorkOutEditHeader.swift in Sources */,
+				7E40798129DCAF9500FE7F02 /* TrainingViewModel.swift in Sources */,
 				7EEA2D03292389A8002C9227 /* WorkFlow.swift in Sources */,
 				7E5C1EE029CC6E85000B4C90 /* SectionSwitch.swift in Sources */,
 				7E5CC56929300C730081017E /* WorkoutRealmManager.swift in Sources */,
@@ -1108,7 +1097,6 @@
 				7ED735692969DBFE00E1A305 /* LanguageSettingConfig.swift in Sources */,
 				7ED59F8829156D550077DF39 /* ActivityView.swift in Sources */,
 				7EBEA1FC294E1BCB006DB920 /* WorkOutButtonConfig.swift in Sources */,
-				7EF9158229D0AE2F00F20870 /* TrainingContentReducer.swift in Sources */,
 				7EED1F97294E44B7002EC362 /* CounterText.swift in Sources */,
 				7EBEA1F9294DC9B6006DB920 /* ActivitySelect.swift in Sources */,
 				7E32D46D29167EE3008FB390 /* Constants.swift in Sources */,
@@ -1567,14 +1555,6 @@
 				kind = branch;
 			};
 		};
-		7E5C1EF429CDA72D000B4C90 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.0;
-			};
-		};
 		7E5CC56229300A750081017E /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift";
@@ -1610,11 +1590,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7E5C1EC929CC4EF3000B4C90 /* XCRemoteSwiftPackageReference "Nimble" */;
 			productName = Nimble;
-		};
-		7E5C1EF529CDA72D000B4C90 /* ComposableArchitecture */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7E5C1EF429CDA72D000B4C90 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
-			productName = ComposableArchitecture;
 		};
 		7E5CC56329300A750081017E /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;

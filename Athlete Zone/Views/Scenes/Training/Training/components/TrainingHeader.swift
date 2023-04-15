@@ -6,42 +6,42 @@
 //
 
 import SwiftUI
-//
-// struct TrainingHeader: View {
-//    var name: String
-//    var onSaveTab: (() -> Void)?
-//
-//    var body: some View {
-//        HStack {
-//            HStack(alignment: .center) {
-//                SectionSwitch()
-//                TitleText(text: name)
-//            }
-//            .frame(maxWidth: .infinity, alignment: .leading)
-//
-//            Button {
-//                performAction(self.onSaveTab)
-//            } label: {
-//                Image(Icons.save.rawValue)
-//                    .resizable()
-//                    .scaledToFit()
-//                    .foregroundColor(Color(ComponentColor.mainText.rawValue))
-//                    .frame(maxHeight: 50)
-//            }
-//        }
-//    }
-// }
-//
-// struct TrainingHeader_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TrainingHeader(name: "Test training")
-//    }
-// }
-//
-// extension TrainingHeader {
-//    func onSaveTab(action: @escaping () -> Void) -> TrainingHeader {
-//        var new = self
-//        new.onSaveTab = action
-//        return new
-//    }
-// }
+
+struct TrainingHeader: View {
+    var name: String
+    var onSaveTab: (() -> Void)?
+
+    var body: some View {
+        HStack {
+            HStack(alignment: .center) {
+                SectionSwitch()
+                TitleText(text: name)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            Button {
+                performAction(self.onSaveTab)
+            } label: {
+                Image(Icons.save.rawValue)
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(Color(ComponentColor.mainText.rawValue))
+                    .frame(maxHeight: 50)
+            }
+        }
+    }
+}
+
+struct TrainingHeader_Previews: PreviewProvider {
+    static var previews: some View {
+        TrainingHeader(name: "Test training")
+    }
+}
+
+extension TrainingHeader {
+    func onSaveTab(action: @escaping () -> Void) -> TrainingHeader {
+        var new = self
+        new.onSaveTab = action
+        return new
+    }
+}
