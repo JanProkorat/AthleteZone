@@ -84,7 +84,14 @@ enum Background: String, CaseIterable {
 }
 
 enum DefaultItem: String {
-    case language, selectedWorkoutId, soundsEnabled, hapticsEnabled, notificationsEnabled, notificationsAllowed
+    case language
+    case selectedWorkoutId
+    case selectedTrainingId
+    case soundsEnabled
+    case hapticsEnabled
+    case notificationsEnabled
+    case notificationsAllowed
+    case selectedSection
 }
 
 enum Sound: String {

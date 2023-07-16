@@ -16,12 +16,12 @@ struct WorkOutContent: View {
             BaseView(title: LocalizedStringKey(viewModel.selectedWorkOut?.name ?? "")) {
                 VStack {
                     Description(
-                        title: "Round \(flow.round)/\(self.workFlowViewModel.roundsCount)",
+                        title: "Round \(flow.round)/\(flow.totalRounds)",
                         color: ComponentColor.lightGreen
                     )
                     .padding(.top)
                     Description(
-                        title: "Exercise \(flow.serie)/\(self.workFlowViewModel.seriesCount)",
+                        title: "Exercise \(flow.serie)/\(flow.totalSeries)",
                         color: ComponentColor.lightBlue
                     )
 

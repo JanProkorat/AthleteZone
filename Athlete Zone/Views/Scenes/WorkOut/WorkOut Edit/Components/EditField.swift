@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EditField<Content: View>: View {
     let content: Content
-    let label: String
+    let label: String?
     let labelSize: CGFloat
     let color: ComponentColor
 
@@ -20,16 +20,25 @@ struct EditField<Content: View>: View {
         self.color = color
     }
 
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+        self.label = nil
+        self.labelSize = 0
+        self.color = ComponentColor.mainText
+    }
+
     var onTab: (() -> Void)?
 
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
-            Text(LocalizedStringKey(label))
-                .font(.custom("Lato-Black", size: labelSize))
-                .bold()
-                .foregroundColor(Color(color.rawValue))
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading, 25)
+            if label != nil {
+                Text(LocalizedStringKey(label!))
+                    .font(.custom("Lato-Black", size: labelSize))
+                    .bold()
+                    .foregroundColor(Color(color.rawValue))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 25)
+            }
 
             content
         }

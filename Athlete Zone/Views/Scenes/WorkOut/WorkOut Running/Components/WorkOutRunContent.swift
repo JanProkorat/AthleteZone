@@ -15,9 +15,9 @@ struct WorkOutRunContent: View {
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
             if let flow = self.viewModel.selectedFlow {
-                DescriptionLabel(title: "Round \(flow.round)/\(self.viewModel.roundsCount)",
+                DescriptionLabel(title: "Round \(flow.round)/\(flow.totalRounds)",
                                  color: ComponentColor.rounds)
-                DescriptionLabel(title: "Exercise \(flow.serie)/\(self.viewModel.seriesCount)",
+                DescriptionLabel(title: "Exercise \(flow.serie)/\(flow.totalSeries)",
                                  color: ComponentColor.series)
 
                 Text(LocalizedStringKey(flow.type.rawValue))
@@ -43,9 +43,9 @@ struct WorkOutRunContent: View {
                                 height: geo.size.height * 0.3
                             )
                             .onTab {
-                                if viewModel.state == .finished {
-                                    viewModel.selectedFlowIndex = 0
-                                }
+//                                if viewModel.state == .finished {
+//                                    viewModel.selectedFlowIndex = 0
+//                                }
                                 viewModel.setState(viewModel.state == .running ? .paused : .running)
                             }
                             IconButton(
@@ -75,10 +75,11 @@ struct WorkOutRunContent: View {
 
 struct WorkOutRunContent_Previews: PreviewProvider {
     static var previews: some View {
-        WorkOutRunContent()
-            .environmentObject(WorkFlowViewModel())
+        let viewModel = WorkFlowViewModel()
+        viewModel.createWorkFlow("Prvni", 2, 2, 2, 2, 2)
+        return WorkOutRunContent()
+            .environmentObject(viewModel)
             .environmentObject(ViewRouter())
-            .environmentObject(WorkOutViewModel())
     }
 }
 

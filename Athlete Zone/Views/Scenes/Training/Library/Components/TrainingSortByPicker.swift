@@ -2,19 +2,19 @@
 //  SortByPicker.swift
 //  Athlete Zone
 //
-//  Created by Jan Prokorát on 29.12.2022.
+//  Created by Jan Prokorát on 03.07.2023.
 //
 
 import SwiftUI
 
-struct SortByPicker: View {
-    @State var selectedProperty = WorkOutSortByProperty.name
+struct TrainingSortByPicker: View {
+    @State var selectedProperty = TrainingSortByProperty.name
 
-    var onPropertySelected: ((_ value: WorkOutSortByProperty) -> Void)?
+    var onPropertySelected: ((_ value: TrainingSortByProperty) -> Void)?
 
     var body: some View {
         Menu {
-            ForEach(WorkOutSortByProperty.allCases.sorted { $0.rawValue < $1.rawValue }) { property in
+            ForEach(TrainingSortByProperty.allCases.sorted { $0.rawValue < $1.rawValue }) { property in
                 Button(action: {
                     selectedProperty = property
                 }, label: {
@@ -44,14 +44,14 @@ struct SortByPicker: View {
     }
 }
 
-struct SortByPicker_Previews: PreviewProvider {
+struct TrainingSortByPicker_Previews: PreviewProvider {
     static var previews: some View {
         SortByPicker()
     }
 }
 
-extension SortByPicker {
-    func onPropertySelected(_ handler: @escaping (_ value: WorkOutSortByProperty) -> Void) -> SortByPicker {
+extension TrainingSortByPicker {
+    func onPropertySelected(_ handler: @escaping (_ value: TrainingSortByProperty) -> Void) -> TrainingSortByPicker {
         var new = self
         new.onPropertySelected = handler
         return new

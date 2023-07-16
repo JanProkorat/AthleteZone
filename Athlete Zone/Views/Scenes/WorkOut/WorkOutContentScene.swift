@@ -10,7 +10,6 @@ import SwiftUI
 struct WorkOutContentScene: View {
     @EnvironmentObject var router: ViewRouter
     @EnvironmentObject var appStorageManager: AppStorageManager
-    @EnvironmentObject var launchScreenStateManager: LaunchScreenStateManager
 
     @StateObject var workOutViewModel = WorkOutViewModel()
     @StateObject var workFlowViewModel = WorkFlowViewModel()
@@ -31,26 +30,25 @@ struct WorkOutContentScene: View {
                     LibraryScene()
                         .environmentObject(libraryViewModel)
 
-                case .profile:
-                    ProfileScene()
-
                 case .setting:
                     SettingsScene()
                         .environmentObject(settingsViewModel)
 
-                case .workoutRun:
+                case .run:
                     WorkOutRunScene()
                         .environmentObject(workFlowViewModel)
+
+                default:
+                    Text("Scene for this route not implemented")
                 }
             }
             .onAppear {
-                if !self.appStorageManager.selectedItemId.isEmpty {
-                    self.workOutViewModel.loadWorkoutById(self.appStorageManager.selectedItemId)
+                if !self.appStorageManager.selectedWorkoutId.isEmpty {
+                    self.workOutViewModel.loadWorkoutById(self.appStorageManager.selectedWorkoutId)
                 }
-                self.launchScreenStateManager.dismiss()
             }
             .onChange(of: router.currentTab, perform: { newValue in
-                if newValue == .workoutRun {
+                if newValue == .run {
                     workFlowViewModel.createWorkFlow(
                         workOutViewModel.name,
                         workOutViewModel.work,
@@ -62,7 +60,7 @@ struct WorkOutContentScene: View {
             })
             .onChange(of: scenePhase) { newPhase in
                 if (newPhase == .inactive || newPhase == .background) && workOutViewModel._id != nil {
-                    appStorageManager.selectedItemId = workOutViewModel._id!
+                    appStorageManager.selectedWorkoutId = workOutViewModel._id!
                 }
             }
             .environmentObject(router)
@@ -77,6 +75,5 @@ struct ContentScene_Previews: PreviewProvider {
         WorkOutContentScene()
             .environmentObject(ViewRouter())
             .environmentObject(AppStorageManager())
-            .environmentObject(LaunchScreenStateManager())
     }
 }

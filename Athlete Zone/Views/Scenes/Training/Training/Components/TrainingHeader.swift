@@ -8,25 +8,27 @@
 import SwiftUI
 
 struct TrainingHeader: View {
-    var name: String
+    var name: String?
     var onSaveTab: (() -> Void)?
 
     var body: some View {
         HStack {
             HStack(alignment: .center) {
                 SectionSwitch()
-                TitleText(text: name)
+                TitleText(text: name ?? "Training")
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
             Button {
                 performAction(self.onSaveTab)
             } label: {
-                Image(Icons.save.rawValue)
-                    .resizable()
-                    .scaledToFit()
-                    .foregroundColor(Color(ComponentColor.mainText.rawValue))
-                    .frame(maxHeight: 50)
+                if name != nil {
+                    Image(Icons.save.rawValue)
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(Color(ComponentColor.mainText.rawValue))
+                        .frame(maxHeight: 50)
+                }
             }
         }
     }

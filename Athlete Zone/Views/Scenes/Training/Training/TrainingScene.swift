@@ -11,16 +11,36 @@ struct TrainingScene: View {
     @EnvironmentObject var router: ViewRouter
     @EnvironmentObject var viewModel: TrainingViewModel
 
+    @State var isModalActive = false
+
     var body: some View {
         BaseView {
-            TrainingHeader(name: viewModel.training.name)
+            TrainingHeader(name: viewModel.selectedTrainingManager.selectedTraining?.name)
+                .onSaveTab { isModalActive.toggle() }
         } content: {
-            TrainingContent(training: viewModel.training)
-                .onStartTab {}
+            TrainingContent()
+                .onStartTab { router.currentTab = .run }
+                .onLibraryTab { router.currentTab = .library }
+                .onCreateTab { isModalActive.toggle() }
         } footer: {
             MenuBar(activeTab: router.currentTab)
                 .onRouteTab { router.currentTab = $0 }
         }
+        .fullScreenCover(isPresented: $isModalActive, content: {
+            TrainingEditScene()
+                .onCloseTab { isModalActive = false }
+                .environmentObject(getViewModel())
+        })
+    }
+
+    private func getViewModel() -> TrainingEditViewModel {
+        if let training = viewModel.selectedTrainingManager.selectedTraining {
+            return TrainingEditViewModel(
+                name: training.name,
+                description: training.description,
+                workouts: training.workouts)
+        }
+        return TrainingEditViewModel()
     }
 }
 

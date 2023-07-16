@@ -14,7 +14,7 @@ class WorkoutRealmManager: ObservableObject, WorkOutRealmManagerProtocol {
     private(set) var realm: Realm!
 
     init() {
-        let config = Realm.Configuration(schemaVersion: 6)
+        let config = Realm.Configuration(schemaVersion: 7)
         Realm.Configuration.defaultConfiguration = config
         do {
             self.realm = try Realm()
@@ -76,7 +76,7 @@ class WorkoutRealmManager: ObservableObject, WorkOutRealmManagerProtocol {
         return result
     }
 
-    func getSortedData(_ searchText: String, _ sortBy: SortByProperty, _ sortOrder: SortOrder) -> [WorkOut] {
+    func getSortedData(_ searchText: String, _ sortBy: WorkOutSortByProperty, _ sortOrder: SortOrder) -> [WorkOut] {
         if sortBy != .workoutLength {
             let data = workOutLibrary
                 .sorted(byKeyPath: sortBy.rawValue.lowercased().toPascalCase(), ascending: sortOrder == .ascending)

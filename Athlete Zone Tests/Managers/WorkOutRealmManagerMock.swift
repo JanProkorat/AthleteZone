@@ -39,7 +39,7 @@ class WorkOutRealmManagerMock: WorkOutRealmManagerProtocol {
         return nil
     }
 
-    func getSortedData(_ searchText: String, _ sortBy: SortByProperty, _ sortOrder: SortOrder) -> [WorkOut] {
+    func getSortedData(_ searchText: String, _ sortBy: WorkOutSortByProperty, _ sortOrder: SortOrder) -> [WorkOut] {
         return objects
     }
 }

@@ -25,7 +25,7 @@ struct WorkOutScene: View {
                 WorkOutContent()
                     .onTab { self.activeSheetType = $0 }
                     .onStartTab {
-                        router.currentTab = .workoutRun
+                        router.currentTab = .run
                     }
             },
             footer: {

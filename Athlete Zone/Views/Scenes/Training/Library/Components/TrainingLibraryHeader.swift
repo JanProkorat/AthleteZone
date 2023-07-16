@@ -1,13 +1,13 @@
 //
-//  LibraryHeader.swift
+//  TrainingLibraryHeader.swift
 //  Athlete Zone
 //
-//  Created by Jan Prokorát on 07.11.2022.
+//  Created by Jan Prokorát on 03.07.2023.
 //
 
 import SwiftUI
 
-struct LibraryHeader: View {
+struct TrainingLibraryHeader: View {
     var onAddTab: (() -> Void)?
 
     var body: some View {
@@ -32,14 +32,14 @@ struct LibraryHeader: View {
     }
 }
 
-struct LibraryHeader_Previews: PreviewProvider {
+struct TrainingLibraryHeader_Previews: PreviewProvider {
     static var previews: some View {
-        LibraryHeader()
+        TrainingLibraryHeader()
     }
 }
 
-extension LibraryHeader {
-    func onAddTab(action: @escaping (() -> Void)) -> LibraryHeader {
+extension TrainingLibraryHeader {
+    func onAddTab(action: @escaping (() -> Void)) -> TrainingLibraryHeader {
         var new = self
         new.onAddTab = action
         return new

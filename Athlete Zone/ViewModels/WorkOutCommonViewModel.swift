@@ -16,7 +16,7 @@ class WorkOutCommonViewModel {
     @Published var reset: Int
 
     var isValid: Bool {
-        return !name.isEmpty && work > 0 && rest > 0 && series > 0 && rounds > 0 && reset > 0
+        !name.isEmpty && work > 0 && rest > 0 && series > 0 && rounds > 0 && reset > 0
     }
 
     var timeOverview: Int {

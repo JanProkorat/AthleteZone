@@ -18,15 +18,6 @@ struct TrainingWorkoutListItem: View {
             performAction(onInfoTab)
         } label: {
             HStack {
-                //            Button(action: {
-                //                performAction(onInfoTab)
-                //            }, label: {
-                //                Image(systemName: "info.circle")
-                //                    .resizable()
-                //                    .scaledToFit()
-                //                    .foregroundColor(Color(ComponentColor.mainText.rawValue))
-                //            })
-                //            .frame(width: height * 0.3, height: height * 0.3)
                 Text(workout.name)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.title2)

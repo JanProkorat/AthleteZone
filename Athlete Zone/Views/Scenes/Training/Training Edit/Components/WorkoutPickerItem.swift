@@ -1,17 +1,19 @@
 //
-//  WorkOutListView.swift
+//  WorkoutPickerItem.swift
 //  Athlete Zone
 //
-//  Created by Jan Prokorát on 27.11.2022.
+//  Created by Jan Prokorát on 11.07.2023.
 //
 
 import SwiftUI
 
-struct WorkOutListView: View {
+struct WorkoutPickerItem: View {
     let workOut: WorkOut
+    @Binding var selectedWorkouts: [WorkOut]
 
-    var onEditTab: (() -> Void)?
-    var onDeleteTab: (() -> Void)?
+    var isSelected: Bool {
+        selectedWorkouts.contains { $0._id == workOut._id }
+    }
 
     let fieldConfig: [[ActivityType]] = [.work, .rounds, .rest, .series, .reset].chunked(into: 2)
 
@@ -21,25 +23,15 @@ struct WorkOutListView: View {
                 HStack(alignment: .center) {
                     TitleText(text: workOut.name)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading, 30)
-                    Menu {
-                        Button(action: {
-                            performAction(onEditTab)
-                        }, label: {
-                            Label(LocalizedStringKey("Edit"), systemImage: "pencil")
-                        })
+                        .padding(.leading, 25)
 
-                        Button(role: .destructive, action: {
-                            performAction(onDeleteTab)
-                        }, label: {
-                            Label(LocalizedStringKey("Delete"), systemImage: "trash")
-                        })
-                    } label: {
-                        Image(Icons.menu.rawValue)
-                            .foregroundColor(Color(ComponentColor.mainText.rawValue))
-                            .frame(width: 40, height: 34)
-                            .padding(.trailing, 20)
-                    }
+                    Image(systemName: isSelected ? "checkmark.circle.fill" : "")
+                        .resizable()
+                        .scaledToFill()
+                        .foregroundColor(Color(ComponentColor.mainText.rawValue))
+                        .frame(width: 35, height: 35)
+                        .padding(.trailing, 20)
+                        .padding(.top, 5)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 5)
@@ -113,22 +105,9 @@ struct WorkOutListView: View {
     }
 }
 
-struct WorkOutListView_Previews: PreviewProvider {
+struct WorkoutPickerItem_Previews: PreviewProvider {
     static var previews: some View {
-        WorkOutListView(workOut: WorkOut())
-    }
-}
-
-extension WorkOutListView {
-    func onEditTab(_ handler: @escaping () -> Void) -> WorkOutListView {
-        var new = self
-        new.onEditTab = handler
-        return new
-    }
-
-    func onDeleteTab(_ handler: @escaping () -> Void) -> WorkOutListView {
-        var new = self
-        new.onDeleteTab = handler
-        return new
+        let workouts = [WorkOut]()
+        WorkoutPickerItem(workOut: WorkOut(), selectedWorkouts: Binding.constant(workouts))
     }
 }

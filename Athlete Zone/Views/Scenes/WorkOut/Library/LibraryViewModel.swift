@@ -12,7 +12,7 @@ import SwiftUI
 class LibraryViewModel: ObservableObject {
     @Published var searchText = ""
     @Published var sortOrder: SortOrder = .ascending
-    @Published var sortBy: SortByProperty = .name
+    @Published var sortBy: WorkOutSortByProperty = .name
     @Published var workoutToEdit: WorkOut?
 
     @ObservedObject var selectedWorkoutManager = SelectedWorkoutManager.shared

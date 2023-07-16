@@ -13,7 +13,7 @@ class ViewModel: ObservableObject {
     @Published var settings: [String: Any]?
     @Published var selectedWorkOut: WorkOut?
 
-    @Published var sortByProperty: SortByProperty = .name
+    @Published var sortByProperty: WorkOutSortByProperty = .name
     @Published var sortOrder: SortOrder = .ascending
 
     @Published var connectivityManager = WatchConnectivityManager.shared
