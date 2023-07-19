@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct SortByPicker: View {
-    @State var selectedProperty = SortByProperty.name
+    @State var selectedProperty = WorkOutSortByProperty.name
 
-    var onPropertySelected: ((_ value: SortByProperty) -> Void)?
+    var onPropertySelected: ((_ value: WorkOutSortByProperty) -> Void)?
 
     var body: some View {
         Menu {
-            ForEach(SortByProperty.allCases.sorted { $0.rawValue < $1.rawValue }) { property in
+            ForEach(WorkOutSortByProperty.allCases.sorted { $0.rawValue < $1.rawValue }) { property in
                 Button(action: {
                     selectedProperty = property
                 }, label: {
@@ -51,7 +51,7 @@ struct SortByPicker_Previews: PreviewProvider {
 }
 
 extension SortByPicker {
-    func onPropertySelected(_ handler: @escaping (_ value: SortByProperty) -> Void) -> SortByPicker {
+    func onPropertySelected(_ handler: @escaping (_ value: WorkOutSortByProperty) -> Void) -> SortByPicker {
         var new = self
         new.onPropertySelected = handler
         return new

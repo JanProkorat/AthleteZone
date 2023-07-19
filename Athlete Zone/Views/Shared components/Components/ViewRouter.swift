@@ -8,6 +8,8 @@
 import SwiftUI
 
 class ViewRouter: ObservableObject {
+    static let shared = ViewRouter()
+
     @Published var currentTab: Tab = .home
     @Published var currentSection: Section = .workout
 }

@@ -14,4 +14,8 @@ class SoundManagerMock: SoundProtocol {
     func playSound(sound: Sound) {
         playSoundSound = true
     }
+
+    func stop() {
+        playSoundSound = false
+    }
 }

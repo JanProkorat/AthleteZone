@@ -13,14 +13,26 @@ struct WorkFlow: Equatable {
     let round: Int
     let serie: Int
     let originalInterval: Int
+    let totalSeries: Int
+    let totalRounds: Int
     var color: ComponentColor
 
-    init(interval: Int, type: WorkFlowType, round: Int, serie: Int) {
+    var lastRound: Bool {
+        round == totalRounds
+    }
+
+    var lastSerie: Bool {
+        serie == totalSeries
+    }
+
+    init(interval: Int, type: WorkFlowType, round: Int, serie: Int, totalSeries: Int, totalRounds: Int) {
         self.interval = interval
         self.type = type
         self.round = round
         self.serie = serie
         self.originalInterval = interval
+        self.totalRounds = totalRounds
+        self.totalSeries = totalSeries
         self.color = .yellow
         switch type {
         case .work:
@@ -35,6 +47,6 @@ struct WorkFlow: Equatable {
     }
 
     func getProgress() -> Double {
-        return Double(self.originalInterval - self.interval) / Double(self.originalInterval)
+        return Double(originalInterval - interval) / Double(originalInterval)
     }
 }

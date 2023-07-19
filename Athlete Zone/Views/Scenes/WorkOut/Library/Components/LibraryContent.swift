@@ -9,7 +9,6 @@ import SwiftUI
 
 struct LibraryContent: View {
     @EnvironmentObject var viewModel: LibraryViewModel
-    @EnvironmentObject var router: ViewRouter
 
     var onEditTab: ((_ workOut: WorkOut) -> Void)?
 
@@ -33,12 +32,10 @@ struct LibraryContent: View {
                 List(viewModel.library, id: \._id) { workout in
                     Button {
                         self.viewModel.setSelectedWorkOut(workout)
-                        self.router.currentTab = .home
+                        self.viewModel.router.currentTab = .home
                     } label: {
                         WorkOutListView(workOut: workout)
-                            .onDeleteTab {
-                                viewModel.removeWorkout(workout)
-                            }
+                            .onDeleteTab { viewModel.removeWorkout(workout) }
                             .onEditTab {
                                 self.performAction(onEditTab, value: workout.thaw()!)
                             }
@@ -67,7 +64,6 @@ struct LibraryContent_Previews: PreviewProvider {
         LibraryContent()
             .environmentObject(WorkOutViewModel())
             .environmentObject(LibraryViewModel())
-            .environmentObject(ViewRouter())
     }
 }
 

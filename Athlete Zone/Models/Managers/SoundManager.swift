@@ -9,16 +9,21 @@ import AVKit
 import Foundation
 
 class SoundManager: SoundProtocol {
-    private var audioPlayer = AVAudioPlayer()
+    private var audioPlayer: AVAudioPlayer?
 
     func playSound(sound: Sound) {
         if let asset = NSDataAsset(name: sound.rawValue) {
             do {
                 audioPlayer = try AVAudioPlayer(data: asset.data, fileTypeHint: "mp3")
-                audioPlayer.play()
+                audioPlayer?.play()
             } catch {
                 print(error.localizedDescription)
             }
         }
+    }
+
+    func stop() {
+        audioPlayer?.pause()
+        audioPlayer = nil
     }
 }

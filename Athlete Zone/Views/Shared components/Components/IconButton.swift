@@ -14,7 +14,6 @@ struct IconButton: View, Identifiable {
     let color: ComponentColor
     let width: CGFloat
     let height: CGFloat
-    var selected = false
 
     var onTab: (() -> Void)?
 
@@ -26,12 +25,6 @@ struct IconButton: View, Identifiable {
                 .resizable()
                 .scaledToFit()
                 .foregroundColor(Color(color.rawValue))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(self.selected ? Color(ComponentColor.action.rawValue) : Color(.clear), lineWidth: 4)
-                        .frame(width: 40, height: 34)
-                )
-
         })
         .frame(width: width, height: height)
     }
@@ -44,8 +37,7 @@ struct IconButton_Previews: PreviewProvider {
             image: Icons.arrowDown.rawValue,
             color: ComponentColor.mainText,
             width: 50,
-            height: 45,
-            selected: true
+            height: 45
         )
     }
 }

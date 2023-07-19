@@ -10,14 +10,12 @@ import SwiftUI
 struct WorkOutRunContent: View {
     @EnvironmentObject var viewModel: WorkFlowViewModel
 
-    var onQuitTab: (() -> Void)?
-
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
             if let flow = self.viewModel.selectedFlow {
-                DescriptionLabel(title: "Round \(flow.round)/\(self.viewModel.roundsCount)",
+                DescriptionLabel(title: "Round \(flow.round)/\(flow.totalRounds)",
                                  color: ComponentColor.rounds)
-                DescriptionLabel(title: "Exercise \(flow.serie)/\(self.viewModel.seriesCount)",
+                DescriptionLabel(title: "Exercise \(flow.serie)/\(flow.totalSeries)",
                                  color: ComponentColor.series)
 
                 Text(LocalizedStringKey(flow.type.rawValue))
@@ -43,9 +41,6 @@ struct WorkOutRunContent: View {
                                 height: geo.size.height * 0.3
                             )
                             .onTab {
-                                if viewModel.state == .finished {
-                                    viewModel.selectedFlowIndex = 0
-                                }
                                 viewModel.setState(viewModel.state == .running ? .paused : .running)
                             }
                             IconButton(
@@ -75,17 +70,9 @@ struct WorkOutRunContent: View {
 
 struct WorkOutRunContent_Previews: PreviewProvider {
     static var previews: some View {
-        WorkOutRunContent()
-            .environmentObject(WorkFlowViewModel())
-            .environmentObject(ViewRouter())
-            .environmentObject(WorkOutViewModel())
-    }
-}
-
-extension WorkOutRunContent {
-    func onQuitTab(_ handler: @escaping () -> Void) -> WorkOutRunContent {
-        var new = self
-        new.onQuitTab = handler
-        return new
+        return WorkOutRunContent()
+            .environmentObject(WorkFlowViewModel(
+                workout: WorkOut("Prvni", 2, 2, 2, 2, 2)
+            ))
     }
 }

@@ -12,7 +12,11 @@ struct LibraryHeader: View {
 
     var body: some View {
         HStack(alignment: .center) {
-            TitleText(text: "Library")
+            HStack(alignment: .center) {
+                SectionSwitch()
+                TitleText(text: "Library")
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
 
             Button {
                 self.performAction(onAddTab)

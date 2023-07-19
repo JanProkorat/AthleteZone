@@ -21,15 +21,14 @@ struct FiltersView: View {
                             Text(LocalizedStringKey(property.rawValue)).tag(property)
                         }
                     } label: {}
-                    
+
                     Text(LocalizedStringKey("Sort by"))
                         .foregroundColor(Color(ComponentColor.green.rawValue))
                     Picker(selection: $viewModel.sortByProperty) {
-                        ForEach(SortByProperty.allCases) { property in
+                        ForEach(WorkOutSortByProperty.allCases) { property in
                             Text(LocalizedStringKey(property.rawValue)).tag(property)
                         }
                     } label: {}
-
                 }
                 .frame(maxHeight: geo.size.height * 0.9)
             }

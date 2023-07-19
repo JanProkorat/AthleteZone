@@ -8,7 +8,7 @@
 import Foundation
 
 enum Tab {
-    case home, library, profile, setting, workoutRun
+    case home, library, profile, setting
 }
 
 enum ActivityType: String, Identifiable, CaseIterable, Encodable {
@@ -45,7 +45,9 @@ enum InputType {
 }
 
 enum Language: String, Equatable, CaseIterable {
-    case cze, de, en
+    case cze = "CZ"
+    case de = "DE"
+    case en = "GB"
 }
 
 enum SortOrder: String, CaseIterable, Identifiable {
@@ -57,7 +59,7 @@ enum SortOrder: String, CaseIterable, Identifiable {
     case descending = "Descending"
 }
 
-enum SortByProperty: String, CaseIterable, Identifiable {
+enum WorkOutSortByProperty: String, CaseIterable, Identifiable {
     var id: Int {
         hashValue
     }
@@ -70,6 +72,17 @@ enum SortByProperty: String, CaseIterable, Identifiable {
     case reset = "Reset"
     case createdDate = "Created date"
     case workoutLength = "Workout length"
+}
+
+enum TrainingSortByProperty: String, CaseIterable, Identifiable {
+    var id: Int {
+        hashValue
+    }
+
+    case name = "Name"
+    case createdDate = "Created date"
+    case numOfWorkouts = "Number of workouts"
+    case trainingLength = "Training length"
 }
 
 enum Section: String, CaseIterable {

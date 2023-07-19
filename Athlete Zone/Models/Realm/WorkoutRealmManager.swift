@@ -14,7 +14,7 @@ class WorkoutRealmManager: ObservableObject, WorkOutRealmManagerProtocol {
     private(set) var realm: Realm!
 
     init() {
-        let config = Realm.Configuration(schemaVersion: 6)
+        let config = Realm.Configuration(schemaVersion: 7)
         Realm.Configuration.defaultConfiguration = config
         do {
             self.realm = try Realm()
@@ -56,27 +56,23 @@ class WorkoutRealmManager: ObservableObject, WorkOutRealmManagerProtocol {
         $workOutLibrary.remove(entity)
     }
 
-    func update(entity: WorkOut) -> WorkOut? {
-        var result: WorkOut?
+    func update(_ id: ObjectId, _ name: String, _ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int) {
         do {
             try realm.write {
-                let workout = realm.objects(WorkOut.self).first { $0._id == entity._id }
-                workout?.name = entity.name
-                workout?.work = entity.work
-                workout?.rest = entity.rest
-                workout?.series = entity.series
-                workout?.rounds = entity.rounds
-                workout?.reset = entity.reset
-                result = workout
+                let workout = realm.objects(WorkOut.self).first { $0._id == id }
+                workout?.name = name
+                workout?.work = work
+                workout?.rest = rest
+                workout?.series = series
+                workout?.rounds = rounds
+                workout?.reset = reset
             }
         } catch {
             print(error.localizedDescription)
-            return nil
         }
-        return result
     }
 
-    func getSortedData(_ searchText: String, _ sortBy: SortByProperty, _ sortOrder: SortOrder) -> [WorkOut] {
+    func getSortedData(_ searchText: String, _ sortBy: WorkOutSortByProperty, _ sortOrder: SortOrder) -> [WorkOut] {
         if sortBy != .workoutLength {
             let data = workOutLibrary
                 .sorted(byKeyPath: sortBy.rawValue.lowercased().toPascalCase(), ascending: sortOrder == .ascending)

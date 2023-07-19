@@ -10,38 +10,51 @@ import SwiftUI
 
 struct WorkOutScene: View {
     @EnvironmentObject var viewModel: WorkOutViewModel
-    @EnvironmentObject var router: ViewRouter
 
-    @State var isModalActive = false
+    @State var isEditModalActive = false
+    @State var isRunModalActive = false
+
     @State var activeSheetType: ActivityType?
 
     var body: some View {
         BaseView(
             header: {
                 WorkOutHeader()
-                    .onSaveTab { isModalActive = true }
+                    .onSaveTab { isEditModalActive.toggle() }
             },
             content: {
                 WorkOutContent()
                     .onTab { self.activeSheetType = $0 }
-                    .onStartTab {
-                        router.currentTab = .workoutRun
-                    }
+                    .onStartTab { isRunModalActive.toggle() }
             },
             footer: {
-                MenuBar(activeTab: router.currentTab)
-                    .onRouteTab { router.currentTab = $0 }
+                MenuBar(activeTab: viewModel.router.currentTab)
+                    .onRouteTab { viewModel.router.currentTab = $0 }
             }
         )
-        .fullScreenCover(isPresented: $isModalActive, content: {
-            WorkOutEditScene(name: viewModel.name, work: viewModel.work, rest: viewModel.rest, series: viewModel.series,
-                             rounds: viewModel.rounds, reset: viewModel.reset)
-                .onCloseTab { newObjectId in
-                    if newObjectId != nil {
-                        viewModel.loadWorkoutById(newObjectId!)
-                    }
-                    isModalActive = false
+        .fullScreenCover(isPresented: $isEditModalActive, content: {
+            WorkOutEditScene()
+                .onCloseTab { isEditModalActive.toggle() }
+                .environmentObject(getViewModel())
+
+        })
+        .fullScreenCover(isPresented: $isRunModalActive, content: {
+            WorkOutRunScene()
+                .onQuitTab {
+                    isRunModalActive.toggle()
                 }
+                .environmentObject(
+                    WorkFlowViewModel(
+                        workout: WorkOut(
+                            viewModel.name,
+                            viewModel.work,
+                            viewModel.rest,
+                            viewModel.series,
+                            viewModel.rounds,
+                            viewModel.reset
+                        )
+                    )
+                )
         })
         .sheet(item: $activeSheetType) { activitySheet in
             IntervalPicker(
@@ -69,13 +82,31 @@ struct WorkOutScene: View {
             .presentationDetents([.fraction(0.4)])
         }
     }
+
+    private func getViewModel() -> WorkOutEditViewModel {
+        if let workout = viewModel.selectedWorkout {
+            return WorkOutEditViewModel(
+                workout: workout,
+                viewModel.work,
+                viewModel.rest,
+                viewModel.series,
+                viewModel.rounds,
+                viewModel.reset
+            )
+        }
+        return WorkOutEditViewModel(
+            viewModel.work,
+            viewModel.rest,
+            viewModel.series,
+            viewModel.rounds,
+            viewModel.reset
+        )
+    }
 }
 
 struct WorkOutScene_Previews: PreviewProvider {
     static var previews: some View {
         WorkOutScene()
             .environmentObject(WorkOutViewModel())
-            .environmentObject(ViewRouter())
-            .environmentObject(AppStorageManager())
     }
 }

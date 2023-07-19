@@ -15,8 +15,7 @@ public class Training: Object, Identifiable, Codable {
     @Persisted var name: String
     @Persisted var trainingDescription: String
     @Persisted var createdDate: Date
-
-    var workouts = List<WorkOut>()
+    @Persisted var workouts: RealmSwift.List<WorkOut>
 
     var workoutCount: Int {
         workouts.count
@@ -26,18 +25,29 @@ public class Training: Object, Identifiable, Codable {
         getTrainingLength()
     }
 
+    var formattedCreatedDate: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        return dateFormatter.string(from: createdDate)
+    }
+
     override public init() {
-        name = "Training"
-        trainingDescription = "Test description. This is the place, where you can say something about the training."
+        name = ""
+        trainingDescription = ""
         createdDate = Date()
-        workouts.append(objectsIn: [WorkOut(), WorkOut(), WorkOut(),
-                                    WorkOut(), WorkOut(), WorkOut(),
-                                    WorkOut(), WorkOut(), WorkOut(),
-                                    WorkOut(), WorkOut(), WorkOut(),
-                                    WorkOut(), WorkOut(), WorkOut()])
+    }
+
+    init(name: String, description: String, workouts: List<WorkOut>) {
+        self.name = name
+        trainingDescription = description
+
+        let workOuts = RealmSwift.List<WorkOut>()
+        workOuts.append(objectsIn: workouts)
+        self.workouts = workOuts
     }
 
     func addWorkOuts(_ workouts: [WorkOut]) {
+        self.workouts.removeAll()
         self.workouts.append(objectsIn: workouts)
     }
 

@@ -26,10 +26,10 @@ struct ActivitySelect: View {
                     Image(image)
                         .resizable()
                         .scaledToFill()
-                        .foregroundColor(Color(color))
                         .frame(maxWidth: height - 5, maxHeight: height - 5)
                         .padding(.leading, 10)
                         .padding([.top, .bottom], 2)
+                        .foregroundColor(Color(color))
 
                     Text(LocalizedStringKey(activity.rawValue))
                         .font(.custom("Lato-Black", size: 20))
@@ -61,7 +61,7 @@ struct ActivitySelect: View {
 
 struct ActivitySelect_Previews: PreviewProvider {
     static var previews: some View {
-        ActivitySelect(image: Icons.play.rawValue, color: ComponentColor.work.rawValue,
+        ActivitySelect(image: "forward.circle", color: ComponentColor.work.rawValue,
                        activity: .work, interval: 40, type: .time, height: 50)
     }
 }

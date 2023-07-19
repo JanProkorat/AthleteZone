@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct WorkOutRunScene: View {
-    @EnvironmentObject var router: ViewRouter
     @EnvironmentObject var viewModel: WorkFlowViewModel
+
+    var onQuitTab: (() -> Void)?
 
     var body: some View {
         BaseView(
@@ -18,17 +19,10 @@ struct WorkOutRunScene: View {
             },
             content: {
                 WorkOutRunContent()
-                    .onQuitTab {
-                        viewModel.onQuitTab()
-                        router.currentTab = .home
-                    }
             },
             footer: {
                 WorkOutRunFooter()
-                    .onQuitTab {
-                        viewModel.onQuitTab()
-                        router.currentTab = .home
-                    }
+                    .onQuitTab { performAction(onQuitTab) }
             }
         )
         .onChange(of: viewModel.state) { newValue in
@@ -46,8 +40,17 @@ struct WorkOutRunScene: View {
 struct WorkOutRunScene_Previews: PreviewProvider {
     static var previews: some View {
         WorkOutRunScene()
-            .environmentObject(ViewRouter())
-            .environmentObject(WorkFlowViewModel())
+            .environmentObject(WorkFlowViewModel(
+                workout: WorkOut("Prvni", 2, 2, 2, 2, 2)
+            ))
             .environment(\.locale, .init(identifier: "cze"))
+    }
+}
+
+extension WorkOutRunScene {
+    func onQuitTab(_ handler: @escaping () -> Void) -> WorkOutRunScene {
+        var new = self
+        new.onQuitTab = handler
+        return new
     }
 }

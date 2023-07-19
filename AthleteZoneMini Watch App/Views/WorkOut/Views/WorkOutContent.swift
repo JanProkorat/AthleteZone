@@ -16,12 +16,12 @@ struct WorkOutContent: View {
             BaseView(title: LocalizedStringKey(viewModel.selectedWorkOut?.name ?? "")) {
                 VStack {
                     Description(
-                        title: "Round \(flow.round)/\(self.workFlowViewModel.roundsCount)",
+                        title: "Round \(flow.round)/\(flow.totalRounds)",
                         color: ComponentColor.lightGreen
                     )
                     .padding(.top)
                     Description(
-                        title: "Exercise \(flow.serie)/\(self.workFlowViewModel.seriesCount)",
+                        title: "Exercise \(flow.serie)/\(flow.totalSeries)",
                         color: ComponentColor.lightBlue
                     )
 
@@ -56,8 +56,7 @@ struct WorkOutContent: View {
 
 struct WorkOutContent_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = WorkFlowViewModel()
-        viewModel.createWorkFlow("Title", 30, 60, 2, 1, 120)
+        let viewModel = WorkFlowViewModel(workout: WorkOut("Title", 30, 60, 2, 1, 120))
         return WorkOutContent()
             .environmentObject(viewModel)
             .environmentObject(ViewModel())

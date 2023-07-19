@@ -8,38 +8,26 @@
 import SwiftUI
 
 struct WorkOutEditScene: View {
-    var onCloseTab: ((_ newWorkoutId: String?) -> Void)?
+    var onCloseTab: (() -> Void)?
 
     @State var activeSheetType: ActivityType?
-    @ObservedObject var viewModel: WorkOutEditViewModel
-
-    init(name: String, work: Int, rest: Int, series: Int, rounds: Int, reset: Int, _id: String? = nil) {
-        viewModel = WorkOutEditViewModel(
-            name: name,
-            work: work,
-            rest: rest,
-            series: series,
-            rounds: rounds,
-            reset: reset,
-            _id: _id
-        )
-    }
+    @EnvironmentObject var viewModel: WorkOutEditViewModel
 
     var body: some View {
         BaseView(
             header: {
-                WorkOutEditHeader()
+                TitleText(text: "\(viewModel.isEditing ? "Edit" : "Add") workout", alignment: .center)
             },
             content: {
                 WorkOutEditContent()
-                    .onEditFieldTab { activeSheetType = $0 }
+                    .onEditTab { activeSheetType = $0 }
             },
             footer: {
                 WorkOutEditFooter()
-                    .onCloseTab { performAction(self.onCloseTab, value: nil) }
+                    .onCloseTab { performAction(self.onCloseTab) }
                     .onSaveTab {
-                        viewModel.save()
-                        performAction(self.onCloseTab, value: viewModel._id)
+                        viewModel.saveWorkout()
+                        performAction(self.onCloseTab)
                     }
             }
         )
@@ -75,12 +63,13 @@ struct WorkOutEditScene: View {
 
 struct ExerciseEditScene_Previews: PreviewProvider {
     static var previews: some View {
-        WorkOutEditScene(name: "Title", work: 30, rest: 60, series: 2, rounds: 1, reset: 120)
+        WorkOutEditScene()
+            .environmentObject(WorkOutEditViewModel())
     }
 }
 
 extension WorkOutEditScene {
-    func onCloseTab(_ handler: @escaping (_ newWorkoutId: String?) -> Void) -> WorkOutEditScene {
+    func onCloseTab(_ handler: @escaping () -> Void) -> WorkOutEditScene {
         var new = self
         new.onCloseTab = handler
         return new

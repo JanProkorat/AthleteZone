@@ -10,6 +10,8 @@ import Foundation
 import UserNotifications
 
 class NotificationManager: ObservableObject {
+    static let shared = NotificationManager()
+
     let notificationIdentifier1 = "workoutReminder1"
     let notificationIdentifier2 = "workoutReminder2"
     let messages = [

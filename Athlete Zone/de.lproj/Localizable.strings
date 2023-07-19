@@ -30,7 +30,8 @@
 "Name" = "Name";
 
 //Library
-"No workouts to display." = "Es werden keine Workouts angezeigt.";
+"No workouts to display." = "Keine workouts vorhanden.";
+"No trainings to display." = "Keine trainings vorhanden.";
 "Sort by" = "Sortieren nach";
 "Sort order" = "Sortierfolge";
 "Search ..." = "Suchen ...";
@@ -52,7 +53,7 @@
 //Workout edit
 "Add workout" = "Workout hinzufügen";
 "Edit workout" = "Workout bearbeiten";
-"Enter Name..." = "Namen angeben...";
+"Enter name..." = "Namen angeben...";
 
 //Workout run
 "Round %lld/%lld" = "Runde %lld/%lld";
@@ -70,3 +71,25 @@
 "Don't forget to crush your workout today!" = "Vergisst nicht, ihnen Training heute zu beenden!";
 "Time to sweat it out - your workout is waiting!" = "Zeit zum Schwitzen – ihr Workout wartet!";
 "Get up, get moving, get your workout in!" = "Aufstehen, bewegen, trainieren!";
+
+//Training
+"Number of workouts" = "Anzahl der Workouts";
+"Training length" = "Trainingsdauer";
+"Length:" = "Dauer:";
+"Workouts:" = "Workouts:";
+"Created date:" = "Erstellungsdatum:";
+"Workouts" = "Workouts";
+"Description" = "Beschreibung";
+"Summary" = "Übersicht";
+"No training selected. Create new one or choose existing from the library" = "Kein Training ausgewählt. Erstellen Sie ein neues oder wählen Sie eines aus der Bibliothek aus";
+
+//Section
+"Workout" = "Workout";
+"Training" = "Training";
+
+//Edit training
+"Enter description..." = "Beschreibung eingeben...";
+"Add workouts" = "Workouts hinzufügen";
+"Select workouts" = "Workouts auswählen";
+"Add training" = "Training hinzufügen";
+"Edit training" = "Training bearbeiten";

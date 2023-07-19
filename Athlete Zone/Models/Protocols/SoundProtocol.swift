@@ -9,4 +9,5 @@ import Foundation
 
 protocol SoundProtocol {
     func playSound(sound: Sound)
+    func stop()
 }

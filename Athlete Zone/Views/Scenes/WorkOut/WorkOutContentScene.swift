@@ -8,21 +8,18 @@
 import SwiftUI
 
 struct WorkOutContentScene: View {
-    @EnvironmentObject var router: ViewRouter
-    @EnvironmentObject var appStorageManager: AppStorageManager
-    @EnvironmentObject var launchScreenStateManager: LaunchScreenStateManager
+    @Environment(\.scenePhase) var scenePhase
+
+    @StateObject var viewModel = WorkOutContentViewModel()
 
     @StateObject var workOutViewModel = WorkOutViewModel()
-    @StateObject var workFlowViewModel = WorkFlowViewModel()
     @StateObject var libraryViewModel = LibraryViewModel()
     @StateObject var settingsViewModel = SettingsViewModel()
-
-    @Environment(\.scenePhase) var scenePhase
 
     var body: some View {
         GeometryReader { _ in
             VStack {
-                switch router.currentTab {
+                switch viewModel.currentTab {
                 case .home:
                     WorkOutScene()
                         .environmentObject(workOutViewModel)
@@ -31,43 +28,16 @@ struct WorkOutContentScene: View {
                     LibraryScene()
                         .environmentObject(libraryViewModel)
 
-                case .profile:
-                    ProfileScene()
-
                 case .setting:
                     SettingsScene()
                         .environmentObject(settingsViewModel)
 
-                case .workoutRun:
-                    WorkOutRunScene()
-                        .environmentObject(workFlowViewModel)
+                default:
+                    Text("Scene for this route not implemented")
                 }
             }
-            .onAppear {
-                if !self.appStorageManager.selectedItemId.isEmpty {
-                    self.workOutViewModel.loadWorkoutById(self.appStorageManager.selectedItemId)
-                }
-                self.launchScreenStateManager.dismiss()
-            }
-            .onChange(of: router.currentTab, perform: { newValue in
-                if newValue == .workoutRun {
-                    workFlowViewModel.createWorkFlow(
-                        workOutViewModel.name,
-                        workOutViewModel.work,
-                        workOutViewModel.rest,
-                        workOutViewModel.series,
-                        workOutViewModel.rounds,
-                        workOutViewModel.reset)
-                }
-            })
-            .onChange(of: scenePhase) { newPhase in
-                if (newPhase == .inactive || newPhase == .background) && workOutViewModel._id != nil {
-                    appStorageManager.selectedItemId = workOutViewModel._id!
-                }
-            }
-            .environmentObject(router)
-            .background(Color(Background.background.rawValue))
-            .animation(.easeInOut, value: router.currentTab)
+            .animation(.easeInOut, value: viewModel.currentTab)
+            .onChange(of: scenePhase) { workOutViewModel.scenePhase = $0 }
         }
     }
 }
@@ -75,8 +45,5 @@ struct WorkOutContentScene: View {
 struct ContentScene_Previews: PreviewProvider {
     static var previews: some View {
         WorkOutContentScene()
-            .environmentObject(ViewRouter())
-            .environmentObject(AppStorageManager())
-            .environmentObject(LaunchScreenStateManager())
     }
 }

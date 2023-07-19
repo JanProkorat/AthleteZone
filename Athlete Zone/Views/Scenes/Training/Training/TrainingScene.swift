@@ -5,33 +5,53 @@
 //  Created by Jan Prokorát on 24.03.2023.
 //
 
-// import ComposableArchitecture
 import SwiftUI
 
-// struct TrainingScene: View {
-//    @EnvironmentObject var router: ViewRouter
-//    let store: StoreOf<TrainingReducer>
-//
-//    var body: some View {
-//        WithViewStore(self.store, observe: { $0 }) { viewStore in
-//            BaseView {
-//                TrainingHeader(name: viewStore.training.name)
-//            } content: {
-//                TrainingContent(training: viewStore.training)
-//                    .onStartTab {
-//                    }
-//            } footer: {
-//                MenuBar(activeTab: router.currentTab)
-//                    .onRouteTab { router.currentTab = $0 }
-//            }
-//        }
-//    }
-// }
-//
-// struct TrainingScene_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let store = Store(initialState: TrainingReducer.State(training: Training()), reducer: TrainingReducer())
-//        TrainingScene(store: store)
-//            .environmentObject(ViewRouter())
-//    }
-// }
+struct TrainingScene: View {
+    @EnvironmentObject var viewModel: TrainingViewModel
+
+    @State var isEditModalActive = false
+    @State var isRunModalActive = false
+
+    var body: some View {
+        BaseView {
+            TrainingHeader(name: viewModel.selectedTrainingManager.selectedTraining?.name)
+                .onSaveTab { isEditModalActive.toggle() }
+        } content: {
+            TrainingContent()
+                .onStartTab { isRunModalActive.toggle() }
+                .onLibraryTab { viewModel.router.currentTab = .library }
+                .onCreateTab { isEditModalActive.toggle() }
+        } footer: {
+            MenuBar(activeTab: viewModel.router.currentTab)
+                .onRouteTab { viewModel.router.currentTab = $0 }
+        }
+        .fullScreenCover(isPresented: $isEditModalActive, content: {
+            TrainingEditScene()
+                .onCloseTab { isEditModalActive.toggle() }
+                .environmentObject(getViewModel())
+        })
+        .fullScreenCover(isPresented: $isRunModalActive, content: {
+            TrainingRunScene()
+                .onQuitTab { isRunModalActive.toggle() }
+                .environmentObject(TrainingRunViewModel(training: viewModel.selectedTraining!))
+        })
+    }
+
+    private func getViewModel() -> TrainingEditViewModel {
+        if let training = viewModel.selectedTraining {
+            return TrainingEditViewModel(
+                name: training.name,
+                description: training.trainingDescription,
+                workouts: viewModel.workouts)
+        }
+        return TrainingEditViewModel()
+    }
+}
+
+struct TrainingScene_Previews: PreviewProvider {
+    static var previews: some View {
+        TrainingScene()
+            .environmentObject(TrainingViewModel())
+    }
+}

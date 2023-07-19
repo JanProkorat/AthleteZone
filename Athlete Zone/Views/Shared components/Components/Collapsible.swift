@@ -11,14 +11,14 @@ struct Collapsible<Label: View, Content: View>: View {
     var label: Label
     var content: Content
 
-    @State var collapsed = false
+    @State var collapsed: Bool
     @State var disabled = false
 
-    init(collapsed: Bool = false, disabled: Bool = false,
+    init(collapsed: Binding<Bool>? = nil, disabled: Bool = false,
          @ViewBuilder label: () -> Label,
          @ViewBuilder content: () -> Content)
     {
-        _collapsed = State(initialValue: collapsed)
+        _collapsed = State(initialValue: collapsed?.wrappedValue ?? false)
         _disabled = State(initialValue: disabled)
         self.label = label()
         self.content = content()
@@ -45,10 +45,11 @@ struct Collapsible<Label: View, Content: View>: View {
 
             VStack {
                 content
+                    .allowsHitTesting(!collapsed)
             }
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: collapsed ? 0 : .none)
             .clipped()
-            .animation(.easeOut)
+            .animation(.easeOut, value: collapsed)
             .transition(.slide)
         }
     }
@@ -56,7 +57,11 @@ struct Collapsible<Label: View, Content: View>: View {
 
 struct Collapsible_Previews: PreviewProvider {
     static var previews: some View {
-        Collapsible {
+        let collapsed = Binding<Bool>(
+            get: { false },
+            set: { _ in }
+        )
+        Collapsible(collapsed: collapsed) {
             Text("Section")
         } content: {
             Text("test")

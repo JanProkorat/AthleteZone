@@ -52,14 +52,6 @@ struct WorkOutListView: View {
                     .padding(.bottom, chunk.count > 1 ? 1 : 10)
                     .frame(maxWidth: reader.size.width * 0.8, alignment: .leading)
                 }
-
-//                listViewItem(
-//                    text: "Created:",
-//                    value: workOut.formattedCreatedDate,
-//                    color: ComponentColor.mainText,
-//                    width: reader.size.width * 0.7
-//                )
-//                .padding()
             }
             .background(
                 RoundedRectangle(cornerRadius: 20)

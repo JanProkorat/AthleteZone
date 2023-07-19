@@ -9,7 +9,7 @@ import AVFoundation
 import Foundation
 
 class SoundManager: SoundProtocol {
-    private var audioPlayer = AVPlayer()
+    private var audioPlayer: AVPlayer?
 
     func playSound(sound: Sound) {
         guard let url = Bundle.main.url(forResource: sound.rawValue, withExtension: "mp3") else {
@@ -20,6 +20,11 @@ class SoundManager: SoundProtocol {
         let asset = AVAsset(url: url)
         let playerItem = AVPlayerItem(asset: asset)
         audioPlayer = AVPlayer(playerItem: playerItem)
-        audioPlayer.play()
+        audioPlayer!.play()
+    }
+
+    func stop() {
+        audioPlayer?.pause()
+        audioPlayer = nil
     }
 }

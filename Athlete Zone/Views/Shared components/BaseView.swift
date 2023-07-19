@@ -34,6 +34,7 @@ struct BaseView<Header: View, Content: View, Footer: View>: View {
                     .padding([.leading, .trailing], 10)
                     .padding(.top, 5)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .environment(\.contentSize, geometry.size)
 
                 footer
                     .padding([.leading, .trailing], 10)
@@ -59,4 +60,15 @@ struct BaseView_Previews: PreviewProvider {
             footer: {}
         )
     }
+}
+
+extension EnvironmentValues {
+    var contentSize: CGSize {
+        get { self[ContentSizeKey.self] }
+        set { self[ContentSizeKey.self] = newValue }
+    }
+}
+
+struct ContentSizeKey: EnvironmentKey {
+    static var defaultValue: CGSize { .zero }
 }
