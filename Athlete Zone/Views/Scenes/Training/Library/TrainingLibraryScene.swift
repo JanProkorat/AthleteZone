@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct TrainingLibraryScene: View {
-    @EnvironmentObject var router: ViewRouter
     @EnvironmentObject var viewModel: TrainingLibraryViewModel
 
     @State var trainingToEdit: Training?
@@ -29,8 +28,8 @@ struct TrainingLibraryScene: View {
                     .id(showModal)
             },
             footer: {
-                MenuBar(activeTab: router.currentTab)
-                    .onRouteTab { router.currentTab = $0 }
+                MenuBar(activeTab: viewModel.router.currentTab)
+                    .onRouteTab { viewModel.router.currentTab = $0 }
             }
         )
         .fullScreenCover(isPresented: $showModal, content: {
@@ -50,6 +49,5 @@ struct TrainingLibraryScene_Previews: PreviewProvider {
     static var previews: some View {
         TrainingLibraryScene()
             .environmentObject(TrainingLibraryViewModel())
-            .environmentObject(ViewRouter())
     }
 }

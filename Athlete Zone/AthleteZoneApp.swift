@@ -14,7 +14,7 @@ struct AthleteZoneApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack {
-                ContentView()
+                ContentView(viewModel: ContentViewModel())
 
                 if launchScreenStateManager.state != .finished {
                     LaunchScreenView()

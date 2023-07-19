@@ -8,28 +8,27 @@
 import SwiftUI
 
 struct LanguagePicker: View {
-    @StateObject var appStorageManager = AppStorageManager.shared
-
-    let languages = [
-        LanguageSettingConfig(id: .cze, icon: Icons.flagCZ.rawValue),
-        LanguageSettingConfig(id: .de, icon: Icons.flagDE.rawValue),
-        LanguageSettingConfig(id: .en, icon: Icons.flagGB.rawValue)
-    ]
+    @Binding var selectedLanguage: Language
 
     var body: some View {
         HStack(alignment: .center, spacing: 5) {
-            ForEach(languages) { item in
-                IconButton(
-                    id: "\(item.id)",
-                    image: item.icon,
-                    color: .none,
-                    width: 40,
-                    height: 35,
-                    selected: appStorageManager.language == item.id
-                )
-                .onTab {
-                    appStorageManager.language = item.id
-                }
+            ForEach(Language.allCases, id: \.self) { item in
+                Button(action: {
+                    selectedLanguage = item
+                }, label: {
+                    Image(item.rawValue)
+                        .resizable()
+                        .scaledToFit()
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(selectedLanguage == item ?
+                                    Color(ComponentColor.action.rawValue) :
+                                    Color(.clear), lineWidth: 4)
+                                .frame(width: 40, height: 34)
+                        )
+
+                })
+                .frame(width: 40, height: 35)
                 .padding(.leading, 5)
             }
         }
@@ -38,6 +37,6 @@ struct LanguagePicker: View {
 
 struct LanguagePicker_Previews: PreviewProvider {
     static var previews: some View {
-        LanguagePicker()
+        LanguagePicker(selectedLanguage: Binding.constant(Language.en))
     }
 }

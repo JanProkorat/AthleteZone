@@ -14,6 +14,7 @@ class TrainingLibraryViewModel: ObservableObject {
     @Published var sortBy: TrainingSortByProperty = .name
 
     @ObservedObject var selectedTrainingManager = SelectedTrainingManager.shared
+    @ObservedObject var router = ViewRouter.shared
 
     var realmManager: TrainingRealmManagerProtocol
 

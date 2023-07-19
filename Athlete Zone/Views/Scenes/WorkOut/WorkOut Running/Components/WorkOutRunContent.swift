@@ -10,8 +10,6 @@ import SwiftUI
 struct WorkOutRunContent: View {
     @EnvironmentObject var viewModel: WorkFlowViewModel
 
-    var onQuitTab: (() -> Void)?
-
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
             if let flow = self.viewModel.selectedFlow {
@@ -43,9 +41,6 @@ struct WorkOutRunContent: View {
                                 height: geo.size.height * 0.3
                             )
                             .onTab {
-//                                if viewModel.state == .finished {
-//                                    viewModel.selectedFlowIndex = 0
-//                                }
                                 viewModel.setState(viewModel.state == .running ? .paused : .running)
                             }
                             IconButton(
@@ -75,18 +70,9 @@ struct WorkOutRunContent: View {
 
 struct WorkOutRunContent_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = WorkFlowViewModel()
-        viewModel.createWorkFlow("Prvni", 2, 2, 2, 2, 2)
         return WorkOutRunContent()
-            .environmentObject(viewModel)
-            .environmentObject(ViewRouter())
-    }
-}
-
-extension WorkOutRunContent {
-    func onQuitTab(_ handler: @escaping () -> Void) -> WorkOutRunContent {
-        var new = self
-        new.onQuitTab = handler
-        return new
+            .environmentObject(WorkFlowViewModel(
+                workout: WorkOut("Prvni", 2, 2, 2, 2, 2)
+            ))
     }
 }

@@ -44,25 +44,37 @@ struct TrainingListView: View {
 
                 VStack(spacing: 7) {
                     HStack {
-                        Text("Length")
+                        Text("Length:")
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .foregroundColor(Color(ComponentColor.lightBlue.rawValue))
+                            .foregroundColor(Color(ComponentColor.pink.rawValue))
                             .padding(.leading, 10)
 
                         Text(training.trainingLength.toFormattedTime())
-                            .foregroundColor(Color(ComponentColor.lightBlue.rawValue))
+                            .foregroundColor(Color(ComponentColor.pink.rawValue))
                             .padding(.trailing, 30)
                     }
                     .padding([.leading, .trailing])
 
                     HStack {
-                        Text("Workouts")
+                        Text("Workouts:")
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .foregroundColor(Color(ComponentColor.lightGreen.rawValue))
+                            .foregroundColor(Color(ComponentColor.yellow.rawValue))
                             .padding(.leading, 10)
 
                         Text(training.workoutCount.toFormattedNumber())
-                            .foregroundColor(Color(ComponentColor.lightGreen.rawValue))
+                            .foregroundColor(Color(ComponentColor.yellow.rawValue))
+                            .padding(.trailing, 30)
+                    }
+                    .padding([.leading, .trailing])
+
+                    HStack {
+                        Text("Created date:")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .foregroundColor(Color(ComponentColor.braun.rawValue))
+                            .padding(.leading, 10)
+
+                        Text(training.formattedCreatedDate)
+                            .foregroundColor(Color(ComponentColor.braun.rawValue))
                             .padding(.trailing, 30)
                     }
                     .padding([.leading, .trailing])

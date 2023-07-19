@@ -7,11 +7,16 @@
 
 import Combine
 import Foundation
+import SwiftUI
 
 class SettingsViewModel: ObservableObject {
     @Published var appStorageManager = AppStorageManager.shared
+    @Published var languageManager = LanguageManager.shared
+
+    @ObservedObject var router = ViewRouter.shared
+
     private var connectivityManager = WatchConnectivityManager.shared
-    private let notificationManager = NotificationManager()
+    private let notificationManager = NotificationManager.shared
     private var cancellables = Set<AnyCancellable>()
 
     init() {

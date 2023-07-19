@@ -41,14 +41,16 @@ struct TrainingRunFooter: View {
                 return "Previous exercise"
             }
         }
-        return viewModel.state == .paused ? "Quit workout" : ""
+        return viewModel.state == .paused ||
+            viewModel.state == .finished ||
+            viewModel.state == .ready ? "Quit workout" : ""
     }
 }
 
 struct TrainingRunFooter_Previews: PreviewProvider {
     static var previews: some View {
         TrainingRunFooter()
-            .environmentObject(WorkFlowViewModel())
+            .environmentObject(WorkFlowViewModel(workout: WorkOut()))
     }
 }
 

@@ -45,10 +45,11 @@ struct Collapsible<Label: View, Content: View>: View {
 
             VStack {
                 content
+                    .allowsHitTesting(!collapsed)
             }
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: collapsed ? 0 : .none)
             .clipped()
-            .animation(.easeOut)
+            .animation(.easeOut, value: collapsed)
             .transition(.slide)
         }
     }

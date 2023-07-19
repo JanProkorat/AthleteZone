@@ -14,6 +14,7 @@ class WorkFlowViewModel: ObservableObject {
 
     @Published var currentWorkout: WorkOut?
     @Published var selectedFlow: WorkFlow?
+    @Published var nextWorkout: WorkOut?
 
     @Published var workoutName = ""
     @Published var selectedFlowIndex = 0
@@ -34,13 +35,20 @@ class WorkFlowViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
 
-    init() {
+    init(workout: WorkOut) {
+        currentWorkout = workout
+        workoutName = workout.name
+        workoutLibrary = [workout]
+
         initViewModel()
     }
 
-    init(workout: WorkOut) {
+    init(workouts: [WorkOut]) {
+        workoutLibrary = workouts
+        currentWorkout = workouts.first
+        workoutName = workouts.first!.name
+
         initViewModel()
-        createWorkFlow(workout.name, workout.work, workout.rest, workout.series, workout.rounds, workout.reset)
     }
 
     private func initViewModel() {
@@ -83,36 +91,12 @@ class WorkFlowViewModel: ObservableObject {
             .store(in: &cancellables)
 
         $currentWorkout
-            .sink { newValue in
-//                self.selectedFlowIndex = 0
-                self.selectedFlow = newValue?.workFlow[0]
-//                print(self.selectedFlow)
-//                self.state = .ready
-            }
+            .sink { self.selectedFlow = $0?.workFlow[0] }
             .store(in: &cancellables)
-    }
-
-    func createWorkFlow(_ name: String, _ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int) {
-        workoutName = name
-        createWorkFlow(WorkOut(name, work, rest, series, rounds, reset))
-    }
-
-    func createWorkFlow(_ workouts: [WorkOut]) {
-        workoutLibrary = workouts
-        currentWorkout = workouts.first
-    }
-
-    private func createWorkFlow(_ workout: WorkOut) {
-        currentWorkout = workout
-        workoutLibrary = [workout]
     }
 
     func setState(_ state: WorkFlowState) {
         self.state = state
-    }
-
-    func onQuitTab() {
-        selectedFlowIndex = 0
     }
 
     func setupNextWorkout(_ state: WorkFlowState) {
@@ -120,6 +104,8 @@ class WorkFlowViewModel: ObservableObject {
             let currentIndex = workoutLibrary.firstIndex(of: currentWorkout!)!
             if currentIndex < workoutLibrary.endIndex - 1 {
                 currentWorkout = workoutLibrary[currentIndex + 1]
+            } else {
+                currentWorkout = workoutLibrary.first
             }
         }
     }
@@ -169,6 +155,10 @@ extension WorkFlowViewModel {
             case .finished:
                 stopTimer()
                 selectedFlowIndex = 0
+                if let next = nextWorkout {
+                    currentWorkout = next
+                    nextWorkout = nil
+                }
 
             case .running:
                 startTimer()

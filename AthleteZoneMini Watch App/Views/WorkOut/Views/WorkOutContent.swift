@@ -56,8 +56,7 @@ struct WorkOutContent: View {
 
 struct WorkOutContent_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = WorkFlowViewModel()
-        viewModel.createWorkFlow("Title", 30, 60, 2, 1, 120)
+        let viewModel = WorkFlowViewModel(workout: WorkOut("Title", 30, 60, 2, 1, 120))
         return WorkOutContent()
             .environmentObject(viewModel)
             .environmentObject(ViewModel())

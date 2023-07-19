@@ -5,6 +5,7 @@
 //  Created by Jan Prokorát on 24.03.2023.
 //
 
+import RealmSwift
 import SwiftUI
 
 struct TrainingContent: View {
@@ -21,41 +22,52 @@ struct TrainingContent: View {
             VStack {
                 if let selectedTraining = viewModel.selectedTraining {
                     VStack {
-                        Collapsible {
-                            Text("Description")
-                                .font(.title)
-                                .foregroundColor(Color(ComponentColor.series.rawValue))
-                        } content: {
+                        EditSection(
+                            icon: "square.and.pencil.circle",
+                            label: "Description",
+                            color: ComponentColor.series
+                        ) {
                             ScrollView {
                                 Text(selectedTraining.trainingDescription)
                                     .font(.title2)
-                                    .padding([.leading, .trailing], 5)
-                                    .padding(.bottom)
+                                    .padding(.top, 7)
+                                    .frame(maxWidth: .infinity)
                             }
                             .frame(maxHeight: geo.size.height * 0.2)
-                            .padding(.bottom)
+                            .frame(maxWidth: .infinity)
+                            .roundedBackground(cornerRadius: 10, color: .darkBlue)
+                            .padding(.bottom, 7)
                         }
-                        .padding([.leading, .trailing], 5)
                     }
                     .roundedBackground(cornerRadius: 20)
 
                     ZStack(alignment: .top) {
                         RoundedRectangle(cornerRadius: 20)
                             .foregroundColor(Color(ComponentColor.menu.rawValue))
-                            .frame(height: geo.size.height * 0.07)
+                            .frame(height: 50)
                         Collapsible {
-                            Text("Workouts")
-                                .font(.title)
-                                .foregroundColor(Color(ComponentColor.rounds.rawValue))
+                            HStack(alignment: .center) {
+                                Image(systemName: "figure.run.circle")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .foregroundColor(Color(ComponentColor.rounds.rawValue))
+                                    .frame(maxWidth: 35, maxHeight: 35)
+                                    .padding(.top, 5)
+
+                                Text(LocalizedStringKey("Workouts"))
+                                    .font(.title)
+                                    .foregroundColor(Color(ComponentColor.rounds.rawValue))
+                                    .padding(.leading, 5)
+                            }
 
                         } content: {
                             List {
-                                ForEach(selectedTraining.workouts, id: \._id) { workout in
+                                ForEach(viewModel.workouts, id: \._id) { workout in
                                     TrainingWorkoutListItem(workout: workout, height: geo.size.height * 0.1)
                                         .onInfoTab { selectedWorkout = workout }
                                 }
                                 .onMove { from, to in
-                                    selectedTraining.workouts.move(fromOffsets: from, toOffset: to)
+                                    viewModel.workouts.move(fromOffsets: from, toOffset: to)
                                 }
                             }
                             .listStyle(.plain)
@@ -66,28 +78,29 @@ struct TrainingContent: View {
                     Spacer()
 
                     HStack {
-                        Collapsible(disabled: true, label: {
-                            Text("Summary")
-                                .font(.title)
-                                .foregroundColor(Color(ComponentColor.work.rawValue))
-                        }, content: {
+                        EditSection(
+                            icon: "play.circle",
+                            label: "Summary",
+                            color: ComponentColor.work,
+                            disabled: true
+                        ) {
                             VStack(spacing: 7) {
                                 HStack {
-                                    Text("Length")
+                                    Text(LocalizedStringKey("Length"))
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Text(selectedTraining.trainingLength.toFormattedTime())
                                 }
                                 .padding([.leading, .trailing])
 
                                 HStack {
-                                    Text("Workouts")
+                                    Text(LocalizedStringKey("Workouts"))
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Text(selectedTraining.workoutCount.toFormattedNumber())
                                 }
                                 .padding([.leading, .trailing])
                             }
                             .padding(.bottom)
-                        })
+                        }
 
                         HStack {
                             Button {
@@ -141,14 +154,19 @@ struct TrainingContent: View {
             }
         }
     }
-
-    func move(from source: IndexSet, to destination: Int) {}
 }
 
 struct TrainingContent_Previews: PreviewProvider {
     static var previews: some View {
-        TrainingContent()
-            .environmentObject(TrainingViewModel())
+        let viewModel = TrainingViewModel()
+        viewModel.selectedTrainingManager.selectedTraining = Training(
+            name: "name",
+            description: "des cript ionwe we wwewe wew ew wewe wewewe wewew ewewe weeweweww wewewewewew",
+            workouts: RealmSwift.List()
+        )
+
+        return TrainingContent()
+            .environmentObject(viewModel)
     }
 }
 

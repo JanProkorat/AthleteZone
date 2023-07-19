@@ -9,9 +9,12 @@ import SwiftUI
 
 struct TrainingLibraryContent: View {
     @EnvironmentObject var viewModel: TrainingLibraryViewModel
-    @EnvironmentObject var router: ViewRouter
 
     var onEditTab: ((_ value: Training) -> Void)?
+
+    init() {
+        UICollectionView.appearance().backgroundColor = UIColor(Color(Background.background.rawValue))
+    }
 
     var body: some View {
         VStack {
@@ -29,7 +32,7 @@ struct TrainingLibraryContent: View {
                 List(viewModel.library, id: \._id) { training in
                     Button {
                         self.viewModel.setSelectedTraining(training)
-                        self.router.currentTab = .home
+                        self.viewModel.router.currentTab = .home
                     } label: {
                         TrainingListView(training: training)
                             .onDeleteTab { viewModel.removeTraining(training) }
@@ -43,7 +46,7 @@ struct TrainingLibraryContent: View {
                 .listStyle(.plain)
 
                 if viewModel.library.isEmpty {
-                    Text("No trainings to display.")
+                    Text(LocalizedStringKey("No trainings to display."))
                         .font(.headline)
                         .bold()
                         .padding(.top, 100)
@@ -57,7 +60,6 @@ struct TrainingLibraryContent_Previews: PreviewProvider {
     static var previews: some View {
         TrainingLibraryContent()
             .environmentObject(TrainingLibraryViewModel())
-            .environmentObject(ViewRouter())
     }
 }
 

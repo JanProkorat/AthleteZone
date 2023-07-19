@@ -21,11 +21,11 @@ extension View {
         }
     }
 
-    func roundedBackground(cornerRadius: CGFloat) -> some View {
+    func roundedBackground(cornerRadius: CGFloat, color: ComponentColor = ComponentColor.menu) -> some View {
         return self
             .background(
                 RoundedRectangle(cornerRadius: cornerRadius)
-                    .foregroundColor(Color(ComponentColor.menu.rawValue))
+                    .foregroundColor(Color(color.rawValue))
             )
     }
 }

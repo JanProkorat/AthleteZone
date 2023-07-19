@@ -65,7 +65,7 @@ public class WorkOut: Object, Identifiable, Codable {
     }
 
     override init() {
-        name = "Title"
+        name = ""
         work = 30
         rest = 60
         series = 3

@@ -8,37 +8,42 @@
 import SwiftUI
 
 struct TrainingScene: View {
-    @EnvironmentObject var router: ViewRouter
     @EnvironmentObject var viewModel: TrainingViewModel
 
-    @State var isModalActive = false
+    @State var isEditModalActive = false
+    @State var isRunModalActive = false
 
     var body: some View {
         BaseView {
             TrainingHeader(name: viewModel.selectedTrainingManager.selectedTraining?.name)
-                .onSaveTab { isModalActive.toggle() }
+                .onSaveTab { isEditModalActive.toggle() }
         } content: {
             TrainingContent()
-                .onStartTab { router.currentTab = .run }
-                .onLibraryTab { router.currentTab = .library }
-                .onCreateTab { isModalActive.toggle() }
+                .onStartTab { isRunModalActive.toggle() }
+                .onLibraryTab { viewModel.router.currentTab = .library }
+                .onCreateTab { isEditModalActive.toggle() }
         } footer: {
-            MenuBar(activeTab: router.currentTab)
-                .onRouteTab { router.currentTab = $0 }
+            MenuBar(activeTab: viewModel.router.currentTab)
+                .onRouteTab { viewModel.router.currentTab = $0 }
         }
-        .fullScreenCover(isPresented: $isModalActive, content: {
+        .fullScreenCover(isPresented: $isEditModalActive, content: {
             TrainingEditScene()
-                .onCloseTab { isModalActive = false }
+                .onCloseTab { isEditModalActive.toggle() }
                 .environmentObject(getViewModel())
+        })
+        .fullScreenCover(isPresented: $isRunModalActive, content: {
+            TrainingRunScene()
+                .onQuitTab { isRunModalActive.toggle() }
+                .environmentObject(TrainingRunViewModel(training: viewModel.selectedTraining!))
         })
     }
 
     private func getViewModel() -> TrainingEditViewModel {
-        if let training = viewModel.selectedTrainingManager.selectedTraining {
+        if let training = viewModel.selectedTraining {
             return TrainingEditViewModel(
                 name: training.name,
-                description: training.description,
-                workouts: training.workouts)
+                description: training.trainingDescription,
+                workouts: viewModel.workouts)
         }
         return TrainingEditViewModel()
     }
@@ -47,7 +52,6 @@ struct TrainingScene: View {
 struct TrainingScene_Previews: PreviewProvider {
     static var previews: some View {
         TrainingScene()
-            .environmentObject(ViewRouter())
             .environmentObject(TrainingViewModel())
     }
 }

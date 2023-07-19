@@ -30,7 +30,7 @@ struct WorkOutContent: View {
                             image: button.image,
                             color: button.color.rawValue,
                             activity: button.id,
-                            interval: viewModel.getProperty(for: button.id),
+                            interval: getProperty(for: button.id),
                             type: button.type,
                             height: geo.size.height * 0.45 * 0.2
                         )
@@ -63,6 +63,25 @@ struct WorkOutContent: View {
                 .frame(height: geo.size.height * 0.47)
                 .frame(maxWidth: .infinity)
             }
+        }
+    }
+
+    func getProperty(for activityType: ActivityType) -> Int {
+        switch activityType {
+        case .work:
+            return viewModel.work
+
+        case .rest:
+            return viewModel.rest
+
+        case .series:
+            return viewModel.series
+
+        case .rounds:
+            return viewModel.rounds
+
+        case .reset:
+            return viewModel.reset
         }
     }
 }

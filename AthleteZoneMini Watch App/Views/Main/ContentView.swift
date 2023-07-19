@@ -11,7 +11,7 @@ struct ContentView: View {
     @EnvironmentObject var viewModel: ViewModel
     @StateObject var launchScreenStateManager = LaunchScreenStateManager()
     @StateObject var appStorageManager = AppStorageManager.shared
-    @StateObject var workFlowViewModel = WorkFlowViewModel()
+//    @StateObject var workFlowViewModel = WorkFlowViewModel()
 
     var body: some View {
         Group {
@@ -30,12 +30,12 @@ struct ContentView: View {
                 self.launchScreenStateManager.dismiss()
             }
         })
-        .fullScreenCover(item: $viewModel.selectedWorkOut, content: { _ in
-            WorkOutView(workFlowViewModel: workFlowViewModel)
-                .navigationBarHidden(true)
-                .environment(\.locale, .init(identifier: "\(appStorageManager.language)"))
-
-        })
+//        .fullScreenCover(item: $viewModel.selectedWorkOut, content: { _ in
+//            WorkOutView(workFlowViewModel: workFlowViewModel)
+//                .navigationBarHidden(true)
+//                .environment(\.locale, .init(identifier: "\(appStorageManager.language)"))
+//
+//        })
     }
 }
 

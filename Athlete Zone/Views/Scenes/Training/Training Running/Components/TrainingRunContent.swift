@@ -16,7 +16,8 @@ struct TrainingRunContent: View {
             Menu {
                 ForEach(viewModel.workoutLibrary, id: \.id) { workout in
                     Button {
-                        self.viewModel.currentWorkout = workout
+                        viewModel.nextWorkout = workout
+                        viewModel.setState(.finished)
                     } label: {
                         HStack {
                             Text(workout.name)
@@ -53,10 +54,9 @@ struct TrainingRunContent: View {
 
 struct TrainingRunContent_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = WorkFlowViewModel()
-        viewModel.createWorkFlow([
+        let viewModel = WorkFlowViewModel(workouts: [
             WorkOut("Prvni", 2, 2, 2, 2, 2),
-            WorkOut("Druhy", 5, 5, 5, 5, 5)
+            WorkOut("Druhy", 3, 3, 3, 3, 3)
         ])
         return TrainingRunContent()
             .environmentObject(viewModel)

@@ -7,19 +7,19 @@
 
 import Combine
 import Foundation
+import SwiftUI
 
 class TrainingRunViewModel: ObservableObject {
-    @Published var trainingName = ""
-    @Published var workouts: [WorkOut] = []
+    @Published var trainingName: String
+    @Published var workouts: [WorkOut]
 
-    @Published var selectedWorkFlowViewModel = WorkFlowViewModel()
+    @Published var selectedWorkFlowViewModel: WorkFlowViewModel
 
     private var cancellables = Set<AnyCancellable>()
 
-    func initTraining(name: String, workouts: [WorkOut]) {
-        trainingName = name
-        self.workouts = workouts
-
-        selectedWorkFlowViewModel.createWorkFlow(workouts)
+    init(training: Training) {
+        trainingName = training.name
+        workouts = Array(training.workouts)
+        selectedWorkFlowViewModel = WorkFlowViewModel(workouts: Array(training.workouts))
     }
 }

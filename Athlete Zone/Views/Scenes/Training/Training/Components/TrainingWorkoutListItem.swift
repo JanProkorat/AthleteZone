@@ -25,10 +25,10 @@ struct TrainingWorkoutListItem: View {
                 Text(workout.workoutLength.toFormattedTime())
                     .font(.title2)
 
-                Image(Icons.bars.rawValue)
-                    .frame(width: height * 0.3, height: height * 0.3)
+                Image(systemName: "line.3.horizontal")
+                    .frame(height: height * 0.03)
                     .padding(.leading)
-                    .foregroundColor(Color(ComponentColor.grey.rawValue))
+                    .foregroundColor(Color(Background.background.rawValue))
             }
             .padding([.leading, .trailing])
             .background(ZStack {

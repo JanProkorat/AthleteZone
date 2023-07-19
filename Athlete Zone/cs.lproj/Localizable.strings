@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   Athlete Zone
 
@@ -31,6 +31,7 @@
 
 //Library
 "No workouts to display." = "Žádné workouty k zobrazení";
+"No trainings to display." = "Žádné tréninky k zobrazení";
 "Sort by" = "Řadit podle";
 "Sort order" = "Směr řazení";
 "Search ..." = "Hledat ...";
@@ -52,7 +53,7 @@
 //Workout edit
 "Add workout" = "Přidat workout";
 "Edit workout" = "Upravit workout";
-"Enter Name..." = "Zadejte název...";
+"Enter name..." = "Zadejte název...";
 
 //Workout run
 "Round %lld/%lld" = "Kolo %lld/%lld";
@@ -71,4 +72,26 @@
 "Don't forget to crush your workout today!" = "Nezapomeň se dnes pořádně zničit!";
 "Time to sweat it out - your workout is waiting!" = "Čas to vypotit - Váš dnešní workout čeká";
 "Get up, get moving, get your workout in!" = "Vstaňte, začněte se hýbat, zacvičte si!";
+
+//Training
+"Number of workouts" = "Počet workoutů";
+"Training length" = "Délka tréninku";
+"Length:" = "Délka:";
+"Workouts:" = "Workouty:";
+"Created date:" = "Datum vytvoření:";
+"Workouts" = "Workouty";
+"Description" = "Popis";
+"Summary" = "Souhrn";
+"No training selected. Create new one or choose existing from the library" = "Není vybrán žádný trénink. Vytvořte nový nebo vyberte existující z knihovny";
+
+//Section
+"Workout" = "Workout";
+"Training" = "Trénink";
+
+//Edit training
+"Enter description..." = "Zadejte popis...";
+"Add workouts" = "Přidat workouty";
+"Select workouts" = "Vyberte workouty";
+"Add training" = "Přidat trénink";
+"Edit training" = "Upravit trénink";
 

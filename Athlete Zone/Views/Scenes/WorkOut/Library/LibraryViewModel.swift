@@ -16,7 +16,9 @@ class LibraryViewModel: ObservableObject {
     @Published var workoutToEdit: WorkOut?
 
     @ObservedObject var selectedWorkoutManager = SelectedWorkoutManager.shared
-    @Published var connectivityManager = WatchConnectivityManager.shared
+    @ObservedObject var router = ViewRouter.shared
+    private var connectivityManager = WatchConnectivityManager.shared
+
     var realmManager: WorkOutRealmManagerProtocol
 
     var library: [WorkOut] {

@@ -11,8 +11,6 @@ struct WorkoutPicker: View {
     @Binding var selectedWorkouts: [WorkOut]
     var workoutLibrary: [WorkOut] = []
 
-//    @State private var shouldReloadItems = false
-
     var body: some View {
         BaseView {
             TitleText(text: "Select workouts", alignment: .center)
@@ -25,7 +23,6 @@ struct WorkoutPicker: View {
                         } else {
                             selectedWorkouts.append(workout)
                         }
-//                        shouldReloadItems.toggle()
                     } label: {
                         listItem(item: workout)
                     }
@@ -36,7 +33,7 @@ struct WorkoutPicker: View {
                 .listStyle(.plain)
 
                 if workoutLibrary.isEmpty {
-                    Text("No workouts to display.")
+                    Text(LocalizedStringKey("No workouts to display."))
                         .font(.headline)
                         .bold()
                         .padding(.top, 100)
@@ -53,13 +50,12 @@ struct WorkoutPicker: View {
         )
         .padding([.leading, .trailing], 2)
         .id(item._id)
-//        .id(shouldReloadItems)
     }
 }
 
 struct WorkoutPicker_Previews: PreviewProvider {
     static var previews: some View {
         let bind = Binding.constant([WorkOut]())
-        WorkoutPicker(selectedWorkouts: bind, workoutLibrary: [WorkOut(), WorkOut(), WorkOut(), WorkOut()])
+        WorkoutPicker(selectedWorkouts: bind, workoutLibrary: [])
     }
 }

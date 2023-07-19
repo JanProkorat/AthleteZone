@@ -48,12 +48,14 @@ class TrainingEditViewModel: ObservableObject {
         workoutRealmManager = WorkoutRealmManager()
     }
 
-    init(name: String, description: String, workouts: RealmSwift.List<WorkOut>) {
-        training = Training(name: name, description: description, workouts: workouts)
+    init(name: String, description: String, workouts: [WorkOut]) {
+        let realmWorkouts = RealmSwift.List<WorkOut>()
+        realmWorkouts.append(objectsIn: workouts)
+        training = Training(name: name, description: description, workouts: realmWorkouts)
 
         self.name = name
         self.description = description
-        self.workouts = Array(workouts)
+        self.workouts = workouts
 
         trainingRealmManager = TrainingRealmManager()
         workoutRealmManager = WorkoutRealmManager()

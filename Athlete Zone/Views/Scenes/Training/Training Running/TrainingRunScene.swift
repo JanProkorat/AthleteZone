@@ -5,11 +5,13 @@
 //  Created by Jan Prokorát on 30.03.2023.
 //
 
+import RealmSwift
 import SwiftUI
 
 struct TrainingRunScene: View {
     @EnvironmentObject var viewModel: TrainingRunViewModel
-    @EnvironmentObject var router: ViewRouter
+
+    var onQuitTab: (() -> Void)?
 
     var body: some View {
         BaseView {
@@ -20,8 +22,7 @@ struct TrainingRunScene: View {
         } footer: {
             TrainingRunFooter()
                 .onQuitTab {
-                    viewModel.selectedWorkFlowViewModel.onQuitTab()
-                    router.currentTab = .home
+                    performAction(onQuitTab)
                 }
                 .environmentObject(viewModel.selectedWorkFlowViewModel)
         }
@@ -30,13 +31,26 @@ struct TrainingRunScene: View {
 
 struct TrainingRunScene_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = TrainingRunViewModel()
-        viewModel.initTraining(name: "test", workouts: [
+        let workouts = RealmSwift.List<WorkOut>()
+        workouts.append(objectsIn: [
             WorkOut("Prvni", 2, 2, 2, 2, 2),
-            WorkOut("Druhy", 5, 5, 5, 5, 5)
+            WorkOut("Druhy", 2, 2, 2, 2, 2)
         ])
         return TrainingRunScene()
-            .environmentObject(viewModel)
-            .environmentObject(ViewRouter())
+            .environmentObject(TrainingRunViewModel(
+                training: Training(
+                    name: "test",
+                    description: "",
+                    workouts: workouts
+                )
+            ))
+    }
+}
+
+extension TrainingRunScene {
+    func onQuitTab(_ handler: @escaping () -> Void) -> TrainingRunScene {
+        var new = self
+        new.onQuitTab = handler
+        return new
     }
 }

@@ -13,36 +13,36 @@ struct SettingsContent: View {
     var body: some View {
         VStack(spacing: 5) {
             SettingsItem(title: "Language", content: {
-                LanguagePicker()
+                LanguagePicker(selectedLanguage: $viewModel.languageManager.language)
             })
             .padding(.top, 20)
-            
+
             SettingsItem(title: "Sounds", content: {
                 Toggle("", isOn: $viewModel.appStorageManager.soundsEnabled)
                     .frame(width: 0)
                     .padding(.trailing, 30)
             })
-            
+
             SettingsItem(title: "Haptics (Watch only)", content: {
                 Toggle("", isOn: $viewModel.appStorageManager.hapticsEnabled)
                     .frame(width: 0)
                     .padding(.trailing, 30)
             })
-                
+
             SettingsItem(title: "Allow notifications", content: {
                 Toggle("", isOn: $viewModel.appStorageManager.notificationsEnabled)
                     .frame(width: 0)
                     .padding(.trailing, 30)
             })
-                
+
             Spacer()
         }
     }
 }
-                         
+
 struct SettingsContent_Previews: PreviewProvider {
     static var previews: some View {
         SettingsContent()
-            .environmentObject(WorkOutViewModel())
+            .environmentObject(SettingsViewModel())
     }
 }

@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct SectionSwitch: View {
-    @EnvironmentObject var router: ViewRouter
+    @StateObject var router = ViewRouter.shared
 
     var body: some View {
         Menu {
             Button(action: {
                 router.currentSection = .workout
             }, label: {
-                Text("\(Section.workout.rawValue)")
+                Text(LocalizedStringKey(Section.workout.rawValue))
             })
             Button(action: {
                 router.currentSection = .training
             }, label: {
-                Text("\(Section.training.rawValue)")
+                Text(LocalizedStringKey(Section.training.rawValue))
             })
         } label: {
             Image(Icons.arrowDown.rawValue)
@@ -35,6 +35,5 @@ struct SectionSwitch: View {
 struct SectionSwitch_Previews: PreviewProvider {
     static var previews: some View {
         SectionSwitch()
-            .environmentObject(ViewRouter())
     }
 }

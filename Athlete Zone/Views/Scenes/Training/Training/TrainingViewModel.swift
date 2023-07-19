@@ -11,19 +11,26 @@ import SwiftUI
 
 class TrainingViewModel: ObservableObject {
     @ObservedObject var selectedTrainingManager = SelectedTrainingManager.shared
+    @ObservedObject var router = ViewRouter.shared
     var appStorageManager = AppStorageManager.shared
 
     @Published var selectedTraining: Training?
+    @Published var workouts: [WorkOut] = []
     @Published var scenePhase: ScenePhase?
 
     private var cancellables = Set<AnyCancellable>()
-    var trainingRealmManager: TrainingRealmManagerProtocol
+    var realmManager: TrainingRealmManagerProtocol
 
     init() {
-        trainingRealmManager = TrainingRealmManager()
+        realmManager = TrainingRealmManager()
 
         selectedTrainingManager.$selectedTraining
-            .sink(receiveValue: { self.selectedTraining = $0 })
+            .sink(receiveValue: { newValue in
+                self.selectedTraining = newValue
+                if newValue != nil {
+                    self.workouts = Array(newValue!.workouts)
+                }
+            })
             .store(in: &cancellables)
 
         $scenePhase
@@ -31,7 +38,7 @@ class TrainingViewModel: ObservableObject {
             .store(in: &cancellables)
 
         if selectedTrainingManager.selectedTraining == nil && !appStorageManager.selectedTrainingId.isEmpty {
-            selectedTrainingManager.selectedTraining = trainingRealmManager.load(
+            selectedTrainingManager.selectedTraining = realmManager.load(
                 primaryKey: appStorageManager.selectedTrainingId
             )
         }

@@ -25,6 +25,12 @@ public class Training: Object, Identifiable, Codable {
         getTrainingLength()
     }
 
+    var formattedCreatedDate: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        return dateFormatter.string(from: createdDate)
+    }
+
     override public init() {
         name = ""
         trainingDescription = ""

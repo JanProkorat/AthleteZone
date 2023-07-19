@@ -58,7 +58,7 @@ struct WorkOutActions: View {
 struct WorkOutActions_Previews: PreviewProvider {
     static var previews: some View {
         WorkOutActions()
-            .environmentObject(WorkFlowViewModel())
+            .environmentObject(WorkFlowViewModel(workout: WorkOut()))
     }
 }
 

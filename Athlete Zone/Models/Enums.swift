@@ -8,7 +8,7 @@
 import Foundation
 
 enum Tab {
-    case home, library, profile, setting, run
+    case home, library, profile, setting
 }
 
 enum ActivityType: String, Identifiable, CaseIterable, Encodable {
@@ -45,7 +45,9 @@ enum InputType {
 }
 
 enum Language: String, Equatable, CaseIterable {
-    case cze, de, en
+    case cze = "CZ"
+    case de = "DE"
+    case en = "GB"
 }
 
 enum SortOrder: String, CaseIterable, Identifiable {

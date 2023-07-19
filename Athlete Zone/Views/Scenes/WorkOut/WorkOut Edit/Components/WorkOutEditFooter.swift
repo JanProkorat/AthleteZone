@@ -17,7 +17,7 @@ struct WorkOutEditFooter: View {
             ActionButton(content: {
                 ActionView(
                     text: "Save",
-                    color: viewModel.isValid ? .rounds : .grey,
+                    color: viewModel.saveDisabled ? .grey : .rounds,
                     backgoundColor: ComponentColor.menu.rawValue,
                     image: Icons.check.rawValue,
                     height: 60,
@@ -25,7 +25,7 @@ struct WorkOutEditFooter: View {
                 )
             })
             .onTab { self.performAction(onSaveTab) }
-            .disabled(!viewModel.isValid)
+            .disabled(viewModel.saveDisabled)
 
             ActionButton(content: {
                 ActionView(
@@ -45,7 +45,7 @@ struct WorkOutEditFooter: View {
 struct WorkOutEditFooter_Previews: PreviewProvider {
     static var previews: some View {
         WorkOutEditFooter()
-            .environmentObject(WorkOutEditViewModel())
+            .environmentObject(WorkOutEditViewModel(workout: WorkOut()))
     }
 }
 

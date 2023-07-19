@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct SettingsScene: View {
-    @EnvironmentObject var router: ViewRouter
+    @EnvironmentObject var viewModel: SettingsViewModel
 
     var body: some View {
         BaseView(
             header: {
-                SettingsHeader()
+                TitleText(text: "Settings")
             },
             content: {
                 SettingsContent()
             },
             footer: {
-                MenuBar(activeTab: router.currentTab)
-                    .onRouteTab { router.currentTab = $0 }
+                MenuBar(activeTab: viewModel.router.currentTab)
+                    .onRouteTab { viewModel.router.currentTab = $0 }
             }
         )
     }
@@ -29,7 +29,6 @@ struct SettingsScene: View {
 struct SettingsScene_Previews: PreviewProvider {
     static var previews: some View {
         SettingsScene()
-            .environmentObject(ViewRouter())
             .environmentObject(SettingsViewModel())
     }
 }

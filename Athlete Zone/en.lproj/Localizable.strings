@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   Athlete Zone
 
@@ -31,11 +31,18 @@
 
 //Library
 "No workouts to display." = "No workouts to display.";
+"No trainings to display." = "No trainings to display.";
 "Sort by" = "Sort by";
 "Sort order" = "Sort order";
 "Search ..." = "Search ...";
 "Ascending" = "Ascending";
 "Descending" = "Descending";
+"Work:" = "Work:";
+"Rest:" = "Rest:";
+"Series:" = "Series:";
+"Rounds:" = "Rounds:";
+"Reset:" = "Reset:";
+"Total:" = "Total:";
 
 //Settings
 "Language" = "Language";
@@ -46,7 +53,7 @@
 //Workout edit
 "Add workout" = "Add workout";
 "Edit workout" = "Edit workout";
-"Enter Name..." = "Enter name...";
+"Enter name..." = "Enter name...";
 
 //Workout run
 "Round %lld/%lld" = "Round %lld/%lld";
@@ -65,3 +72,24 @@
 "Time to sweat it out - your workout is waiting!" = "Time to sweat it out - your workout is waiting!";
 "Get up, get moving, get your workout in!" = "Get up, get moving, get your workout in!";
 
+//Training
+"Number of workouts" = "Number of workouts";
+"Training length" = "Training length";
+"Length:" = "Length:";
+"Workouts:" = "Workouts:";
+"Created date:" = "Created date:";
+"Workouts" = "Workouts";
+"Description" = "Description";
+"Summary" = "Summary";
+"No training selected. Create new one or choose existing from the library" = "No training selected. Create new one or choose existing from the library";
+
+//Section
+"Workout" = "Workout";
+"Training" = "Training";
+
+//Edit training
+"Enter description..." = "Enter description...";
+"Add workouts" = "Add workouts";
+"Select workouts" = "Select workouts";
+"Add training" = "Add training";
+"Edit training" = "Edit training";

@@ -11,95 +11,74 @@ struct WorkOutEditContent: View {
     @EnvironmentObject var viewModel: WorkOutEditViewModel
 
     var onNameChange: ((_ value: String) -> Void)?
-    var onEditFieldTab: ((_ value: ActivityType) -> Void)?
+    var onEditTab: ((_ value: ActivityType) -> Void)?
 
-    let editFieldConfig = ActivityType.allCases.chunked(into: 2)
+    var buttons = [
+        WorkOutButtonConfig(id: .work, image: Icons.play.rawValue, color: .work, type: .time),
+        WorkOutButtonConfig(id: .rest, image: Icons.pause.rawValue, color: .rest, type: .time),
+        WorkOutButtonConfig(id: .series, image: Icons.forward.rawValue, color: .series, type: .number),
+        WorkOutButtonConfig(id: .rounds, image: Icons.repeatIcon.rawValue, color: .rounds, type: .number),
+        WorkOutButtonConfig(id: .reset, image: Icons.time.rawValue, color: .reset, type: .time)
+    ]
 
     var body: some View {
-        VStack(spacing: 15) {
-            nameSection
-
-            VStack(spacing: 0) {
-                ForEach(editFieldConfig, id: \.first?.id) { chunk in
-                    HStack {
-                        editField(for: chunk.first!)
-
-                        if chunk.count > 1 {
-                            editField(for: chunk.last!)
-                        }
+        GeometryReader { geo in
+            VStack(spacing: 15) {
+                VStack(alignment: .leading, spacing: 5) {
+                    EditField(label: "Name", labelSize: 23, color: ComponentColor.mainText) {
+                        TextInput(text: $viewModel.name)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding([.top, .bottom], 10)
+                    .padding([.top, .bottom])
                 }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .roundedBackground(cornerRadius: 20)
-            .padding(.bottom)
-        }
-        .frame(maxHeight: .infinity, alignment: .top)
-        .ignoresSafeArea(.keyboard, edges: .bottom)
-    }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .roundedBackground(cornerRadius: 20)
 
-    @ViewBuilder
-    var nameSection: some View {
-        VStack(alignment: .leading, spacing: 5) {
-            EditField(label: "Name", labelSize: 23, color: ComponentColor.mainText) {
-                TextInput(text: $viewModel.name)
-            }
-            .padding([.top, .bottom])
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .roundedBackground(cornerRadius: 20)
-    }
-
-    @ViewBuilder
-    func editField(for type: ActivityType) -> some View {
-        let label = type.rawValue
-        let labelSize: CGFloat = 23
-        let color = ComponentColor.allCases.first(where: { label.contains($0.rawValue) })!
-
-        EditField(label: label, labelSize: labelSize, color: color) {
-            ActionButton {
-                ActionView(
-                    text: self.getValueByType(type),
-                    color: ComponentColor.mainText,
-                    backgoundColor: Background.background.rawValue,
-                    image: nil,
-                    height: 40,
-                    cornerRadius: 10
-                )
-                .overlay(
-                    HStack {
-                        if self.getValueByType(type) == "00:00" {
-                            Image(systemName: "exclamationmark.circle")
-                                .foregroundColor(.red)
+                VStack(alignment: .center, spacing: 3) {
+                    ForEach(buttons, id: \.id) { button in
+                        ActivitySelect(
+                            image: button.image,
+                            color: button.color.rawValue,
+                            activity: button.id,
+                            interval: getProperty(for: button.id),
+                            type: button.type,
+                            height: geo.size.height * 0.45 * 0.2
+                        )
+                        .onTab {
+                            performAction(self.onEditTab, value: button.id)
                         }
                     }
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                    .padding(.trailing, 10)
+                }
+                .frame(height: geo.size.height * 0.5, alignment: .top)
+                .frame(maxWidth: .infinity)
+                .padding(.top)
+
+                CounterText(
+                    text: viewModel.timeOverview.toFormattedTime(),
+                    size: geo.size.height * 0.12
                 )
+                .padding(.top)
             }
-            .onTab { performAction(self.onEditFieldTab, value: type) }
-            .padding([.leading, .trailing])
+            .frame(maxHeight: .infinity, alignment: .top)
+            .ignoresSafeArea(.keyboard, edges: .bottom)
         }
     }
 
-    func getValueByType(_ type: ActivityType) -> String {
-        switch type {
+    func getProperty(for activityType: ActivityType) -> Int {
+        switch activityType {
         case .work:
-            return viewModel.work.toFormattedTime()
+            return viewModel.work
 
         case .rest:
-            return viewModel.rest.toFormattedTime()
+            return viewModel.rest
 
         case .series:
-            return viewModel.series.toFormattedNumber()
+            return viewModel.series
 
         case .rounds:
-            return viewModel.rounds.toFormattedNumber()
+            return viewModel.rounds
 
         case .reset:
-            return viewModel.reset.toFormattedTime()
+            return viewModel.reset
         }
     }
 }
@@ -107,7 +86,7 @@ struct WorkOutEditContent: View {
 struct ExerciseEditContent_Previews: PreviewProvider {
     static var previews: some View {
         WorkOutEditContent()
-            .environmentObject(WorkOutEditViewModel())
+            .environmentObject(WorkOutEditViewModel(workout: WorkOut()))
     }
 }
 
@@ -118,9 +97,9 @@ extension WorkOutEditContent {
         return new
     }
 
-    func onEditFieldTab(_ handler: @escaping (_ value: ActivityType) -> Void) -> WorkOutEditContent {
+    func onEditTab(_ handler: @escaping (_ value: ActivityType) -> Void) -> WorkOutEditContent {
         var new = self
-        new.onEditFieldTab = handler
+        new.onEditTab = handler
         return new
     }
 }

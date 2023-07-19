@@ -16,26 +16,14 @@ struct TrainingEditContent: View {
     var body: some View {
         GeometryReader { geo in
             VStack {
-                Collapsible {
-                    Text("Name")
-                        .font(.title)
-                        .padding(.leading, 5)
-                        .foregroundColor(Color(ComponentColor.work.rawValue))
-                } content: {
+                EditSection(icon: "pencil.circle", label: "Name", color: ComponentColor.work) {
                     EditField {
                         TextInput(text: $viewModel.name)
                     }
                     .padding(.bottom)
                 }
-                .padding([.leading, .trailing], 5)
-                .roundedBackground(cornerRadius: 20)
 
-                Collapsible {
-                    Text("Description")
-                        .font(.title)
-                        .padding(.leading, 5)
-                        .foregroundColor(Color(ComponentColor.series.rawValue))
-                } content: {
+                EditSection(icon: "square.and.pencil.circle", label: "Description", color: ComponentColor.series) {
                     ScrollView {
                         TextField("Enter description...",
                                   text: $viewModel.description,
@@ -46,92 +34,29 @@ struct TrainingEditContent: View {
                     }
                     .frame(maxHeight: geo.size.height * 0.22)
                 }
-                .padding([.leading, .trailing], 5)
-                .roundedBackground(cornerRadius: 20)
 
                 ZStack(alignment: .top) {
                     RoundedRectangle(cornerRadius: 20)
                         .foregroundColor(Color(ComponentColor.menu.rawValue))
-                        .frame(height: geo.size.height * 0.07)
+                        .frame(height: 50)
                     Collapsible {
+                        Image(systemName: "figure.run.circle")
+                            .resizable()
+                            .scaledToFill()
+                            .foregroundColor(Color(ComponentColor.rounds.rawValue))
+                            .frame(maxWidth: 35, maxHeight: 35)
+                            .padding(.top, 5)
+
                         Text("Workouts")
                             .font(.title)
-                            .padding(.leading, 5)
                             .foregroundColor(Color(ComponentColor.rounds.rawValue))
+                            .padding(.leading, 5)
 
                     } content: {
-                        if !viewModel.workouts.isEmpty {
-                            VStack {
-                                Button {
-                                    isModalVisible.toggle()
-                                } label: {
-                                    HStack(alignment: .center) {
-                                        Image(Icons.add.rawValue)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 30, height: 30)
-
-                                        Text("Add workouts")
-                                            .font(.title2)
-                                            .padding(.leading, 5)
-                                    }
-                                    .background(ZStack {
-                                        RoundedRectangle(cornerRadius: 13)
-                                            .foregroundColor(Color(ComponentColor.menu.rawValue))
-                                            .frame(width: geo.size.width * 0.98, height: geo.size.height * 0.096)
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .foregroundColor(Color(Background.background.rawValue))
-                                            .frame(width: geo.size.width * 0.96, height: geo.size.height * 0.089)
-                                    })
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: geo.size.height * 0.09)
-                                    .background(Color(Background.background.rawValue))
-                                    .padding(.top, 2)
-                                }
-                                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-
-                                List {
-                                    ForEach(viewModel.workouts, id: \._id) { workout in
-                                        TrainingWorkoutListItem(workout: workout, height: geo.size.height * 0.1)
-                                    }
-                                    .onMove { from, to in
-                                        viewModel.workouts.move(fromOffsets: from, toOffset: to)
-                                    }
-                                }
-                                .listStyle(.plain)
-                            }
+                        if viewModel.workouts.isEmpty {
+                            emptyListSection(geo: geo)
                         } else {
-                            Button {
-                                isModalVisible.toggle()
-                            } label: {
-                                HStack {
-                                    VStack {
-                                        Image(Icons.add.rawValue)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 80, height: 80)
-
-                                        Text("Add workouts")
-                                            .frame(maxWidth: .infinity, alignment: .center)
-                                            .font(.title2)
-                                            .padding(.top, 5)
-                                    }
-                                }
-                                .padding([.leading, .trailing])
-                                .background(ZStack {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .foregroundColor(Color(ComponentColor.menu.rawValue))
-                                        .frame(height: geo.size.height * 0.35)
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .foregroundColor(Color(Background.background.rawValue))
-                                        .frame(width: geo.size.width * 0.96, height: geo.size.height * 0.34)
-                                })
-                                .frame(maxWidth: .infinity)
-                                .frame(height: geo.size.height * 0.35)
-                                .padding(.bottom, 2)
-                                .background(Color(Background.background.rawValue))
-                            }
-                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            notEmptyListSection(geo: geo)
                         }
                     }
                     .padding([.leading, .trailing], 5)
@@ -140,6 +65,85 @@ struct TrainingEditContent: View {
             }
             .animation(.easeOut)
             .transition(.slide)
+        }
+    }
+
+    @ViewBuilder
+    func emptyListSection(geo: GeometryProxy) -> some View {
+        Button {
+            isModalVisible.toggle()
+        } label: {
+            HStack {
+                VStack {
+                    Image(Icons.add.rawValue)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 80, height: 80)
+
+                    Text("Add workouts")
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .font(.title2)
+                        .padding(.top, 5)
+                }
+            }
+            .padding([.leading, .trailing])
+            .background(ZStack {
+                RoundedRectangle(cornerRadius: 10)
+                    .foregroundColor(Color(ComponentColor.menu.rawValue))
+                    .frame(height: geo.size.height * 0.3)
+                RoundedRectangle(cornerRadius: 10)
+                    .foregroundColor(Color(Background.background.rawValue))
+                    .frame(width: geo.size.width * 0.96, height: geo.size.height * 0.29)
+            })
+            .frame(maxWidth: .infinity)
+            .frame(height: geo.size.height * 0.3)
+            .padding(.bottom, 2)
+            .padding(.top, 5)
+            .background(Color(Background.background.rawValue))
+        }
+        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+    }
+
+    @ViewBuilder
+    func notEmptyListSection(geo: GeometryProxy) -> some View {
+        VStack {
+            Button {
+                isModalVisible.toggle()
+            } label: {
+                HStack(alignment: .center) {
+                    Image(Icons.add.rawValue)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 30, height: 30)
+
+                    Text("Add workouts")
+                        .font(.title2)
+                        .padding(.leading, 5)
+                }
+                .background(ZStack {
+                    RoundedRectangle(cornerRadius: 13)
+                        .foregroundColor(Color(ComponentColor.menu.rawValue))
+                        .frame(width: geo.size.width * 0.98, height: geo.size.height * 0.096)
+                    RoundedRectangle(cornerRadius: 10)
+                        .foregroundColor(Color(Background.background.rawValue))
+                        .frame(width: geo.size.width * 0.96, height: geo.size.height * 0.089)
+                })
+                .frame(maxWidth: .infinity)
+                .frame(height: geo.size.height * 0.09)
+                .background(Color(Background.background.rawValue))
+                .padding(.top, 2)
+            }
+            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+
+            List {
+                ForEach(viewModel.workouts, id: \._id) { workout in
+                    TrainingWorkoutListItem(workout: workout, height: geo.size.height * 0.1)
+                }
+                .onMove { from, to in
+                    viewModel.workouts.move(fromOffsets: from, toOffset: to)
+                }
+            }
+            .listStyle(.plain)
         }
     }
 }
@@ -155,9 +159,7 @@ struct EditFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
             .padding([.leading, .trailing, .top])
-            .background(
-                RoundedRectangle(cornerRadius: 10)
-                    .foregroundColor(Color(Background.background.rawValue))
-            ).padding()
+            .roundedBackground(cornerRadius: 10, color: ComponentColor.darkBlue)
+            .padding()
     }
 }
