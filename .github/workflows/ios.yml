@@ -14,6 +14,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Build
+
+      - name: Build and Test
         run: |
-          xcodebuild clean test -workspace "AthleteZone.xcworkspace" -scheme "Athlete Zone" -destination "platform=iOS Simulator,OS=16.0,name=iPhone 14"
+          xcodebuild clean test -workspace "Athlete Zone.xcworkspace" -scheme "Athlete Zone" -destination "platform=iOS Simulator,name=iPhone 11"
