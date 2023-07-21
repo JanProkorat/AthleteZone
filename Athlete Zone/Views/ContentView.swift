@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var viewModel = ContentViewModel()
-    @EnvironmentObject var launchScreenStateManager: LaunchScreenStateManager
+    @StateObject var launchScreenStateManager = LaunchScreenStateManager()
 
     @Environment(\.scenePhase) var scenePhase
 
@@ -21,6 +21,11 @@ struct ContentView: View {
 
             case .training:
                 TrainingContentScene()
+            }
+
+            if launchScreenStateManager.state != .finished {
+                LaunchScreenView()
+                    .environmentObject(launchScreenStateManager)
             }
         })
         .environment(\.locale, .init(identifier: "\(viewModel.currentLanguage)"))
@@ -35,7 +40,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(viewModel: ContentViewModel())
-            .environmentObject(LaunchScreenStateManager())
+        ContentView()
     }
 }

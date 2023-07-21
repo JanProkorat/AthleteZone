@@ -9,18 +9,10 @@ import SwiftUI
 
 @main
 struct AthleteZoneApp: App {
-    @StateObject var launchScreenStateManager = LaunchScreenStateManager()
 
     var body: some Scene {
         WindowGroup {
-            ZStack {
-                ContentView(viewModel: ContentViewModel())
-
-                if launchScreenStateManager.state != .finished {
-                    LaunchScreenView()
-                }
-            }
-            .environmentObject(launchScreenStateManager)
+                ContentView()
         }
     }
 }

@@ -35,8 +35,17 @@ class WorkOutRealmManagerMock: WorkOutRealmManagerProtocol {
         }
     }
 
-    func update(entity: WorkOut) -> WorkOut? {
-        return nil
+    func update(_ id: RealmSwift.ObjectId, _ name: String, _ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int) {
+        guard let index = objects.firstIndex(where: { $0._id == id }) else {
+            return
+        }
+
+        objects[index].name = name
+        objects[index].work = work
+        objects[index].rest = rest
+        objects[index].series = series
+        objects[index].rounds = rounds
+        objects[index].reset = reset
     }
 
     func getSortedData(_ searchText: String, _ sortBy: WorkOutSortByProperty, _ sortOrder: SortOrder) -> [WorkOut] {

@@ -10,15 +10,15 @@ import Foundation
 import SwiftUI
 
 class ContentViewModel: ObservableObject {
-    @ObservedObject var router = ViewRouter.shared
-    @ObservedObject var notificationManager = NotificationManager.shared
-    @ObservedObject var languageManager = LanguageManager.shared
+    var router = ViewRouter.shared
+    var notificationManager = NotificationManager.shared
+    var languageManager = LanguageManager.shared
+    var appStorageManager = AppStorageManager.shared
 
     @Published var currentSection: Section = .workout
     @Published var currentLanguage: Language = .en
 
     private var cancellables = Set<AnyCancellable>()
-    private var appStorageManager = AppStorageManager.shared
 
     init() {
         router.currentSection = appStorageManager.selectedSection
