@@ -9,7 +9,7 @@ import Combine
 import Foundation
 import SwiftUI
 
-class WorkFlowViewModel: ObservableObject {
+class WorkOutRunViewModel: ObservableObject {
     @Published var workoutLibrary: [WorkOut] = []
 
     @Published var currentWorkout: WorkOut?
@@ -113,7 +113,7 @@ class WorkFlowViewModel: ObservableObject {
 
 // MARK: Timer extension
 
-extension WorkFlowViewModel {
+extension WorkOutRunViewModel {
     func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             if self?.selectedFlow != nil {
@@ -172,7 +172,7 @@ extension WorkFlowViewModel {
 
 // MARK: Sound extension
 
-extension WorkFlowViewModel {
+extension WorkOutRunViewModel {
     func playSound(_ worflow: WorkFlow?) {
         if state == .running {
             if let flow = worflow {
@@ -198,7 +198,7 @@ extension WorkFlowViewModel {
 
 // MARK: Haptic extensio
 
-extension WorkFlowViewModel {
+extension WorkOutRunViewModel {
     func playHaptic(_ worflow: WorkFlow?) {
         if state == .running {
             if let flow = worflow {

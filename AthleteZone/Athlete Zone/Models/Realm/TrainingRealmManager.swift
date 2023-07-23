@@ -24,41 +24,49 @@ class TrainingRealmManager: ObservableObject, TrainingRealmManagerProtocol {
     }
 
     func load(_ searchText: String, _ sortBy: TrainingSortByProperty, _ sortOrder: SortOrder) -> [Training] {
-        var trainingResults: Results<Training>
-
-        if !searchText.isEmpty {
-            trainingResults = trainingLibrary.filter("name CONTAINS[c] %@", searchText)
+        // Step 1: Filter the list of trainings based on the search text (name).
+        let filteredTrainings: [Training]
+        if searchText.isEmpty {
+            // If the search text is empty, return all trainings without filtering.
+            filteredTrainings = Array(trainingLibrary)
         } else {
-            trainingResults = trainingLibrary
+            // Otherwise, filter based on the search text.
+            filteredTrainings = trainingLibrary.filter { training in
+                training.name.lowercased().contains(searchText.lowercased())
+            }
         }
 
-        var sortedResults: [Training]
-
+        // Step 2: Sort the filtered list based on the selected `sortBy` and `sortOrder`.
+        let sortedTrainings: [Training]
         switch sortBy {
         case .name:
-            sortedResults = Array(trainingResults.sorted(byKeyPath: "name", ascending: sortOrder == .ascending))
-
+            sortedTrainings = filteredTrainings.sorted { training1, training2 in
+                sortOrder == .ascending ?
+                training1.name < training2.name :
+                training1.name > training2.name
+            }
         case .createdDate:
-            sortedResults = Array(trainingResults.sorted(byKeyPath: "createdDate", ascending: sortOrder == .ascending))
-
-        default:
-            sortedResults = Array(trainingResults)
-        }
-
-        switch sortBy {
+            sortedTrainings = filteredTrainings.sorted { training1, training2 in
+                sortOrder == .ascending ?
+                training1.createdDate < training2.createdDate :
+                training1.createdDate > training2.createdDate
+            }
         case .numOfWorkouts:
-            sortedResults.sort { $0.workoutCount < $1.workoutCount }
-
+            sortedTrainings = filteredTrainings.sorted { training1, training2 in
+                sortOrder == .ascending ?
+                training1.workoutCount < training2.workoutCount :
+                training1.workoutCount > training2.workoutCount
+            }
         case .trainingLength:
-            sortedResults.sort { $0.trainingLength < $1.trainingLength }
-
-        default:
-            break
+            sortedTrainings = filteredTrainings.sorted { training1, training2 in
+                sortOrder == .ascending ?
+                training1.trainingLength < training2.trainingLength :
+                training1.trainingLength > training2.trainingLength
+            }
         }
 
-        realm.refresh()
-
-        return sortedResults
+        // Step 3: Return the sorted and filtered list as an array.
+        return sortedTrainings
     }
 
     func delete(entity: Training) {

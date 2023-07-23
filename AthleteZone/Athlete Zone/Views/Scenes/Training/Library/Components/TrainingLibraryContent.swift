@@ -39,11 +39,12 @@ struct TrainingLibraryContent: View {
                             .onEditTab { performAction(onEditTab, value: training) }
                             .padding([.leading, .trailing], 2)
                     }
-                    .padding(.bottom, 110)
+                    .padding(.bottom, 140)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     .background(Color(Background.background.rawValue))
                 }
                 .listStyle(.plain)
+                .id(viewModel.library)
 
                 if viewModel.library.isEmpty {
                     Text(LocalizedStringKey("No trainings to display."))

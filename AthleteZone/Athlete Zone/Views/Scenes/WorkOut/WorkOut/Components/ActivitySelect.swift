@@ -23,10 +23,10 @@ struct ActivitySelect: View {
         }, label: {
             HStack {
                 HStack {
-                    Image(image)
+                    Image(systemName: image)
                         .resizable()
                         .scaledToFill()
-                        .frame(maxWidth: height - 5, maxHeight: height - 5)
+                        .frame(maxWidth: height * 0.7, maxHeight: height * 0.7)
                         .padding(.leading, 10)
                         .padding([.top, .bottom], 2)
                         .foregroundColor(Color(color))
@@ -35,6 +35,7 @@ struct ActivitySelect: View {
                         .font(.custom("Lato-Black", size: 20))
                         .bold()
                         .foregroundColor(Color(color))
+                        .padding(.leading, 5)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 Text(interval.toFormattedValue(type: type))
@@ -46,7 +47,7 @@ struct ActivitySelect: View {
             .background(
                 ZStack {
                     RoundedRectangle(cornerRadius: 20)
-                        .frame(maxHeight: 70)
+                        .frame(height: 55)
                         .foregroundColor(Color("\(color)_background"))
                 }
             )

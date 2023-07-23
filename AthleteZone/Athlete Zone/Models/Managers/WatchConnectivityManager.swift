@@ -8,7 +8,9 @@
 import Foundation
 import WatchConnectivity
 
-final class WatchConnectivityManager: NSObject, ObservableObject {
+final class WatchConnectivityManager: NSObject, ObservableObject, WatchConnectivityProtocol {
+    var lastSentMessage: [String: Any]? // Not needed here, only for testing
+
     static let shared = WatchConnectivityManager()
 
     var appStorageManager = AppStorageManager.shared

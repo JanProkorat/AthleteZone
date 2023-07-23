@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TrainingRunContent: View {
     @Environment(\.contentSize) var contentSize
-    @EnvironmentObject var viewModel: WorkFlowViewModel
+    @EnvironmentObject var viewModel: WorkOutRunViewModel
 
     var body: some View {
         VStack {
@@ -54,7 +54,7 @@ struct TrainingRunContent: View {
 
 struct TrainingRunContent_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = WorkFlowViewModel(workouts: [
+        let viewModel = WorkOutRunViewModel(workouts: [
             WorkOut("Prvni", 2, 2, 2, 2, 2),
             WorkOut("Druhy", 3, 3, 3, 3, 3)
         ])

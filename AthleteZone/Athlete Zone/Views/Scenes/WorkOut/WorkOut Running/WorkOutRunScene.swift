@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WorkOutRunScene: View {
-    @EnvironmentObject var viewModel: WorkFlowViewModel
+    @EnvironmentObject var viewModel: WorkOutRunViewModel
 
     var onQuitTab: (() -> Void)?
 
@@ -40,7 +40,7 @@ struct WorkOutRunScene: View {
 struct WorkOutRunScene_Previews: PreviewProvider {
     static var previews: some View {
         WorkOutRunScene()
-            .environmentObject(WorkFlowViewModel(
+            .environmentObject(WorkOutRunViewModel(
                 workout: WorkOut("Prvni", 2, 2, 2, 2, 2)
             ))
             .environment(\.locale, .init(identifier: "cze"))

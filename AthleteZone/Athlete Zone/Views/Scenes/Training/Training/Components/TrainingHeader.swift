@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TrainingHeader: View {
     var name: String?
-    var onSaveTab: (() -> Void)?
+    var onAddTab: (() -> Void)?
 
     var body: some View {
         HStack {
@@ -20,10 +20,10 @@ struct TrainingHeader: View {
             .frame(maxWidth: .infinity, alignment: .leading)
 
             Button {
-                performAction(self.onSaveTab)
+                performAction(self.onAddTab)
             } label: {
                 if name != nil {
-                    Image(Icons.save.rawValue)
+                    Image(Icons.add.rawValue)
                         .resizable()
                         .scaledToFit()
                         .foregroundColor(Color(ComponentColor.mainText.rawValue))
@@ -41,9 +41,9 @@ struct TrainingHeader_Previews: PreviewProvider {
 }
 
 extension TrainingHeader {
-    func onSaveTab(action: @escaping () -> Void) -> TrainingHeader {
+    func onAddTab(action: @escaping () -> Void) -> TrainingHeader {
         var new = self
-        new.onSaveTab = action
+        new.onAddTab = action
         return new
     }
 }

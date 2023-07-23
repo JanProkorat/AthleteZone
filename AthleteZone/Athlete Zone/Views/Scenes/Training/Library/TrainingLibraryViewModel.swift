@@ -27,11 +27,9 @@ class TrainingLibraryViewModel: ObservableObject {
     }
 
     func removeTraining(_ training: Training) {
-//        let id = training._id.stringValue
         realmManager.delete(entity: training)
         objectWillChange.send()
         selectedTrainingManager.selectedTraining = nil
-//        removeFromWatch(id)
     }
 
     func setSelectedTraining(_ id: String) {

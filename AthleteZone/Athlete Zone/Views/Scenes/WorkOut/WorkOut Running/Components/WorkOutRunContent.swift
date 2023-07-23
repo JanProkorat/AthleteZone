@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WorkOutRunContent: View {
-    @EnvironmentObject var viewModel: WorkFlowViewModel
+    @EnvironmentObject var viewModel: WorkOutRunViewModel
 
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
@@ -71,7 +71,7 @@ struct WorkOutRunContent: View {
 struct WorkOutRunContent_Previews: PreviewProvider {
     static var previews: some View {
         return WorkOutRunContent()
-            .environmentObject(WorkFlowViewModel(
+            .environmentObject(WorkOutRunViewModel(
                 workout: WorkOut("Prvni", 2, 2, 2, 2, 2)
             ))
     }

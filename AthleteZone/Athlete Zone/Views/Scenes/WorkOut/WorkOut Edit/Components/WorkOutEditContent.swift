@@ -14,11 +14,11 @@ struct WorkOutEditContent: View {
     var onEditTab: ((_ value: ActivityType) -> Void)?
 
     var buttons = [
-        WorkOutButtonConfig(id: .work, image: Icons.play.rawValue, color: .work, type: .time),
-        WorkOutButtonConfig(id: .rest, image: Icons.pause.rawValue, color: .rest, type: .time),
-        WorkOutButtonConfig(id: .series, image: Icons.forward.rawValue, color: .series, type: .number),
-        WorkOutButtonConfig(id: .rounds, image: Icons.repeatIcon.rawValue, color: .rounds, type: .number),
-        WorkOutButtonConfig(id: .reset, image: Icons.time.rawValue, color: .reset, type: .time)
+        WorkOutButtonConfig(id: .work, image: "play.circle", color: .work, type: .time),
+        WorkOutButtonConfig(id: .rest, image: "pause.circle", color: .rest, type: .time),
+        WorkOutButtonConfig(id: .series, image: "forward.circle", color: .series, type: .number),
+        WorkOutButtonConfig(id: .rounds, image: "repeat.circle", color: .rounds, type: .number),
+        WorkOutButtonConfig(id: .reset, image: "clock.arrow.circlepath", color: .reset, type: .time)
     ]
 
     var body: some View {
@@ -46,6 +46,7 @@ struct WorkOutEditContent: View {
                         .onTab {
                             performAction(self.onEditTab, value: button.id)
                         }
+                        .padding(.bottom, 5)
                     }
                 }
                 .frame(height: geo.size.height * 0.5, alignment: .top)
@@ -56,7 +57,7 @@ struct WorkOutEditContent: View {
                     text: viewModel.timeOverview.toFormattedTime(),
                     size: geo.size.height * 0.12
                 )
-                .padding(.top)
+                .padding(.top, 20)
             }
             .frame(maxHeight: .infinity, alignment: .top)
             .ignoresSafeArea(.keyboard, edges: .bottom)

@@ -44,7 +44,7 @@ struct WorkOutScene: View {
                     isRunModalActive.toggle()
                 }
                 .environmentObject(
-                    WorkFlowViewModel(
+                    WorkOutRunViewModel(
                         workout: WorkOut(
                             viewModel.name,
                             viewModel.work,

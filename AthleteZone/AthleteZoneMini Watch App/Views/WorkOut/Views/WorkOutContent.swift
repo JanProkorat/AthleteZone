@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WorkOutContent: View {
-    @EnvironmentObject var workFlowViewModel: WorkFlowViewModel
+    @EnvironmentObject var workFlowViewModel: WorkOutRunViewModel
     @EnvironmentObject var viewModel: ViewModel
 
     var body: some View {
@@ -56,7 +56,7 @@ struct WorkOutContent: View {
 
 struct WorkOutContent_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = WorkFlowViewModel(workout: WorkOut("Title", 30, 60, 2, 1, 120))
+        let viewModel = WorkOutRunViewModel(workout: WorkOut("Title", 30, 60, 2, 1, 120))
         return WorkOutContent()
             .environmentObject(viewModel)
             .environmentObject(ViewModel())

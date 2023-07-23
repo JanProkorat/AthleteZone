@@ -73,29 +73,72 @@ class WorkoutRealmManager: ObservableObject, WorkOutRealmManagerProtocol {
     }
 
     func getSortedData(_ searchText: String, _ sortBy: WorkOutSortByProperty, _ sortOrder: SortOrder) -> [WorkOut] {
-        if sortBy != .workoutLength {
-            let data = workOutLibrary
-                .sorted(byKeyPath: sortBy.rawValue.lowercased().toPascalCase(), ascending: sortOrder == .ascending)
-            return applySearch(searchText, data)
+        // Step 1: Filter the list of workouts based on the search text (name).
+        let filteredWorkouts: [WorkOut]
+        if searchText.isEmpty {
+            // If the search text is empty, return all workouts without filtering.
+            filteredWorkouts = Array(workOutLibrary)
         } else {
-            let data = applySearch(searchText, workOutLibrary)
-            return data.sorted(by: { work1, work2 in
-                switch sortOrder {
-                case .ascending:
-                    return work1.workoutLength < work2.workoutLength
-
-                default:
-                    return work1.workoutLength > work2.workoutLength
-                }
-            })
+            // Otherwise, filter based on the search text.
+            filteredWorkouts = workOutLibrary.filter { workout in
+                workout.name.lowercased().contains(searchText.lowercased())
+            }
         }
-    }
 
-    func applySearch(_ searchText: String, _ data: Results<WorkOut>) -> [WorkOut] {
-        if !searchText.isEmpty {
-            return Array(data.filter("name CONTAINS[c] %@", searchText))
-        } else {
-            return Array(data)
+        // Step 2: Sort the filtered list based on the selected `sortBy` and `sortOrder`.
+        let sortedWorkouts: [WorkOut]
+        switch sortBy {
+        case .name:
+            sortedWorkouts = filteredWorkouts.sorted { workout1, workout2 in
+                sortOrder == .ascending ?
+                workout1.name < workout2.name :
+                workout1.name > workout2.name
+            }
+        case .work:
+            sortedWorkouts = filteredWorkouts.sorted { workout1, workout2 in
+                sortOrder == .ascending ?
+                workout1.work < workout2.work :
+                workout1.work > workout2.work
+            }
+        case .rest:
+            sortedWorkouts = filteredWorkouts.sorted { workout1, workout2 in
+                sortOrder == .ascending ?
+                workout1.rest < workout2.rest :
+                workout1.rest > workout2.rest
+            }
+        case .series:
+            sortedWorkouts = filteredWorkouts.sorted { workout1, workout2 in
+                sortOrder == .ascending ?
+                workout1.series < workout2.series :
+                workout1.series > workout2.series
+            }
+        case .rounds:
+            sortedWorkouts = filteredWorkouts.sorted { workout1, workout2 in
+                sortOrder == .ascending ?
+                workout1.rounds < workout2.rounds :
+                workout1.rounds > workout2.rounds
+            }
+        case .reset:
+            sortedWorkouts = filteredWorkouts.sorted { workout1, workout2 in
+                sortOrder == .ascending ?
+                workout1.reset < workout2.reset :
+                workout1.reset > workout2.reset
+            }
+        case .createdDate:
+            sortedWorkouts = filteredWorkouts.sorted { workout1, workout2 in
+                sortOrder == .ascending ?
+                workout1.createdDate < workout2.createdDate :
+                workout1.createdDate > workout2.createdDate
+            }
+        case .workoutLength:
+            sortedWorkouts = filteredWorkouts.sorted { workout1, workout2 in
+                sortOrder == .ascending ?
+                workout1.workoutLength < workout2.workoutLength :
+                workout1.workoutLength > workout2.workoutLength
+            }
         }
+
+        // Step 3: Return the sorted and filtered list as an array.
+        return sortedWorkouts
     }
 }

@@ -16,7 +16,7 @@ struct TrainingScene: View {
     var body: some View {
         BaseView {
             TrainingHeader(name: viewModel.selectedTrainingManager.selectedTraining?.name)
-                .onSaveTab { isEditModalActive.toggle() }
+                .onAddTab { isEditModalActive.toggle() }
         } content: {
             TrainingContent()
                 .onStartTab { isRunModalActive.toggle() }
@@ -29,23 +29,13 @@ struct TrainingScene: View {
         .fullScreenCover(isPresented: $isEditModalActive, content: {
             TrainingEditScene()
                 .onCloseTab { isEditModalActive.toggle() }
-                .environmentObject(getViewModel())
+                .environmentObject(TrainingEditViewModel())
         })
         .fullScreenCover(isPresented: $isRunModalActive, content: {
             TrainingRunScene()
                 .onQuitTab { isRunModalActive.toggle() }
                 .environmentObject(TrainingRunViewModel(training: viewModel.selectedTraining!))
         })
-    }
-
-    private func getViewModel() -> TrainingEditViewModel {
-        if let training = viewModel.selectedTraining {
-            return TrainingEditViewModel(
-                name: training.name,
-                description: training.trainingDescription,
-                workouts: viewModel.workouts)
-        }
-        return TrainingEditViewModel()
     }
 }
 

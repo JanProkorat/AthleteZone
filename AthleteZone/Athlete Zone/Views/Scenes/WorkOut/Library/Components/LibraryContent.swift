@@ -36,9 +36,7 @@ struct LibraryContent: View {
                     } label: {
                         WorkOutListView(workOut: workout)
                             .onDeleteTab { viewModel.removeWorkout(workout) }
-                            .onEditTab {
-                                self.performAction(onEditTab, value: workout.thaw()!)
-                            }
+                            .onEditTab { performAction(onEditTab, value: workout.thaw()!) }
                             .padding([.leading, .trailing], 2)
                     }
                     .padding(.bottom, 150)
@@ -46,6 +44,7 @@ struct LibraryContent: View {
                     .background(Color(Background.background.rawValue))
                 }
                 .listStyle(.plain)
+                .id(viewModel.library)
 
                 if viewModel.library.isEmpty {
                     Text("No workouts to display.")

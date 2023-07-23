@@ -88,12 +88,7 @@ class WorkOutEditViewModel: ObservableObject {
 
     func saveWorkout() {
         if !isEditing {
-            workout.name = name
-            workout.work = work
-            workout.rest = rest
-            workout.series = series
-            workout.rounds = rounds
-            workout.reset = reset
+            let workout = WorkOut(name, work, rest, series, rounds, reset)
 
             realmManager.add(workout)
 

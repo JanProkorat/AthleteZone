@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WorkOutActions: View {
-    @EnvironmentObject var workFlowViewModel: WorkFlowViewModel
+    @EnvironmentObject var workFlowViewModel: WorkOutRunViewModel
 
     var onTab: (() -> Void)?
 
@@ -58,7 +58,7 @@ struct WorkOutActions: View {
 struct WorkOutActions_Previews: PreviewProvider {
     static var previews: some View {
         WorkOutActions()
-            .environmentObject(WorkFlowViewModel(workout: WorkOut()))
+            .environmentObject(WorkOutRunViewModel(workout: WorkOut()))
     }
 }
 

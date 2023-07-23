@@ -15,11 +15,13 @@ class SettingsViewModel: ObservableObject {
 
     @ObservedObject var router = ViewRouter.shared
 
-    private var connectivityManager = WatchConnectivityManager.shared
+    var connectivityManager: WatchConnectivityProtocol
     private let notificationManager = NotificationManager.shared
     private var cancellables = Set<AnyCancellable>()
 
     init() {
+        self.connectivityManager = WatchConnectivityManager.shared
+
         appStorageManager.objectWillChange
             .sink { [weak self] _ in
                 guard let self = self else { return }
