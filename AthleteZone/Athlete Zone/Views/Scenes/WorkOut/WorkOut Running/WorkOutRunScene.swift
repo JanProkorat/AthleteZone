@@ -8,42 +8,34 @@
 import SwiftUI
 
 struct WorkOutRunScene: View {
-    @EnvironmentObject var viewModel: WorkOutRunViewModel
+    @StateObject var viewModel: WorkOutRunViewModel
 
     var onQuitTab: (() -> Void)?
 
     var body: some View {
         BaseView(
             header: {
-                WorkOutRunHeader(title: viewModel.workoutName)
+                TitleText(text: viewModel.workoutName, alignment: .center)
             },
             content: {
                 WorkOutRunContent()
+                    .environmentObject(viewModel)
             },
             footer: {
                 WorkOutRunFooter()
                     .onQuitTab { performAction(onQuitTab) }
+                    .environmentObject(viewModel)
             }
         )
-        .onChange(of: viewModel.state) { newValue in
-            switch newValue {
-            case .running:
-                UIApplication.shared.isIdleTimerDisabled = true
-
-            default:
-                UIApplication.shared.isIdleTimerDisabled = false
-            }
-        }
     }
 }
 
 struct WorkOutRunScene_Previews: PreviewProvider {
     static var previews: some View {
-        WorkOutRunScene()
-            .environmentObject(WorkOutRunViewModel(
-                workout: WorkOut("Prvni", 2, 2, 2, 2, 2)
-            ))
-            .environment(\.locale, .init(identifier: "cze"))
+        WorkOutRunScene(viewModel: WorkOutRunViewModel(
+            workout: WorkOut("Prvni", 2, 2, 2, 2, 2)
+        ))
+        .environment(\.locale, .init(identifier: "cze"))
     }
 }
 

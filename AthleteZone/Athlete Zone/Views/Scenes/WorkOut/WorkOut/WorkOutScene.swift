@@ -39,22 +39,19 @@ struct WorkOutScene: View {
 
         })
         .fullScreenCover(isPresented: $isRunModalActive, content: {
-            WorkOutRunScene()
-                .onQuitTab {
-                    isRunModalActive.toggle()
-                }
-                .environmentObject(
-                    WorkOutRunViewModel(
-                        workout: WorkOut(
-                            viewModel.name,
-                            viewModel.work,
-                            viewModel.rest,
-                            viewModel.series,
-                            viewModel.rounds,
-                            viewModel.reset
-                        )
-                    )
+            WorkOutRunScene(viewModel: WorkOutRunViewModel(
+                workout: WorkOut(
+                    viewModel.name,
+                    viewModel.work,
+                    viewModel.rest,
+                    viewModel.series,
+                    viewModel.rounds,
+                    viewModel.reset
                 )
+            ))
+            .onQuitTab {
+                isRunModalActive.toggle()
+            }
         })
         .sheet(item: $activeSheetType) { activitySheet in
             IntervalPicker(

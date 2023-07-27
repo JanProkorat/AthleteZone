@@ -65,12 +65,21 @@ struct WorkOutRunContent: View {
         .onAppear {
             viewModel.setState(.running)
         }
+        .onChange(of: viewModel.state) { newValue in
+            switch newValue {
+            case .running:
+                UIApplication.shared.isIdleTimerDisabled = true
+
+            default:
+                UIApplication.shared.isIdleTimerDisabled = false
+            }
+        }
     }
 }
 
 struct WorkOutRunContent_Previews: PreviewProvider {
     static var previews: some View {
-        return WorkOutRunContent()
+        WorkOutRunContent()
             .environmentObject(WorkOutRunViewModel(
                 workout: WorkOut("Prvni", 2, 2, 2, 2, 2)
             ))

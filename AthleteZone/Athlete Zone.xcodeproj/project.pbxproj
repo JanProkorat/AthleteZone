@@ -37,7 +37,6 @@
 		7E1F9AFF2919812A006CA3AA /* ProfileHeaderBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1F9AFE2919812A006CA3AA /* ProfileHeaderBar.swift */; };
 		7E1F9B0529198603006CA3AA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7E1F9B0729198603006CA3AA /* Localizable.strings */; };
 		7E1F9B0E29199F73006CA3AA /* WorkOutRunScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1F9B0D29199F73006CA3AA /* WorkOutRunScene.swift */; };
-		7E1F9B112919A034006CA3AA /* WorkOutRunHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1F9B102919A034006CA3AA /* WorkOutRunHeader.swift */; };
 		7E1F9B132919A2E3006CA3AA /* WorkOutRunContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1F9B122919A2E3006CA3AA /* WorkOutRunContent.swift */; };
 		7E1F9B152919A508006CA3AA /* DescriptionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1F9B142919A508006CA3AA /* DescriptionLabel.swift */; };
 		7E1F9B172919AD20006CA3AA /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1F9B162919AD20006CA3AA /* CircularProgressBar.swift */; };
@@ -54,7 +53,6 @@
 		7E3EDCD4295DB5130047EB25 /* SortByPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3EDCD3295DB5130047EB25 /* SortByPicker.swift */; };
 		7E40798129DCAF9500FE7F02 /* TrainingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E40798029DCAF9500FE7F02 /* TrainingViewModel.swift */; };
 		7E42133F29F55A0600CB17AF /* TrainingRunViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E42133E29F55A0600CB17AF /* TrainingRunViewModel.swift */; };
-		7E42134429F5640400CB17AF /* TrainingRunHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E42134329F5640400CB17AF /* TrainingRunHeader.swift */; };
 		7E42134629F5686C00CB17AF /* TrainingRunContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E42134529F5686C00CB17AF /* TrainingRunContent.swift */; };
 		7E431FCB29D63C440063C9DC /* TrainingRunScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E431FCA29D63C440063C9DC /* TrainingRunScene.swift */; };
 		7E43E47E294F76AD0095559B /* WorkOutRunFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E43E47D294F76AD0095559B /* WorkOutRunFooter.swift */; };
@@ -142,7 +140,6 @@
 		7ED7356E296B06BD00E1A305 /* LaunchScreenStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED7356D296B06BD00E1A305 /* LaunchScreenStateManager.swift */; };
 		7ED73570296B07DD00E1A305 /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED7356F296B07DD00E1A305 /* LaunchScreenView.swift */; };
 		7ED73578296B76C300E1A305 /* AthleteZoneMiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED73577296B76C300E1A305 /* AthleteZoneMiniApp.swift */; };
-		7ED7357A296B76C300E1A305 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED73579296B76C300E1A305 /* ContentView.swift */; };
 		7ED7357F296B76C400E1A305 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ED7357E296B76C400E1A305 /* Preview Assets.xcassets */; };
 		7ED7D0922A61229400691C69 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED7D0912A61229400691C69 /* ContentView.swift */; };
 		7ED7DE742A6AE1EE003C421C /* ContentVideModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED7DE732A6AE1EE003C421C /* ContentVideModelTests.swift */; };
@@ -176,8 +173,10 @@
 		7EF9157A29CF011000F20870 /* TrainingLibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF9157929CF011000F20870 /* TrainingLibraryViewModel.swift */; };
 		7EF9158429D0FB5500F20870 /* Collapsible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF9158329D0FB5500F20870 /* Collapsible.swift */; };
 		7EF98A5D2970BBF3009EC003 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E32D47029168600008FB390 /* Enums.swift */; };
+		7EFB12C42A6D417F003FA6F9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED73579296B76C300E1A305 /* ContentView.swift */; };
 		7EFC06122A536A7700959513 /* TrainingSortByPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFC06112A536A7600959513 /* TrainingSortByPicker.swift */; };
 		7EFC06142A53722700959513 /* SelectedTrainingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFC06132A53722700959513 /* SelectedTrainingManager.swift */; };
+		7EFE18E92A72C4D5008C828B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFE18E82A72C4D5008C828B /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -238,7 +237,6 @@
 		7E1F9B0A29198A72006CA3AA /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7E1F9B0B29198A75006CA3AA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7E1F9B0D29199F73006CA3AA /* WorkOutRunScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutRunScene.swift; sourceTree = "<group>"; };
-		7E1F9B102919A034006CA3AA /* WorkOutRunHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutRunHeader.swift; sourceTree = "<group>"; };
 		7E1F9B122919A2E3006CA3AA /* WorkOutRunContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutRunContent.swift; sourceTree = "<group>"; };
 		7E1F9B142919A508006CA3AA /* DescriptionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionLabel.swift; sourceTree = "<group>"; };
 		7E1F9B162919AD20006CA3AA /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
@@ -258,7 +256,6 @@
 		7E3EDCD3295DB5130047EB25 /* SortByPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortByPicker.swift; sourceTree = "<group>"; };
 		7E40798029DCAF9500FE7F02 /* TrainingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingViewModel.swift; sourceTree = "<group>"; };
 		7E42133E29F55A0600CB17AF /* TrainingRunViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingRunViewModel.swift; sourceTree = "<group>"; };
-		7E42134329F5640400CB17AF /* TrainingRunHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingRunHeader.swift; sourceTree = "<group>"; };
 		7E42134529F5686C00CB17AF /* TrainingRunContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingRunContent.swift; sourceTree = "<group>"; };
 		7E431FCA29D63C440063C9DC /* TrainingRunScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingRunScene.swift; sourceTree = "<group>"; };
 		7E43E47D294F76AD0095559B /* WorkOutRunFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutRunFooter.swift; sourceTree = "<group>"; };
@@ -361,6 +358,7 @@
 		7EF9158329D0FB5500F20870 /* Collapsible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collapsible.swift; sourceTree = "<group>"; };
 		7EFC06112A536A7600959513 /* TrainingSortByPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSortByPicker.swift; sourceTree = "<group>"; };
 		7EFC06132A53722700959513 /* SelectedTrainingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTrainingManager.swift; sourceTree = "<group>"; };
+		7EFE18E82A72C4D5008C828B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -507,7 +505,6 @@
 		7E1F9B0F2919A01E006CA3AA /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				7E1F9B102919A034006CA3AA /* WorkOutRunHeader.swift */,
 				7E1F9B122919A2E3006CA3AA /* WorkOutRunContent.swift */,
 				7E1F9B142919A508006CA3AA /* DescriptionLabel.swift */,
 				7E1F9B162919AD20006CA3AA /* CircularProgressBar.swift */,
@@ -632,6 +629,7 @@
 				7EE47B5329407B61000FC098 /* .swiftformat */,
 				7EE47B4F29407901000FC098 /* .swiftlint.yml */,
 				7E32D47F2916C456008FB390 /* Athlete-Zone-Info.plist */,
+				7EFE18E82A72C4D5008C828B /* AppDelegate.swift */,
 				7E33B660291435BE009E4C1C /* AthleteZoneApp.swift */,
 				7E1F9B0729198603006CA3AA /* Localizable.strings */,
 				7E32D46929167DC0008FB390 /* Models */,
@@ -645,7 +643,6 @@
 		7E42134029F563E500CB17AF /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				7E42134329F5640400CB17AF /* TrainingRunHeader.swift */,
 				7E42134529F5686C00CB17AF /* TrainingRunContent.swift */,
 				7ECF2A382A157AF0002B5BA3 /* TrainingRunFooter.swift */,
 			);
@@ -863,7 +860,6 @@
 				7E833088299585E7009BD343 /* Model */,
 				7E6FBFC1296E0D79006519B0 /* ViewModel */,
 				7ED73585296B7A3F00E1A305 /* Views */,
-				7ED73577296B76C300E1A305 /* AthleteZoneMiniApp.swift */,
 				7ED7357D296B76C400E1A305 /* Preview Content */,
 			);
 			path = "AthleteZoneMini Watch App";
@@ -880,6 +876,7 @@
 		7ED73585296B7A3F00E1A305 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7ED73577296B76C300E1A305 /* AthleteZoneMiniApp.swift */,
 				7E8330852995836C009BD343 /* Main */,
 				7E94E3A32998059700795E31 /* WorkOut */,
 				7E94E3AB299809AD00795E31 /* BaseView.swift */,
@@ -1179,7 +1176,6 @@
 				7E17247E29CA13AB00B90E31 /* WorkOutRealmManagerProtocol.swift in Sources */,
 				7E43E4802950856C0095559B /* Array.swift in Sources */,
 				7E4F04792A68697200B42B88 /* LanguageManager.swift in Sources */,
-				7E1F9B112919A034006CA3AA /* WorkOutRunHeader.swift in Sources */,
 				7E68E5922A530C9A0083C2E0 /* TrainingListView.swift in Sources */,
 				7ED59F842915599B0077DF39 /* IconButton.swift in Sources */,
 				7E77F1C82A5B5498008BBBF2 /* TrainingEditFooter.swift in Sources */,
@@ -1232,6 +1228,7 @@
 				7ED59F8829156D550077DF39 /* ActivityView.swift in Sources */,
 				7EBEA1FC294E1BCB006DB920 /* WorkOutButtonConfig.swift in Sources */,
 				7EC2C5C62A6B4E5C00D7273C /* WatchConnectivityProtocol.swift in Sources */,
+				7EFE18E92A72C4D5008C828B /* AppDelegate.swift in Sources */,
 				7EED1F97294E44B7002EC362 /* CounterText.swift in Sources */,
 				7E32D46D29167EE3008FB390 /* Constants.swift in Sources */,
 				7E68E58E2A5304F30083C2E0 /* TrainingRealmManagerProtocol.swift in Sources */,
@@ -1239,7 +1236,6 @@
 				7E68E58A2A52FDD50083C2E0 /* TrainingLibraryHeader.swift in Sources */,
 				7E1F9B152919A508006CA3AA /* DescriptionLabel.swift in Sources */,
 				7EF3892C292401EF008420C2 /* ActionView.swift in Sources */,
-				7E42134429F5640400CB17AF /* TrainingRunHeader.swift in Sources */,
 				7EEE480F2933786B0034E95C /* ListViewText.swift in Sources */,
 				7E669B4C291C195500529298 /* TimePicker.swift in Sources */,
 				7E103A2229D5B26200B12120 /* WorkoutDetailSheet.swift in Sources */,
@@ -1278,7 +1274,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E06670C299FD0A700FCF8C5 /* HapticManager.swift in Sources */,
-				7ED7357A296B76C300E1A305 /* ContentView.swift in Sources */,
 				7EDDF9CF299B89BF00BEC1CD /* ListItemView.swift in Sources */,
 				7E8B50FD29A574DB007442A1 /* String.swift in Sources */,
 				7E17CC1029A6B72B0078A9C0 /* Array.swift in Sources */,
@@ -1302,6 +1297,7 @@
 				7E49333F299C45DC00F344B6 /* FiltersView.swift in Sources */,
 				7E0A25E8299196CA00C3C57C /* WorkoutRealmManager.swift in Sources */,
 				7E4A994E299FD8A70031504A /* LaunchScreenStateManager.swift in Sources */,
+				7EFB12C42A6D417F003FA6F9 /* ContentView.swift in Sources */,
 				7EE7809329991DAB00DEC1A4 /* SoundProtocol.swift in Sources */,
 				7EF98A5D2970BBF3009EC003 /* Enums.swift in Sources */,
 				7EDDF9CB299B896A00BEC1CD /* LibraryView.swift in Sources */,
@@ -1523,6 +1519,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -1556,6 +1553,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;

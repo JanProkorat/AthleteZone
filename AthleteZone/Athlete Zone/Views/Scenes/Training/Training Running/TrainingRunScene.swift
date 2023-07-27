@@ -9,13 +9,13 @@ import RealmSwift
 import SwiftUI
 
 struct TrainingRunScene: View {
-    @EnvironmentObject var viewModel: TrainingRunViewModel
+    @StateObject var viewModel: TrainingRunViewModel
 
     var onQuitTab: (() -> Void)?
 
     var body: some View {
         BaseView {
-            TrainingRunHeader(title: viewModel.trainingName)
+            TitleText(text: viewModel.trainingName, alignment: .center)
         } content: {
             TrainingRunContent()
                 .environmentObject(viewModel.selectedWorkFlowViewModel)
@@ -36,14 +36,13 @@ struct TrainingRunScene_Previews: PreviewProvider {
             WorkOut("Prvni", 2, 2, 2, 2, 2),
             WorkOut("Druhy", 2, 2, 2, 2, 2)
         ])
-        return TrainingRunScene()
-            .environmentObject(TrainingRunViewModel(
-                training: Training(
-                    name: "test",
-                    description: "",
-                    workouts: workouts
-                )
-            ))
+        return TrainingRunScene(viewModel: TrainingRunViewModel(
+            training: Training(
+                name: "test",
+                description: "",
+                workouts: workouts
+            )
+        ))
     }
 }
 
