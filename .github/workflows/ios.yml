@@ -17,4 +17,4 @@ jobs:
 
       - name: Build and Test
         run: |
-          xcodebuild clean test -workspace "AthleteZone.xcworkspace" -scheme "Athlete Zone Tests" -destination "platform=iOS Simulator,name=iPhone 11" -X
+          xcodebuild clean test -workspace "AthleteZone.xcworkspace" -scheme "Athlete Zone Tests" -destination "platform=iOS Simulator,name=iPhone 11"
