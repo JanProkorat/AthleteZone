@@ -7,14 +7,11 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-    name: Build and analyze and test using xcodebuild command
+  build-and-test:
     runs-on: macos-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Build and Test
-        run: |
-          xcodebuild clean test -workspace "AthleteZone.xcworkspace" -scheme "Athlete Zone Tests" -destination "platform=iOS Simulator,name=iPhone 11"
+  steps:
+    - uses: actions/checkout@v2
+    - name: Select Xcode
+      run: sudo Xcode-select -switch /Applications/Xcode_13.2.1.app
+    - name: Build & Test
+      run: xcodebuild clean build test -workspace AthleteZone.xcworkspace -scheme "Athlete Zone Tests" -destination 'platform=iOS Simulator,name=iPhone 12 Pro,OS=16'
