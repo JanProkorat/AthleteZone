@@ -9,6 +9,7 @@ import SwiftUI
 
 struct WorkOutRunContent: View {
     @EnvironmentObject var viewModel: WorkOutRunViewModel
+    @State private var timeElapsed: TimeInterval = 0
 
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
@@ -52,7 +53,7 @@ struct WorkOutRunContent: View {
                             )
                             .onTab {
                                 if !viewModel.isLastRunning {
-                                    self.viewModel.selectedFlowIndex += 1
+                                    viewModel.selectedFlowIndex += 1
                                 }
                             }
                         }
@@ -64,6 +65,10 @@ struct WorkOutRunContent: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             viewModel.setState(.running)
+//            timeElapsed = TimerManager.shared.getTimeElapsed() // Update the initial timeElapsed value
+        }
+        .onReceive(TimerManager.shared.timePublisher) { elapsed in
+            timeElapsed = elapsed // Update the timeElapsed value whenever the timer updates
         }
         .onChange(of: viewModel.state) { newValue in
             switch newValue {

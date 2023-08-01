@@ -101,6 +101,7 @@
 		7E8224502954AE75004CA77E /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E82244F2954AE75004CA77E /* SearchBar.swift */; };
 		7E831A6129AA5D51009DA0CE /* WorkOutEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E831A6029AA5D51009DA0CE /* WorkOutEditViewModel.swift */; };
 		7E83308B299587AF009BD343 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA6C8B7292119A000EEF5DA /* Int.swift */; };
+		7E890F062A7694220032C73B /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E890F052A7694220032C73B /* TimerManager.swift */; };
 		7E8B50FC29A574DB007442A1 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8B50FB29A574DB007442A1 /* String.swift */; };
 		7E8B50FD29A574DB007442A1 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8B50FB29A574DB007442A1 /* String.swift */; };
 		7E94E39F2998034000795E31 /* WorkFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEA2D02292389A8002C9227 /* WorkFlow.swift */; };
@@ -110,6 +111,9 @@
 		7E94E3AA2998084C00795E31 /* WorkOutActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E94E3A92998084C00795E31 /* WorkOutActions.swift */; };
 		7E94E3AC299809AD00795E31 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E94E3AB299809AD00795E31 /* BaseView.swift */; };
 		7E94E3AD29980EB900795E31 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC8C48F2940AB2300FFB47C /* View.swift */; };
+		7E99A5982A78D9F200DB6841 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E99A5972A78D9F200DB6841 /* TimerManager.swift */; };
+		7E99A59A2A78DA4A00DB6841 /* TimerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E99A5992A78DA4A00DB6841 /* TimerProtocol.swift */; };
+		7E99A59B2A78DA4A00DB6841 /* TimerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E99A5992A78DA4A00DB6841 /* TimerProtocol.swift */; };
 		7E9FEDD9297A87B200026080 /* WorkOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E669B51291CDF0800529298 /* WorkOut.swift */; };
 		7EA6C8B8292119A000EEF5DA /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA6C8B7292119A000EEF5DA /* Int.swift */; };
 		7EB1A0442917A76C008A6CF7 /* WorkOutContentScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB1A0432917A76C008A6CF7 /* WorkOutContentScene.swift */; };
@@ -186,13 +190,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 7E33B65C291435BE009E4C1C;
 			remoteInfo = "Athlete Zone";
-		};
-		7EF7C71D296EBB4100DC1AF2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7E33B655291435BE009E4C1C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7ED73574296B76C300E1A305;
-			remoteInfo = "AthleteZoneMini Watch App";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -295,11 +292,14 @@
 		7E7E9C5829B28F7500E8D3CF /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		7E82244F2954AE75004CA77E /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		7E831A6029AA5D51009DA0CE /* WorkOutEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutEditViewModel.swift; sourceTree = "<group>"; };
+		7E890F052A7694220032C73B /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		7E8B50FB29A574DB007442A1 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		7E94E3A42998078B00795E31 /* WorkOutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutView.swift; sourceTree = "<group>"; };
 		7E94E3A62998081200795E31 /* WorkOutContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutContent.swift; sourceTree = "<group>"; };
 		7E94E3A92998084C00795E31 /* WorkOutActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutActions.swift; sourceTree = "<group>"; };
 		7E94E3AB299809AD00795E31 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		7E99A5972A78D9F200DB6841 /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
+		7E99A5992A78DA4A00DB6841 /* TimerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerProtocol.swift; sourceTree = "<group>"; };
 		7EA6C8B7292119A000EEF5DA /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		7EB1A0432917A76C008A6CF7 /* WorkOutContentScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutContentScene.swift; sourceTree = "<group>"; };
 		7EBA93A92A6437600062194E /* EditSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSection.swift; sourceTree = "<group>"; };
@@ -804,6 +804,7 @@
 			children = (
 				7E2F25B6299F75E500385A80 /* SoundManager.swift */,
 				7E06670B299FD0A700FCF8C5 /* HapticManager.swift */,
+				7E99A5972A78D9F200DB6841 /* TimerManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -912,6 +913,7 @@
 				7E17247D29CA13AB00B90E31 /* WorkOutRealmManagerProtocol.swift */,
 				7E68E58D2A5304F30083C2E0 /* TrainingRealmManagerProtocol.swift */,
 				7EC2C5C52A6B4E5C00D7273C /* WatchConnectivityProtocol.swift */,
+				7E99A5992A78DA4A00DB6841 /* TimerProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -935,6 +937,7 @@
 				7EFC06132A53722700959513 /* SelectedTrainingManager.swift */,
 				7E4F04782A68697200B42B88 /* LanguageManager.swift */,
 				7E1F9AE22918EA4A006CA3AA /* ViewRouter.swift */,
+				7E890F052A7694220032C73B /* TimerManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -1000,7 +1003,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				7EF7C71E296EBB4100DC1AF2 /* PBXTargetDependency */,
 			);
 			name = "Athlete Zone";
 			packageProductDependencies = (
@@ -1225,9 +1227,11 @@
 				7E3E38162920E8DF0084D37B /* WorkOutViewModel.swift in Sources */,
 				7ED73570296B07DD00E1A305 /* LaunchScreenView.swift in Sources */,
 				7E7E9C5929B28F7500E8D3CF /* SettingsViewModel.swift in Sources */,
+				7E99A59A2A78DA4A00DB6841 /* TimerProtocol.swift in Sources */,
 				7ED59F8829156D550077DF39 /* ActivityView.swift in Sources */,
 				7EBEA1FC294E1BCB006DB920 /* WorkOutButtonConfig.swift in Sources */,
 				7EC2C5C62A6B4E5C00D7273C /* WatchConnectivityProtocol.swift in Sources */,
+				7E890F062A7694220032C73B /* TimerManager.swift in Sources */,
 				7EFE18E92A72C4D5008C828B /* AppDelegate.swift in Sources */,
 				7EED1F97294E44B7002EC362 /* CounterText.swift in Sources */,
 				7E32D46D29167EE3008FB390 /* Constants.swift in Sources */,
@@ -1278,10 +1282,12 @@
 				7E8B50FD29A574DB007442A1 /* String.swift in Sources */,
 				7E17CC1029A6B72B0078A9C0 /* Array.swift in Sources */,
 				7E94E39F2998034000795E31 /* WorkFlow.swift in Sources */,
+				7E99A59B2A78DA4A00DB6841 /* TimerProtocol.swift in Sources */,
 				7E9FEDD9297A87B200026080 /* WorkOut.swift in Sources */,
 				7EBDBC9429997605000B1079 /* ActionButton.swift in Sources */,
 				7E94E3A02998039300795E31 /* Constants.swift in Sources */,
 				7E94E3A72998081200795E31 /* WorkOutContent.swift in Sources */,
+				7E99A5982A78D9F200DB6841 /* TimerManager.swift in Sources */,
 				7E03709B29A25E5B00261B2A /* AppStorageManager.swift in Sources */,
 				7E94E3AD29980EB900795E31 /* View.swift in Sources */,
 				7E4A9952299FDACD0031504A /* LaunchScreenView.swift in Sources */,
@@ -1317,11 +1323,6 @@
 			isa = PBXTargetDependency;
 			target = 7E33B65C291435BE009E4C1C /* Athlete Zone */;
 			targetProxy = 7E17246729CA123300B90E31 /* PBXContainerItemProxy */;
-		};
-		7EF7C71E296EBB4100DC1AF2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7ED73574296B76C300E1A305 /* AthleteZoneMini Watch App */;
-			targetProxy = 7EF7C71D296EBB4100DC1AF2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

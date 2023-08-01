@@ -29,9 +29,9 @@ class WorkOutRunViewModel: ObservableObject {
             selectedFlow!.lastSerie
     }
 
-    var timer: Timer?
     private var soundManager: SoundProtocol?
     private var hapticManager: HapticProtocol?
+    @Published var timerManager = TimerManager.shared
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -93,6 +93,22 @@ class WorkOutRunViewModel: ObservableObject {
         $currentWorkout
             .sink { self.selectedFlow = $0?.workFlow[0] }
             .store(in: &cancellables)
+
+//        timerManager.$timeElapsed
+//            .sink { interval in
+//                if self.selectedFlow != nil && interval > 0 {
+//                    self.updateInterval()
+//                }
+//            }
+//            .store(in: &cancellables)
+
+        NotificationCenter.default.publisher(for: TimerManager.timerUpdatedNotification)
+            .sink { [weak self] _ in
+                if self?.selectedFlow != nil {
+                    self?.updateInterval()
+                }
+            }
+            .store(in: &cancellables)
     }
 
     func setState(_ state: WorkFlowState) {
@@ -114,18 +130,6 @@ class WorkOutRunViewModel: ObservableObject {
 // MARK: Timer extension
 
 extension WorkOutRunViewModel {
-    func startTimer() {
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
-            if self?.selectedFlow != nil {
-                self?.updateInterval()
-            }
-        }
-    }
-
-    func stopTimer() {
-        timer?.invalidate()
-    }
-
     func updateInterval() {
         if selectedFlow != nil {
             if selectedFlow!.interval > 0 {
@@ -150,10 +154,10 @@ extension WorkOutRunViewModel {
         if newState != previous {
             switch newState {
             case .paused:
-                stopTimer()
+                timerManager.stopTimer()
 
             case .finished:
-                stopTimer()
+                timerManager.stopTimer()
                 selectedFlowIndex = 0
                 if let next = nextWorkout {
                     currentWorkout = next
@@ -161,7 +165,7 @@ extension WorkOutRunViewModel {
                 }
 
             case .running:
-                startTimer()
+                timerManager.startTimer()
 
             default:
                 break
@@ -196,7 +200,7 @@ extension WorkOutRunViewModel {
     }
 }
 
-// MARK: Haptic extensio
+// MARK: Haptic extension
 
 extension WorkOutRunViewModel {
     func playHaptic(_ worflow: WorkFlow?) {

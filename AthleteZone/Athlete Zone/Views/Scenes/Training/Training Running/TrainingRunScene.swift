@@ -31,18 +31,15 @@ struct TrainingRunScene: View {
 
 struct TrainingRunScene_Previews: PreviewProvider {
     static var previews: some View {
-        let workouts = RealmSwift.List<WorkOut>()
-        workouts.append(objectsIn: [
-            WorkOut("Prvni", 2, 2, 2, 2, 2),
-            WorkOut("Druhy", 2, 2, 2, 2, 2)
-        ])
-        return TrainingRunScene(viewModel: TrainingRunViewModel(
-            training: Training(
-                name: "test",
-                description: "",
-                workouts: workouts
+        TrainingRunScene(
+            viewModel: TrainingRunViewModel(
+                trainingName: "name",
+                workouts: [
+                    WorkOut("Prvni", 2, 2, 2, 2, 2),
+                    WorkOut("Druhy", 2, 2, 2, 2, 2)
+                ]
             )
-        ))
+        )
     }
 }
 

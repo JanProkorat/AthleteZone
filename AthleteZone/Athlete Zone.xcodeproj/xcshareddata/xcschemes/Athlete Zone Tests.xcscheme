@@ -53,6 +53,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "7E33B65C291435BE009E4C1C"
+            BuildableName = "Athlete Zone.app"
+            BlueprintName = "Athlete Zone"
+            ReferencedContainer = "container:Athlete Zone.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

@@ -10,6 +10,11 @@ import Foundation
 
 class SoundManager: SoundProtocol {
     private var audioPlayer: AVAudioPlayer?
+    private var audioSession: AVAudioSession?
+
+    init() {
+        setupAudioSession()
+    }
 
     func playSound(sound: Sound) {
         if let asset = NSDataAsset(name: sound.rawValue) {
@@ -25,5 +30,24 @@ class SoundManager: SoundProtocol {
     func stop() {
         audioPlayer?.pause()
         audioPlayer = nil
+    }
+
+    private func setupAudioSession() {
+        audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession?.setCategory(.playback)
+            try audioSession?.setActive(true)
+        } catch {
+            print("Failed to set up audio session: \(error.localizedDescription)")
+        }
+    }
+
+    deinit {
+        stop()
+        do {
+            try audioSession?.setActive(false)
+        } catch {
+            print("Failed to deactivate audio session: \(error.localizedDescription)")
+        }
     }
 }

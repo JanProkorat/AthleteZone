@@ -32,8 +32,13 @@ struct TrainingScene: View {
                 .environmentObject(TrainingEditViewModel())
         })
         .fullScreenCover(isPresented: $isRunModalActive, content: {
-            TrainingRunScene(viewModel: TrainingRunViewModel(training: viewModel.selectedTraining!))
-                .onQuitTab { isRunModalActive.toggle() }
+            TrainingRunScene(
+                viewModel: TrainingRunViewModel(
+                    trainingName: viewModel.selectedTraining?.name ?? "",
+                    workouts: viewModel.workouts
+                )
+            )
+            .onQuitTab { isRunModalActive.toggle() }
         })
     }
 }

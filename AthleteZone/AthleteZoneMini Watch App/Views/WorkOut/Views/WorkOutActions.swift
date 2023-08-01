@@ -43,7 +43,6 @@ struct WorkOutActions: View {
 
                     ActionButton(icon: Icons.stop, color: .braun)
                         .onTab {
-                            workFlowViewModel.stopTimer()
                             workFlowViewModel.setState(.quit)
                         }
                 }

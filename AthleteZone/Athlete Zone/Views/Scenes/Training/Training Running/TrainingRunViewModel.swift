@@ -17,9 +17,9 @@ class TrainingRunViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
 
-    init(training: Training) {
-        trainingName = training.name
-        workouts = Array(training.workouts)
-        selectedWorkFlowViewModel = WorkOutRunViewModel(workouts: Array(training.workouts))
+    init(trainingName: String, workouts: [WorkOut]) {
+        self.trainingName = trainingName
+        self.workouts = workouts
+        selectedWorkFlowViewModel = WorkOutRunViewModel(workouts: workouts)
     }
 }
