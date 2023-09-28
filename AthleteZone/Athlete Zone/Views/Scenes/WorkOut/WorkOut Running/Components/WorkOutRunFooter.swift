@@ -8,16 +8,14 @@
 import SwiftUI
 
 struct WorkOutRunFooter: View {
-    @EnvironmentObject var viewModel: WorkOutRunViewModel
-
-    var onQuitTab: (() -> Void)?
+    @EnvironmentObject var viewModel: PhoneWorkOutRunViewModel
 
     var body: some View {
         Button {
-            if viewModel.state != .running {
-                self.performAction(onQuitTab)
-            } else {
+            if viewModel.state == .running {
                 self.viewModel.selectedFlowIndex -= 1
+            } else {
+                viewModel.state = .quit
             }
         } label: {
             Text(LocalizedStringKey(getLabel()))
@@ -47,17 +45,11 @@ struct WorkOutRunFooter: View {
 
 struct WorkOutRunFooter_Previews: PreviewProvider {
     static var previews: some View {
-        WorkOutRunFooter()
-            .environmentObject(WorkOutRunViewModel(workout: WorkOut()))
-            .environmentObject(ViewRouter())
-            .environmentObject(WorkOutViewModel())
-    }
-}
-
-extension WorkOutRunFooter {
-    func onQuitTab(_ handler: @escaping () -> Void) -> WorkOutRunFooter {
-        var new = self
-        new.onQuitTab = handler
-        return new
+        let viewModel = PhoneWorkOutRunViewModel()
+        viewModel.setupViewModel(workout: WorkOut("Title", 30, 60, 2, 1, 120))
+        return WorkOutRunFooter()
+            .environmentObject(viewModel)
+//            .environmentObject(ViewRouter())
+//            .environmentObject(WorkOutViewModel())
     }
 }

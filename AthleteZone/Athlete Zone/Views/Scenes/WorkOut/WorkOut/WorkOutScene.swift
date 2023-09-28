@@ -12,7 +12,7 @@ struct WorkOutScene: View {
     @EnvironmentObject var viewModel: WorkOutViewModel
 
     @State var isEditModalActive = false
-    @State var isRunModalActive = false
+    @Binding var isRunViewVisible: Bool
 
     @State var activeSheetType: ActivityType?
 
@@ -25,7 +25,7 @@ struct WorkOutScene: View {
             content: {
                 WorkOutContent()
                     .onTab { self.activeSheetType = $0 }
-                    .onStartTab { isRunModalActive.toggle() }
+                    .onStartTab { viewModel.setupRunViewModel() }
             },
             footer: {
                 MenuBar(activeTab: viewModel.router.currentTab)
@@ -38,20 +38,8 @@ struct WorkOutScene: View {
                 .environmentObject(getViewModel())
 
         })
-        .fullScreenCover(isPresented: $isRunModalActive, content: {
-            WorkOutRunScene(viewModel: WorkOutRunViewModel(
-                workout: WorkOut(
-                    viewModel.name,
-                    viewModel.work,
-                    viewModel.rest,
-                    viewModel.series,
-                    viewModel.rounds,
-                    viewModel.reset
-                )
-            ))
-            .onQuitTab {
-                isRunModalActive.toggle()
-            }
+        .fullScreenCover(isPresented: $isRunViewVisible, content: {
+            WorkOutRunScene(viewModel: viewModel.runViewModel)
         })
         .sheet(item: $activeSheetType) { activitySheet in
             IntervalPicker(
@@ -103,7 +91,7 @@ struct WorkOutScene: View {
 
 struct WorkOutScene_Previews: PreviewProvider {
     static var previews: some View {
-        WorkOutScene()
+        WorkOutScene(isRunViewVisible: .constant(false))
             .environmentObject(WorkOutViewModel())
     }
 }

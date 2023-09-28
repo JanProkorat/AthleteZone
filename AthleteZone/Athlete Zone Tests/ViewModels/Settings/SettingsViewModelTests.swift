@@ -32,7 +32,9 @@ class SettingsViewModelTests: XCTestCase {
         viewModel.shareLanguage(languageToShare)
 
         // Assert that the language value was sent to the mock connectivity manager using Nimble's expect and to syntax
-        expect(self.viewModel.connectivityManager.lastSentMessage?[DefaultItem.language.rawValue] as? String).to(equal(languageToShare.rawValue))
+        expect(self.viewModel.connectivityManager
+            .lastSentMessage?[DefaultItem.language.rawValue] as? String)
+            .to(equal(languageToShare.rawValue))
     }
 
     func testShareSoundsEnabled() {
@@ -40,8 +42,9 @@ class SettingsViewModelTests: XCTestCase {
         let soundsEnabled = true
         viewModel.shareSoundsEnabled(soundsEnabled)
 
-        // Assert that the sounds enabled value was sent to the mock connectivity manager using Nimble's expect and to syntax
-        expect(self.viewModel.connectivityManager.lastSentMessage?[DefaultItem.soundsEnabled.rawValue] as? Bool).to(equal(soundsEnabled))
+        expect(self.viewModel.connectivityManager
+            .lastSentMessage?[DefaultItem.soundsEnabled.rawValue] as? Bool)
+            .to(equal(soundsEnabled))
     }
 
     func testShareHapticsEnabled() {
@@ -49,7 +52,8 @@ class SettingsViewModelTests: XCTestCase {
         let hapticsEnabled = true
         viewModel.shareHapticsEnabled(hapticsEnabled)
 
-        // Assert that the haptics enabled value was sent to the mock connectivity manager using Nimble's expect and to syntax
-        expect(self.viewModel.connectivityManager.lastSentMessage?[DefaultItem.hapticsEnabled.rawValue] as? Bool).to(equal(hapticsEnabled))
+        expect(self.viewModel.connectivityManager
+            .lastSentMessage?[DefaultItem.hapticsEnabled.rawValue] as? Bool)
+            .to(equal(hapticsEnabled))
     }
 }

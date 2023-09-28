@@ -28,4 +28,12 @@ extension View {
                     .foregroundColor(Color(color.rawValue))
             )
     }
+
+    func roundedBackground(cornerRadius: CGFloat, color: Color) -> some View {
+        return self
+            .background(
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .foregroundColor(color)
+            )
+    }
 }

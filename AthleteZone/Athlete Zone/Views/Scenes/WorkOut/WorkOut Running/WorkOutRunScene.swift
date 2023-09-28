@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct WorkOutRunScene: View {
-    @StateObject var viewModel: WorkOutRunViewModel
-
-    var onQuitTab: (() -> Void)?
+    @StateObject var viewModel: PhoneWorkOutRunViewModel
 
     var body: some View {
         BaseView(
@@ -23,7 +21,6 @@ struct WorkOutRunScene: View {
             },
             footer: {
                 WorkOutRunFooter()
-                    .onQuitTab { performAction(onQuitTab) }
                     .environmentObject(viewModel)
             }
         )
@@ -32,17 +29,9 @@ struct WorkOutRunScene: View {
 
 struct WorkOutRunScene_Previews: PreviewProvider {
     static var previews: some View {
-        WorkOutRunScene(viewModel: WorkOutRunViewModel(
-            workout: WorkOut("Prvni", 2, 2, 2, 2, 2)
-        ))
-        .environment(\.locale, .init(identifier: "cze"))
-    }
-}
-
-extension WorkOutRunScene {
-    func onQuitTab(_ handler: @escaping () -> Void) -> WorkOutRunScene {
-        var new = self
-        new.onQuitTab = handler
-        return new
+        let viewModel = PhoneWorkOutRunViewModel()
+        viewModel.setupViewModel(workout: WorkOut("Title", 30, 60, 2, 1, 120))
+        return WorkOutRunScene(viewModel: viewModel)
+            .environment(\.locale, .init(identifier: "cze"))
     }
 }

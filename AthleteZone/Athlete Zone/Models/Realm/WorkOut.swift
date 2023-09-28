@@ -110,9 +110,9 @@ public class WorkOut: Object, Identifiable, Codable {
         return dateFormatter.string(from: createdDate)
     }
 
-    override public static func ignoredProperties() -> [String] {
-        return ["objectWillChange"]
-    }
+//    override public static func ignoredProperties() -> [String] {
+//        return ["objectWillChange"]
+//    }
 
     enum CodingKeys: String, CodingKey {
         case name, work, rest, series, rounds, reset, createdDate, _id
@@ -130,14 +130,29 @@ public class WorkOut: Object, Identifiable, Codable {
         try container.encode(_id, forKey: ._id)
     }
 
-    public func encode() -> String {
+    public func encode() -> String? {
         do {
             let encodedData = try JSONEncoder().encode(self)
             let jsonString = String(data: encodedData, encoding: .utf8)
-            return jsonString ?? ""
+            return jsonString
         } catch {
             print(error)
-            return ""
+            return nil
         }
+    }
+}
+
+extension WorkOut {
+    func toWidgetWorkOut() -> WidgetWorkOut {
+        return WidgetWorkOut(
+            id: _id.stringValue,
+            name: name,
+            work: work,
+            rest: rest,
+            series: series,
+            rounds: rounds,
+            reset: reset,
+            workoutLength: workoutLength
+        )
     }
 }

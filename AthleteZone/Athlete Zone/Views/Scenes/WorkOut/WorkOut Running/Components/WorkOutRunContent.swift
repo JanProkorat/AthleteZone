@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WorkOutRunContent: View {
-    @EnvironmentObject var viewModel: WorkOutRunViewModel
+    @EnvironmentObject var viewModel: PhoneWorkOutRunViewModel
     @State private var timeElapsed: TimeInterval = 0
 
     var body: some View {
@@ -65,12 +65,11 @@ struct WorkOutRunContent: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             viewModel.setState(.running)
-//            timeElapsed = TimerManager.shared.getTimeElapsed() // Update the initial timeElapsed value
         }
         .onReceive(TimerManager.shared.timePublisher) { elapsed in
             timeElapsed = elapsed // Update the timeElapsed value whenever the timer updates
         }
-        .onChange(of: viewModel.state) { newValue in
+        .onChange(of: viewModel.state) { _, newValue in
             switch newValue {
             case .running:
                 UIApplication.shared.isIdleTimerDisabled = true
@@ -84,9 +83,11 @@ struct WorkOutRunContent: View {
 
 struct WorkOutRunContent_Previews: PreviewProvider {
     static var previews: some View {
-        WorkOutRunContent()
-            .environmentObject(WorkOutRunViewModel(
-                workout: WorkOut("Prvni", 2, 2, 2, 2, 2)
-            ))
+        let viewModel = PhoneWorkOutRunViewModel()
+        viewModel.setupViewModel(workout:
+            WorkOut("Prvni", 2, 2, 2, 2, 2)
+        )
+        return WorkOutRunContent()
+            .environmentObject(viewModel)
     }
 }

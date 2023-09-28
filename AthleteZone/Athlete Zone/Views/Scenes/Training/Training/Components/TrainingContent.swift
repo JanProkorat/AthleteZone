@@ -32,6 +32,7 @@ struct TrainingContent: View {
                                     .font(.title2)
                                     .padding(.top, 7)
                                     .frame(maxWidth: .infinity)
+                                    .padding([.leading, .trailing])
                             }
                             .frame(maxHeight: geo.size.height * 0.2)
                             .frame(maxWidth: .infinity)

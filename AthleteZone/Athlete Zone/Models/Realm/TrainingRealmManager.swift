@@ -24,48 +24,46 @@ class TrainingRealmManager: ObservableObject, TrainingRealmManagerProtocol {
     }
 
     func load(_ searchText: String, _ sortBy: TrainingSortByProperty, _ sortOrder: SortOrder) -> [Training] {
-        // Step 1: Filter the list of trainings based on the search text (name).
         let filteredTrainings: [Training]
         if searchText.isEmpty {
-            // If the search text is empty, return all trainings without filtering.
             filteredTrainings = Array(trainingLibrary)
         } else {
-            // Otherwise, filter based on the search text.
             filteredTrainings = trainingLibrary.filter { training in
                 training.name.lowercased().contains(searchText.lowercased())
             }
         }
 
-        // Step 2: Sort the filtered list based on the selected `sortBy` and `sortOrder`.
         let sortedTrainings: [Training]
         switch sortBy {
         case .name:
             sortedTrainings = filteredTrainings.sorted { training1, training2 in
                 sortOrder == .ascending ?
-                training1.name < training2.name :
-                training1.name > training2.name
+                    training1.name < training2.name :
+                    training1.name > training2.name
             }
+
         case .createdDate:
             sortedTrainings = filteredTrainings.sorted { training1, training2 in
                 sortOrder == .ascending ?
-                training1.createdDate < training2.createdDate :
-                training1.createdDate > training2.createdDate
+                    training1.createdDate < training2.createdDate :
+                    training1.createdDate > training2.createdDate
             }
+
         case .numOfWorkouts:
             sortedTrainings = filteredTrainings.sorted { training1, training2 in
                 sortOrder == .ascending ?
-                training1.workoutCount < training2.workoutCount :
-                training1.workoutCount > training2.workoutCount
+                    training1.workoutCount < training2.workoutCount :
+                    training1.workoutCount > training2.workoutCount
             }
+
         case .trainingLength:
             sortedTrainings = filteredTrainings.sorted { training1, training2 in
                 sortOrder == .ascending ?
-                training1.trainingLength < training2.trainingLength :
-                training1.trainingLength > training2.trainingLength
+                    training1.trainingLength < training2.trainingLength :
+                    training1.trainingLength > training2.trainingLength
             }
         }
 
-        // Step 3: Return the sorted and filtered list as an array.
         return sortedTrainings
     }
 
@@ -100,5 +98,9 @@ class TrainingRealmManager: ObservableObject, TrainingRealmManagerProtocol {
         } catch {
             print(error.localizedDescription)
         }
+    }
+
+    func load() -> [Training] {
+        return Array(trainingLibrary)
     }
 }

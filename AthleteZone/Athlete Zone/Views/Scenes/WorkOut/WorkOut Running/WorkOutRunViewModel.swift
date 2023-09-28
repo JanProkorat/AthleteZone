@@ -9,7 +9,7 @@ import Combine
 import Foundation
 import SwiftUI
 
-class WorkOutRunViewModel: ObservableObject {
+class WorkOutRunViewModel: ObservableObject, Identifiable {
     @Published var workoutLibrary: [WorkOut] = []
 
     @Published var currentWorkout: WorkOut?
@@ -29,34 +29,17 @@ class WorkOutRunViewModel: ObservableObject {
             selectedFlow!.lastSerie
     }
 
+    var isFirstRunning: Bool {
+        selectedFlowIndex == 0
+    }
+
     private var soundManager: SoundProtocol?
-    private var hapticManager: HapticProtocol?
-    @Published var timerManager = TimerManager.shared
+    var timerManager = TimerManager.shared
 
-    private var cancellables = Set<AnyCancellable>()
+    var cancellables = Set<AnyCancellable>()
 
-    init(workout: WorkOut) {
-        currentWorkout = workout
-        workoutName = workout.name
-        workoutLibrary = [workout]
-
-        initViewModel()
-    }
-
-    init(workouts: [WorkOut]) {
-        workoutLibrary = workouts
-        currentWorkout = workouts.first
-        workoutName = workouts.first!.name
-
-        initViewModel()
-    }
-
-    private func initViewModel() {
+    init() {
         soundManager = SoundManager()
-
-        #if os(watchOS)
-        hapticManager = HapticManager()
-        #endif
 
         $state
             .scan((state, state)) { previous, current -> (WorkFlowState, WorkFlowState) in
@@ -78,14 +61,6 @@ class WorkOutRunViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
-        $selectedFlow
-            .sink { newValue in
-                if self.appStorageManager.hapticsEnabled {
-                    self.playHaptic(newValue)
-                }
-            }
-            .store(in: &cancellables)
-
         $state
             .sink { self.setupNextWorkout($0) }
             .store(in: &cancellables)
@@ -93,22 +68,18 @@ class WorkOutRunViewModel: ObservableObject {
         $currentWorkout
             .sink { self.selectedFlow = $0?.workFlow[0] }
             .store(in: &cancellables)
+    }
 
-//        timerManager.$timeElapsed
-//            .sink { interval in
-//                if self.selectedFlow != nil && interval > 0 {
-//                    self.updateInterval()
-//                }
-//            }
-//            .store(in: &cancellables)
+    func setupViewModel(workout: WorkOut) {
+        currentWorkout = workout
+        workoutName = workout.name
+        workoutLibrary = [workout]
+    }
 
-        NotificationCenter.default.publisher(for: TimerManager.timerUpdatedNotification)
-            .sink { [weak self] _ in
-                if self?.selectedFlow != nil {
-                    self?.updateInterval()
-                }
-            }
-            .store(in: &cancellables)
+    func setupViewModel(workouts: [WorkOut]) {
+        workoutLibrary = workouts
+        currentWorkout = workouts.first
+        workoutName = workouts.first!.name
     }
 
     func setState(_ state: WorkFlowState) {
@@ -123,13 +94,10 @@ class WorkOutRunViewModel: ObservableObject {
             } else {
                 currentWorkout = workoutLibrary.first
             }
+            workoutName = currentWorkout!.name
         }
     }
-}
 
-// MARK: Timer extension
-
-extension WorkOutRunViewModel {
     func updateInterval() {
         if selectedFlow != nil {
             if selectedFlow!.interval > 0 {
@@ -150,28 +118,7 @@ extension WorkOutRunViewModel {
         }
     }
 
-    func updateTimerOnStateChange(_ previous: WorkFlowState, _ newState: WorkFlowState) {
-        if newState != previous {
-            switch newState {
-            case .paused:
-                timerManager.stopTimer()
-
-            case .finished:
-                timerManager.stopTimer()
-                selectedFlowIndex = 0
-                if let next = nextWorkout {
-                    currentWorkout = next
-                    nextWorkout = nil
-                }
-
-            case .running:
-                timerManager.startTimer()
-
-            default:
-                break
-            }
-        }
-    }
+    func updateTimerOnStateChange(_ previous: WorkFlowState, _ newState: WorkFlowState) {}
 }
 
 // MARK: Sound extension
@@ -197,23 +144,5 @@ extension WorkOutRunViewModel {
 
     func stopSound() {
         soundManager?.stop()
-    }
-}
-
-// MARK: Haptic extension
-
-extension WorkOutRunViewModel {
-    func playHaptic(_ worflow: WorkFlow?) {
-        if state == .running {
-            if let flow = worflow {
-                if flow.interval > 0 {
-                    if flow.interval <= 3 {
-                        hapticManager?.playHaptic()
-                    }
-                } else {
-                    hapticManager?.playFinishHaptic()
-                }
-            }
-        }
     }
 }

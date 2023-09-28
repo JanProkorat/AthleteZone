@@ -31,7 +31,8 @@ class WorkOutEditViewModel: ObservableObject {
 
     @ObservedObject var selectedWorkoutManager = SelectedWorkoutManager.shared
 
-    @Published var connectivityManager = WatchConnectivityManager.shared
+    var connectivityManager = WatchConnectivityManager.shared
+    var router = ViewRouter.shared
 
     init() {
         let workout = WorkOut()
@@ -89,14 +90,19 @@ class WorkOutEditViewModel: ObservableObject {
     func saveWorkout() {
         if !isEditing {
             let workout = WorkOut(name, work, rest, series, rounds, reset)
-
             realmManager.add(workout)
+            connectivityManager.sendValue(["workout_add": workout.encode()!])
 
-            selectedWorkoutManager.selectedWorkout = workout
-            connectivityManager.sendValue(["workout_add": workout.encode()])
+            if router.currentTab == .home {
+                selectedWorkoutManager.selectedWorkout = workout
+            }
         } else {
             realmManager.update(workout._id, name, work, rest, series, rounds, reset)
-            connectivityManager.sendValue(["workout_edit": workout.encode()])
+            connectivityManager.sendValue(["workout_edit": workout.encode()!])
+
+            if selectedWorkoutManager.selectedWorkout?._id == workout._id {
+                selectedWorkoutManager.selectedWorkout = workout
+            }
         }
     }
 }

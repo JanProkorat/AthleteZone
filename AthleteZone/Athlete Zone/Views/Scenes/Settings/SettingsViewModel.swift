@@ -7,17 +7,22 @@
 
 import Combine
 import Foundation
+import HealthKit
 import SwiftUI
 
 class SettingsViewModel: ObservableObject {
     @Published var appStorageManager = AppStorageManager.shared
     @Published var languageManager = LanguageManager.shared
+    var healthManager = HealthManager.shared
 
     @ObservedObject var router = ViewRouter.shared
 
     var connectivityManager: WatchConnectivityProtocol
     private let notificationManager = NotificationManager.shared
     private var cancellables = Set<AnyCancellable>()
+
+    @Published var healthKitAccess = false
+    @Published var hkAuthStatus: HKAuthorizationStatus = .notDetermined
 
     init() {
         self.connectivityManager = WatchConnectivityManager.shared
@@ -31,6 +36,34 @@ class SettingsViewModel: ObservableObject {
                 self.handleNotifications(self.appStorageManager.notificationsEnabled)
             }
             .store(in: &cancellables)
+
+        $healthKitAccess
+            .sink { self.grantAccess($0) }
+            .store(in: &cancellables)
+
+        healthManager.$hkAccessStatus
+            .sink { newValue in
+                self.hkAuthStatus = newValue
+                if newValue == .sharingAuthorized {
+                    self.healthKitAccess = true
+                } else {
+                    self.healthKitAccess = false
+                }
+            }
+            .store(in: &cancellables)
+    }
+
+    func grantAccess(_ access: Bool) {
+        if !access {
+            return
+        }
+
+        let status = healthManager.checkAuthorizationStatus()
+        if status == .sharingAuthorized {
+            return
+        }
+
+        healthManager.requestAuthorization()
     }
 
     func shareLanguage(_ language: Language) {

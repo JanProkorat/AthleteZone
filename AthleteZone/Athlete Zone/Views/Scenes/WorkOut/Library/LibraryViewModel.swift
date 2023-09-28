@@ -8,6 +8,7 @@
 import Combine
 import RealmSwift
 import SwiftUI
+import WidgetKit
 
 class LibraryViewModel: ObservableObject {
     @Published var searchText = ""
@@ -18,6 +19,7 @@ class LibraryViewModel: ObservableObject {
     @ObservedObject var selectedWorkoutManager = SelectedWorkoutManager.shared
     @ObservedObject var router = ViewRouter.shared
     private var connectivityManager = WatchConnectivityManager.shared
+    private var storageManager = AppStorageManager.shared
 
     var realmManager: WorkOutRealmManagerProtocol
 
@@ -45,8 +47,13 @@ extension LibraryViewModel {
         let id = workout._id.stringValue
         realmManager.delete(entity: workout)
         objectWillChange.send()
-        selectedWorkoutManager.selectedWorkout = nil
         removeFromWatch(id)
+
+        if id == storageManager.selectedWorkoutId {
+            selectedWorkoutManager.selectedWorkout = nil
+            storageManager.removeFromDefaults(key: UserDefaultValues.workoutId.rawValue)
+            WidgetCenter.shared.reloadTimelines(ofKind: "RunningWorkoutWidget")
+        }
     }
 }
 

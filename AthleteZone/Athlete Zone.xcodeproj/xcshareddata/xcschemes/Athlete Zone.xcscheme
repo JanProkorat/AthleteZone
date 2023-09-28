@@ -20,6 +20,20 @@
                ReferencedContainer = "container:Athlete Zone.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "7ED73574296B76C300E1A305"
+               BuildableName = "Athlete Zone Mini.app"
+               BlueprintName = "AthleteZoneMini Watch App"
+               ReferencedContainer = "container:Athlete Zone.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -28,17 +42,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7E3D4CA129689A8700B54852"
-               BuildableName = "Athlete ZoneTests.xctest"
-               BlueprintName = "Athlete ZoneTests"
-               ReferencedContainer = "container:Athlete Zone.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
          <TestableReference
             skipped = "NO"
             parallelizable = "YES">

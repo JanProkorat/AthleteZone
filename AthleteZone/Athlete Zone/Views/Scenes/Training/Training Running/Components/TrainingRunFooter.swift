@@ -8,14 +8,12 @@
 import SwiftUI
 
 struct TrainingRunFooter: View {
-    @EnvironmentObject var viewModel: WorkOutRunViewModel
-
-    var onQuitTab: (() -> Void)?
+    @EnvironmentObject var viewModel: PhoneWorkOutRunViewModel
 
     var body: some View {
         Button {
             if viewModel.state != .running {
-                self.performAction(onQuitTab)
+                viewModel.state = .quit
             } else {
                 self.viewModel.selectedFlowIndex -= 1
             }
@@ -49,15 +47,9 @@ struct TrainingRunFooter: View {
 
 struct TrainingRunFooter_Previews: PreviewProvider {
     static var previews: some View {
-        TrainingRunFooter()
-            .environmentObject(WorkOutRunViewModel(workout: WorkOut()))
-    }
-}
-
-extension TrainingRunFooter {
-    func onQuitTab(_ handler: @escaping () -> Void) -> TrainingRunFooter {
-        var new = self
-        new.onQuitTab = handler
-        return new
+        let viewModel = PhoneWorkOutRunViewModel()
+        viewModel.setupViewModel(workout: WorkOut("Title", 30, 60, 2, 1, 120))
+        return TrainingRunFooter()
+            .environmentObject(viewModel)
     }
 }

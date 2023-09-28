@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import WidgetKit
 
 class TrainingLibraryViewModel: ObservableObject {
     @Published var searchText = ""
@@ -15,6 +16,9 @@ class TrainingLibraryViewModel: ObservableObject {
 
     @ObservedObject var selectedTrainingManager = SelectedTrainingManager.shared
     @ObservedObject var router = ViewRouter.shared
+
+    private var connectivityManager = WatchConnectivityManager.shared
+    private var storageManager = AppStorageManager.shared
 
     var realmManager: TrainingRealmManagerProtocol
 
@@ -29,7 +33,13 @@ class TrainingLibraryViewModel: ObservableObject {
     func removeTraining(_ training: Training) {
         realmManager.delete(entity: training)
         objectWillChange.send()
-        selectedTrainingManager.selectedTraining = nil
+        removeFromWatch(training._id.stringValue)
+
+        if training._id == selectedTrainingManager.selectedTraining?._id {
+            selectedTrainingManager.selectedTraining = nil
+            storageManager.removeFromDefaults(key: UserDefaultValues.trainingId.rawValue)
+            WidgetCenter.shared.reloadTimelines(ofKind: "RunningWorkoutWidget")
+        }
     }
 
     func setSelectedTraining(_ id: String) {
@@ -38,5 +48,13 @@ class TrainingLibraryViewModel: ObservableObject {
 
     func setSelectedTraining(_ training: Training) {
         selectedTrainingManager.selectedTraining = training
+    }
+}
+
+// MARK: Watch connecctivity
+
+extension TrainingLibraryViewModel {
+    func removeFromWatch(_ id: String) {
+        connectivityManager.sendValue(["training_remove": id])
     }
 }

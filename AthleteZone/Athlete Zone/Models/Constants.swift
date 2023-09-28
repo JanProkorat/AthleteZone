@@ -47,7 +47,7 @@ enum Picture: String {
     case welcome = "Welcome"
 }
 
-enum ComponentColor: String, CaseIterable {
+enum ComponentColor: String, CaseIterable, Codable {
     case action = "Action"
     case braun = "Braun"
     case darkBlue = "Dark_blue"
@@ -97,4 +97,10 @@ enum Sound: String {
     case beep
     case gong
     case fanfare
+}
+
+enum UserDefaultValues: String {
+    case groupId = "group.com.janprokorat.Athlete-Zone"
+    case workoutId = "selectedWorkout"
+    case trainingId = "selectedTraining"
 }

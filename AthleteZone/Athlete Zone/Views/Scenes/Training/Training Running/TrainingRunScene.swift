@@ -11,8 +11,6 @@ import SwiftUI
 struct TrainingRunScene: View {
     @StateObject var viewModel: TrainingRunViewModel
 
-    var onQuitTab: (() -> Void)?
-
     var body: some View {
         BaseView {
             TitleText(text: viewModel.trainingName, alignment: .center)
@@ -21,32 +19,19 @@ struct TrainingRunScene: View {
                 .environmentObject(viewModel.selectedWorkFlowViewModel)
         } footer: {
             TrainingRunFooter()
-                .onQuitTab {
-                    performAction(onQuitTab)
-                }
                 .environmentObject(viewModel.selectedWorkFlowViewModel)
         }
     }
 }
 
-struct TrainingRunScene_Previews: PreviewProvider {
-    static var previews: some View {
-        TrainingRunScene(
-            viewModel: TrainingRunViewModel(
-                trainingName: "name",
-                workouts: [
-                    WorkOut("Prvni", 2, 2, 2, 2, 2),
-                    WorkOut("Druhy", 2, 2, 2, 2, 2)
-                ]
-            )
-        )
-    }
-}
-
-extension TrainingRunScene {
-    func onQuitTab(_ handler: @escaping () -> Void) -> TrainingRunScene {
-        var new = self
-        new.onQuitTab = handler
-        return new
-    }
+#Preview {
+    let viewModeel = TrainingRunViewModel()
+    viewModeel.setupViewModel(
+        trainingName: "name",
+        workouts: [
+            WorkOut("Prvni", 2, 2, 2, 2, 2),
+            WorkOut("Druhy", 2, 2, 2, 2, 2)
+        ]
+    )
+    return TrainingRunScene(viewModel: viewModeel)
 }

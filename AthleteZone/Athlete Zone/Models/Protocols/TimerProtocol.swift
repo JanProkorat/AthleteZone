@@ -8,6 +8,9 @@
 import Foundation
 
 protocol TimerProtocol {
+    var timeElapsed: TimeInterval { get }
+    var timeElapsedPublisher: Published<TimeInterval>.Publisher { get }
+
     func startTimer()
     func stopTimer()
 }

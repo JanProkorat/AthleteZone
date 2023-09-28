@@ -91,50 +91,57 @@ class WorkoutRealmManager: ObservableObject, WorkOutRealmManagerProtocol {
         case .name:
             sortedWorkouts = filteredWorkouts.sorted { workout1, workout2 in
                 sortOrder == .ascending ?
-                workout1.name < workout2.name :
-                workout1.name > workout2.name
+                    workout1.name < workout2.name :
+                    workout1.name > workout2.name
             }
+
         case .work:
             sortedWorkouts = filteredWorkouts.sorted { workout1, workout2 in
                 sortOrder == .ascending ?
-                workout1.work < workout2.work :
-                workout1.work > workout2.work
+                    workout1.work < workout2.work :
+                    workout1.work > workout2.work
             }
+
         case .rest:
             sortedWorkouts = filteredWorkouts.sorted { workout1, workout2 in
                 sortOrder == .ascending ?
-                workout1.rest < workout2.rest :
-                workout1.rest > workout2.rest
+                    workout1.rest < workout2.rest :
+                    workout1.rest > workout2.rest
             }
+
         case .series:
             sortedWorkouts = filteredWorkouts.sorted { workout1, workout2 in
                 sortOrder == .ascending ?
-                workout1.series < workout2.series :
-                workout1.series > workout2.series
+                    workout1.series < workout2.series :
+                    workout1.series > workout2.series
             }
+
         case .rounds:
             sortedWorkouts = filteredWorkouts.sorted { workout1, workout2 in
                 sortOrder == .ascending ?
-                workout1.rounds < workout2.rounds :
-                workout1.rounds > workout2.rounds
+                    workout1.rounds < workout2.rounds :
+                    workout1.rounds > workout2.rounds
             }
+
         case .reset:
             sortedWorkouts = filteredWorkouts.sorted { workout1, workout2 in
                 sortOrder == .ascending ?
-                workout1.reset < workout2.reset :
-                workout1.reset > workout2.reset
+                    workout1.reset < workout2.reset :
+                    workout1.reset > workout2.reset
             }
+
         case .createdDate:
             sortedWorkouts = filteredWorkouts.sorted { workout1, workout2 in
                 sortOrder == .ascending ?
-                workout1.createdDate < workout2.createdDate :
-                workout1.createdDate > workout2.createdDate
+                    workout1.createdDate < workout2.createdDate :
+                    workout1.createdDate > workout2.createdDate
             }
+
         case .workoutLength:
             sortedWorkouts = filteredWorkouts.sorted { workout1, workout2 in
                 sortOrder == .ascending ?
-                workout1.workoutLength < workout2.workoutLength :
-                workout1.workoutLength > workout2.workoutLength
+                    workout1.workoutLength < workout2.workoutLength :
+                    workout1.workoutLength > workout2.workoutLength
             }
         }
 

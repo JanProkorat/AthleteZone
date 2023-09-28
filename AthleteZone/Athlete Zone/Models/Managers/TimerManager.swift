@@ -12,8 +12,13 @@ import UIKit
 class TimerManager: ObservableObject, TimerProtocol {
     static let shared = TimerManager()
 
+    var timeElapsedPublisher: Published<TimeInterval>.Publisher {
+        $timeElapsed
+    }
+
+    @Published var timeElapsed: TimeInterval = 0
+
     private var timer: Timer?
-    private var timeElapsed: TimeInterval = 0
     private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
     static let timerUpdatedNotification = Notification.Name("BackgroundTimerUpdatedNotification")
 
@@ -59,10 +64,5 @@ class TimerManager: ObservableObject, TimerProtocol {
         let application = UIApplication.shared
         application.endBackgroundTask(backgroundTask)
         backgroundTask = .invalid
-    }
-
-    // Getter for the current time elapsed
-    func getTimeElapsed() -> TimeInterval {
-        return timeElapsed
     }
 }

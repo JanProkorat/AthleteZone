@@ -21,7 +21,7 @@ struct WorkOutContentScene: View {
             VStack {
                 switch viewModel.currentTab {
                 case .home:
-                    WorkOutScene()
+                    WorkOutScene(isRunViewVisible: $workOutViewModel.isRunViewVisible)
                         .environmentObject(workOutViewModel)
 
                 case .library:

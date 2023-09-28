@@ -11,7 +11,7 @@ struct TrainingScene: View {
     @EnvironmentObject var viewModel: TrainingViewModel
 
     @State var isEditModalActive = false
-    @State var isRunModalActive = false
+    @Binding var isRunViewVisible: Bool
 
     var body: some View {
         BaseView {
@@ -19,7 +19,7 @@ struct TrainingScene: View {
                 .onAddTab { isEditModalActive.toggle() }
         } content: {
             TrainingContent()
-                .onStartTab { isRunModalActive.toggle() }
+                .onStartTab { viewModel.setupRunViewModel() }
                 .onLibraryTab { viewModel.router.currentTab = .library }
                 .onCreateTab { isEditModalActive.toggle() }
         } footer: {
@@ -31,21 +31,15 @@ struct TrainingScene: View {
                 .onCloseTab { isEditModalActive.toggle() }
                 .environmentObject(TrainingEditViewModel())
         })
-        .fullScreenCover(isPresented: $isRunModalActive, content: {
-            TrainingRunScene(
-                viewModel: TrainingRunViewModel(
-                    trainingName: viewModel.selectedTraining?.name ?? "",
-                    workouts: viewModel.workouts
-                )
-            )
-            .onQuitTab { isRunModalActive.toggle() }
+        .fullScreenCover(isPresented: $isRunViewVisible, content: {
+            TrainingRunScene(viewModel: viewModel.runViewModel)
         })
     }
 }
 
 struct TrainingScene_Previews: PreviewProvider {
     static var previews: some View {
-        TrainingScene()
+        TrainingScene(isRunViewVisible: .constant(false))
             .environmentObject(TrainingViewModel())
     }
 }

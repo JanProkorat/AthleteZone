@@ -46,6 +46,15 @@ public class Training: Object, Identifiable, Codable {
         self.workouts = workOuts
     }
 
+    init(name: String, description: String, workouts: [WorkOut]) {
+        self.name = name
+        trainingDescription = description
+
+        let workOuts = RealmSwift.List<WorkOut>()
+        workOuts.append(objectsIn: workouts)
+        self.workouts = workOuts
+    }
+
     func addWorkOuts(_ workouts: [WorkOut]) {
         self.workouts.removeAll()
         self.workouts.append(objectsIn: workouts)
@@ -57,5 +66,40 @@ public class Training: Object, Identifiable, Codable {
             result += workout.workoutLength
         }
         return result
+    }
+
+    func encode() -> String {
+        do {
+            let encodedData = try JSONEncoder().encode(self)
+            let jsonString = String(data: encodedData, encoding: .utf8)
+            return jsonString ?? ""
+        } catch {
+            print(error)
+            return ""
+        }
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case name, trainingDescription, createdDate, workouts
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(name, forKey: .name)
+        try container.encode(trainingDescription, forKey: .trainingDescription)
+        try container.encode(createdDate, forKey: .createdDate)
+        try container.encode(workouts, forKey: .workouts)
+    }
+}
+
+extension Training {
+    func toWidgetTraining() -> WidgetTraining {
+        return WidgetTraining(
+            id: _id.stringValue,
+            name: name,
+            trainingDescription: trainingDescription,
+            workoutsCount: workouts.count,
+            trainingLength: trainingLength
+        )
     }
 }

@@ -15,8 +15,16 @@ final class WatchConnectivityManager: NSObject, ObservableObject, WatchConnectiv
 
     var appStorageManager = AppStorageManager.shared
 
-    @Published var receivedData: [WorkOut]?
     @Published var isSessionReachable = false
+    @Published var isPairedAppInstalled = false
+
+    @Published var receivedData: String? = nil
+    @Published var receivedNewWorkout: String? = nil
+    @Published var receivedNewTraining: String? = nil
+    @Published var receivedUpdateWorkout: String? = nil
+    @Published var receivedUpdateTraining: String? = nil
+    @Published var receivedRemoveWorkout: String? = nil
+    @Published var receivedRemoveTraining: String? = nil
 
     override private init() {
         super.init()
@@ -30,6 +38,27 @@ final class WatchConnectivityManager: NSObject, ObservableObject, WatchConnectiv
 
         WCSession.default.delegate = self
         WCSession.default.activate()
+    }
+}
+
+// MARK: - Is paired app installed
+
+// TODO: - Integrate to settings
+extension WatchConnectivityManager {
+    func checkIfPairedAppInstalled() {
+        #if os(watchOS)
+        guard WCSession.default.isCompanionAppInstalled else {
+            print("iOS app not installed on the paired Apple Watch")
+            return
+        }
+        #else
+        guard WCSession.default.isWatchAppInstalled else {
+            print("WatchOS app not installed on the paired Apple Watch")
+            return
+        }
+        #endif
+
+        self.isPairedAppInstalled.toggle()
     }
 }
 
@@ -91,20 +120,23 @@ extension WatchConnectivityManager: WCSessionDelegate {
         }
         #endif
 
-        WCSession.default.sendMessage(["data": Section.workout.rawValue]) { newValue in
+        WCSession.default.sendMessage(["data": "data"]) { newValue in
             DispatchQueue.main.async {
                 self.decodeMessage(newValue)
             }
 
         } errorHandler: { error in
-            print(error.localizedDescription)
+            print(["Error sending data request", error.localizedDescription])
         }
     }
 
     func loadReplyData() -> String {
-        let realmManager = WorkoutRealmManager()
-        let data = realmManager.load()
-        return data.toJSONString() ?? ""
+        let workoutManager = WorkoutRealmManager()
+        let workouts = workoutManager.load()
+
+        let trainingManager = TrainingRealmManager()
+        let trainings = trainingManager.load()
+        return WatchDataDto(workouts: workouts, trainings: trainings).toJSONString() ?? ""
     }
 
     func sessionReachabilityDidChange(_ session: WCSession) {
@@ -116,44 +148,35 @@ extension WatchConnectivityManager: WCSessionDelegate {
     }
 
     func decodeMessage(_ message: [String: Any]) {
-        do {
-            if let dataString = message["data"] as? String {
-                self.receivedData = try JSONDecoder().decode([WorkOut].self, from: Data(dataString.utf8))
-            }
-            if let language = message[DefaultItem.language.rawValue] as? String {
-                self.appStorageManager.language = Language(rawValue: language) ?? .en
-            }
-            if let sounds = message[DefaultItem.soundsEnabled.rawValue] as? Bool {
-                self.appStorageManager.soundsEnabled = sounds
-            }
-            if let sounds = message[DefaultItem.hapticsEnabled.rawValue] as? Bool {
-                self.appStorageManager.hapticsEnabled = sounds
-            }
-            if let workout: WorkOut = try (message["workout_add"] as? String)?.decode() {
-                if self.receivedData != nil {
-                    self.receivedData!.append(workout)
-                } else {
-                    self.receivedData = [workout]
-                }
-            }
-            if let workout: WorkOut = try (message["workout_edit"] as? String)?.decode() {
-                self.receivedData = self.receivedData?.map {
-                    if $0._id == workout._id {
-                        $0.name = workout.name
-                        $0.work = workout.work
-                        $0.rest = workout.rest
-                        $0.series = workout.series
-                        $0.rounds = workout.rounds
-                        $0.reset = workout.reset
-                    }
-                    return $0
-                }
-            }
-            if let workoutId = message["workout_remove"] as? String {
-                self.receivedData?.removeAll { $0._id.stringValue == workoutId }
-            }
-        } catch {
-            print(error.localizedDescription)
+        if let dataString = message["data"] as? String {
+            self.receivedData = dataString
+        }
+        if let language = message[DefaultItem.language.rawValue] as? String {
+            self.appStorageManager.language = Language(rawValue: language) ?? .en
+        }
+        if let sounds = message[DefaultItem.soundsEnabled.rawValue] as? Bool {
+            self.appStorageManager.soundsEnabled = sounds
+        }
+        if let haptics = message[DefaultItem.hapticsEnabled.rawValue] as? Bool {
+            self.appStorageManager.hapticsEnabled = haptics
+        }
+        if let workout = message["workout_add"] as? String {
+            self.receivedNewWorkout = workout
+        }
+        if let workout = message["workout_edit"] as? String {
+            self.receivedUpdateWorkout = workout
+        }
+        if let workoutId = message["workout_remove"] as? String {
+            self.receivedRemoveWorkout = workoutId
+        }
+        if let trainingId = message["training_remove"] as? String {
+            self.receivedRemoveTraining = trainingId
+        }
+        if let training = message["training_edit"] as? String {
+            self.receivedUpdateTraining = training
+        }
+        if let training = message["training_add"] as? String {
+            self.receivedNewTraining = training
         }
     }
 }

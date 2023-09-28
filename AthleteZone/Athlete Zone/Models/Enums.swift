@@ -23,7 +23,7 @@ enum ActivityType: String, Identifiable, CaseIterable, Encodable {
     case reset = "Reset"
 }
 
-enum WorkFlowType: String {
+enum WorkFlowType: String, Codable {
     case preparation = "Get ready!"
     case work = "Work"
     case rest = "Rest"
@@ -59,7 +59,9 @@ enum SortOrder: String, CaseIterable, Identifiable {
     case descending = "Descending"
 }
 
-enum WorkOutSortByProperty: String, CaseIterable, Identifiable {
+protocol SortByProperty: CaseIterable, Hashable, Identifiable {}
+
+enum WorkOutSortByProperty: String, SortByProperty {
     var id: Int {
         hashValue
     }
@@ -74,7 +76,7 @@ enum WorkOutSortByProperty: String, CaseIterable, Identifiable {
     case workoutLength = "Workout length"
 }
 
-enum TrainingSortByProperty: String, CaseIterable, Identifiable {
+enum TrainingSortByProperty: String, SortByProperty {
     var id: Int {
         hashValue
     }

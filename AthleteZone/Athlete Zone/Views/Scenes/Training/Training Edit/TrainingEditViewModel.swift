@@ -25,6 +25,8 @@ class TrainingEditViewModel: ObservableObject {
     var workoutRealmManager: WorkOutRealmManagerProtocol
 
     @ObservedObject var selectedTrainingManager = SelectedTrainingManager.shared
+    @Published var connectivityManager = WatchConnectivityManager.shared
+    var router = ViewRouter.shared
 
     init() {
         let training = Training()
@@ -66,12 +68,19 @@ class TrainingEditViewModel: ObservableObject {
             training.name = name
             training.trainingDescription = description
             training.addWorkOuts(workouts)
-
             trainingRealmManager.add(training)
+            connectivityManager.sendValue(["training_add": training.encode()])
 
-            selectedTrainingManager.selectedTraining = training
+            if router.currentTab == .home {
+                selectedTrainingManager.selectedTraining = training
+            }
         } else {
             trainingRealmManager.update(training._id, name, description, workouts)
+            connectivityManager.sendValue(["training_edit": training.encode()])
+
+            if selectedTrainingManager.selectedTraining?._id == training._id {
+                selectedTrainingManager.selectedTraining = training
+            }
         }
     }
 }

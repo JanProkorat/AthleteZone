@@ -9,6 +9,7 @@ import Foundation
 import RealmSwift
 
 protocol TrainingRealmManagerProtocol {
+    func load() -> [Training]
     func load(_ searchText: String, _ sortBy: TrainingSortByProperty, _ sortOrder: SortOrder) -> [Training]
     func load(primaryKey: String) -> Training?
     func delete(entity: Training)

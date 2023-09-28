@@ -35,7 +35,8 @@ class WorkOutRealmManagerMock: WorkOutRealmManagerProtocol {
         }
     }
 
-    func update(_ id: RealmSwift.ObjectId, _ name: String, _ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int) {
+    func update(_ id: RealmSwift.ObjectId, _ name: String, _ work: Int,
+                _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int) {
         guard let index = objects.firstIndex(where: { $0._id == id }) else {
             return
         }

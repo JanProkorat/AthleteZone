@@ -30,10 +30,7 @@ struct SettingsItem<Content: View>: View {
             content
                 .padding()
         }
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .foregroundColor(Color(ComponentColor.menu.rawValue))
-        )
+        .roundedBackground(cornerRadius: 20)
         .frame(maxWidth: .infinity)
     }
 }

@@ -8,12 +8,15 @@
 import Combine
 import Foundation
 import SwiftUI
+import WidgetKit
 
 class WorkOutViewModel: ObservableObject, Identifiable {
     @ObservedObject var selectedWorkoutManager = SelectedWorkoutManager.shared
     @ObservedObject var router = ViewRouter.shared
+    @ObservedObject var runViewModel = PhoneWorkOutRunViewModel()
 
     var appStorageManager = AppStorageManager.shared
+    var realmManager: WorkOutRealmManagerProtocol
 
     @Published var selectedWorkout: WorkOut?
     @Published var name = "Title"
@@ -23,13 +26,13 @@ class WorkOutViewModel: ObservableObject, Identifiable {
     @Published var rounds = 3
     @Published var reset = 60
     @Published var scenePhase: ScenePhase?
+    @Published var isRunViewVisible = false
 
     var timeOverview: Int {
         (((work * series) + (rest * (series - 1)) + reset) * rounds) - reset
     }
 
     private var cancellables = Set<AnyCancellable>()
-    var realmManager: WorkOutRealmManagerProtocol
 
     init() {
         realmManager = WorkoutRealmManager()
@@ -44,6 +47,9 @@ class WorkOutViewModel: ObservableObject, Identifiable {
                     self.series = workout.series
                     self.rounds = workout.rounds
                     self.reset = workout.reset
+                    self.storeWidgetData()
+                } else if self.selectedWorkout != nil {
+                    self.selectedWorkout = nil
                 }
             })
             .store(in: &cancellables)
@@ -57,11 +63,31 @@ class WorkOutViewModel: ObservableObject, Identifiable {
                 primaryKey: appStorageManager.selectedWorkoutId
             )
         }
+
+        runViewModel.$state
+            .sink(receiveValue: { newValue in
+                if newValue == .quit {
+                    self.isRunViewVisible.toggle()
+                }
+            })
+            .store(in: &cancellables)
     }
 
     private func storeSelectedWorkoutId(_ scenePhase: ScenePhase?) {
         if scenePhase != nil && (scenePhase == .inactive || scenePhase == .background) && selectedWorkout != nil {
             appStorageManager.selectedWorkoutId = selectedWorkout!._id.stringValue
+        }
+    }
+
+    func setupRunViewModel() {
+        runViewModel.setupViewModel(workout: WorkOut(name, work, rest, series, rounds, reset))
+        isRunViewVisible.toggle()
+    }
+
+    func storeWidgetData() {
+        if let data = selectedWorkout?.toWidgetWorkOut().encode() {
+            appStorageManager.storeToUserDefaults(data: data, key: UserDefaultValues.workoutId.rawValue)
+            WidgetCenter.shared.reloadTimelines(ofKind: "RunningWorkoutWidget")
         }
     }
 }

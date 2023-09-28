@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 import SwiftUI
+import WidgetKit
 
 class ContentViewModel: ObservableObject {
     var router = ViewRouter.shared
@@ -27,6 +28,7 @@ class ContentViewModel: ObservableObject {
             .sink { newValue in
                 self.currentSection = newValue
                 self.appStorageManager.selectedSection = newValue
+                WidgetCenter.shared.reloadTimelines(ofKind: "RunningWorkoutWidget")
             }
             .store(in: &cancellables)
 
