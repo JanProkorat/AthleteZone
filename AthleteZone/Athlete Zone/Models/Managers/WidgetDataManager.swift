@@ -12,7 +12,7 @@ class WidgetDataManager {
 
     // Define the shared container directory URL
     private let sharedContainerURL: URL? = FileManager.default.containerURL(
-        forSecurityApplicationGroupIdentifier: "group.com.janprokorat.Athlete-Zone"
+        forSecurityApplicationGroupIdentifier: UserDefaultValues.groupId.rawValue
     )
 
     // Define the file URL where you want to store data
@@ -20,7 +20,7 @@ class WidgetDataManager {
         sharedContainerURL?.appendingPathComponent("widgetData.json")
     }
 
-    func saveWidgetData(_ data: WorkFlow? = nil) {
+    func saveWidgetData(_ workoutName: String, _ data: WorkFlow?) {
         guard let dataFileURL = dataFileURL else {
             return
         }
@@ -34,14 +34,14 @@ class WidgetDataManager {
             }
 
             let encoder = JSONEncoder()
-            let encodedData = try encoder.encode(data)
+            let encodedData = try encoder.encode(WidgetDataDto(workFlow: data!, name: workoutName))
             try encodedData.write(to: dataFileURL)
         } catch {
             print("Error saving widget data: \(error)")
         }
     }
 
-    func loadWidgetData() -> WorkFlow? {
+    func loadWidgetData() -> WidgetDataDto? {
         guard let dataFileURL = dataFileURL,
               let data = try? Data(contentsOf: dataFileURL)
         else {
@@ -50,7 +50,7 @@ class WidgetDataManager {
 
         do {
             let decoder = JSONDecoder()
-            let widgetData = try decoder.decode(WorkFlow.self, from: data)
+            let widgetData = try decoder.decode(WidgetDataDto.self, from: data)
             return widgetData
         } catch {
             print("Error loading widget data: \(error)")

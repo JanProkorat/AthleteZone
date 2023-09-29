@@ -8,7 +8,7 @@
 import Foundation
 import WidgetKit
 
-class PhoneWorkOutRunViewModel: WorkOutRunViewModel {
+class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
     private var widgetManager = WidgetDataManager.shared
     private var liveActivityManager = LiveActivityManager.shared
 
@@ -29,8 +29,8 @@ class PhoneWorkOutRunViewModel: WorkOutRunViewModel {
 
         $selectedFlow
             .sink { newValue in
-                self.widgetManager.saveWidgetData(newValue)
-                WidgetCenter.shared.reloadTimelines(ofKind: "RunningWorkoutWidget")
+                self.widgetManager.saveWidgetData(self.workoutName, newValue)
+                WidgetCenter.shared.reloadTimelines(ofKind: UserDefaultValues.widgetId.rawValue)
 
                 if newValue != nil {
                     self.liveActivityManager.updateActivity(

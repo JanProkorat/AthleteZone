@@ -28,7 +28,7 @@ class ContentViewModel: ObservableObject {
             .sink { newValue in
                 self.currentSection = newValue
                 self.appStorageManager.selectedSection = newValue
-                WidgetCenter.shared.reloadTimelines(ofKind: "RunningWorkoutWidget")
+                WidgetCenter.shared.reloadTimelines(ofKind: UserDefaultValues.widgetId.rawValue)
             }
             .store(in: &cancellables)
 

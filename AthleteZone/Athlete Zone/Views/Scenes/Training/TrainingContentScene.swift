@@ -37,7 +37,9 @@ struct TrainingContentScene: View {
                 }
             }
             .animation(.easeInOut, value: viewModel.currentTab)
-            .onChange(of: scenePhase) { trainingViewModel.scenePhase = $0 }
+            .onChange(of: scenePhase) { _, newValue in
+                trainingViewModel.scenePhase = newValue
+            }
         }
     }
 }

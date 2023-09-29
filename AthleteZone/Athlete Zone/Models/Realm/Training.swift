@@ -93,13 +93,15 @@ public class Training: Object, Identifiable, Codable {
 }
 
 extension Training {
-    func toWidgetTraining() -> WidgetTraining {
-        return WidgetTraining(
+    func toDto() -> TrainingDto {
+        return TrainingDto(
             id: _id.stringValue,
             name: name,
             trainingDescription: trainingDescription,
             workoutsCount: workouts.count,
-            trainingLength: trainingLength
+            trainingLength: trainingLength,
+            createdDate: createdDate,
+            workouts: workouts.map { $0.toDto() }
         )
     }
 }

@@ -11,7 +11,13 @@ import SwiftUI
 
 class TrainingRunViewModel: ObservableObject {
     @Published var trainingName: String
-    @Published var selectedWorkFlowViewModel: WorkOutRunViewModel
+
+    #if os(iOS)
+        @Published var selectedWorkFlowViewModel: PhoneWorkOutRunViewModel
+    #else
+        @Published var selectedWorkFlowViewModel: WatchWorkOutRunViewModel
+    #endif
+
     @Published var closeSheet = false
 
     private var cancellables = Set<AnyCancellable>()
@@ -20,9 +26,9 @@ class TrainingRunViewModel: ObservableObject {
         trainingName = ""
 
         #if os(iOS)
-        selectedWorkFlowViewModel = PhoneWorkOutRunViewModel()
+            selectedWorkFlowViewModel = PhoneWorkOutRunViewModel()
         #else
-        selectedWorkFlowViewModel = WatchWorkOutRunViewModel()
+            selectedWorkFlowViewModel = WatchWorkOutRunViewModel()
         #endif
 
         selectedWorkFlowViewModel.$state.sink { newValue in
@@ -33,9 +39,18 @@ class TrainingRunViewModel: ObservableObject {
         .store(in: &cancellables)
     }
 
-    func setupViewModel(trainingName: String?, workouts: [WorkOut]) {
-        closeSheet = false
-        self.trainingName = trainingName ?? ""
-        selectedWorkFlowViewModel.setupViewModel(workouts: workouts)
-    }
+    #if os(iOS)
+        func setupViewModel(trainingName: String?, workouts: [WorkOut]) {
+            closeSheet = false
+            self.trainingName = trainingName ?? ""
+            selectedWorkFlowViewModel.setupViewModel(workouts: workouts)
+        }
+    #else
+
+        func setupViewModel(trainingName: String?, workouts: [WorkOutDto]) {
+            closeSheet = false
+            self.trainingName = trainingName ?? ""
+            selectedWorkFlowViewModel.setupViewModel(workouts: workouts)
+        }
+    #endif
 }

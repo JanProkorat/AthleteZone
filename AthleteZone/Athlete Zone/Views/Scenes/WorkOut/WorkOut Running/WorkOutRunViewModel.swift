@@ -9,12 +9,12 @@ import Combine
 import Foundation
 import SwiftUI
 
-class WorkOutRunViewModel: ObservableObject, Identifiable {
-    @Published var workoutLibrary: [WorkOut] = []
+class WorkOutRunViewModel<T: WorkOutProtocol>: ObservableObject, Identifiable {
+    @Published var workoutLibrary: [T] = []
 
-    @Published var currentWorkout: WorkOut?
+    @Published var currentWorkout: T?
     @Published var selectedFlow: WorkFlow?
-    @Published var nextWorkout: WorkOut?
+    @Published var nextWorkout: T?
 
     @Published var workoutName = ""
     @Published var selectedFlowIndex = 0
@@ -70,13 +70,13 @@ class WorkOutRunViewModel: ObservableObject, Identifiable {
             .store(in: &cancellables)
     }
 
-    func setupViewModel(workout: WorkOut) {
+    func setupViewModel(workout: T) {
         currentWorkout = workout
         workoutName = workout.name
         workoutLibrary = [workout]
     }
 
-    func setupViewModel(workouts: [WorkOut]) {
+    func setupViewModel(workouts: [T]) {
         workoutLibrary = workouts
         currentWorkout = workouts.first
         workoutName = workouts.first!.name

@@ -18,13 +18,13 @@ final class WatchConnectivityManager: NSObject, ObservableObject, WatchConnectiv
     @Published var isSessionReachable = false
     @Published var isPairedAppInstalled = false
 
-    @Published var receivedData: String? = nil
-    @Published var receivedNewWorkout: String? = nil
-    @Published var receivedNewTraining: String? = nil
-    @Published var receivedUpdateWorkout: String? = nil
-    @Published var receivedUpdateTraining: String? = nil
-    @Published var receivedRemoveWorkout: String? = nil
-    @Published var receivedRemoveTraining: String? = nil
+    @Published var receivedData: String?
+    @Published var receivedNewWorkout: String?
+    @Published var receivedNewTraining: String?
+    @Published var receivedUpdateWorkout: String?
+    @Published var receivedUpdateTraining: String?
+    @Published var receivedRemoveWorkout: String?
+    @Published var receivedRemoveTraining: String?
 
     override private init() {
         super.init()
@@ -131,12 +131,16 @@ extension WatchConnectivityManager: WCSessionDelegate {
     }
 
     func loadReplyData() -> String {
+        #if os(iOS)
         let workoutManager = WorkoutRealmManager()
-        let workouts = workoutManager.load()
+        let workouts = workoutManager.load().map { $0.toDto() }
 
         let trainingManager = TrainingRealmManager()
-        let trainings = trainingManager.load()
+        let trainings = trainingManager.load().map { $0.toDto() }
         return WatchDataDto(workouts: workouts, trainings: trainings).toJSONString() ?? ""
+        #else
+        return ""
+        #endif
     }
 
     func sessionReachabilityDidChange(_ session: WCSession) {

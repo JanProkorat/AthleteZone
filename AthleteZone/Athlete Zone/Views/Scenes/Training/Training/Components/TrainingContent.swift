@@ -36,7 +36,7 @@ struct TrainingContent: View {
                             }
                             .frame(maxHeight: geo.size.height * 0.2)
                             .frame(maxWidth: .infinity)
-                            .roundedBackground(cornerRadius: 10, color: .darkBlue)
+                            .roundedBackground(cornerRadius: 10, color: ComponentColor.darkBlue)
                             .padding(.bottom, 7)
                         }
                     }

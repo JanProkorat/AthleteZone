@@ -8,8 +8,8 @@
 import Foundation
 
 struct WatchDataDto: Codable {
-    var workouts: [WorkOut]
-    var trainings: [Training]
+    var workouts: [WorkOutDto]
+    var trainings: [TrainingDto]
 }
 
 extension WatchDataDto {

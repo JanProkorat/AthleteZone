@@ -52,7 +52,7 @@ extension LibraryViewModel {
         if id == storageManager.selectedWorkoutId {
             selectedWorkoutManager.selectedWorkout = nil
             storageManager.removeFromDefaults(key: UserDefaultValues.workoutId.rawValue)
-            WidgetCenter.shared.reloadTimelines(ofKind: "RunningWorkoutWidget")
+            WidgetCenter.shared.reloadTimelines(ofKind: UserDefaultValues.widgetId.rawValue)
         }
     }
 }

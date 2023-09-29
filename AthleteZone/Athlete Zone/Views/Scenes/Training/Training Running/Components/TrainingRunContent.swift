@@ -23,7 +23,7 @@ struct TrainingRunContent: View {
                             Text(workout.name)
                             if workout._id == viewModel.currentWorkout?._id {
                                 Image(systemName: "checkmark")
-                                    .foregroundColor(Color(ComponentColor.yellow.rawValue))
+                                    .foregroundColor(Color(ComponentColor.lightYellow.rawValue))
                             }
                         }
                     }

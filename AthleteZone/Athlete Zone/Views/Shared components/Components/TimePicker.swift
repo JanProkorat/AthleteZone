@@ -61,7 +61,7 @@ struct TimePicker: View {
             }
         )
         .pickerStyle(InlinePickerStyle())
-        .onChange(of: selectedValue.wrappedValue) { _ in
+        .onChange(of: selectedValue.wrappedValue) { _, _ in
             interval = selectedHours * 3600 + selectedMins * 60 + selectedSecs
         }
     }

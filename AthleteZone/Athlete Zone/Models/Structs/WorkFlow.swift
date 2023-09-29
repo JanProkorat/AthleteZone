@@ -25,6 +25,28 @@ struct WorkFlow: Equatable, Codable, Hashable {
         serie == totalSeries
     }
 
+    var icon: String {
+        switch type {
+        case .preparation:
+            return "exclamationmark.circle"
+
+        case .work:
+            return "play.circle"
+
+        case .rest:
+            return "pause.circle"
+
+        case .series:
+            return "forward.circle"
+
+        case .rounds:
+            return "repeat.circle"
+
+        case .reset:
+            return "clock.arrow.circlepath"
+        }
+    }
+
     init() {
         self.interval = 0
         self.type = .work
@@ -44,13 +66,13 @@ struct WorkFlow: Equatable, Codable, Hashable {
         self.originalInterval = interval
         self.totalRounds = totalRounds
         self.totalSeries = totalSeries
-        self.color = .yellow
+        self.color = .lightYellow
         switch type {
         case .work:
-            self.color = .pink
+            self.color = .lightPink
 
         case .rest:
-            self.color = .yellow
+            self.color = .lightYellow
 
         default:
             self.color = .braun

@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 @objcMembers
-public class WorkOut: Object, Identifiable, Codable {
+public class WorkOut: Object, WorkOutProtocol, Identifiable {
     @Persisted(primaryKey: true) var _id: ObjectId
 
     @Persisted var name: String
@@ -20,48 +20,8 @@ public class WorkOut: Object, Identifiable, Codable {
     @Persisted var reset: Int
     @Persisted var createdDate: Date
 
-    var workFlow: [WorkFlow] {
-        var flow: [WorkFlow] = []
-        flow.append(WorkFlow(interval: 10, type: .preparation,
-                             round: 1, serie: 1,
-                             totalSeries: series, totalRounds: rounds))
-        var serieCount = 1
-        var interval = 0
-        for round in 1 ... rounds {
-            for serie in 1 ... (series + (series - 1)) {
-                interval = serie.isOdd() ? work : rest
-                if interval != 0 {
-                    flow.append(
-                        WorkFlow(
-                            interval: interval - 1,
-                            type: serie.isOdd() ? .work : .rest,
-                            round: round,
-                            serie: serieCount,
-                            totalSeries: series,
-                            totalRounds: rounds
-                        )
-                    )
-                }
-                if serie.isIven() {
-                    serieCount += 1
-                }
-            }
-            if round < rounds {
-                flow.append(
-                    WorkFlow(
-                        interval: reset,
-                        type: .reset,
-                        round: round,
-                        serie: flow[flow.count - 1].serie,
-                        totalSeries: series,
-                        totalRounds: rounds
-                    )
-                )
-                serieCount = 1
-            }
-        }
-
-        return flow
+    public var id: String {
+        _id.stringValue
     }
 
     override init() {
@@ -143,8 +103,8 @@ public class WorkOut: Object, Identifiable, Codable {
 }
 
 extension WorkOut {
-    func toWidgetWorkOut() -> WidgetWorkOut {
-        return WidgetWorkOut(
+    func toDto() -> WorkOutDto {
+        return WorkOutDto(
             id: _id.stringValue,
             name: name,
             work: work,
@@ -152,6 +112,7 @@ extension WorkOut {
             series: series,
             rounds: rounds,
             reset: reset,
+            createdDate: createdDate,
             workoutLength: workoutLength
         )
     }

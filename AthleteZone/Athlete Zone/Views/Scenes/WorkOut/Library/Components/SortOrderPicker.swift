@@ -37,7 +37,7 @@ struct SortOrderPicker: View {
                        alignment: .center)
                 .cornerRadius(35)
         }
-        .onChange(of: selectedOrder) { newValue in
+        .onChange(of: selectedOrder) { _, newValue in
             performAction(onOrderSelected, value: newValue)
         }
     }

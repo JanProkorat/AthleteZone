@@ -46,11 +46,11 @@ struct TrainingListView: View {
                     HStack {
                         Text("Length:")
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .foregroundColor(Color(ComponentColor.pink.rawValue))
+                            .foregroundColor(Color(ComponentColor.lightPink.rawValue))
                             .padding(.leading, 10)
 
                         Text(training.trainingLength.toFormattedTime())
-                            .foregroundColor(Color(ComponentColor.pink.rawValue))
+                            .foregroundColor(Color(ComponentColor.lightPink.rawValue))
                             .padding(.trailing, 30)
                     }
                     .padding([.leading, .trailing])
@@ -58,11 +58,11 @@ struct TrainingListView: View {
                     HStack {
                         Text("Workouts:")
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .foregroundColor(Color(ComponentColor.yellow.rawValue))
+                            .foregroundColor(Color(ComponentColor.lightYellow.rawValue))
                             .padding(.leading, 10)
 
                         Text(training.workoutCount.toFormattedNumber())
-                            .foregroundColor(Color(ComponentColor.yellow.rawValue))
+                            .foregroundColor(Color(ComponentColor.lightYellow.rawValue))
                             .padding(.trailing, 30)
                     }
                     .padding([.leading, .trailing])

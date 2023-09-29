@@ -85,9 +85,9 @@ class WorkOutViewModel: ObservableObject, Identifiable {
     }
 
     func storeWidgetData() {
-        if let data = selectedWorkout?.toWidgetWorkOut().encode() {
+        if let data = selectedWorkout?.toDto().encode() {
             appStorageManager.storeToUserDefaults(data: data, key: UserDefaultValues.workoutId.rawValue)
-            WidgetCenter.shared.reloadTimelines(ofKind: "RunningWorkoutWidget")
+            WidgetCenter.shared.reloadTimelines(ofKind: UserDefaultValues.widgetId.rawValue)
         }
     }
 }

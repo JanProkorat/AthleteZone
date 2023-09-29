@@ -38,7 +38,7 @@ struct SortByPicker: View {
                        alignment: .center)
                 .cornerRadius(35)
         }
-        .onChange(of: selectedProperty) { newValue in
+        .onChange(of: selectedProperty) { _, newValue in
             performAction(onPropertySelected, value: newValue)
         }
     }
