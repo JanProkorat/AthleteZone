@@ -28,10 +28,10 @@ struct ContentView: View {
                 }
             }
 
-            if viewModel.launchScreenState != .finished {
-                LaunchScreenView()
-                    .environmentObject(viewModel.launchScreenStateManager)
-            }
+//            if viewModel.launchScreenState != .finished {
+//                LaunchScreenView()
+//                    .environmentObject(viewModel.launchScreenStateManager)
+//            }
         }
         .environment(\.locale, .init(identifier: "\(viewModel.appStorageManager.language)"))
     }
