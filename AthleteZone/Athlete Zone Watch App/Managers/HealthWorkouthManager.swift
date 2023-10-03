@@ -14,7 +14,6 @@ class HealthWorkouthManager: HealthManager {
     @Published var baseEnergy: Double = 0
     @Published var workout: HKWorkout?
     @Published var running = false
-    @Published var workoutStartDate: Date?
 
     var session: HKWorkoutSession?
     var builder: HKLiveWorkoutBuilder?
@@ -22,7 +21,7 @@ class HealthWorkouthManager: HealthManager {
     func startWorkout(workoutType: HKWorkoutActivityType, workoutName: String) {
         let configuration = HKWorkoutConfiguration()
         configuration.activityType = workoutType
-        configuration.locationType = .outdoor
+        configuration.locationType = .unknown
 
         do {
             session = try HKWorkoutSession(healthStore: healthStore, configuration: configuration)
@@ -33,7 +32,13 @@ class HealthWorkouthManager: HealthManager {
         }
 
         builder?.dataSource = HKLiveWorkoutDataSource(healthStore: healthStore, workoutConfiguration: configuration)
-        builder?.addMetadata([HKMetadataKeyIndoorWorkout: workoutName], completion: { _, error in
+
+        let metadata = [
+            HKMetadataKeyWorkoutBrandName: workoutName as Any,
+            HKMetadataKeyIndoorWorkout: NSNumber(value: true) as Any
+        ]
+
+        builder?.addMetadata(metadata, completion: { _, error in
             if let locError = error {
                 print(["Error adding metadata: ", locError.localizedDescription])
             }
@@ -43,9 +48,9 @@ class HealthWorkouthManager: HealthManager {
         builder?.delegate = self
 
         // Start the workout session and begin data collection.
-        workoutStartDate = Date()
-        session?.startActivity(with: workoutStartDate!)
-        builder?.beginCollection(withStart: workoutStartDate!, completion: { _, error in
+        let workoutStartDate = Date()
+        session?.startActivity(with: workoutStartDate)
+        builder?.beginCollection(withStart: workoutStartDate, completion: { _, error in
             if let newError = error {
                 print(["Begin collection error", newError.localizedDescription])
             }
@@ -155,27 +160,5 @@ extension HealthWorkouthManager: HKLiveWorkoutBuilderDelegate {
             default: return
             }
         }
-    }
-}
-
-// MARK: - Calculating workout time
-
-extension HealthWorkouthManager {
-    func calculateWorkoutTime() -> String {
-        guard let startTime = workoutStartDate else {
-            return "00:00:00"
-        }
-
-        let currentTime = Date()
-        let timeInterval = currentTime.timeIntervalSince(startTime)
-        return formattedTime(timeInterval)
-    }
-
-    private func formattedTime(_ timeInterval: TimeInterval) -> String {
-        let hours = Int(timeInterval) / 3600
-        let minutes = (Int(timeInterval) % 3600) / 60
-        let seconds = (Int(timeInterval) % 3600) % 60
-
-        return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
 }

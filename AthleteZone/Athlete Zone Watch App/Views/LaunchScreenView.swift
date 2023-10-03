@@ -28,7 +28,8 @@ struct LaunchScreenView: View {
                      .opacity(startFadeoutAnimation ? 0 : 1)
                  })
                  .edgesIgnoringSafeArea(.all)
-                 .padding(-5)
+                 .padding(-10)
+                 .padding(.bottom)
     }
 
     @ViewBuilder

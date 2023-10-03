@@ -13,51 +13,52 @@ struct WorkOutRunContent: View {
     var body: some View {
         if let flow = viewModel.selectedFlow {
             BaseView(title: LocalizedStringKey(viewModel.state == .paused ? "Paused" : viewModel.workoutName)) {
-                VStack {
-                    Description(
-                        title: "Round \(flow.round)/\(flow.totalRounds)",
-                        color: ComponentColor.lightGreen
-                    )
-                    .padding(.top)
-
-                    HStack {
-                        Button {
-                            viewModel.selectedFlowIndex -= 1
-                        } label: {
-                            Image(systemName: "chevron.left")
-                                .foregroundColor(Color(ComponentColor.lightBlue.rawValue))
-                        }
-                        .buttonStyle(.plain)
-                        .padding(.leading, 15)
-                        .disabled(viewModel.isFirstRunning)
-
+                TabView {
+                    VStack {
                         Description(
-                            title: "Exercise \(flow.serie)/\(flow.totalSeries)",
-                            color: ComponentColor.lightBlue
+                            title: "Round \(flow.round)/\(flow.totalRounds)",
+                            color: ComponentColor.lightGreen
                         )
 
-                        Button {
-                            viewModel.selectedFlowIndex += 1
-                        } label: {
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(Color(ComponentColor.lightBlue.rawValue))
+                        HStack {
+                            Button {
+                                viewModel.selectedFlowIndex -= 1
+                            } label: {
+                                Image(systemName: "chevron.left")
+                                    .foregroundColor(Color(ComponentColor.lightBlue.rawValue))
+                            }
+                            .buttonStyle(.plain)
+                            .padding(.leading, 15)
+                            .disabled(viewModel.isFirstRunning)
+
+                            Description(
+                                title: "Exercise \(flow.serie)/\(flow.totalSeries)",
+                                color: ComponentColor.lightBlue
+                            )
+
+                            Button {
+                                viewModel.selectedFlowIndex += 1
+                            } label: {
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(Color(ComponentColor.lightBlue.rawValue))
+                            }
+                            .buttonStyle(.plain)
+                            .padding(.trailing, 15)
+                            .disabled(viewModel.isLastRunning)
                         }
-                        .buttonStyle(.plain)
-                        .padding(.trailing, 15)
-                        .disabled(viewModel.isLastRunning)
-                    }
-                    .roundedBackground(cornerRadius: 10, color: Color(Background.listItemBackground.rawValue))
-                    .padding(.top, 1)
+                        .roundedBackground(cornerRadius: 10, color: Color(Background.listItemBackground.rawValue))
+                        .padding(.top, 1)
 
-                    Text(LocalizedStringKey(flow.type.rawValue))
-                        .font(.headline)
-                        .padding(.top, 10)
-                        .frame(maxWidth: .infinity, alignment: .center)
+                        Text(LocalizedStringKey(flow.type.rawValue))
+                            .font(.headline)
+                            .padding(.top, 10)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .foregroundStyle(.accent)
 
-                    Button {
-                        self.viewModel.state = self.viewModel.state == .running ? .paused : .running
-                    } label: {
-                        TimelineView(.periodic(from: Date(), by: 0.1)) { _ in
+                        Button {
+                            self.viewModel.state = self.viewModel.state == .running ? .paused : .running
+                        } label: {
+                            //                        TimelineView(.periodic(from: Date(), by: 0.1)) { _ in
                             Text(flow.interval.toFormattedTime())
                                 .font(.largeTitle)
                                 .scaledToFill()
@@ -66,13 +67,78 @@ struct WorkOutRunContent: View {
                                 .lineLimit(1)
                                 .padding(.top)
                                 .foregroundColor(Color(flow.color.rawValue))
+                            //                        }
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    .padding(.top, -25)
+
+                    VStack(alignment: .leading) {
+                        Text(viewModel.timeElapsed)
+                            .font(.title2)
+                            .foregroundColor(.yellow)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        HStack {
+                            Text(String(format: "%.0f", viewModel.activeEnergy))
+                                .font(.title)
+                                .foregroundColor(.white)
+
+                            VStack(alignment: .leading) {
+                                Text("Aktivní")
+                                    .font(.footnote)
+                                    .textCase(.uppercase)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .foregroundColor(.white)
+
+                                Text("kcal")
+                                    .font(.footnote)
+                                    .textCase(.uppercase)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .foregroundColor(.white)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.leading)
+                        }
+
+                        HStack {
+                            Text(String(format: "%.0f", viewModel.baseEnergy))
+                                .font(.title)
+                                .foregroundColor(.white)
+
+                            VStack(alignment: .leading) {
+                                Text("Celkem")
+                                    .font(.footnote)
+                                    .textCase(.uppercase)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .foregroundColor(.white)
+
+                                Text("kcal")
+                                    .font(.footnote)
+                                    .textCase(.uppercase)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .foregroundColor(.white)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.leading)
+                        }
+
+                        HStack {
+                            Image(systemName: "heart.fill")
+                                .font(.title3)
+                                .foregroundColor(.red)
+                            Text(String(format: "%.0f", viewModel.heartRate))
+                                .font(.title2)
+                                .foregroundColor(.white)
+
+                            Text("BPM")
+                                .font(.title2)
+                                .foregroundColor(.white)
                         }
                     }
-                    .buttonStyle(.plain)
-
-                    Spacer()
+                    .padding(.leading)
                 }
-                .edgesIgnoringSafeArea([.top, .bottom])
+                .tabViewStyle(.verticalPage)
             }
             .onAppear {
                 if viewModel.state == .ready {

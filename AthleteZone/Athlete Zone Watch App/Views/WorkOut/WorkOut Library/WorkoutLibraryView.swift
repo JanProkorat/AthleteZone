@@ -11,25 +11,23 @@ struct WorkoutLibraryView: View {
     @EnvironmentObject var viewModel: WorkOutLibraryViewModel
 
     var body: some View {
-        BaseView(title: "Workouts") {
-            VStack {
-                List(viewModel.getSortedArray(), id: \.id) { workout in
-                    Button {
-                        viewModel.setupRunViewModel(workout)
-                    } label: {
-                        ListItemView(name: workout.name, workOutTime: workout.workoutLength.toFormattedTime())
-                    }
-                    .listRowInsets(EdgeInsets(top: 2, leading: 2, bottom: 0, trailing: 2))
+        VStack {
+            List(viewModel.getSortedArray(), id: \.id) { workout in
+                Button {
+                    viewModel.setupRunViewModel(workout)
+                } label: {
+                    ListItemView(name: workout.name, workOutTime: workout.workoutLength.toFormattedTime())
                 }
-                .listStyle(PlainListStyle())
-                .environment(\.defaultMinListRowHeight, 50)
-
-                HStack {}
-                    .frame(height: 10)
-                    .frame(maxWidth: .infinity)
-                    .background(Color(ComponentColor.darkBlue.rawValue))
-                    .padding(.bottom)
+                .listRowInsets(EdgeInsets(top: 2, leading: 2, bottom: 0, trailing: 2))
             }
+            .listStyle(PlainListStyle())
+            .environment(\.defaultMinListRowHeight, 40)
+
+            HStack {}
+                .frame(height: 2)
+                .frame(maxWidth: .infinity)
+                .background(Color(ComponentColor.darkBlue.rawValue))
+                .padding(.bottom)
         }
         .fullScreenCover(item: $viewModel.selectedWorkOut, content: { _ in
             WorkOutRunView()
@@ -40,9 +38,63 @@ struct WorkoutLibraryView: View {
     }
 }
 
-struct WorkoutLibraryView_Previews: PreviewProvider {
-    static var previews: some View {
-        WorkoutLibraryView()
-            .environmentObject(WorkOutLibraryViewModel())
-    }
+#Preview {
+    let viewModel = WorkOutLibraryViewModel()
+    viewModel.library = [WorkOutDto(
+        id: "sadsdsa",
+        name: "Test",
+        work: 30,
+        rest: 15,
+        series: 2,
+        rounds: 4,
+        reset: 60,
+        createdDate: Date(),
+        workoutLength: 40
+    ),
+    WorkOutDto(
+        id: "1",
+        name: "Prvni",
+        work: 2,
+        rest: 2,
+        series: 2,
+        rounds: 2,
+        reset: 30,
+        createdDate: Date(),
+        workoutLength: 50
+    ),
+    WorkOutDto(
+        id: "2",
+        name: "Druhy",
+        work: 3,
+        rest: 3,
+        series: 3,
+        rounds: 3,
+        reset: 30,
+        createdDate: Date(),
+        workoutLength: 50
+    ),
+    WorkOutDto(
+        id: "3",
+        name: "Treti",
+        work: 2,
+        rest: 2,
+        series: 2,
+        rounds: 2,
+        reset: 30,
+        createdDate: Date(),
+        workoutLength: 50
+    ),
+    WorkOutDto(
+        id: "4",
+        name: "Ctvrty",
+        work: 3,
+        rest: 3,
+        series: 3,
+        rounds: 3,
+        reset: 30,
+        createdDate: Date(),
+        workoutLength: 50
+    )]
+    return WorkoutLibraryView()
+        .environmentObject(viewModel)
 }

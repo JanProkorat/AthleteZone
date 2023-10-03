@@ -5,7 +5,9 @@
 //  Created by Jan Prokorát on 23.08.2023.
 //
 
+import Combine
 import Foundation
+import SwiftUI
 
 class TrainingLibraryViewModel: ObservableObject {
     @Published var library: [TrainingDto] = []
@@ -13,10 +15,21 @@ class TrainingLibraryViewModel: ObservableObject {
     @Published var sortByProperty: TrainingSortByProperty = .name
     @Published var sortOrder: SortOrder = .ascending
 
-    @Published var selectedTraining: TrainingDto?
+    @Published var isRunSheetPresented = false
 
-    func setSelectedTraining(_ training: TrainingDto) {
-        selectedTraining = training
+    @ObservedObject var runViewModel = TrainingRunViewModel()
+
+    private var cancellables = Set<AnyCancellable>()
+
+    init() {
+        runViewModel
+            .$closeSheet
+            .sink { close in
+                if close {
+                    self.isRunSheetPresented.toggle()
+                }
+            }
+            .store(in: &cancellables)
     }
 
     func setLibrary(_ trainings: [TrainingDto]) {
@@ -43,12 +56,6 @@ class TrainingLibraryViewModel: ObservableObject {
     }
 
     func addTraining(_ training: TrainingDto) {
-//        if library != nil {
-//            library.append(workout)
-//        }
-//        else {
-//            library = [workout]
-//        }
         library.append(training)
     }
 
@@ -63,5 +70,10 @@ class TrainingLibraryViewModel: ObservableObject {
 
     func removeTraining(_ trainingId: String) {
         library.removeAll { $0.id == trainingId }
+    }
+
+    func setupViewModel(_ training: TrainingDto) {
+        runViewModel.setupViewModel(trainingName: training.name, workouts: training.workouts)
+        isRunSheetPresented.toggle()
     }
 }

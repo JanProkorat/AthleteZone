@@ -10,17 +10,17 @@ import Foundation
 
 class LiveActivityManager {
     static let shared = LiveActivityManager()
-    private var activity: Activity<AthleteZoneWidgetsAttributes>?
+    private var activity: Activity<AthleteZoneWidgetAttributes>?
 
     func startActivity(workFlow: WorkFlow, workoutName: String) {
         if ActivityAuthorizationInfo().areActivitiesEnabled, activity == nil {
-            let initialState = AthleteZoneWidgetsAttributes.ContentState(
+            let initialState = AthleteZoneWidgetAttributes.ContentState(
                 workFlow: workFlow,
                 name: workoutName
             )
             do {
                 activity = try Activity.request(
-                    attributes: AthleteZoneWidgetsAttributes(),
+                    attributes: AthleteZoneWidgetAttributes(),
                     content: ActivityContent(
                         state: initialState,
                         staleDate: Date()
@@ -34,7 +34,7 @@ class LiveActivityManager {
 
     func updateActivity(workFlow: WorkFlow, workoutName: String) {
         Task {
-            let updatedContentState = AthleteZoneWidgetsAttributes.ContentState(
+            let updatedContentState = AthleteZoneWidgetAttributes.ContentState(
                 workFlow: workFlow,
                 name: workoutName
             )
@@ -49,7 +49,7 @@ class LiveActivityManager {
     }
 
     func listAllActivities() -> [[String: String]] {
-        let sortedActivities = Activity<AthleteZoneWidgetsAttributes>.activities.sorted { $0.id > $1.id }
+        let sortedActivities = Activity<AthleteZoneWidgetAttributes>.activities.sorted { $0.id > $1.id }
         return sortedActivities.map {
             ["id": $0.id,
              "workFlow": $0.content.state.workFlow.encode(),

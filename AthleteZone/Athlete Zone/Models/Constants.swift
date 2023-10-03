@@ -93,7 +93,7 @@ enum DefaultItem: String {
     case selectedSection
 }
 
-enum Sound: String {
+enum Sound: String, CaseIterable {
     case beep
     case gong
     case fanfare

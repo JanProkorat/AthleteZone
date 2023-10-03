@@ -26,9 +26,13 @@ class TimerManager: ObservableObject, TimerProtocol {
             }
     }
 
-    func stopTimer() {
+    func pauseTimer() {
         timer?.cancel()
         timer = nil
+    }
+
+    func stopTimer() {
+        pauseTimer()
         timeElapsed = 0
     }
 }

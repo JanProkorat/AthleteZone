@@ -11,9 +11,11 @@ import WidgetKit
 class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
     private var widgetManager = WidgetDataManager.shared
     private var liveActivityManager = LiveActivityManager.shared
+    private var soundManager: SoundProtocol?
 
     override init() {
         super.init()
+        self.soundManager = SoundManager()
 
         NotificationCenter.default.publisher(for: TimerManager.timerUpdatedNotification)
             .sink { [weak self] _ in
@@ -40,6 +42,14 @@ class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
                 }
             }
             .store(in: &cancellables)
+
+        $selectedFlow
+            .sink { newValue in
+                if self.appStorageManager.soundsEnabled {
+                    self.playSound(newValue)
+                }
+            }
+            .store(in: &cancellables)
     }
 
     override func updateTimerOnStateChange(_ previous: WorkFlowState, _ newState: WorkFlowState) {
@@ -60,7 +70,7 @@ class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
             case .running:
                 timerManager.startTimer()
                 if previous == .ready {
-                    self.liveActivityManager.startActivity(
+                    liveActivityManager.startActivity(
                         workFlow: selectedFlow!,
                         workoutName: workoutName
                     )
@@ -72,10 +82,32 @@ class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
                 selectedFlowIndex = 0
                 currentWorkout = nil
                 nextWorkout = nil
-                self.liveActivityManager.endActivity()
+                liveActivityManager.endActivity()
 
             default:
                 break
+            }
+        }
+    }
+}
+
+// MARK: Sound extension
+
+extension PhoneWorkOutRunViewModel {
+    func playSound(_ worflow: WorkFlow?) {
+        if state == .running {
+            if let flow = worflow {
+                if flow.interval > 0 {
+                    if flow.interval == 3 {
+                        soundManager?.playSound(sound: .beep, numOfLoops: 2)
+                    }
+                } else {
+                    if isLastRunning {
+                        soundManager?.playSound(sound: .fanfare, numOfLoops: 0)
+                    } else {
+                        soundManager?.playSound(sound: .gong, numOfLoops: 0)
+                    }
+                }
             }
         }
     }
