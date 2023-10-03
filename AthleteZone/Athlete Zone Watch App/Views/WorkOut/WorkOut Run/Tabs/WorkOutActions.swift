@@ -13,7 +13,7 @@ struct WorkOutActions: View {
     var onTab: (() -> Void)?
 
     var body: some View {
-        BaseView(title: "Actions") {
+        BaseView(title: LocalizedStringKey(workFlowViewModel.workoutName)) {
             VStack(alignment: .center) {
                 HStack(alignment: .center, spacing: 20) {
                     ActionButton(icon: Icons.actionsForward, color: .lightBlue)
@@ -32,6 +32,7 @@ struct WorkOutActions: View {
                         .disabled(workFlowViewModel.isLastRunning)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.top)
 
                 HStack(alignment: .center, spacing: 20) {
                     ActionButton(icon: workFlowViewModel.state == .running ?
@@ -49,9 +50,9 @@ struct WorkOutActions: View {
                         }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.top)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding([.top, .bottom])
         }
     }
 }

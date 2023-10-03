@@ -9,29 +9,25 @@ import SwiftUI
 
 struct WorkOutRunView: View {
     @EnvironmentObject var workFlowViewModel: WatchWorkOutRunViewModel
-    @State private var selectedTab = 1
-
-    private let workOutContent = WorkOutRunContent()
+    @State private var selectedTab = 0
 
     var body: some View {
         TabView(selection: $selectedTab) {
-            HealthView()
+            WorkOutRunContent()
                 .tag(0)
-
-            workOutContent
-                .tag(1)
 
             WorkOutActions()
                 .onTab { selectedTab = 0 }
-                .tag(2)
+                .tag(1)
         }
         .environmentObject(workFlowViewModel)
+        .background(Color(Background.background.rawValue))
+        .animation(.easeIn, value: selectedTab)
+        .transition(.slide)
     }
 }
 
-struct WorkOutRunView_Previews: PreviewProvider {
-    static var previews: some View {
-        WorkOutRunView()
-            .environmentObject(WatchWorkOutRunViewModel())
-    }
+#Preview {
+    WorkOutRunView()
+        .environmentObject(WatchWorkOutRunViewModel())
 }

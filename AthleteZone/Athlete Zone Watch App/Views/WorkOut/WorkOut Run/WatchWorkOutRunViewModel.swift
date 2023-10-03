@@ -13,13 +13,13 @@ class WatchWorkOutRunViewModel: WorkOutRunViewModel<WorkOutDto> {
     private var hapticManager = HapticManager()
     private var soundManager: SoundProtocol?
 
+    @Published var timeElapsed: String = "00:00:00"
     @Published var heartRate: Double = 0
     @Published var activeEnergy: Double = 0
     @Published var baseEnergy: Double = 0
 
     override init() {
         super.init()
-        soundManager = SoundManager()
 
         $selectedFlow
             .sink { newValue in
@@ -29,12 +29,14 @@ class WatchWorkOutRunViewModel: WorkOutRunViewModel<WorkOutDto> {
             }
             .store(in: &cancellables)
 
-        timerManager.$timeElapsed.sink { _ in
-            if self.selectedFlow != nil {
-                self.updateInterval()
+        timerManager.$timeElapsed
+            .sink { elapsed in
+                if self.selectedFlow != nil {
+                    self.updateInterval()
+                }
+                self.timeElapsed = self.formatElapsedTime(elapsed)
             }
-        }
-        .store(in: &cancellables)
+            .store(in: &cancellables)
 
         healthManager.$activeEnergy
             .sink { self.activeEnergy = $0 }
@@ -53,11 +55,11 @@ class WatchWorkOutRunViewModel: WorkOutRunViewModel<WorkOutDto> {
         if newState != previous {
             switch newState {
             case .paused:
-                timerManager.stopTimer()
+                timerManager.pauseTimer()
                 togglePauseHealthWorkout()
 
             case .finished:
-                timerManager.stopTimer()
+                timerManager.pauseTimer()
                 selectedFlow = nil
                 selectedFlowIndex = 0
                 if let next = nextWorkout {
@@ -127,5 +129,16 @@ extension WatchWorkOutRunViewModel {
                 }
             }
         }
+    }
+}
+
+extension WatchWorkOutRunViewModel {
+    func formatElapsedTime(_ timeInterval: TimeInterval?) -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .positional
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.zeroFormattingBehavior = [.pad]
+
+        return formatter.string(from: timeInterval ?? 0) ?? ""
     }
 }

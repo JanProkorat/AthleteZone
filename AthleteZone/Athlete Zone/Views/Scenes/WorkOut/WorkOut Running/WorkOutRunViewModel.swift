@@ -33,14 +33,11 @@ class WorkOutRunViewModel<T: WorkOutProtocol>: ObservableObject, Identifiable {
         selectedFlowIndex == 0
     }
 
-    private var soundManager: SoundProtocol?
     var timerManager = TimerManager.shared
 
     var cancellables = Set<AnyCancellable>()
 
     init() {
-        soundManager = SoundManager()
-
         $state
             .scan((state, state)) { previous, current -> (WorkFlowState, WorkFlowState) in
                 (previous.1, current)
@@ -51,14 +48,6 @@ class WorkOutRunViewModel<T: WorkOutProtocol>: ObservableObject, Identifiable {
 
         $selectedFlowIndex
             .sink { self.updateFlowOnIndexChange($0) }
-            .store(in: &cancellables)
-
-        $selectedFlow
-            .sink { newValue in
-                if self.appStorageManager.soundsEnabled {
-                    self.playSound(newValue)
-                }
-            }
             .store(in: &cancellables)
 
         $state
@@ -74,12 +63,14 @@ class WorkOutRunViewModel<T: WorkOutProtocol>: ObservableObject, Identifiable {
         currentWorkout = workout
         workoutName = workout.name
         workoutLibrary = [workout]
+        state = .ready
     }
 
     func setupViewModel(workouts: [T]) {
         workoutLibrary = workouts
         currentWorkout = workouts.first
         workoutName = workouts.first!.name
+        state = .ready
     }
 
     func setState(_ state: WorkFlowState) {
@@ -119,30 +110,4 @@ class WorkOutRunViewModel<T: WorkOutProtocol>: ObservableObject, Identifiable {
     }
 
     func updateTimerOnStateChange(_ previous: WorkFlowState, _ newState: WorkFlowState) {}
-}
-
-// MARK: Sound extension
-
-extension WorkOutRunViewModel {
-    func playSound(_ worflow: WorkFlow?) {
-        if state == .running {
-            if let flow = worflow {
-                if flow.interval > 0 {
-                    if flow.interval <= 3 {
-                        soundManager?.playSound(sound: .beep)
-                    }
-                } else {
-                    if isLastRunning {
-                        soundManager?.playSound(sound: .fanfare)
-                    } else {
-                        soundManager?.playSound(sound: .gong)
-                    }
-                }
-            }
-        }
-    }
-
-    func stopSound() {
-        soundManager?.stop()
-    }
 }

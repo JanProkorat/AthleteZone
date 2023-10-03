@@ -28,24 +28,23 @@ struct LibraryContent: View {
             }
             .padding([.leading, .trailing, .bottom], 5)
 
-            ZStack(alignment: .top) {
-                List(viewModel.library, id: \._id) { workout in
-                    Button {
-                        self.viewModel.setSelectedWorkOut(workout)
-                        self.viewModel.router.currentTab = .home
-                    } label: {
-                        WorkOutListView(workOut: workout)
-                            .onDeleteTab { viewModel.removeWorkout(workout) }
-                            .onEditTab { performAction(onEditTab, value: workout.thaw()!) }
-                            .padding([.leading, .trailing], 2)
-                    }
-                    .padding(.bottom, 150)
-                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                    .background(Color(Background.background.rawValue))
+            List(viewModel.library, id: \._id) { workout in
+                Button {
+                    self.viewModel.setSelectedWorkOut(workout)
+                    self.viewModel.router.currentTab = .home
+                } label: {
+                    WorkOutListView(workOut: workout)
+                        .onDeleteTab { viewModel.removeWorkout(workout) }
+                        .onEditTab { performAction(onEditTab, value: workout.thaw()!) }
+                        .padding([.leading, .trailing], 2)
                 }
-                .listStyle(.plain)
-                .id(viewModel.library)
-
+                .padding(.bottom, 150)
+                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                .background(Color(Background.background.rawValue))
+            }
+            .listStyle(.plain)
+            .id(viewModel.library)
+            .overlay(alignment: .top) {
                 if viewModel.library.isEmpty {
                     Text("No workouts to display.")
                         .font(.headline)

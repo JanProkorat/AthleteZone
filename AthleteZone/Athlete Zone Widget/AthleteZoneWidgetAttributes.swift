@@ -8,7 +8,7 @@
 import ActivityKit
 import Foundation
 
-struct AthleteZoneWidgetsAttributes: ActivityAttributes {
+struct AthleteZoneWidgetAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         // Dynamic stateful properties about your activity go here!
         var workFlow: WorkFlow

@@ -8,6 +8,6 @@
 import Foundation
 
 protocol SoundProtocol {
-    func playSound(sound: Sound)
+    func playSound(sound: Sound, numOfLoops: Int)
     func stop()
 }

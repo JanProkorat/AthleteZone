@@ -10,26 +10,11 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var viewModel = ContentViewModel()
 
-    @State private var activeTab = 1
-
     var body: some View {
         ZStack {
-            TabView(selection: $activeTab) {
-                SectionSetterView()
+            TabView {
+                WatchLibraryView()
                     .environmentObject(viewModel)
-                    .tag(0)
-
-                Group {
-                    if viewModel.currentSection == .workout {
-                        WorkoutLibraryView()
-                            .environmentObject(viewModel.workoutLibraryViewModel)
-
-                    } else {
-                        TrainingLibraryView()
-                            .environmentObject(viewModel.trainingLibraryViewModel)
-                    }
-                }
-                .tag(1)
 
                 Group {
                     if viewModel.currentSection == .workout {
@@ -41,20 +26,73 @@ struct ContentView: View {
                             .environmentObject(viewModel.trainingLibraryViewModel)
                     }
                 }
-                .tag(2)
             }
 
-            if viewModel.launchScreenState != .finished {
-                LaunchScreenView()
-                    .environmentObject(viewModel.launchScreenStateManager)
-            }
+//            if viewModel.launchScreenState != .finished {
+//                LaunchScreenView()
+//                    .environmentObject(viewModel.launchScreenStateManager)
+//            }
         }
         .environment(\.locale, .init(identifier: "\(viewModel.appStorageManager.language)"))
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+#Preview {
+    let viewModel = ContentViewModel()
+    viewModel.workoutLibraryViewModel.library = [WorkOutDto(
+        id: "sadsdsa",
+        name: "Hodne dlouhy nazev",
+        work: 30,
+        rest: 15,
+        series: 2,
+        rounds: 4,
+        reset: 60,
+        createdDate: Date(),
+        workoutLength: 40
+    ),
+    WorkOutDto(
+        id: "1",
+        name: "Prvni",
+        work: 2,
+        rest: 2,
+        series: 2,
+        rounds: 2,
+        reset: 30,
+        createdDate: Date(),
+        workoutLength: 50
+    ),
+    WorkOutDto(
+        id: "2",
+        name: "Druhy",
+        work: 3,
+        rest: 3,
+        series: 3,
+        rounds: 3,
+        reset: 30,
+        createdDate: Date(),
+        workoutLength: 50
+    ),
+    WorkOutDto(
+        id: "3",
+        name: "Treti",
+        work: 2,
+        rest: 2,
+        series: 2,
+        rounds: 2,
+        reset: 30,
+        createdDate: Date(),
+        workoutLength: 50
+    ),
+    WorkOutDto(
+        id: "4",
+        name: "Ctvrty",
+        work: 3,
+        rest: 3,
+        series: 3,
+        rounds: 3,
+        reset: 30,
+        createdDate: Date(),
+        workoutLength: 50
+    )]
+    return ContentView(viewModel: viewModel)
 }

@@ -50,7 +50,8 @@ class HealthManager: NSObject, HealthProtocol {
     private func setupAuthorizationObserver() {
         let authorizationQuery = HKObserverQuery(
             sampleType: typesToShare.first!,
-            predicate: nil) { _, completionHandler, error in
+            predicate: nil)
+        { _, completionHandler, error in
 
             if let error = error {
                 print("Error observing authorization changes: \(error.localizedDescription)")

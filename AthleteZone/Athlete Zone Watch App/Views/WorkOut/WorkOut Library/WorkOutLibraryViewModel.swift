@@ -11,7 +11,6 @@ import SwiftUI
 
 class WorkOutLibraryViewModel: ObservableObject {
     @Published var library: [WorkOutDto] = []
-    @Published var settings: [String: Any]?
     @Published var selectedWorkOut: WorkOutDto?
 
     @Published var sortByProperty: WorkOutSortByProperty = .name
@@ -70,12 +69,6 @@ class WorkOutLibraryViewModel: ObservableObject {
     }
 
     func addWorkout(_ workout: WorkOutDto) {
-//        if library != nil {
-//            library.append(workout)
-//        }
-//        else {
-//            library = [workout]
-//        }
         library.append(workout)
     }
 

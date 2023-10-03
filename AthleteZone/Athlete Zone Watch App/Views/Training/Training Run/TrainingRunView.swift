@@ -9,7 +9,6 @@ import SwiftUI
 
 struct TrainingRunView: View {
     @EnvironmentObject var viewModel: TrainingRunViewModel
-    var onQuitTab: (() -> Void)?
     @State var selectedTab = 1
 
     var body: some View {
@@ -28,10 +27,9 @@ struct TrainingRunView: View {
                 .environmentObject(viewModel.selectedWorkFlowViewModel)
                 .tag(2)
         }
-        .onChange(of: viewModel.closeSheet) { _, _ in
-            self.viewModel.closeSheet.toggle()
-            self.performAction(onQuitTab)
-        }
+        .background(Color(Background.background.rawValue))
+        .animation(.easeIn, value: selectedTab)
+        .transition(.slide)
     }
 }
 
@@ -67,13 +65,5 @@ struct TrainingRunView_Previews: PreviewProvider {
         )
         return TrainingRunView()
             .environmentObject(viewModel)
-    }
-}
-
-extension TrainingRunView {
-    func onQuitTab(_ handler: @escaping () -> Void) -> TrainingRunView {
-        var new = self
-        new.onQuitTab = handler
-        return new
     }
 }

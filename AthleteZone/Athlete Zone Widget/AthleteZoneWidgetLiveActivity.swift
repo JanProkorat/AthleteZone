@@ -9,9 +9,9 @@ import ActivityKit
 import SwiftUI
 import WidgetKit
 
-struct AthleteZoneWidgetsLiveActivity: Widget {
+struct AthleteZoneWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
-        ActivityConfiguration(for: AthleteZoneWidgetsAttributes.self) { context in
+        ActivityConfiguration(for: AthleteZoneWidgetAttributes.self) { context in
             // Lock screen/banner UI goes here
             HStack {
                 Image(systemName: context.state.workFlow.icon)
@@ -73,10 +73,10 @@ struct AthleteZoneWidgetsLiveActivity: Widget {
     }
 }
 
-#Preview("Notification", as: .content, using: AthleteZoneWidgetsAttributes()) {
-    AthleteZoneWidgetsLiveActivity()
+#Preview("Notification", as: .content, using: AthleteZoneWidgetAttributes()) {
+    AthleteZoneWidgetLiveActivity()
 } contentStates: {
-    AthleteZoneWidgetsAttributes.ContentState(
+    AthleteZoneWidgetAttributes.ContentState(
         workFlow: WorkFlow(
             interval: 10,
             type: .preparation,
@@ -86,7 +86,7 @@ struct AthleteZoneWidgetsLiveActivity: Widget {
             totalRounds: 4
         ), name: "Workout"
     )
-    AthleteZoneWidgetsAttributes.ContentState(
+    AthleteZoneWidgetAttributes.ContentState(
         workFlow: WorkFlow(
             interval: 9,
             type: .preparation,
@@ -96,7 +96,7 @@ struct AthleteZoneWidgetsLiveActivity: Widget {
             totalRounds: 4
         ), name: "Workout"
     )
-    AthleteZoneWidgetsAttributes.ContentState(
+    AthleteZoneWidgetAttributes.ContentState(
         workFlow: WorkFlow(
             interval: 8,
             type: .preparation,
@@ -106,7 +106,7 @@ struct AthleteZoneWidgetsLiveActivity: Widget {
             totalRounds: 4
         ), name: "Workout"
     )
-    AthleteZoneWidgetsAttributes.ContentState(
+    AthleteZoneWidgetAttributes.ContentState(
         workFlow: WorkFlow(
             interval: 7,
             type: .preparation,
@@ -116,7 +116,7 @@ struct AthleteZoneWidgetsLiveActivity: Widget {
             totalRounds: 4
         ), name: "Workout"
     )
-    AthleteZoneWidgetsAttributes.ContentState(
+    AthleteZoneWidgetAttributes.ContentState(
         workFlow: WorkFlow(
             interval: 6,
             type: .preparation,
@@ -126,7 +126,7 @@ struct AthleteZoneWidgetsLiveActivity: Widget {
             totalRounds: 4
         ), name: "Workout"
     )
-    AthleteZoneWidgetsAttributes.ContentState(
+    AthleteZoneWidgetAttributes.ContentState(
         workFlow: WorkFlow(
             interval: 5,
             type: .preparation,
@@ -136,7 +136,7 @@ struct AthleteZoneWidgetsLiveActivity: Widget {
             totalRounds: 4
         ), name: "Workout"
     )
-    AthleteZoneWidgetsAttributes.ContentState(
+    AthleteZoneWidgetAttributes.ContentState(
         workFlow: WorkFlow(
             interval: 4,
             type: .preparation,
@@ -146,7 +146,7 @@ struct AthleteZoneWidgetsLiveActivity: Widget {
             totalRounds: 4
         ), name: "Workout"
     )
-    AthleteZoneWidgetsAttributes.ContentState(
+    AthleteZoneWidgetAttributes.ContentState(
         workFlow: WorkFlow(
             interval: 3,
             type: .preparation,

@@ -15,18 +15,21 @@ struct ListItemView: View {
         HStack {
             Text(name)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading, 15)
-                .font(.title3)
-                .lineLimit(1)
+                .padding(.leading, 10)
+                .font(.footnote)
+                .lineLimit(2)
+                .foregroundStyle(.white)
+
             Text(workOutTime)
-                .padding(.trailing, 15)
-                .font(.title3)
+                .padding(.trailing, 10)
+                .font(.caption)
+                .foregroundStyle(.white)
         }
-        .frame(width: .infinity, height: 50)
+        .frame(width: .infinity, height: 40)
         .background(
             ZStack {
                 RoundedRectangle(cornerRadius: 10)
-                    .frame(maxHeight: 50)
+                    .frame(maxHeight: 40)
                     .foregroundColor(Color(Background.listItemBackground.rawValue))
             }
         )

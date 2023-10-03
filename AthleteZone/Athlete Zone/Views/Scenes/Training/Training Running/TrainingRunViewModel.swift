@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 class TrainingRunViewModel: ObservableObject {
-    @Published var trainingName: String
+    @Published var trainingName = ""
 
     #if os(iOS)
         @Published var selectedWorkFlowViewModel: PhoneWorkOutRunViewModel
@@ -23,8 +23,6 @@ class TrainingRunViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     init() {
-        trainingName = ""
-
         #if os(iOS)
             selectedWorkFlowViewModel = PhoneWorkOutRunViewModel()
         #else
@@ -46,7 +44,6 @@ class TrainingRunViewModel: ObservableObject {
             selectedWorkFlowViewModel.setupViewModel(workouts: workouts)
         }
     #else
-
         func setupViewModel(trainingName: String?, workouts: [WorkOutDto]) {
             closeSheet = false
             self.trainingName = trainingName ?? ""

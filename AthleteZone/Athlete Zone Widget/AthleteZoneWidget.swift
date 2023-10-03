@@ -115,7 +115,7 @@ struct WorkoutWidgetEntry: TimelineEntry {
     }
 }
 
-struct AthleteZoneWidgetsEntryView: View {
+struct AthleteZoneWidgetEntryView: View {
     var entry: Provider.Entry
 
     var body: some View {
@@ -158,12 +158,12 @@ struct AthleteZoneWidgetsEntryView: View {
     }
 }
 
-struct AthleteZoneWidgets: Widget {
+struct AthleteZoneWidget: Widget {
     let kind: String = "AthleteZoneWidgets"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            AthleteZoneWidgetsEntryView(entry: entry)
+            AthleteZoneWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("Running Workout Widget")
         .description("Displays information about your running workout")
@@ -172,7 +172,7 @@ struct AthleteZoneWidgets: Widget {
 }
 
 #Preview(as: .systemMedium) {
-    AthleteZoneWidgets()
+    AthleteZoneWidget()
 } timeline: {
     WorkoutWidgetEntry(
         date: Date(),

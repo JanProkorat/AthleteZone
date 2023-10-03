@@ -9,9 +9,9 @@ import WidgetKit
 import SwiftUI
 
 @main
-struct AthleteZoneWidgetsBundle: WidgetBundle {
+struct AthleteZoneWidgetBundle: WidgetBundle {
     var body: some Widget {
-        AthleteZoneWidgets()
-        AthleteZoneWidgetsLiveActivity()
+        AthleteZoneWidget()
+        AthleteZoneWidgetLiveActivity()
     }
 }

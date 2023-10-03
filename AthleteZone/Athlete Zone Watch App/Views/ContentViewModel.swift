@@ -13,6 +13,7 @@ class ContentViewModel: ObservableObject {
     var appStorageManager = AppStorageManager.shared
     var sectionManager = SectionManager.shared
     var connectivityManager = WatchConnectivityManager.shared
+    var healthManager = HealthManager.shared
 
     @Published var currentSection: Section = .workout
     @Published var launchScreenState: LaunchScreenStep = .firstStep
@@ -24,6 +25,8 @@ class ContentViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     init() {
+        healthManager.requestAuthorization()
+
         appStorageManager.objectWillChange
             .sink { [weak self] _ in
                 guard let self = self else { return }
