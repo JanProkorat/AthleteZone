@@ -17,10 +17,8 @@ jobs:
     - name: Checkout the code
       uses: actions/checkout@v3
 
-    - name: Install and switch to the latest Xcode version
-      uses: xcode-actions/install@v2
-      with:
-        version: latest
+    - name: Setup Xcode 
+      uses: axmolengine/setup-xcode@v1.5.2
 
     - name: Show eligible build destinations
       run: xcodebuild -showdestinations -scheme "Athlete Zone Tests"
