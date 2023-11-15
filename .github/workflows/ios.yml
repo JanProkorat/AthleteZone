@@ -24,5 +24,5 @@ jobs:
       run: xcodebuild -showdestinations -scheme "Athlete Zone Tests"
 
     - name: Build and test ( iOS 17.0)
-      run: xcodebuild test -scheme "Athlete Zone Tests" -destination 'platform=iOS Simulator,OS=17,name=iPhone 11'
+      run: xcodebuild test -scheme "Athlete Zone Tests" -destination 'platform:iOS Simulator, id:dvtdevice-DVTiOSDeviceSimulatorPlaceholder-iphonesimulator:placeholder, name:Any iOS Simulator Device'
       
