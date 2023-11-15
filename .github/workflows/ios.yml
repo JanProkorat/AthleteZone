@@ -24,8 +24,5 @@ jobs:
       run: xcodebuild -showdestinations -scheme "Athlete Zone Tests"
 
     - name: Build and test ( iOS 17.0)
-      run: xcodebuild test -scheme "Athlete Zone Tests" -destination 'platform=iOS Simulator,OS=17.0,name=iPhone 15'
-        
-        
-        # run: |
-        #  xcodebuild clean build test -workspace "AthleteZone.xcworkspace" -scheme "Athlete Zone Tests" -destination "platform=iOS Simulator,name=iPhone 13,OS=16"
+      run: xcodebuild test -scheme "Athlete Zone Tests" -destination 'platform=iOS Simulator,OS=17,name=iPhone 11'
+      
