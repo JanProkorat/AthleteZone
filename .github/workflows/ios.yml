@@ -26,7 +26,7 @@ jobs:
       run: xcodebuild -showdestinations -scheme "Athlete Zone Tests"
 
     - name: Build and test
-      run: xcodebuild test -scheme "Athlete Zone Tests" -destination 'platform=iOS,name=Any iOS Device'
+      run: xcodebuild test -scheme "Athlete Zone Tests" -destination 'platform=iOS,id=dvtdevice-DVTiPhonePlaceholder-iphoneos:placeholder,name=Any iOS Device'
       # uses: sergeysova/xcodebuild-action@v2.1.0
       # with:
       #   workspace: AthleteZone.xcworkspace
