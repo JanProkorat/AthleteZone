@@ -5,8 +5,8 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-  schedule:
-    - cron: 0 0 * * * #trigger once a day, according to the cron syntax
+  # schedule:
+  #   - cron: 0 0 * * * #trigger once a day, according to the cron syntax
 
 jobs:
   build:
@@ -25,7 +25,11 @@ jobs:
     - name: Show eligible build destinations
       run: xcodebuild -showdestinations -scheme "Athlete Zone Tests"
 
-    - name: Build and test ( iOS 17.0)
-      run: xcodebuild test -scheme "Athlete Zone Tests" -destination 'platform=iOS Simulator,name=iPhone 14,OS=16'
+    - name: Build and test
+      # run: xcodebuild test -scheme "Athlete Zone Tests" -destination 'platform=iOS Simulator,name=iPhone 14,OS=16'
+      uses: sergeysova/xcodebuild-action@v2.1.0
+      with:
+        scheme: "Athlete Zone Tests"
+        action: test
       
             
