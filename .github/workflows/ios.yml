@@ -29,7 +29,7 @@ jobs:
       # run: xcodebuild test -scheme "Athlete Zone Tests" -destination 'platform=iOS Simulator,name=iPhone 14,OS=16'
       uses: sergeysova/xcodebuild-action@v2.1.0
       with:
-        project: "Athlete Zone"
+        project: AthleteZone
         scheme: "Athlete Zone Tests"
         action: test
       
