@@ -32,5 +32,4 @@ jobs:
         workspace: AthleteZone.xcworkspace
         scheme: "Athlete Zone Tests"
         action: test
-      
-            
+        destination: platform=iOS
