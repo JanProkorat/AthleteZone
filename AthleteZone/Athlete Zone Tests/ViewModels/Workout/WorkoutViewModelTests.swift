@@ -11,14 +11,18 @@ import XCTest
 
 final class WorkOutViewModelTests: XCTestCase {
     var viewModel: WorkOutViewModel!
+    var appStorageManaer: AppStorageManagerMock!
 
     override func setUp() {
         super.setUp()
         viewModel = WorkOutViewModel()
+        appStorageManaer = AppStorageManagerMock()
+        viewModel.appStorageManager = appStorageManaer
     }
 
     override func tearDown() {
         viewModel = nil
+        appStorageManaer = nil
         super.tearDown()
     }
 
@@ -82,5 +86,46 @@ final class WorkOutViewModelTests: XCTestCase {
         // Then
         let storedWorkoutId = viewModel.appStorageManager.selectedWorkoutId
         expect(storedWorkoutId).to(beEmpty())
+    }
+
+    func testStoreSelectedWorkoutId() {
+        viewModel.selectedWorkout = WorkOut()
+        viewModel.scenePhase = .inactive
+
+        viewModel.storeSelectedWorkoutId(viewModel.scenePhase)
+
+        expect(self.appStorageManaer.selectedWorkoutId)
+            .to(equal(viewModel.selectedWorkout?._id.stringValue))
+    }
+
+    func testSetupRunViewModel() {
+        let workout = WorkOut()
+
+        viewModel.name = workout.name
+        viewModel.work = workout.work
+        viewModel.rest = workout.rest
+        viewModel.series = workout.series
+        viewModel.rounds = workout.rounds
+        viewModel.reset = workout.reset
+
+        viewModel.setupRunViewModel()
+
+        expect(self.viewModel.isRunViewVisible).to(beTrue())
+        expect(self.viewModel.runViewModel.workoutName).to(equal(workout.name))
+        expect(self.viewModel.runViewModel.currentWorkout).notTo(beNil())
+        expect(self.viewModel.runViewModel.currentWorkout!.work).to(equal(workout.work))
+        expect(self.viewModel.runViewModel.currentWorkout!.rest).to(equal(workout.rest))
+        expect(self.viewModel.runViewModel.currentWorkout!.series).to(equal(workout.series))
+        expect(self.viewModel.runViewModel.currentWorkout!.rounds).to(equal(workout.rounds))
+        expect(self.viewModel.runViewModel.currentWorkout!.reset).to(equal(workout.reset))
+    }
+
+    func testStoreWidgetData() {
+        let workout = WorkOut()
+
+        viewModel.selectedWorkout = workout
+        viewModel.storeWidgetData()
+
+        expect(self.appStorageManaer.loadFromDefaults(key: .workoutId)).notTo(beNil())
     }
 }

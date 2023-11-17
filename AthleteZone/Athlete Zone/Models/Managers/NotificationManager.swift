@@ -9,7 +9,7 @@ import Combine
 import Foundation
 import UserNotifications
 
-class NotificationManager: ObservableObject {
+class NotificationManager: NotiificationProtocol, ObservableObject {
     static let shared = NotificationManager()
 
     let notificationIdentifier1 = "workoutReminder1"
@@ -65,5 +65,6 @@ class NotificationManager: ObservableObject {
     func removeNotification() {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationIdentifier1])
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationIdentifier2])
+        enabled = false
     }
 }

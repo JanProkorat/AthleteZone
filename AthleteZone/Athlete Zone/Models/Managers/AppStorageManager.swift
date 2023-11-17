@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class AppStorageManager: ObservableObject {
+class AppStorageManager: AppStorageProtocol {
     static let shared = AppStorageManager()
 
     @AppStorage(DefaultItem.selectedWorkoutId.rawValue,
@@ -39,15 +39,15 @@ class AppStorageManager: ObservableObject {
                 store: UserDefaults(suiteName: UserDefaultValues.groupId.rawValue))
     var notificationsEnabled = false
 
-    public func storeToUserDefaults(data: String, key: String) {
-        UserDefaults(suiteName: UserDefaultValues.groupId.rawValue)!.set(data, forKey: key)
+    public func storeToUserDefaults(data: String, key: UserDefaultValues) {
+        UserDefaults(suiteName: UserDefaultValues.groupId.rawValue)!.set(data, forKey: key.rawValue)
     }
 
-    public func loadFromDefaults(key: String) -> String? {
-        return UserDefaults(suiteName: UserDefaultValues.groupId.rawValue)!.object(forKey: key) as? String
+    public func loadFromDefaults(key: UserDefaultValues) -> String? {
+        return UserDefaults(suiteName: UserDefaultValues.groupId.rawValue)!.object(forKey: key.rawValue) as? String
     }
 
-    public func removeFromDefaults(key: String) {
-        UserDefaults(suiteName: UserDefaultValues.groupId.rawValue)?.removeObject(forKey: key)
+    public func removeFromDefaults(key: UserDefaultValues) {
+        UserDefaults(suiteName: UserDefaultValues.groupId.rawValue)?.removeObject(forKey: key.rawValue)
     }
 }

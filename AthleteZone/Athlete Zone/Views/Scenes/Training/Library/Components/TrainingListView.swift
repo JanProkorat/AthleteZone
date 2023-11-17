@@ -47,11 +47,10 @@ struct TrainingListView: View {
                         Text("Length:")
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .foregroundColor(Color(ComponentColor.lightPink.rawValue))
-                            .padding(.leading, 10)
 
                         Text(training.trainingLength.toFormattedTime())
                             .foregroundColor(Color(ComponentColor.lightPink.rawValue))
-                            .padding(.trailing, 30)
+                            .padding(.trailing, 20)
                     }
                     .padding([.leading, .trailing])
 
@@ -59,11 +58,10 @@ struct TrainingListView: View {
                         Text("Workouts:")
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .foregroundColor(Color(ComponentColor.lightYellow.rawValue))
-                            .padding(.leading, 10)
 
                         Text(training.workoutCount.toFormattedNumber())
                             .foregroundColor(Color(ComponentColor.lightYellow.rawValue))
-                            .padding(.trailing, 30)
+                            .padding(.trailing, 20)
                     }
                     .padding([.leading, .trailing])
 
@@ -71,11 +69,10 @@ struct TrainingListView: View {
                         Text("Created date:")
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .foregroundColor(Color(ComponentColor.braun.rawValue))
-                            .padding(.leading, 10)
 
                         Text(training.formattedCreatedDate)
                             .foregroundColor(Color(ComponentColor.braun.rawValue))
-                            .padding(.trailing, 30)
+                            .padding(.trailing, 20)
                     }
                     .padding([.leading, .trailing])
                 }

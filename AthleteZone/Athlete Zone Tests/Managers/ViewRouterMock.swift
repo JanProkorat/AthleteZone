@@ -1,15 +1,14 @@
 //
-//  ViewRouter.swift
-//  Athlete Zone
+//  ViewRouterMock.swift
+//  Athlete Zone Tests
 //
-//  Created by Jan Prokorát on 07.11.2022.
+//  Created by Jan Prokorát on 14.11.2023.
 //
 
-import SwiftUI
+@testable import Athlete_Zone
+import Foundation
 
-class ViewRouter: ViewRoutingProtocol {
-    static var shared = ViewRouter()
-
+class ViewRouterMock: ViewRoutingProtocol {
     @Published var currentTab: Tab = .home
     @Published var currentSection: Section = .workout
 

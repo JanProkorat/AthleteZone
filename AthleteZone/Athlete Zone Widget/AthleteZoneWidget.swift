@@ -34,13 +34,13 @@ struct Provider: TimelineProvider {
             )
         } else {
             if section == .workout {
-                if let workout = loadEntity(key: UserDefaultValues.workoutId.rawValue, type: WorkOutDto.self) {
+                if let workout = loadEntity(key: UserDefaultValues.workoutId, type: WorkOutDto.self) {
                     entry = WorkoutWidgetEntry(date: currentDate, workout: workout, family: context.family)
                 }
             }
 
             if section == .training {
-                if let training = loadEntity(key: UserDefaultValues.trainingId.rawValue, type: TrainingDto.self) {
+                if let training = loadEntity(key: UserDefaultValues.trainingId, type: TrainingDto.self) {
                     entry = WorkoutWidgetEntry(date: currentDate, training: training, family: context.family)
                 }
             }
@@ -54,7 +54,7 @@ struct Provider: TimelineProvider {
         completion(timeline)
     }
 
-    private func loadEntity<T: Codable>(key: String, type: T.Type) -> T? {
+    private func loadEntity<T: Codable>(key: UserDefaultValues, type: T.Type) -> T? {
         if let stringValue = AppStorageManager.shared.loadFromDefaults(key: key) {
             do {
                 return try stringValue.decode() as T

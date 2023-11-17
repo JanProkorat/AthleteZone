@@ -10,4 +10,7 @@ import Foundation
 protocol SoundProtocol {
     func playSound(sound: Sound, numOfLoops: Int)
     func stop()
+
+    var selectedSound: Sound? { get set }
+    var isSoundPlaying: Bool { get }
 }

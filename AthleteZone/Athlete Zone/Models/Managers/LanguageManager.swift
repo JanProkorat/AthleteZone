@@ -7,8 +7,9 @@
 
 import Foundation
 
-class LanguageManager: ObservableObject {
+class LanguageManager: LanguageProtocol {
     static let shared = LanguageManager()
 
     @Published var language: Language = .en
+    var languagePublisher: Published<Language>.Publisher { $language }
 }

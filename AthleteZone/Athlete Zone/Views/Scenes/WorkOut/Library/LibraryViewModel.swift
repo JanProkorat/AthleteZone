@@ -18,10 +18,10 @@ class LibraryViewModel: ObservableObject {
 
     @ObservedObject var selectedWorkoutManager = SelectedWorkoutManager.shared
     @ObservedObject var router = ViewRouter.shared
-    private var connectivityManager = WatchConnectivityManager.shared
     private var storageManager = AppStorageManager.shared
 
     var realmManager: WorkOutRealmManagerProtocol
+    var connectivityManager: WatchConnectivityProtocol
 
     var library: [WorkOut] {
         realmManager.getSortedData(searchText, sortBy, sortOrder)
@@ -29,6 +29,7 @@ class LibraryViewModel: ObservableObject {
 
     init() {
         realmManager = WorkoutRealmManager()
+        connectivityManager = WatchConnectivityManager.shared
     }
 }
 
@@ -51,7 +52,7 @@ extension LibraryViewModel {
 
         if id == storageManager.selectedWorkoutId {
             selectedWorkoutManager.selectedWorkout = nil
-            storageManager.removeFromDefaults(key: UserDefaultValues.workoutId.rawValue)
+            storageManager.removeFromDefaults(key: UserDefaultValues.workoutId)
             WidgetCenter.shared.reloadTimelines(ofKind: UserDefaultValues.widgetId.rawValue)
         }
     }

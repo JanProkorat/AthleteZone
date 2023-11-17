@@ -38,7 +38,7 @@ struct LibraryContent: View {
                         .onEditTab { performAction(onEditTab, value: workout.thaw()!) }
                         .padding([.leading, .trailing], 2)
                 }
-                .padding(.bottom, 150)
+                .padding(.bottom, 142)
                 .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 .background(Color(Background.background.rawValue))
             }

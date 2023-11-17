@@ -37,7 +37,7 @@ class TrainingLibraryViewModel: ObservableObject {
 
         if training._id == selectedTrainingManager.selectedTraining?._id {
             selectedTrainingManager.selectedTraining = nil
-            storageManager.removeFromDefaults(key: UserDefaultValues.trainingId.rawValue)
+            storageManager.removeFromDefaults(key: UserDefaultValues.trainingId)
             WidgetCenter.shared.reloadTimelines(ofKind: UserDefaultValues.widgetId.rawValue)
         }
     }

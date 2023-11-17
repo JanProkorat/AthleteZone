@@ -49,7 +49,5 @@ struct WorkOutRunFooter_Previews: PreviewProvider {
         viewModel.setupViewModel(workout: WorkOut("Title", 30, 60, 2, 1, 120))
         return WorkOutRunFooter()
             .environmentObject(viewModel)
-//            .environmentObject(ViewRouter())
-//            .environmentObject(WorkOutViewModel())
     }
 }

@@ -11,11 +11,10 @@ import WidgetKit
 class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
     private var widgetManager = WidgetDataManager.shared
     private var liveActivityManager = LiveActivityManager.shared
-    private var soundManager: SoundProtocol?
+    private var soundManager: SoundProtocol = SoundManager()
 
     override init() {
         super.init()
-        self.soundManager = SoundManager()
 
         NotificationCenter.default.publisher(for: TimerManager.timerUpdatedNotification)
             .sink { [weak self] _ in
@@ -98,14 +97,14 @@ extension PhoneWorkOutRunViewModel {
         if state == .running {
             if let flow = worflow {
                 if flow.interval > 0 {
-                    if flow.interval == 3 {
-                        soundManager?.playSound(sound: .beep, numOfLoops: 2)
+                    if flow.interval <= 3 && (!soundManager.isSoundPlaying || soundManager.selectedSound != .beep) {
+                        soundManager.playSound(sound: .beep, numOfLoops: flow.interval - 1)
                     }
                 } else {
                     if isLastRunning {
-                        soundManager?.playSound(sound: .fanfare, numOfLoops: 0)
+                        soundManager.playSound(sound: .fanfare, numOfLoops: 0)
                     } else {
-                        soundManager?.playSound(sound: .gong, numOfLoops: 0)
+                        soundManager.playSound(sound: .gong, numOfLoops: 0)
                     }
                 }
             }

@@ -11,40 +11,53 @@ import SwiftUI
 import WidgetKit
 
 class ContentViewModel: ObservableObject {
-    var router = ViewRouter.shared
-    var notificationManager = NotificationManager.shared
-    var languageManager = LanguageManager.shared
-    var appStorageManager = AppStorageManager.shared
+    var router: any ViewRoutingProtocol {
+        didSet { setupSectionWatcher() }
+    }
+
+    var languageManager: any LanguageProtocol {
+        didSet { setupLanguageWatcher() }
+    }
+
+    var notificationManager: NotiificationProtocol
+    var appStorageManager: any AppStorageProtocol
 
     @Published var currentSection: Section = .workout
     @Published var currentLanguage: Language = .en
 
-    private var cancellables = Set<AnyCancellable>()
+    private var routerCancellable: AnyCancellable?
+    private var languageCancellable: AnyCancellable?
 
     init() {
-        router.currentSection = appStorageManager.selectedSection
-
-        router.$currentSection
-            .sink { newValue in
-                self.currentSection = newValue
-                self.appStorageManager.selectedSection = newValue
-                WidgetCenter.shared.reloadTimelines(ofKind: UserDefaultValues.widgetId.rawValue)
-            }
-            .store(in: &cancellables)
+        appStorageManager = AppStorageManager.shared
+        languageManager = LanguageManager.shared
+        notificationManager = NotificationManager.shared
+        router = ViewRouter.shared
 
         if appStorageManager.notificationsEnabled {
             notificationManager.allowNotifications()
         }
 
+        router.currentSection = appStorageManager.selectedSection
         languageManager.language = appStorageManager.language
+    }
 
-        languageManager.$language
+    private func setupSectionWatcher() {
+        routerCancellable = router.currentSectionPublisher
+            .sink { newValue in
+                self.currentSection = newValue
+                self.appStorageManager.selectedSection = newValue
+                WidgetCenter.shared.reloadTimelines(ofKind: UserDefaultValues.widgetId.rawValue)
+            }
+    }
+
+    private func setupLanguageWatcher() {
+        languageCancellable = languageManager.languagePublisher
             .sink { newValue in
                 if newValue != self.appStorageManager.language {
                     self.appStorageManager.language = newValue
                 }
                 self.currentLanguage = newValue
             }
-            .store(in: &cancellables)
     }
 }

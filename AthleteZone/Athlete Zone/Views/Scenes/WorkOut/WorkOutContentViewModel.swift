@@ -9,15 +9,18 @@ import Combine
 import Foundation
 
 class WorkOutContentViewModel: ObservableObject {
-    @Published var router = ViewRouter.shared
+    @Published var router: any ViewRoutingProtocol {
+        didSet {
+            cancellable = router.currentTabPublisher
+                .sink { self.currentTab = $0 }
+        }
+    }
 
     @Published var currentTab: Tab = .home
 
-    private var cancellables = Set<AnyCancellable>()
+    private var cancellable: AnyCancellable?
 
     init() {
-        router.$currentTab
-            .sink { self.currentTab = $0 }
-            .store(in: &cancellables)
+        router = ViewRouter.shared
     }
 }

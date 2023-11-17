@@ -9,13 +9,19 @@
 import Foundation
 
 class SoundManagerMock: SoundProtocol {
-    var playSoundSound = false
+    private var isPlaying = false
 
-    func playSound(sound: Sound) {
-        playSoundSound = true
+    var selectedSound: Athlete_Zone.Sound?
+    var isSoundPlaying: Bool {
+        isPlaying
+    }
+
+    func playSound(sound: Athlete_Zone.Sound, numOfLoops: Int) {
+        isPlaying = true
+        selectedSound = sound
     }
 
     func stop() {
-        playSoundSound = false
+        isPlaying = false
     }
 }

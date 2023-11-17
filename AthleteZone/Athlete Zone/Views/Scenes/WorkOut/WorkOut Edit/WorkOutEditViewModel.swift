@@ -31,8 +31,8 @@ class WorkOutEditViewModel: ObservableObject {
 
     @ObservedObject var selectedWorkoutManager = SelectedWorkoutManager.shared
 
-    var connectivityManager = WatchConnectivityManager.shared
-    var router = ViewRouter.shared
+    var connectivityManager: WatchConnectivityProtocol
+    var router: any ViewRoutingProtocol
 
     init() {
         let workout = WorkOut()
@@ -46,6 +46,8 @@ class WorkOutEditViewModel: ObservableObject {
         reset = workout.reset
 
         realmManager = WorkoutRealmManager()
+        connectivityManager = WatchConnectivityManager.shared
+        router = ViewRouter.shared
     }
 
     init(workout: WorkOut, _ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int) {
@@ -59,6 +61,8 @@ class WorkOutEditViewModel: ObservableObject {
         self.reset = reset
 
         realmManager = WorkoutRealmManager()
+        connectivityManager = WatchConnectivityManager.shared
+        router = ViewRouter.shared
     }
 
     init(workout: WorkOut) {
@@ -73,6 +77,8 @@ class WorkOutEditViewModel: ObservableObject {
         isEditing = true
 
         realmManager = WorkoutRealmManager()
+        connectivityManager = WatchConnectivityManager.shared
+        router = ViewRouter.shared
     }
 
     init(_ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int) {
@@ -85,6 +91,8 @@ class WorkOutEditViewModel: ObservableObject {
         self.reset = reset
 
         realmManager = WorkoutRealmManager()
+        connectivityManager = WatchConnectivityManager.shared
+        router = ViewRouter.shared
     }
 
     func saveWorkout() {

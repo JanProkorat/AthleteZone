@@ -73,7 +73,7 @@ class TrainingViewModel: ObservableObject {
 
     func storeWidgetData() {
         if let data = selectedTraining?.toDto().encode() {
-            appStorageManager.storeToUserDefaults(data: data, key: UserDefaultValues.trainingId.rawValue)
+            appStorageManager.storeToUserDefaults(data: data, key: UserDefaultValues.trainingId)
             WidgetCenter.shared.reloadTimelines(ofKind: UserDefaultValues.widgetId.rawValue)
         }
     }

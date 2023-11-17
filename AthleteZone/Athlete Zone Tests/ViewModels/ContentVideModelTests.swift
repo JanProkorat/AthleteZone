@@ -6,40 +6,26 @@
 //
 
 @testable import Athlete_Zone
-import Combine
 import Nimble
 import XCTest
 
 class ContentViewModelTests: XCTestCase {
     var viewModel: ContentViewModel!
-    var router: ViewRouter!
-    var notificationManager: NotificationManager!
-    var languageManager: LanguageManager!
-    var appStorageManager: AppStorageManager!
 
-    override func setUp() {
-        super.setUp()
+    override func setUpWithError() throws {
+        try super.setUpWithError()
 
         // Create and inject the mocked dependencies
-        router = ViewRouter.shared
-        notificationManager = NotificationManager.shared
-        languageManager = LanguageManager.shared
-        appStorageManager = AppStorageManager.shared
-
         viewModel = ContentViewModel()
-        viewModel.router = router
-        viewModel.notificationManager = notificationManager
-        viewModel.languageManager = languageManager
-        viewModel.appStorageManager = appStorageManager
+        viewModel.router = ViewRouterMock()
+        viewModel.notificationManager = NotificationManagerMock()
+        viewModel.languageManager = LanguageManagerMock()
+        viewModel.appStorageManager = AppStorageManagerMock()
     }
 
-    override func tearDown() {
+    override func tearDownWithError() throws {
         viewModel = nil
-        router = nil
-        notificationManager = nil
-        languageManager = nil
-        appStorageManager = nil
-        super.tearDown()
+        try super.tearDownWithError()
     }
 
     func testCurrentSectionUpdatesRouterAndAppStorageManager() {
@@ -47,11 +33,11 @@ class ContentViewModelTests: XCTestCase {
         let expectedSection: Section = .training
 
         // When
-        viewModel.currentSection = expectedSection
+        viewModel.router.currentSection = expectedSection
 
         // Then
-        expect(self.router.currentSection) == expectedSection
-        expect(self.appStorageManager.selectedSection) == expectedSection
+        expect(self.viewModel.currentSection) == expectedSection
+        expect(self.viewModel.appStorageManager.selectedSection) == expectedSection
     }
 
     func testLanguageManagerUpdatesAppStorageManagerAndCurrentLanguage() {
@@ -62,18 +48,7 @@ class ContentViewModelTests: XCTestCase {
         viewModel.languageManager.language = expectedLanguage
 
         // Then
-        expect(self.appStorageManager.language) == expectedLanguage
+        expect(self.viewModel.appStorageManager.language) == expectedLanguage
         expect(self.viewModel.currentLanguage) == expectedLanguage
-    }
-
-    func testNotificationsEnabledAllowNotifications() {
-        // Given
-        appStorageManager.notificationsEnabled = true
-
-        // When
-        viewModel = ContentViewModel()
-
-        // Then
-        expect(self.appStorageManager.notificationsEnabled) == true
     }
 }

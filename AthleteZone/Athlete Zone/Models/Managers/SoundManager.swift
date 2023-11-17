@@ -9,9 +9,13 @@ import AVKit
 import Foundation
 
 class SoundManager: SoundProtocol {
-    private var selectedSound: Sound?
     private var audioSession: AVAudioSession?
     private var players: [Sound: AVAudioPlayer]
+
+    var selectedSound: Sound?
+    var isSoundPlaying: Bool {
+        players.contains(where: { $0.value.isPlaying })
+    }
 
     init() {
         players = [:]

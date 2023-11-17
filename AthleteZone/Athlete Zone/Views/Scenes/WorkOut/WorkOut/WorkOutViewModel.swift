@@ -15,7 +15,7 @@ class WorkOutViewModel: ObservableObject, Identifiable {
     @ObservedObject var router = ViewRouter.shared
     @ObservedObject var runViewModel = PhoneWorkOutRunViewModel()
 
-    var appStorageManager = AppStorageManager.shared
+    var appStorageManager: any AppStorageProtocol
     var realmManager: WorkOutRealmManagerProtocol
 
     @Published var selectedWorkout: WorkOut?
@@ -36,6 +36,7 @@ class WorkOutViewModel: ObservableObject, Identifiable {
 
     init() {
         realmManager = WorkoutRealmManager()
+        appStorageManager = AppStorageManager.shared
 
         selectedWorkoutManager.$selectedWorkout
             .sink(receiveValue: { newValue in
@@ -73,7 +74,7 @@ class WorkOutViewModel: ObservableObject, Identifiable {
             .store(in: &cancellables)
     }
 
-    private func storeSelectedWorkoutId(_ scenePhase: ScenePhase?) {
+    func storeSelectedWorkoutId(_ scenePhase: ScenePhase?) {
         if scenePhase != nil && (scenePhase == .inactive || scenePhase == .background) && selectedWorkout != nil {
             appStorageManager.selectedWorkoutId = selectedWorkout!._id.stringValue
         }
@@ -86,7 +87,7 @@ class WorkOutViewModel: ObservableObject, Identifiable {
 
     func storeWidgetData() {
         if let data = selectedWorkout?.toDto().encode() {
-            appStorageManager.storeToUserDefaults(data: data, key: UserDefaultValues.workoutId.rawValue)
+            appStorageManager.storeToUserDefaults(data: data, key: UserDefaultValues.workoutId)
             WidgetCenter.shared.reloadTimelines(ofKind: UserDefaultValues.widgetId.rawValue)
         }
     }

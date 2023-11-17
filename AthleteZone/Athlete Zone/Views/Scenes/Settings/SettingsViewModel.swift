@@ -25,7 +25,7 @@ class SettingsViewModel: ObservableObject {
     @Published var hkAuthStatus: HKAuthorizationStatus = .notDetermined
 
     init() {
-        self.connectivityManager = WatchConnectivityManager.shared
+        connectivityManager = WatchConnectivityManager.shared
 
         appStorageManager.objectWillChange
             .sink { [weak self] _ in

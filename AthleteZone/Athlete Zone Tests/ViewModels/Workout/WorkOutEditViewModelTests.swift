@@ -11,14 +11,26 @@ import XCTest
 
 class WorkOutEditViewModelTests: XCTestCase {
     var viewModel: WorkOutEditViewModel!
+    var connectivityManager: WatchConnectivityMock!
+    var router: ViewRouterMock!
 
     override func setUp() {
+        super.setUp()
+
+        connectivityManager = WatchConnectivityMock()
+        router = ViewRouterMock()
+
         viewModel = WorkOutEditViewModel()
         viewModel.realmManager = WorkOutRealmManagerMock()
+        viewModel.connectivityManager = connectivityManager
+        viewModel.router = router
     }
 
     override func tearDown() {
         viewModel = nil
+        connectivityManager = nil
+
+        super.tearDown()
     }
 
     func testTimeOverviewCalculation() {
@@ -33,7 +45,7 @@ class WorkOutEditViewModelTests: XCTestCase {
         let expectedTimeOverview = (((40 * 5) + (70 * (5 - 1)) + 60) * 3) - 60
 
         // Then
-        XCTAssertEqual(viewModel.timeOverview, expectedTimeOverview)
+        expect(self.viewModel.timeOverview).to(equal(expectedTimeOverview))
     }
 
     func testSaveDisabled() {
@@ -41,13 +53,13 @@ class WorkOutEditViewModelTests: XCTestCase {
         viewModel.name = ""
 
         // Then
-        XCTAssertEqual(viewModel.saveDisabled, true)
+        expect(self.viewModel.saveDisabled).to(beTrue())
 
         // When
         viewModel.name = "tests"
 
         // Then
-        XCTAssertEqual(viewModel.saveDisabled, false)
+        expect(self.viewModel.saveDisabled).to(beFalse())
     }
 
     func testSaveWorkout() {
@@ -59,15 +71,15 @@ class WorkOutEditViewModelTests: XCTestCase {
         viewModel.saveWorkout()
 
         // Then
-        XCTAssertNotNil(viewModel.realmManager.load(primaryKey: workout._id.stringValue))
-        XCTAssertEqual(viewModel.selectedWorkoutManager.selectedWorkout?._id, workout._id)
+        expect(self.connectivityManager.lastSentMessage?.first(where: { $0.key == "workout_add" })).notTo(beNil())
+        expect(self.router.currentTab).to(equal(.home))
     }
 
     func testSaveWorkoutWhileEditing() {
         // Given
         let workout = WorkOut()
+        viewModel.realmManager.add(workout)
         viewModel.workout = workout
-        viewModel.saveWorkout()
 
         viewModel.isEditing = true
         viewModel.name = "Test Workout Edited"
@@ -79,13 +91,14 @@ class WorkOutEditViewModelTests: XCTestCase {
 
         // When
         viewModel.saveWorkout()
-        let result = viewModel.realmManager.load(primaryKey: workout._id.stringValue)
+
         // Then
-        XCTAssertEqual(result?.name, viewModel.name)
-        XCTAssertEqual(result?.work, viewModel.work)
-        XCTAssertEqual(result?.rest, viewModel.rest)
-        XCTAssertEqual(result?.series, viewModel.series)
-        XCTAssertEqual(result?.rounds, viewModel.rounds)
-        XCTAssertEqual(result?.reset, viewModel.reset)
+        let result = viewModel.realmManager.load(primaryKey: workout._id.stringValue)
+        expect(result?.name).to(equal(viewModel.name))
+        expect(result?.work).to(equal(viewModel.work))
+        expect(result?.rest).to(equal(viewModel.rest))
+        expect(result?.series).to(equal(viewModel.series))
+        expect(result?.rounds).to(equal(viewModel.rounds))
+        expect(result?.reset).to(equal(viewModel.reset))
     }
 }

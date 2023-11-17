@@ -13,12 +13,11 @@ import XCTest
 
 final class WorkOutContentViewModelTests: XCTestCase {
     var viewModel: WorkOutContentViewModel!
-    var router: ViewRouter!
 
     override func setUp() {
         super.setUp()
         viewModel = WorkOutContentViewModel()
-        router = ViewRouter.shared
+        viewModel.router = ViewRouterMock()
     }
 
     override func tearDown() {
@@ -31,7 +30,7 @@ final class WorkOutContentViewModelTests: XCTestCase {
         let expectedTab: Tab = .profile
 
         // When
-        router.currentTab = expectedTab
+        viewModel.router.currentTab = expectedTab
 
         // Then
         expect(self.viewModel.currentTab) == expectedTab
