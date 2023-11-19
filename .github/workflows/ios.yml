@@ -26,7 +26,7 @@ jobs:
     #   run: xcodebuild -showdestinations -scheme "Athlete Zone Tests"
 
     - name: Build and test
-      run: xcodebuild test -scheme "Athlete Zone Tests"
+      run: xcodebuild test -scheme "Athlete Zone Tests" -destination 'platform=iOS Simulator,id=dvtdevice-DVTiOSDeviceSimulatorPlaceholder-iphonesimulator:E98E6297-96CD-47D6-8BCB-094879FA62A6'
 
       # uses: sergeysova/xcodebuild-action@v2.1.0
       # with:
