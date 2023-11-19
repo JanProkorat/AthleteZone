@@ -26,5 +26,5 @@ jobs:
     #   run: xcodebuild -showdestinations -scheme "Athlete Zone Tests"
 
     - name: Build and test
-      # run: xcodebuild test  -project "Athlete Zone.xcodeproj" -scheme "Athlete Zone Tests" -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=13.5,name=iPhone SE (2nd generation)'
+      run: xcodebuild test  -project "Athlete Zone.xcodeproj" -scheme "Athlete Zone Tests" -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=13.5,name=iPhone SE (2nd generation)'
       
