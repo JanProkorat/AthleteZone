@@ -22,10 +22,8 @@ jobs:
       # with:
       #   xcode-version: '15.0.0'
 
-    - name: tmp
-      uses: futureware-tech/simulator-action@v3
-      with:
-        model: 'iPhone 8'
+    - name: install simulator
+      run: xcversion simulators --install='iOS 17.0.1'
   
     - name: Show eligible build destinations
       run: xcodebuild -showdestinations -scheme "Athlete Zone Tests"
