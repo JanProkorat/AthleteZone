@@ -37,5 +37,5 @@ jobs:
       run: xcodebuild -showdestinations -scheme "Athlete Zone Tests"
 
     - name: Build and test
-      run: xcodebuild test -scheme "Athlete Zone Tests" -sdk iphonesimulator -destination 'platform=iOS,name=iPhone 15'
+      run: xcodebuild test -scheme "Athlete Zone Tests" -sdk iphonesimulator -destination 'platform=iOS,id=FA33A38E-EEAA-4F85-A3C0-B4D9D0283EDD,name=iPhone 13'
       
