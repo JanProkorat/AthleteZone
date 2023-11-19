@@ -20,7 +20,7 @@ jobs:
     - name: Setup Xcode 
       uses: axmolengine/setup-xcode@v1.5.2
       with:
-        xcode-version: '13.4.1'
+        xcode-version: '14.0.0'
 
     - name: Show eligible build destinations
       run: xcodebuild -showdestinations -scheme "Athlete Zone Tests"
