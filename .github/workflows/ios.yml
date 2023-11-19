@@ -22,8 +22,8 @@ jobs:
       with:
         xcode-version: '14.2.0'
 
-    # - name: install simulator
-    #   run: xcversion simulators --install='iOS 15.4'
+    - name: install simulator
+      run: xcversion simulators --install='iOS 16.2'
 
     - name: Prepare iOS 16.2 simulator
       run: |
