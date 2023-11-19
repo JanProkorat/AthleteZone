@@ -19,12 +19,12 @@ jobs:
 
     - name: Setup Xcode 
       uses: axmolengine/setup-xcode@v1.5.2
-      # with:
-      #   xcode-version: '14.2.0'
+      with:
+        xcode-version: '14.1.0'
 
-    # - name: Show eligible build destinations
-    #   run: xcodebuild -showdestinations -scheme "Athlete Zone Tests"
+    - name: Show eligible build destinations
+      run: xcodebuild -showdestinations -scheme "Athlete Zone Tests"
 
     - name: Build and test
-      run: xcodebuild test -scheme "Athlete Zone Tests" -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=13.5,name=iPhone SE (2nd generation)'
+      run: xcodebuild test -scheme "Athlete Zone Tests" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 15'
       
