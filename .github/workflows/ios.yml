@@ -22,8 +22,8 @@ jobs:
       # with:
       #   xcode-version: '14.2.0'
 
-    # - name: Show eligible build destinations
-    #   run: xcodebuild -showdestinations -scheme "Athlete Zone Tests"
+    - name: Show eligible build destinations
+      run: xcodebuild -showdestinations -scheme "Athlete Zone Tests"
 
     - name: Build and test
       run: xcodebuild test -scheme "Athlete Zone Tests" -destination 'platform=iOS Simulator,id=dvtdevice-DVTiPhonePlaceholder-iphoneos:placeholder,name=Any iOS Device'
