@@ -23,7 +23,7 @@ jobs:
       #   xcode-version: '15.0.0'
 
     - name: install simulator
-      run: xcversion simulators --install='iOS 17.0.1'
+      run: xcversion simulators --install='iOS 15.4'
   
     - name: Show eligible build destinations
       run: xcodebuild -showdestinations -scheme "Athlete Zone Tests"
