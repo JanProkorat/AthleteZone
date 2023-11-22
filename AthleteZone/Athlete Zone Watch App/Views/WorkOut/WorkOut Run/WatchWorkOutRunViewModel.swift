@@ -29,7 +29,7 @@ class WatchWorkOutRunViewModel: WorkOutRunViewModel<WorkOutDto> {
             }
             .store(in: &cancellables)
 
-        timerManager.$timeElapsed
+        timerManager.timeElapsedPublisher
             .sink { elapsed in
                 if self.selectedFlow != nil {
                     self.updateInterval()

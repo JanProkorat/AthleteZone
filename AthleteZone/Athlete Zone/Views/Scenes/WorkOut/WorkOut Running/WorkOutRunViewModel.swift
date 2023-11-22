@@ -20,7 +20,7 @@ class WorkOutRunViewModel<T: WorkOutProtocol>: ObservableObject, Identifiable {
     @Published var selectedFlowIndex = 0
 
     @Published var state: WorkFlowState = .ready
-    @Published var appStorageManager = AppStorageManager.shared
+    @Published var appStorageManager: any AppStorageProtocol
 
     var isLastRunning: Bool {
         selectedFlow != nil &&
@@ -33,11 +33,14 @@ class WorkOutRunViewModel<T: WorkOutProtocol>: ObservableObject, Identifiable {
         selectedFlowIndex == 0
     }
 
-    var timerManager = TimerManager.shared
+    var timerManager: any TimerProtocol
 
     var cancellables = Set<AnyCancellable>()
 
     init() {
+        appStorageManager = AppStorageManager.shared
+        timerManager = TimerManager.shared
+
         $state
             .scan((state, state)) { previous, current -> (WorkFlowState, WorkFlowState) in
                 (previous.1, current)
@@ -69,7 +72,7 @@ class WorkOutRunViewModel<T: WorkOutProtocol>: ObservableObject, Identifiable {
     func setupViewModel(workouts: [T]) {
         workoutLibrary = workouts
         currentWorkout = workouts.first
-        workoutName = workouts.first!.name
+        workoutName = workouts.first?.name ?? ""
         state = .ready
     }
 

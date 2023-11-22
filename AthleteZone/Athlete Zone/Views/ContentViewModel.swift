@@ -28,6 +28,8 @@ class ContentViewModel: ObservableObject {
     private var routerCancellable: AnyCancellable?
     private var languageCancellable: AnyCancellable?
 
+    private var cancellables = Set<AnyCancellable>()
+
     init() {
         appStorageManager = AppStorageManager.shared
         languageManager = LanguageManager.shared
@@ -40,9 +42,14 @@ class ContentViewModel: ObservableObject {
 
         router.currentSection = appStorageManager.selectedSection
         languageManager.language = appStorageManager.language
+
+        setupSectionWatcher()
+        setupLanguageWatcher()
     }
 
     private func setupSectionWatcher() {
+        routerCancellable?.cancel()
+
         routerCancellable = router.currentSectionPublisher
             .sink { newValue in
                 self.currentSection = newValue

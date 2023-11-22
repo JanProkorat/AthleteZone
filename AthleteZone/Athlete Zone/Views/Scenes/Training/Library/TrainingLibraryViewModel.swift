@@ -15,10 +15,9 @@ class TrainingLibraryViewModel: ObservableObject {
     @Published var sortBy: TrainingSortByProperty = .name
 
     @ObservedObject var selectedTrainingManager = SelectedTrainingManager.shared
-    @ObservedObject var router = ViewRouter.shared
-
-    private var connectivityManager = WatchConnectivityManager.shared
-    private var storageManager = AppStorageManager.shared
+    var router: any ViewRoutingProtocol
+    var connectivityManager: WatchConnectivityProtocol
+    var storageManager: any AppStorageProtocol
 
     var realmManager: TrainingRealmManagerProtocol
 
@@ -28,12 +27,15 @@ class TrainingLibraryViewModel: ObservableObject {
 
     init() {
         realmManager = TrainingRealmManager()
+        router = ViewRouter.shared
+        connectivityManager = WatchConnectivityManager.shared
+        storageManager = AppStorageManager.shared
     }
 
     func removeTraining(_ training: Training) {
         realmManager.delete(entity: training)
         objectWillChange.send()
-        removeFromWatch(training._id.stringValue)
+        connectivityManager.sendValue(["training_remove": training._id.stringValue])
 
         if training._id == selectedTrainingManager.selectedTraining?._id {
             selectedTrainingManager.selectedTraining = nil
@@ -48,13 +50,5 @@ class TrainingLibraryViewModel: ObservableObject {
 
     func setSelectedTraining(_ training: Training) {
         selectedTrainingManager.selectedTraining = training
-    }
-}
-
-// MARK: Watch connecctivity
-
-extension TrainingLibraryViewModel {
-    func removeFromWatch(_ id: String) {
-        connectivityManager.sendValue(["training_remove": id])
     }
 }

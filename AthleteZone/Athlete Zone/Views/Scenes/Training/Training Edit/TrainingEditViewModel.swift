@@ -25,8 +25,8 @@ class TrainingEditViewModel: ObservableObject {
     var workoutRealmManager: WorkOutRealmManagerProtocol
 
     @ObservedObject var selectedTrainingManager = SelectedTrainingManager.shared
-    @Published var connectivityManager = WatchConnectivityManager.shared
-    var router = ViewRouter.shared
+    @Published var connectivityManager: WatchConnectivityProtocol
+    var router: any ViewRoutingProtocol
 
     init() {
         let training = Training()
@@ -37,6 +37,8 @@ class TrainingEditViewModel: ObservableObject {
 
         trainingRealmManager = TrainingRealmManager()
         workoutRealmManager = WorkoutRealmManager()
+        router = ViewRouter.shared
+        connectivityManager = WatchConnectivityManager.shared
     }
 
     init(training: Training) {
@@ -48,6 +50,8 @@ class TrainingEditViewModel: ObservableObject {
         isEditing = true
         trainingRealmManager = TrainingRealmManager()
         workoutRealmManager = WorkoutRealmManager()
+        router = ViewRouter.shared
+        connectivityManager = WatchConnectivityManager.shared
     }
 
     init(name: String, description: String, workouts: [WorkOut]) {
@@ -61,6 +65,8 @@ class TrainingEditViewModel: ObservableObject {
 
         trainingRealmManager = TrainingRealmManager()
         workoutRealmManager = WorkoutRealmManager()
+        router = ViewRouter.shared
+        connectivityManager = WatchConnectivityManager.shared
     }
 
     func saveTraining() {

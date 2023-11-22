@@ -9,6 +9,8 @@ import AVKit
 import Foundation
 
 class SoundManager: SoundProtocol {
+    static let shared = SoundManager()
+
     private var audioSession: AVAudioSession?
     private var players: [Sound: AVAudioPlayer]
 

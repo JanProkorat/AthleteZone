@@ -12,11 +12,11 @@ import WidgetKit
 
 class WorkOutViewModel: ObservableObject, Identifiable {
     @ObservedObject var selectedWorkoutManager = SelectedWorkoutManager.shared
-    @ObservedObject var router = ViewRouter.shared
     @ObservedObject var runViewModel = PhoneWorkOutRunViewModel()
 
     var appStorageManager: any AppStorageProtocol
     var realmManager: WorkOutRealmManagerProtocol
+    var router: any ViewRoutingProtocol
 
     @Published var selectedWorkout: WorkOut?
     @Published var name = "Title"
@@ -35,6 +35,7 @@ class WorkOutViewModel: ObservableObject, Identifiable {
     private var cancellables = Set<AnyCancellable>()
 
     init() {
+        router = ViewRouter.shared
         realmManager = WorkoutRealmManager()
         appStorageManager = AppStorageManager.shared
 

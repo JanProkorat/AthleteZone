@@ -10,10 +10,7 @@ import Foundation
 
 class WorkOutContentViewModel: ObservableObject {
     @Published var router: any ViewRoutingProtocol {
-        didSet {
-            cancellable = router.currentTabPublisher
-                .sink { self.currentTab = $0 }
-        }
+        didSet { setupCurrentTabWatcher() }
     }
 
     @Published var currentTab: Tab = .home
@@ -21,6 +18,15 @@ class WorkOutContentViewModel: ObservableObject {
     private var cancellable: AnyCancellable?
 
     init() {
-        router = ViewRouter.shared
+        self.router = ViewRouter.shared
+
+        setupCurrentTabWatcher()
+    }
+
+    private func setupCurrentTabWatcher() {
+        cancellable?.cancel()
+
+        cancellable = router.currentTabPublisher
+            .sink { self.currentTab = $0 }
     }
 }

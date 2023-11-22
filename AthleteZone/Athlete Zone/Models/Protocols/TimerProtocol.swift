@@ -7,10 +7,11 @@
 
 import Foundation
 
-protocol TimerProtocol {
+protocol TimerProtocol: ObservableObject {
     var timeElapsed: TimeInterval { get }
     var timeElapsedPublisher: Published<TimeInterval>.Publisher { get }
 
     func startTimer()
     func stopTimer()
+    func pauseTimer()
 }

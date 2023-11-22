@@ -9,7 +9,7 @@ import Combine
 import Foundation
 import UIKit
 
-class TimerManager: ObservableObject, TimerProtocol {
+class TimerManager: TimerProtocol {
     static let shared = TimerManager()
 
     var timeElapsedPublisher: Published<TimeInterval>.Publisher {
@@ -51,6 +51,11 @@ class TimerManager: ObservableObject, TimerProtocol {
         timer?.invalidate()
         timer = nil
         endBackgroundTask()
+    }
+
+    func pauseTimer() {
+        timer?.invalidate()
+        timer = nil
     }
 
     private func scheduleBackgroundTask() {

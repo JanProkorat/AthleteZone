@@ -10,10 +10,13 @@ import WidgetKit
 
 class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
     private var widgetManager = WidgetDataManager.shared
-    private var liveActivityManager = LiveActivityManager.shared
-    private var soundManager: SoundProtocol = SoundManager()
+    var liveActivityManager: LiveActivityProtocol
+    var soundManager: SoundProtocol
 
     override init() {
+        liveActivityManager = LiveActivityManager.shared
+        soundManager = SoundManager.shared
+
         super.init()
 
         NotificationCenter.default.publisher(for: TimerManager.timerUpdatedNotification)

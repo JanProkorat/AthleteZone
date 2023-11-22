@@ -8,9 +8,9 @@
 import ActivityKit
 import Foundation
 
-class LiveActivityManager {
+class LiveActivityManager: LiveActivityProtocol {
     static let shared = LiveActivityManager()
-    private var activity: Activity<AthleteZoneWidgetAttributes>?
+    var activity: Activity<AthleteZoneWidgetAttributes>?
 
     func startActivity(workFlow: WorkFlow, workoutName: String) {
         if ActivityAuthorizationInfo().areActivitiesEnabled, activity == nil {

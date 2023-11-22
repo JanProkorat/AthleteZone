@@ -12,10 +12,10 @@ import WidgetKit
 
 class TrainingViewModel: ObservableObject {
     @ObservedObject var selectedTrainingManager = SelectedTrainingManager.shared
-    @ObservedObject var router = ViewRouter.shared
     @ObservedObject var runViewModel = TrainingRunViewModel()
-
-    var appStorageManager = AppStorageManager.shared
+    var router: any ViewRoutingProtocol
+    var realmManager: TrainingRealmManagerProtocol
+    var appStorageManager: any AppStorageProtocol
 
     @Published var selectedTraining: Training?
     @Published var workouts: [WorkOut] = []
@@ -23,10 +23,11 @@ class TrainingViewModel: ObservableObject {
     @Published var isRunViewVisible = false
 
     private var cancellables = Set<AnyCancellable>()
-    var realmManager: TrainingRealmManagerProtocol
 
     init() {
         realmManager = TrainingRealmManager()
+        router = ViewRouter.shared
+        appStorageManager = AppStorageManager.shared
 
         selectedTrainingManager.$selectedTraining
             .sink(receiveValue: { newValue in
