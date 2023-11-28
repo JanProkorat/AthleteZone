@@ -67,15 +67,15 @@ class SettingsViewModel: ObservableObject {
     }
 
     func shareLanguage(_ language: Language) {
-        connectivityManager.sendValue([DefaultItem.language.rawValue: language.rawValue])
+        connectivityManager.sendValue([TransferDataKey.language.rawValue: language.rawValue])
     }
 
     func shareSoundsEnabled(_ enabled: Bool) {
-        connectivityManager.sendValue([DefaultItem.soundsEnabled.rawValue: enabled])
+        connectivityManager.sendValue([TransferDataKey.soundsEnabled.rawValue: enabled])
     }
 
     func shareHapticsEnabled(_ enabled: Bool) {
-        connectivityManager.sendValue([DefaultItem.hapticsEnabled.rawValue: enabled])
+        connectivityManager.sendValue([TransferDataKey.hapticsEnabled.rawValue: enabled])
     }
 
     func handleNotifications(_ isEnabled: Bool) {

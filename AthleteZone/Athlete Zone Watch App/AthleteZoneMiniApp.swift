@@ -9,13 +9,13 @@ import SwiftUI
 
 @main
 struct AthleteZoneMiniWatchAppApp: App {
-    @StateObject var appStorageManager = AppStorageManager.shared
+    @StateObject var settingsManager = SettingsManager.shared
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(\.colorScheme, .dark)
-                .environment(\.locale, .init(identifier: "\(appStorageManager.language)"))
+                .environment(\.locale, .init(identifier: "\(settingsManager.currentLanguage)"))
         }
     }
 }

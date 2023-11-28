@@ -44,7 +44,7 @@ enum InputType {
     case time, number, text
 }
 
-enum Language: String, Equatable, CaseIterable {
+enum Language: String, Equatable, CaseIterable, Codable {
     case cze = "CZ"
     case de = "DE"
     case en = "GB"
@@ -87,7 +87,7 @@ enum TrainingSortByProperty: String, SortByProperty {
     case trainingLength = "Training length"
 }
 
-enum Section: String, CaseIterable {
+enum Section: String, CaseIterable, Codable {
     case workout = "Workout"
     case training = "Training"
 }
@@ -96,4 +96,17 @@ enum LaunchScreenStep {
     case firstStep
     case secondStep
     case finished
+}
+
+enum TransferDataKey: String {
+    case data
+    case soundsEnabled
+    case hapticsEnabled
+    case language
+    case workoutAdd
+    case workoutEdit
+    case workoutRemove
+    case trainingAdd
+    case trainingEdit
+    case trainingRemove
 }

@@ -16,6 +16,11 @@ struct BaseView<Content: View>: View {
         self.content = content()
     }
 
+    init(@ViewBuilder content: () -> Content) {
+        self.title = ""
+        self.content = content()
+    }
+
     var body: some View {
         VStack(alignment: .center) {
             Text(title)

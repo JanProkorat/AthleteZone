@@ -62,6 +62,6 @@ extension LibraryViewModel {
 
 extension LibraryViewModel {
     func removeFromWatch(_ id: String) {
-        connectivityManager.sendValue(["workout_remove": id])
+        connectivityManager.sendValue([TransferDataKey.workoutRemove.rawValue: id])
     }
 }

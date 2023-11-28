@@ -99,14 +99,14 @@ class WorkOutEditViewModel: ObservableObject {
         if !isEditing {
             let workout = WorkOut(name, work, rest, series, rounds, reset)
             realmManager.add(workout)
-            connectivityManager.sendValue(["workout_add": workout.toDto().encode()!])
+            connectivityManager.sendValue([TransferDataKey.workoutAdd.rawValue: workout.toDto().encode()!])
 
             if router.currentTab == .home {
                 selectedWorkoutManager.selectedWorkout = workout
             }
         } else {
             realmManager.update(workout._id, name, work, rest, series, rounds, reset)
-            connectivityManager.sendValue(["workout_edit": workout.toDto().encode()!])
+            connectivityManager.sendValue([TransferDataKey.workoutEdit.rawValue: workout.toDto().encode()!])
 
             if selectedWorkoutManager.selectedWorkout?._id == workout._id {
                 selectedWorkoutManager.selectedWorkout = workout

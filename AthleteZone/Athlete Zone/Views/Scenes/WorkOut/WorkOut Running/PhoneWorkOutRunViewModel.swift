@@ -12,10 +12,12 @@ class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
     private var widgetManager = WidgetDataManager.shared
     var liveActivityManager: LiveActivityProtocol
     var soundManager: SoundProtocol
+    var appStorageManager: any AppStorageProtocol
 
     override init() {
         liveActivityManager = LiveActivityManager.shared
         soundManager = SoundManager.shared
+        appStorageManager = AppStorageManager.shared
 
         super.init()
 

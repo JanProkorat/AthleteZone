@@ -15,10 +15,10 @@ struct WatchLibraryView: View {
             VStack {
                 HStack {
                     SectionButton(title: "Workouts", section: viewModel.currentSection, expectedSection: .workout)
-                        .onTab { viewModel.appStorageManager.selectedSection = .workout }
+                        .onTab { viewModel.settingsManager.currentSection = .workout }
 
                     SectionButton(title: "Trainings", section: viewModel.currentSection, expectedSection: .training)
-                        .onTab { viewModel.appStorageManager.selectedSection = .training }
+                        .onTab { viewModel.settingsManager.currentSection = .training }
                 }
                 .padding([.top, .bottom])
 

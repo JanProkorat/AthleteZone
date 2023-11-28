@@ -35,7 +35,7 @@ class TrainingLibraryViewModel: ObservableObject {
     func removeTraining(_ training: Training) {
         realmManager.delete(entity: training)
         objectWillChange.send()
-        connectivityManager.sendValue(["training_remove": training._id.stringValue])
+        connectivityManager.sendValue([TransferDataKey.trainingRemove.rawValue: training._id.stringValue])
 
         if training._id == selectedTrainingManager.selectedTraining?._id {
             selectedTrainingManager.selectedTraining = nil

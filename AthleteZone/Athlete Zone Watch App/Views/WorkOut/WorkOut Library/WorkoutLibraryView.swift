@@ -22,6 +22,13 @@ struct WorkoutLibraryView: View {
             }
             .listStyle(PlainListStyle())
             .environment(\.defaultMinListRowHeight, 40)
+            .overlay(alignment: .top) {
+                if viewModel.library.isEmpty {
+                    Text("No workouts to display. Define workouts in iOS app or swipe left to start quick workout")
+                        .font(.footnote)
+                        .padding([.top, .leading, .trailing])
+                }
+            }
 
             HStack {}
                 .frame(height: 2)

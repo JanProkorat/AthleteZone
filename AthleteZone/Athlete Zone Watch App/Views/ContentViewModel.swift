@@ -8,12 +8,12 @@
 import Combine
 import Foundation
 import SwiftUI
+import WatchConnectivity
 
 class ContentViewModel: ObservableObject {
-    var appStorageManager = AppStorageManager.shared
-    var sectionManager = SectionManager.shared
-    var connectivityManager = WatchConnectivityManager.shared
-    var healthManager = HealthManager.shared
+    var settingsManager: any SettingsProtocol
+    var connectivityManager: any ConnectivityProtocol
+    var healthManager: any HealthProtocol
 
     @Published var currentSection: Section = .workout
     @Published var launchScreenState: LaunchScreenStep = .firstStep
@@ -24,57 +24,38 @@ class ContentViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
 
+    private var methodDictionary: [TransferDataKey: (String?) -> Void] = [:]
+
     init() {
+        settingsManager = SettingsManager.shared
+        connectivityManager = ConnectivityManager.shared
+        healthManager = HealthManager.shared
+
         healthManager.requestAuthorization()
 
-        appStorageManager.objectWillChange
-            .sink { [weak self] _ in
-                guard let self = self else { return }
-                currentSection = appStorageManager.selectedSection
-            }
+        settingsManager
+            .currentSectionPublished
+            .sink { self.currentSection = $0 }
             .store(in: &cancellables)
 
-        connectivityManager.$isSessionReachable
+        connectivityManager
+            .isSessionReachablePublisher
+            .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
+            .sink { self.loadData($0) }
+            .store(in: &cancellables)
+
+        connectivityManager
+            .activationStatePublisher
+            .sink { self.dismissLaunchScreenIfPhoneNotInstalled($0) }
+            .store(in: &cancellables)
+
+        connectivityManager
+            .receivedMessagePublisher
             .sink { newValue in
-                if newValue {
-                    self.connectivityManager.requestData()
+                if newValue != nil {
+                    self.processReceivedMessage(newValue!)
                 }
             }
-            .store(in: &cancellables)
-
-        connectivityManager
-            .$receivedData
-            .sink { self.setReceivedData($0) }
-            .store(in: &cancellables)
-
-        connectivityManager
-            .$receivedNewWorkout
-            .sink { self.addReceivedWorkout($0) }
-            .store(in: &cancellables)
-
-        connectivityManager
-            .$receivedUpdateWorkout
-            .sink { self.updateReceivedWorkout($0) }
-            .store(in: &cancellables)
-
-        connectivityManager
-            .$receivedRemoveWorkout
-            .sink { self.removeReceivedWorkout($0) }
-            .store(in: &cancellables)
-
-        connectivityManager
-            .$receivedNewTraining
-            .sink { self.addReceivedTraining($0) }
-            .store(in: &cancellables)
-
-        connectivityManager
-            .$receivedUpdateTraining
-            .sink { self.updateReceivedTraining($0) }
-            .store(in: &cancellables)
-
-        connectivityManager
-            .$receivedRemoveTraining
-            .sink { self.removeReceivedTraining($0) }
             .store(in: &cancellables)
 
         launchScreenStateManager
@@ -83,13 +64,59 @@ class ContentViewModel: ObservableObject {
                 self.launchScreenState = state
             }
             .store(in: &cancellables)
+
+        methodDictionary[.data] = { self.setReceivedData($0) }
+        methodDictionary[.soundsEnabled] = { self.setRecievedSoundsEnabled($0) }
+        methodDictionary[.hapticsEnabled] = { self.setRecievedHapticsEnabled($0) }
+        methodDictionary[.language] = { self.setRecievedLanguage($0) }
+        methodDictionary[.workoutAdd] = { self.addReceivedWorkout($0) }
+        methodDictionary[.workoutEdit] = { self.updateReceivedWorkout($0) }
+        methodDictionary[.workoutRemove] = { self.removeReceivedWorkout($0) }
+        methodDictionary[.trainingAdd] = { self.addReceivedTraining($0) }
+        methodDictionary[.trainingEdit] = { self.updateReceivedTraining($0) }
+        methodDictionary[.trainingRemove] = { self.removeReceivedTraining($0) }
     }
 }
 
 // MARK: Receive data
 
 extension ContentViewModel {
-    func setReceivedData(_ data: String?) {
+    func loadData(_ isReachable: Bool) {
+        if isReachable {
+            connectivityManager.requestData()
+        } else {
+            loadBackupData()
+            launchScreenStateManager.dismiss()
+        }
+    }
+
+    func dismissLaunchScreenIfPhoneNotInstalled(_ activationState: WCSessionActivationState) {
+        if activationState != .activated {
+            return
+        }
+
+        if !connectivityManager.isIosAppInstalled() {
+            loadBackupData()
+            launchScreenStateManager.dismiss()
+        }
+    }
+
+    func processReceivedMessage(_ message: [String: Any]) {
+        message.forEach { key, value in
+            if let identifier = TransferDataKey(rawValue: key) {
+                if let processMethod = methodDictionary[identifier] {
+                    processMethod(value as? String)
+                } else {
+                    print("No process method for key \(key) defined")
+                }
+            } else {
+                print("No \(String(describing: TransferDataKey.self)) for key \(key) defined")
+            }
+        }
+        settingsManager.backupData(workoutLibraryViewModel.library, trainingLibraryViewModel.library)
+    }
+
+    private func setReceivedData(_ data: String?) {
         if let receivedDataString = data {
             do {
                 let receivedData = try JSONDecoder().decode(WatchDataDto.self, from: Data(receivedDataString.utf8))
@@ -102,7 +129,7 @@ extension ContentViewModel {
         }
     }
 
-    func addReceivedWorkout(_ data: String?) {
+    private func addReceivedWorkout(_ data: String?) {
         if let receivedDataString = data {
             do {
                 let workout = try receivedDataString.decode() as WorkOutDto
@@ -113,7 +140,7 @@ extension ContentViewModel {
         }
     }
 
-    func updateReceivedWorkout(_ data: String?) {
+    private func updateReceivedWorkout(_ data: String?) {
         if let receivedDataString = data {
             do {
                 let workout = try receivedDataString.decode() as WorkOutDto
@@ -124,13 +151,13 @@ extension ContentViewModel {
         }
     }
 
-    func removeReceivedWorkout(_ receivedId: String?) {
+    private func removeReceivedWorkout(_ receivedId: String?) {
         if let workoutId = receivedId {
             workoutLibraryViewModel.removeWorkout(workoutId)
         }
     }
 
-    func addReceivedTraining(_ data: String?) {
+    private func addReceivedTraining(_ data: String?) {
         if let receivedDataString = data {
             do {
                 let training = try receivedDataString.decode() as TrainingDto
@@ -141,7 +168,7 @@ extension ContentViewModel {
         }
     }
 
-    func updateReceivedTraining(_ data: String?) {
+    private func updateReceivedTraining(_ data: String?) {
         if let receivedDataString = data {
             do {
                 let training = try receivedDataString.decode() as TrainingDto
@@ -152,9 +179,38 @@ extension ContentViewModel {
         }
     }
 
-    func removeReceivedTraining(_ receivedId: String?) {
+    private func removeReceivedTraining(_ receivedId: String?) {
         if let trainingId = receivedId {
             trainingLibraryViewModel.removeTraining(trainingId)
+        }
+    }
+
+    private func setRecievedSoundsEnabled(_ soundsEnabled: String?) {
+        if let enabled = soundsEnabled {
+            settingsManager.soundsEnabled = Bool(enabled) ?? false
+        }
+    }
+
+    private func setRecievedHapticsEnabled(_ hapticsEnabled: String?) {
+        if let enabled = hapticsEnabled {
+            settingsManager.hapticsEnabled = Bool(enabled) ?? false
+        }
+    }
+
+    private func setRecievedLanguage(_ language: String?) {
+        if let newLanguage = language {
+            settingsManager.currentLanguage = Language(rawValue: newLanguage) ?? .en
+        }
+    }
+
+    private func loadBackupData() {
+        if let backup = settingsManager.loadBackupData() {
+            workoutLibraryViewModel.setLibrary(backup.workouts)
+            trainingLibraryViewModel.setLibrary(backup.trainings)
+            settingsManager.soundsEnabled = backup.soundsEnabled
+            settingsManager.hapticsEnabled = backup.hapticsEnabled
+            settingsManager.currentLanguage = backup.currentLanguage
+            settingsManager.currentSection = backup.currentSection
         }
     }
 }

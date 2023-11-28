@@ -55,21 +55,16 @@ struct WorkOutRunContent: View {
                             .frame(maxWidth: .infinity, alignment: .center)
                             .foregroundStyle(.accent)
 
-                        Button {
-                            self.viewModel.state = self.viewModel.state == .running ? .paused : .running
-                        } label: {
-                            //                        TimelineView(.periodic(from: Date(), by: 0.1)) { _ in
-                            Text(flow.interval.toFormattedTime())
-                                .font(.largeTitle)
-                                .scaledToFill()
-                                .scaledToFit()
-                                .minimumScaleFactor(0.01)
-                                .lineLimit(1)
-                                .padding(.top)
-                                .foregroundColor(Color(flow.color.rawValue))
-                            //                        }
-                        }
-                        .buttonStyle(.plain)
+                        //                        TimelineView(.periodic(from: Date(), by: 0.1)) { _ in
+                        Text(flow.interval.toFormattedTime())
+                            .font(.largeTitle)
+                            .scaledToFill()
+                            .scaledToFit()
+                            .minimumScaleFactor(0.01)
+                            .lineLimit(1)
+                            .padding(.top)
+                            .foregroundColor(Color(flow.color.rawValue))
+                        //                        }
                     }
                     .padding(.top, -25)
 

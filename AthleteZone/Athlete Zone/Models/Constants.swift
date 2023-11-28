@@ -51,6 +51,7 @@ enum ComponentColor: String, CaseIterable, Codable {
     case action = "Action"
     case braun = "Braun"
     case darkBlue = "Dark_blue"
+    case darkGrey = "Dark_grey"
     case grey = "Grey"
     case mainText = "Main_text"
     case menuText = "Menu_text"
@@ -91,6 +92,7 @@ enum DefaultItem: String {
     case notificationsEnabled
     case notificationsAllowed
     case selectedSection
+    case backupData
 }
 
 enum Sound: String, CaseIterable {

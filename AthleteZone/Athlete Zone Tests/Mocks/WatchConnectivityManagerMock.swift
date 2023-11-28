@@ -9,6 +9,10 @@
 import Foundation
 
 class WatchConnectivityMock: WatchConnectivityProtocol {
+    func checkIfPairedAppInstalled() -> Bool {
+        return true
+    }
+
     var lastSentMessage: [String: Any]?
 
     func sendValue(_ value: [String: Any]) {

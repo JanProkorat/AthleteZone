@@ -20,7 +20,6 @@ class WorkOutRunViewModel<T: WorkOutProtocol>: ObservableObject, Identifiable {
     @Published var selectedFlowIndex = 0
 
     @Published var state: WorkFlowState = .ready
-    @Published var appStorageManager: any AppStorageProtocol
 
     var isLastRunning: Bool {
         selectedFlow != nil &&
@@ -38,7 +37,6 @@ class WorkOutRunViewModel<T: WorkOutProtocol>: ObservableObject, Identifiable {
     var cancellables = Set<AnyCancellable>()
 
     init() {
-        appStorageManager = AppStorageManager.shared
         timerManager = TimerManager.shared
 
         $state

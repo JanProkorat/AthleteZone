@@ -12,6 +12,7 @@ class WatchWorkOutRunViewModel: WorkOutRunViewModel<WorkOutDto> {
     private var healthManager = HealthWorkouthManager()
     private var hapticManager = HapticManager()
     private var soundManager: SoundProtocol?
+    private var settingsManager: any SettingsProtocol
 
     @Published var timeElapsed: String = "00:00:00"
     @Published var heartRate: Double = 0
@@ -19,11 +20,12 @@ class WatchWorkOutRunViewModel: WorkOutRunViewModel<WorkOutDto> {
     @Published var baseEnergy: Double = 0
 
     override init() {
+        settingsManager = SettingsManager.shared
         super.init()
 
         $selectedFlow
             .sink { newValue in
-                if self.appStorageManager.hapticsEnabled {
+                if self.settingsManager.hapticsEnabled {
                     self.playHaptic(newValue)
                 }
             }

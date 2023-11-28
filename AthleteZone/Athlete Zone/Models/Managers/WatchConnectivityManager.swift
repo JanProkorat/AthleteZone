@@ -15,26 +15,13 @@ final class WatchConnectivityManager: NSObject, ObservableObject, WatchConnectiv
 
     var appStorageManager = AppStorageManager.shared
 
-    @Published var isSessionReachable = false
-    @Published var isPairedAppInstalled = false
-
-    @Published var receivedData: String?
-    @Published var receivedNewWorkout: String?
-    @Published var receivedNewTraining: String?
-    @Published var receivedUpdateWorkout: String?
-    @Published var receivedUpdateTraining: String?
-    @Published var receivedRemoveWorkout: String?
-    @Published var receivedRemoveTraining: String?
-
     override private init() {
         super.init()
 
-        #if !os(watchOS)
         guard WCSession.isSupported() else {
-            print("Not supported")
+            print("WCSession Not supported")
             return
         }
-        #endif
 
         WCSession.default.delegate = self
         WCSession.default.activate()
@@ -43,51 +30,41 @@ final class WatchConnectivityManager: NSObject, ObservableObject, WatchConnectiv
 
 // MARK: - Is paired app installed
 
-// TODO: - Integrate to settings
 extension WatchConnectivityManager {
-    func checkIfPairedAppInstalled() {
-        #if os(watchOS)
-        guard WCSession.default.isCompanionAppInstalled else {
-            print("iOS app not installed on the paired Apple Watch")
-            return
-        }
-        #else
-        guard WCSession.default.isWatchAppInstalled else {
-            print("WatchOS app not installed on the paired Apple Watch")
-            return
-        }
-        #endif
-
-        self.isPairedAppInstalled.toggle()
+    func checkIfPairedAppInstalled() -> Bool {
+        return WCSession.default.isWatchAppInstalled
     }
 }
 
 // MARK: - WCSessionDelegate
 
 extension WatchConnectivityManager: WCSessionDelegate {
-    #if os(iOS)
     func sessionDidBecomeInactive(_ session: WCSession) {}
 
     func sessionDidDeactivate(_ session: WCSession) {
         WCSession.default.activate()
     }
-    #endif
 
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         switch activationState {
         case .activated:
-            print("Activated")
+            print("Phone Activated")
 
         case .notActivated:
-            print("Not Activated")
+            print("Phone Not Activated")
 
         case .inactive:
-            print("Inactive")
+            print("Phone Inactive")
         @unknown default:
             break
         }
     }
 
+    ///  Receives message from watch when watch app is starting, loads all necessary data and sends back a reply
+    /// - Parameters:
+    ///   - session: Watch connectivity session
+    ///   - message: Message received from watch
+    ///   - replyHandler: Handler to send back a reply
     func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
         if message["data"] != nil {
             let replyData = self.loadReplyData()
@@ -96,91 +73,18 @@ extension WatchConnectivityManager: WCSessionDelegate {
                           DefaultItem.soundsEnabled.rawValue: self.appStorageManager.soundsEnabled,
                           DefaultItem.hapticsEnabled.rawValue: self.appStorageManager.hapticsEnabled])
         }
-
-        DispatchQueue.main.async {
-            self.decodeMessage(message)
-        }
-    }
-
-    public func requestData() {
-        guard WCSession.default.activationState == .activated else {
-            print("Session not in active state")
-            return
-        }
-
-        #if os(watchOS)
-        guard WCSession.default.isCompanionAppInstalled else {
-            print("iOS app not installed")
-            return
-        }
-        #else
-        guard WCSession.default.isWatchAppInstalled else {
-            print("WatchOS app not installed")
-            return
-        }
-        #endif
-
-        WCSession.default.sendMessage(["data": "data"]) { newValue in
-            DispatchQueue.main.async {
-                self.decodeMessage(newValue)
-            }
-
-        } errorHandler: { error in
-            print(["Error sending data request", error.localizedDescription])
-        }
     }
 
     func loadReplyData() -> String {
-        #if os(iOS)
         let workoutManager = WorkoutRealmManager()
         let workouts = workoutManager.load().map { $0.toDto() }
 
         let trainingManager = TrainingRealmManager()
         let trainings = trainingManager.load().map { $0.toDto() }
         return WatchDataDto(workouts: workouts, trainings: trainings).toJSONString() ?? ""
-        #else
-        return ""
-        #endif
-    }
-
-    func sessionReachabilityDidChange(_ session: WCSession) {
-        self.isSessionReachable = session.isReachable
     }
 
     func sendValue(_ value: [String: Any]) {
         WCSession.default.sendMessage(value) { _ in }
-    }
-
-    func decodeMessage(_ message: [String: Any]) {
-        if let dataString = message["data"] as? String {
-            self.receivedData = dataString
-        }
-        if let language = message[DefaultItem.language.rawValue] as? String {
-            self.appStorageManager.language = Language(rawValue: language) ?? .en
-        }
-        if let sounds = message[DefaultItem.soundsEnabled.rawValue] as? Bool {
-            self.appStorageManager.soundsEnabled = sounds
-        }
-        if let haptics = message[DefaultItem.hapticsEnabled.rawValue] as? Bool {
-            self.appStorageManager.hapticsEnabled = haptics
-        }
-        if let workout = message["workout_add"] as? String {
-            self.receivedNewWorkout = workout
-        }
-        if let workout = message["workout_edit"] as? String {
-            self.receivedUpdateWorkout = workout
-        }
-        if let workoutId = message["workout_remove"] as? String {
-            self.receivedRemoveWorkout = workoutId
-        }
-        if let trainingId = message["training_remove"] as? String {
-            self.receivedRemoveTraining = trainingId
-        }
-        if let training = message["training_edit"] as? String {
-            self.receivedUpdateTraining = training
-        }
-        if let training = message["training_add"] as? String {
-            self.receivedNewTraining = training
-        }
     }
 }

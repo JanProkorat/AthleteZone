@@ -75,14 +75,14 @@ class TrainingEditViewModel: ObservableObject {
             training.trainingDescription = description
             training.addWorkOuts(workouts)
             trainingRealmManager.add(training)
-            connectivityManager.sendValue(["training_add": training.toDto().encode() as Any])
+            connectivityManager.sendValue([TransferDataKey.trainingAdd.rawValue: training.toDto().encode() as Any])
 
             if router.currentTab == .home {
                 selectedTrainingManager.selectedTraining = training
             }
         } else {
             trainingRealmManager.update(training._id, name, description, workouts)
-            connectivityManager.sendValue(["training_edit": training.toDto().encode() as Any])
+            connectivityManager.sendValue([TransferDataKey.trainingEdit.rawValue: training.toDto().encode() as Any])
 
             if selectedTrainingManager.selectedTraining?._id == training._id {
                 selectedTrainingManager.selectedTraining = training
