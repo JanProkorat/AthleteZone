@@ -29,14 +29,9 @@ class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
             }
             .store(in: &cancellables)
 
-        var selectedFlowPublisher: Published<WorkFlow?>.Publisher {
-            $selectedFlow
-        }
-
         $selectedFlow
             .sink { newValue in
                 self.widgetManager.saveWidgetData(self.workoutName, newValue)
-                WidgetCenter.shared.reloadTimelines(ofKind: UserDefaultValues.widgetId.rawValue)
 
                 if newValue != nil {
                     self.liveActivityManager.updateActivity(
@@ -44,11 +39,8 @@ class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
                         workoutName: self.workoutName
                     )
                 }
-            }
-            .store(in: &cancellables)
+//                WidgetCenter.shared.reloadTimelines(ofKind: UserDefaultValues.widgetId.rawValue)
 
-        $selectedFlow
-            .sink { newValue in
                 if self.appStorageManager.soundsEnabled {
                     self.playSound(newValue)
                 }

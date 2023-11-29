@@ -41,8 +41,7 @@ class TimerManager: TimerProtocol {
             self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
                 guard let self = self else { return }
                 self.timeElapsed += timer.timeInterval
-                NotificationCenter
-                    .default.post(name: TimerManager.timerUpdatedNotification, object: nil)
+                NotificationCenter.default.post(name: TimerManager.timerUpdatedNotification, object: nil)
             }
         }
     }

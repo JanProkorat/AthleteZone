@@ -498,6 +498,7 @@
 		7ED7357E296B76C400E1A305 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7ED7D0912A61229400691C69 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7ED7DE732A6AE1EE003C421C /* ContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModelTests.swift; sourceTree = "<group>"; };
+		7EDC93DC2B16A2E500C518B6 /* AthleteZoneWidgetsExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AthleteZoneWidgetsExtensionRelease.entitlements; sourceTree = "<group>"; };
 		7EDDF9BE299B7FE300BEC1CD /* SettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsItem.swift; sourceTree = "<group>"; };
 		7EDDF9C1299B81CB00BEC1CD /* LanguagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePicker.swift; sourceTree = "<group>"; };
 		7EDDF9CA299B896A00BEC1CD /* WorkoutLibraryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutLibraryView.swift; sourceTree = "<group>"; };
@@ -819,6 +820,7 @@
 		7E33B654291435BE009E4C1C = {
 			isa = PBXGroup;
 			children = (
+				7EDC93DC2B16A2E500C518B6 /* AthleteZoneWidgetsExtensionRelease.entitlements */,
 				7E3AD0812AC6057200437EEC /* AthleteZoneWidgetsExtensionDebug.entitlements */,
 				7E3AD0652AC603BB00437EEC /* AthleteZoneMini-Watch-App-Info.plist */,
 				7E33B65F291435BE009E4C1C /* Athlete Zone */,
@@ -2205,6 +2207,7 @@
 				"INFOPLIST_FILE[sdk=*]" = "Athlete Zone Widget/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = AthleteZoneWidgets;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
+				INFOPLIST_KEY_LSBackgroundOnly = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2231,6 +2234,7 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = AthleteZoneWidgetsExtensionRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5SV4N2J8AG;
@@ -2240,6 +2244,7 @@
 				INFOPLIST_FILE = "Athlete Zone Widget/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = AthleteZoneWidgets;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
+				INFOPLIST_KEY_LSBackgroundOnly = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -40,11 +40,11 @@ class AppStorageManager: AppStorageProtocol {
     var notificationsEnabled = false
 
     public func storeToUserDefaults(data: String, key: UserDefaultValues) {
-        UserDefaults(suiteName: UserDefaultValues.groupId.rawValue)!.set(data, forKey: key.rawValue)
+        UserDefaults(suiteName: UserDefaultValues.groupId.rawValue)?.set(data, forKey: key.rawValue)
     }
 
     public func loadFromDefaults(key: UserDefaultValues) -> String? {
-        return UserDefaults(suiteName: UserDefaultValues.groupId.rawValue)!.object(forKey: key.rawValue) as? String
+        return UserDefaults(suiteName: UserDefaultValues.groupId.rawValue)?.object(forKey: key.rawValue) as? String
     }
 
     public func removeFromDefaults(key: UserDefaultValues) {

@@ -204,9 +204,12 @@ struct FlowStepsView: View {
     }
 
     @ViewBuilder
-    private func valuePicker(value: Binding<Int>, maxValue: Int,
-                             color: ComponentColor, height: CGFloat) -> some View
-    {
+    private func valuePicker(
+        value: Binding<Int>,
+        maxValue: Int,
+        color: ComponentColor,
+        height: CGFloat
+    ) -> some View {
         Picker("", selection: value) {
             ForEach((0 ..< maxValue).reversed(), id: \.self) {
                 Text("\($0)")

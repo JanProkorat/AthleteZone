@@ -67,11 +67,11 @@ extension WatchConnectivityManager: WCSessionDelegate {
     ///   - replyHandler: Handler to send back a reply
     func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
         if message["data"] != nil {
-            let replyData = self.loadReplyData()
+            let replyData = loadReplyData()
             replyHandler(["data": replyData,
-                          DefaultItem.language.rawValue: self.appStorageManager.language.rawValue,
-                          DefaultItem.soundsEnabled.rawValue: self.appStorageManager.soundsEnabled,
-                          DefaultItem.hapticsEnabled.rawValue: self.appStorageManager.hapticsEnabled])
+                          DefaultItem.language.rawValue: appStorageManager.language.rawValue,
+                          DefaultItem.soundsEnabled.rawValue: appStorageManager.soundsEnabled,
+                          DefaultItem.hapticsEnabled.rawValue: appStorageManager.hapticsEnabled])
         }
     }
 
@@ -85,6 +85,8 @@ extension WatchConnectivityManager: WCSessionDelegate {
     }
 
     func sendValue(_ value: [String: Any]) {
-        WCSession.default.sendMessage(value) { _ in }
+        if checkIfPairedAppInstalled() {
+            WCSession.default.sendMessage(value) { _ in }
+        }
     }
 }

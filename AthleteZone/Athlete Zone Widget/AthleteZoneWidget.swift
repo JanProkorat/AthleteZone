@@ -50,7 +50,7 @@ struct Provider: TimelineProvider {
             entry = WorkoutWidgetEntry(date: currentDate, family: context.family)
         }
 
-        let timeline = Timeline(entries: [entry!], policy: .atEnd)
+        let timeline = Timeline(entries: [entry!], policy: .never)
         completion(timeline)
     }
 
@@ -159,7 +159,7 @@ struct AthleteZoneWidgetEntryView: View {
 }
 
 struct AthleteZoneWidget: Widget {
-    let kind: String = "AthleteZoneWidgets"
+    let kind: String = UserDefaultValues.widgetId.rawValue
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in

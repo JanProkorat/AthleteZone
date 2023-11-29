@@ -105,5 +105,5 @@ enum UserDefaultValues: String {
     case groupId = "group.com.janprokorat.Athlete-Zone"
     case workoutId = "selectedWorkout"
     case trainingId = "selectedTraining"
-    case widgetId = "AthleteZoneWidgets"
+    case widgetId = "AthleteZoneWidget"
 }
