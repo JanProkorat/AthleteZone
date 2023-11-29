@@ -22,7 +22,7 @@ struct Description: View {
                 ZStack {
                     RoundedRectangle(cornerRadius: 10)
                         .frame(height: 30)
-                        .foregroundColor(Color(Background.listItemBackground.rawValue))
+                        .foregroundColor(Color(ComponentColor.darkGrey.rawValue))
                 }
             )
             .frame(minWidth: 0, maxWidth: .infinity)
@@ -32,6 +32,6 @@ struct Description: View {
 
 struct Description_Previews: PreviewProvider {
     static var previews: some View {
-        Description(title: "Test", color: .work)
+        Description(title: "Test", color: .lightPink)
     }
 }

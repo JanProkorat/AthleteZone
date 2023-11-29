@@ -11,106 +11,110 @@ struct WorkoutDetailSheet: View {
     var workout: WorkOut
 
     var body: some View {
-        VStack(spacing: 0) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(Color(ComponentColor.menu.rawValue))
-                Text(LocalizedStringKey(workout.name))
-                    .font(.title)
-                    .foregroundColor(Color(ComponentColor.mainText.rawValue))
-                    .frame(maxWidth: .infinity, alignment: .center)
+        GeometryReader(content: { geometry in
+            VStack(spacing: 0) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color(ComponentColor.darkGrey.rawValue), lineWidth: 3)
+                        .foregroundColor(Color(ComponentColor.darkBlue.rawValue))
+                    Text(LocalizedStringKey(workout.name))
+                        .font(.title)
+                        .foregroundColor(Color(ComponentColor.mainText.rawValue))
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
+                .padding(.top, 20)
+                .padding([.leading, .trailing], 10)
+                .frame(maxHeight: 80)
+
+                HStack {
+                    HStack {
+                        Text(LocalizationKey.work.localizedKey)
+                            .font(.title2)
+                            .foregroundColor(Color(ComponentColor.lightPink.rawValue))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        Text(workout.work.toFormattedTime())
+                            .font(.title2)
+                            .foregroundColor(Color(ComponentColor.lightPink.rawValue))
+                    }
+                    .frame(maxWidth: geometry.size.width * 0.7)
+                    .padding([.leading, .trailing], 5)
+
+                    HStack {
+                        Text(LocalizationKey.series.localizedKey)
+                            .font(.title2)
+                            .foregroundColor(Color(ComponentColor.lightBlue.rawValue))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        Text(workout.series.toFormattedNumber())
+                            .font(.title2)
+                            .foregroundColor(Color(ComponentColor.lightBlue.rawValue))
+                    }
+                    .frame(maxWidth: geometry.size.width * 0.3)
+                    .padding([.leading, .trailing])
+                }
+                .frame(maxWidth: .infinity)
+                .padding([.leading, .trailing])
+                .padding(.top, 30)
+
+                HStack {
+                    HStack {
+                        Text(LocalizationKey.rest.localizedKey)
+                            .font(.title2)
+                            .foregroundColor(Color(ComponentColor.lightYellow.rawValue))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        Text(workout.rest.toFormattedTime())
+                            .font(.title2)
+                            .foregroundColor(Color(ComponentColor.lightYellow.rawValue))
+                    }
+                    .frame(maxWidth: geometry.size.width * 0.7)
+                    .padding([.leading, .trailing], 5)
+
+                    HStack {
+                        Text(LocalizationKey.rounds.localizedKey)
+                            .font(.title2)
+                            .foregroundColor(Color(ComponentColor.lightGreen.rawValue))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        Text(workout.rounds.toFormattedNumber())
+                            .font(.title2)
+                            .foregroundColor(Color(ComponentColor.lightGreen.rawValue))
+                    }
+                    .frame(maxWidth: geometry.size.width * 0.3)
+                    .padding([.leading, .trailing])
+                }
+                .frame(maxWidth: .infinity)
+                .padding([.leading, .trailing])
+                .padding(.top)
+
+                HStack {
+                    HStack {
+                        Text(LocalizationKey.reset.localizedKey)
+                            .font(.title2)
+                            .foregroundColor(Color(ComponentColor.braun.rawValue))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        Text(workout.reset.toFormattedTime())
+                            .font(.title2)
+                            .foregroundColor(Color(ComponentColor.braun.rawValue))
+                    }
+                    .frame(maxWidth: geometry.size.width * 0.7)
+                    .padding([.leading, .trailing], 5)
+
+                    HStack {}
+                        .frame(maxWidth: geometry.size.width * 0.3)
+                        .padding([.leading, .trailing])
+                }
+                .frame(maxWidth: .infinity)
+                .padding([.leading, .trailing])
+                .padding(.top)
+
+                Spacer()
             }
-            .padding(.top, 20)
-            .padding([.leading, .trailing], 10)
-            .frame(maxHeight: 80)
-
-            HStack {
-                HStack {
-                    Text("Work")
-                        .font(.title2)
-                        .foregroundColor(Color(ComponentColor.work.rawValue))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                    Text(workout.work.toFormattedTime())
-                        .font(.title2)
-                        .foregroundColor(Color(ComponentColor.work.rawValue))
-                }
-                .frame(maxWidth: .infinity)
-                .padding([.leading, .trailing])
-
-                HStack {
-                    Text("Series")
-                        .font(.title2)
-                        .foregroundColor(Color(ComponentColor.series.rawValue))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                    Text(workout.series.toFormattedNumber())
-                        .font(.title2)
-                        .foregroundColor(Color(ComponentColor.series.rawValue))
-                }
-                .frame(maxWidth: .infinity)
-                .padding([.leading, .trailing])
-            }
-            .frame(maxWidth: .infinity)
-            .padding([.leading, .trailing])
-            .padding(.top, 30)
-
-            HStack {
-                HStack {
-                    Text("Rest")
-                        .font(.title2)
-                        .foregroundColor(Color(ComponentColor.rest.rawValue))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                    Text(workout.rest.toFormattedTime())
-                        .font(.title2)
-                        .foregroundColor(Color(ComponentColor.rest.rawValue))
-                }
-                .frame(maxWidth: .infinity)
-                .padding([.leading, .trailing])
-
-                HStack {
-                    Text("Rounds")
-                        .font(.title2)
-                        .foregroundColor(Color(ComponentColor.rounds.rawValue))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                    Text(workout.rounds.toFormattedNumber())
-                        .font(.title2)
-                        .foregroundColor(Color(ComponentColor.rounds.rawValue))
-                }
-                .frame(maxWidth: .infinity)
-                .padding([.leading, .trailing])
-            }
-            .frame(maxWidth: .infinity)
-            .padding([.leading, .trailing])
-            .padding(.top)
-
-            HStack {
-                HStack {
-                    Text("Reset")
-                        .font(.title2)
-                        .foregroundColor(Color(ComponentColor.reset.rawValue))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                    Text(workout.reset.toFormattedTime())
-                        .font(.title2)
-                        .foregroundColor(Color(ComponentColor.reset.rawValue))
-                }
-                .frame(maxWidth: .infinity)
-                .padding([.leading, .trailing])
-
-                HStack {}
-                    .frame(maxWidth: .infinity)
-            }
-            .frame(maxWidth: .infinity)
-            .padding([.leading, .trailing])
-            .padding(.top)
-
-            Spacer()
-        }
-        .background(Color(Background.sheetBackground.rawValue))
-        .environment(\.colorScheme, .dark)
+            .background(Color(ComponentColor.darkBlue.rawValue))
+            .environment(\.colorScheme, .dark)
+        })
     }
 }
 

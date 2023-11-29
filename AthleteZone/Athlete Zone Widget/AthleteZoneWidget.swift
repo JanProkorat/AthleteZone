@@ -153,7 +153,7 @@ struct AthleteZoneWidgetEntryView: View {
             }
         }
         .containerBackground(for: .widget) {
-            Color(Background.background.rawValue)
+            Color(ComponentColor.darkBlue.rawValue)
         }
     }
 }

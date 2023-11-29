@@ -13,7 +13,7 @@ struct TrainingLibraryContent: View {
     var onEditTab: ((_ value: Training) -> Void)?
 
     init() {
-        UICollectionView.appearance().backgroundColor = UIColor(Color(Background.background.rawValue))
+        UICollectionView.appearance().backgroundColor = UIColor(Color(ComponentColor.darkBlue.rawValue))
     }
 
     var body: some View {
@@ -41,13 +41,13 @@ struct TrainingLibraryContent: View {
                     }
                     .padding(.bottom, 140)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                    .background(Color(Background.background.rawValue))
+                    .background(Color(ComponentColor.darkBlue.rawValue))
                 }
                 .listStyle(.plain)
                 .id(viewModel.library)
 
                 if viewModel.library.isEmpty {
-                    Text(LocalizedStringKey("No trainings to display."))
+                    Text(LocalizationKey.noTrainingsToDisplay.localizedKey)
                         .font(.headline)
                         .bold()
                         .padding(.top, 100)

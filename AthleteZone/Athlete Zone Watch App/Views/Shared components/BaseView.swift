@@ -35,7 +35,7 @@ struct BaseView<Content: View>: View {
                 .padding([.leading, .trailing], 5)
         }
         .frame(maxWidth: .infinity)
-        .background(Color(Background.background.rawValue))
+        .background(Color(ComponentColor.darkBlue.rawValue))
         .edgesIgnoringSafeArea([.top, .bottom])
     }
 }

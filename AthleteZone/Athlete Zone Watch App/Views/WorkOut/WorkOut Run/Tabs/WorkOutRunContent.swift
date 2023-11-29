@@ -46,7 +46,7 @@ struct WorkOutRunContent: View {
                             .padding(.trailing, 15)
                             .disabled(viewModel.isLastRunning)
                         }
-                        .roundedBackground(cornerRadius: 10, color: Color(Background.listItemBackground.rawValue))
+                        .roundedBackground(cornerRadius: 10, color: Color(ComponentColor.darkBlue.rawValue))
                         .padding(.top, 1)
 
                         Text(LocalizedStringKey(flow.type.rawValue))

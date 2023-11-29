@@ -13,7 +13,7 @@ struct LibraryContent: View {
     var onEditTab: ((_ workOut: WorkOut) -> Void)?
 
     init() {
-        UICollectionView.appearance().backgroundColor = UIColor(Color(Background.background.rawValue))
+        UICollectionView.appearance().backgroundColor = UIColor(Color(ComponentColor.darkBlue.rawValue))
     }
 
     var body: some View {
@@ -38,15 +38,15 @@ struct LibraryContent: View {
                         .onEditTab { performAction(onEditTab, value: workout.thaw()!) }
                         .padding([.leading, .trailing], 2)
                 }
-                .padding(.bottom, 142)
+                .padding(.bottom, 130)
                 .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                .background(Color(Background.background.rawValue))
+                .background(Color(ComponentColor.darkBlue.rawValue))
             }
             .listStyle(.plain)
             .id(viewModel.library)
             .overlay(alignment: .top) {
                 if viewModel.library.isEmpty {
-                    Text("No workouts to display.")
+                    Text(LocalizationKey.noWorkoutsToDisplay.localizedKey)
                         .font(.headline)
                         .bold()
                         .padding(.top, 100)

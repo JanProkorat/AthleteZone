@@ -24,13 +24,13 @@ struct TrainingListView: View {
                         Button(action: {
                             performAction(onEditTab)
                         }, label: {
-                            Label(LocalizedStringKey("Edit"), systemImage: "pencil")
+                            Label(LocalizationKey.edit.localizedKey, systemImage: "pencil")
                         })
 
                         Button(role: .destructive, action: {
                             performAction(onDeleteTab)
                         }, label: {
-                            Label(LocalizedStringKey("Delete"), systemImage: "trash")
+                            Label(LocalizationKey.delete.localizedKey, systemImage: "trash")
                         })
                     } label: {
                         Image(Icons.menu.rawValue)
@@ -43,47 +43,52 @@ struct TrainingListView: View {
                 .padding(.top, 5)
 
                 VStack(spacing: 7) {
-                    HStack {
-                        Text("Length:")
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .foregroundColor(Color(ComponentColor.lightPink.rawValue))
+                    descriptionView(
+                        property: LocalizationKey.length.localizedKey,
+                        value: training.trainingLength.toFormattedTime(),
+                        color: ComponentColor.lightPink
+                    )
 
-                        Text(training.trainingLength.toFormattedTime())
-                            .foregroundColor(Color(ComponentColor.lightPink.rawValue))
-                            .padding(.trailing, 20)
-                    }
-                    .padding([.leading, .trailing])
+                    descriptionView(
+                        property: LocalizationKey.workouts.localizedKey,
+                        value: training.workoutCount.toFormattedNumber(),
+                        color: ComponentColor.lightYellow
+                    )
 
-                    HStack {
-                        Text("Workouts:")
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .foregroundColor(Color(ComponentColor.lightYellow.rawValue))
-
-                        Text(training.workoutCount.toFormattedNumber())
-                            .foregroundColor(Color(ComponentColor.lightYellow.rawValue))
-                            .padding(.trailing, 20)
-                    }
-                    .padding([.leading, .trailing])
-
-                    HStack {
-                        Text("Created date:")
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .foregroundColor(Color(ComponentColor.braun.rawValue))
-
-                        Text(training.formattedCreatedDate)
-                            .foregroundColor(Color(ComponentColor.braun.rawValue))
-                            .padding(.trailing, 20)
-                    }
-                    .padding([.leading, .trailing])
+                    descriptionView(
+                        property: LocalizationKey.createdDate.localizedKey,
+                        value: training.formattedCreatedDate,
+                        color: ComponentColor.braun
+                    )
                 }
                 .padding(.bottom)
                 .padding([.leading, .trailing], 30)
             }
             .background(
                 RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(Color(Background.work.rawValue))
+                    .foregroundColor(Color(ComponentColor.darkGrey.rawValue))
             )
         }
+    }
+
+    @ViewBuilder
+    func descriptionView(property: LocalizedStringKey, value: String, color: ComponentColor) -> some View {
+        HStack {
+            Text(property)
+                .font(.callout)
+                .foregroundColor(Color(color.rawValue))
+                .scaledToFill()
+            Text(":")
+                .font(.callout)
+                .foregroundColor(Color(color.rawValue))
+                .padding(.leading, -7)
+            Text(value)
+                .font(.callout)
+                .foregroundColor(Color(color.rawValue))
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .padding(.trailing)
+        }
+        .padding([.leading, .trailing])
     }
 }
 

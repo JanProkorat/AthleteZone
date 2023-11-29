@@ -35,7 +35,7 @@ struct ActivityView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 20)
                     .frame(height: 60)
-                    .foregroundColor(Color("\(color)_background"))
+                    .foregroundColor(Color(ComponentColor.darkGrey.rawValue))
             }
         )
         .frame(minWidth: 0, maxWidth: .infinity)
@@ -46,7 +46,7 @@ struct ActivityView: View {
 
 struct ActivityView_Previews: PreviewProvider {
     static var previews: some View {
-        ActivityView(image: Icons.play.rawValue, color: ComponentColor.work,
+        ActivityView(image: Icons.play.rawValue, color: ComponentColor.lightPink,
                      activity: "Work", interval: 40, type: .time)
     }
 }

@@ -15,7 +15,8 @@ struct TrainingEditScene: View {
 
     var body: some View {
         BaseView {
-            TitleText(text: "\(!viewModel.isEditing ? "Add" : "Edit") training", alignment: .center)
+            TitleText(text: viewModel.isEditing ? LocalizationKey.editTraining.rawValue :
+                LocalizationKey.addTraining.rawValue, alignment: .center)
         } content: {
             TrainingEditContent(isModalVisible: $isModalVisible)
         } footer: {

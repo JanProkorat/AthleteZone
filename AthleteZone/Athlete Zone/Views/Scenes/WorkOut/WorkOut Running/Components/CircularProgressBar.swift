@@ -50,6 +50,6 @@ struct CircularProgressBar: View {
 
 struct CircularProgressBar_Previews: PreviewProvider {
     static var previews: some View {
-        CircularProgressBar(color: .work, progress: 0.34)
+        CircularProgressBar(color: .lightPink, progress: 0.34)
     }
 }

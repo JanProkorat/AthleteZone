@@ -42,7 +42,7 @@ struct ActivityBar: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 10)
                     .frame(height: 45)
-                    .foregroundColor(Color(Background.listItemBackground.rawValue))
+                    .foregroundColor(Color(ComponentColor.darkGrey.rawValue))
             }
         )
         .frame(maxWidth: .infinity)

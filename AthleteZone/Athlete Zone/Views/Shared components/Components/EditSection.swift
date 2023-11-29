@@ -9,14 +9,14 @@ import SwiftUI
 
 struct EditSection<Content: View>: View {
     var icon: String
-    var label: String
+    var label: LocalizationKey
     var color: ComponentColor
     var content: Content
     var disabled: Bool
 
     init(
         icon: String,
-        label: String,
+        label: LocalizationKey,
         color: ComponentColor,
         disabled: Bool = false,
         @ViewBuilder content: () -> Content
@@ -37,7 +37,7 @@ struct EditSection<Content: View>: View {
                 .frame(maxWidth: 35, maxHeight: 35)
                 .padding(.top, 5)
 
-            Text(LocalizedStringKey(label))
+            Text(label.localizedKey)
                 .font(.title)
                 .padding(.leading, 5)
                 .foregroundColor(Color(color.rawValue))
@@ -51,7 +51,7 @@ struct EditSection<Content: View>: View {
 
 struct EditSection_Previews: PreviewProvider {
     static var previews: some View {
-        EditSection(icon: "pencil.circle", label: "Name", color: ComponentColor.work) {
+        EditSection(icon: "pencil.circle", label: LocalizationKey.name, color: ComponentColor.lightPink) {
             EditField {
                 TextInput(text: Binding.constant("Name"))
             }

@@ -38,7 +38,7 @@ struct WidgetTrainingMediumView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .frame(height: 75)
                             .padding(.top)
-                            .foregroundColor(Color(Background.listItemBackground.rawValue))
+                            .foregroundColor(Color(ComponentColor.darkGrey.rawValue))
                     }
                 )
 

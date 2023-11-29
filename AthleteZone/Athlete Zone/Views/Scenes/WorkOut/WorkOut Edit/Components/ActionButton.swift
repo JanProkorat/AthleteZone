@@ -31,8 +31,8 @@ struct ActionButton_Previews: PreviewProvider {
     static var previews: some View {
         ActionButton {
             ActionView(
-                text: "Save",
-                color: ComponentColor.rounds,
+                text: LocalizationKey.save,
+                color: ComponentColor.lightGreen,
                 backgoundColor: nil,
                 image: Icons.check.rawValue,
                 height: 60,

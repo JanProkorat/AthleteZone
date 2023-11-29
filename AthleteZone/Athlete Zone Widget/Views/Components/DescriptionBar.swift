@@ -20,7 +20,7 @@ struct DescriptionBar: View {
                 ZStack {
                     RoundedRectangle(cornerRadius: 10)
                         .frame(height: 30)
-                        .foregroundColor(Color(Background.listItemBackground.rawValue))
+                        .foregroundColor(Color(ComponentColor.darkGrey.rawValue))
                 }
             )
             .frame(maxWidth: .infinity)

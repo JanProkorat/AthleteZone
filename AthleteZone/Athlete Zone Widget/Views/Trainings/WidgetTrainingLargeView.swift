@@ -29,7 +29,7 @@ struct WidgetTrainingLargeView: View {
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)
                             .frame(height: 140)
-                            .foregroundColor(Color(Background.listItemBackground.rawValue))
+                            .foregroundColor(Color(ComponentColor.darkGrey.rawValue))
                     }
                 )
 

@@ -21,24 +21,24 @@ struct WorkOutListView: View {
                 HStack(alignment: .center) {
                     TitleText(text: workOut.name)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading, 30)
+                        .padding(.leading, 10)
                     Menu {
                         Button(action: {
                             performAction(onEditTab)
                         }, label: {
-                            Label(LocalizedStringKey("Edit"), systemImage: "pencil")
+                            Label(LocalizationKey.edit.localizedKey, systemImage: "pencil")
                         })
 
                         Button(role: .destructive, action: {
                             performAction(onDeleteTab)
                         }, label: {
-                            Label(LocalizedStringKey("Delete"), systemImage: "trash")
+                            Label(LocalizationKey.delete.localizedKey, systemImage: "trash")
                         })
                     } label: {
                         Image(Icons.menu.rawValue)
                             .foregroundColor(Color(ComponentColor.mainText.rawValue))
                             .frame(width: 40, height: 34)
-                            .padding(.trailing, 20)
+                            .padding(.trailing, 10)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -47,15 +47,15 @@ struct WorkOutListView: View {
                 ForEach(fieldConfig, id: \.first?.id) { chunk in
                     HStack {
                         listViewItem(item: chunk.first!, width: reader.size.width * 0.8 * 0.5)
-                        listViewItem(item: chunk.count > 1 ? chunk.last! : nil, width: reader.size.width * 0.8 * 0.4)
+                        listViewItem(item: chunk.count > 1 ? chunk.last! : nil, width: reader.size.width * 0.9 * 0.5)
                     }
                     .padding(.bottom, chunk.count > 1 ? 1 : 10)
-                    .frame(maxWidth: reader.size.width * 0.8, alignment: .leading)
+                    .frame(maxWidth: reader.size.width * 0.9, alignment: .center)
                 }
             }
             .background(
                 RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(Color(Background.work.rawValue))
+                    .foregroundColor(Color(ComponentColor.darkGrey.rawValue))
             )
         }
     }
@@ -63,34 +63,43 @@ struct WorkOutListView: View {
     @ViewBuilder
     func listViewItem(item: ActivityType?, width: CGFloat) -> some View {
         HStack {
-            ListViewText(
-                text: item == nil ? "Total:" : "\(item!.rawValue):",
-                color: item == nil ? ComponentColor.mainText :
-                    ComponentColor.allCases.first(where: { $0.rawValue == item!.rawValue })!
-            )
-            ListViewText(
-                text: item == nil ? self.workOut.workoutLength.toFormattedTime() : getValueByType(item!),
-                color: item == nil ? ComponentColor.mainText :
-                    ComponentColor.allCases.first(where: { $0.rawValue == item!.rawValue })!
-            )
+            Text(item == nil ? LocalizationKey.total.localizedKey : LocalizedStringKey(item!.rawValue))
+                .font(.callout)
+                .foregroundColor(Color(getColor(item)))
+                .scaledToFill()
+            Text(":")
+                .font(.callout)
+                .foregroundColor(Color(getColor(item)))
+                .padding(.leading, -7)
+            Text(item == nil ? self.workOut.workoutLength.toFormattedTime() : getValueByType(item!))
+                .font(.callout)
+                .foregroundColor(Color(getColor(item)))
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .padding(.trailing)
         }
         .frame(width: width, alignment: .leading)
     }
 
-    @ViewBuilder
-    func listViewItem(text: String, value: String, color: ComponentColor, width: CGFloat) -> some View {
-        HStack {
-            ListViewText(
-                text: text,
-                color: color
-            )
+    private func getColor(_ type: ActivityType?) -> String {
+        switch type {
+        case .work:
+            return ComponentColor.lightPink.rawValue
 
-            ListViewText(
-                text: value,
-                color: color
-            )
+        case .rest:
+            return ComponentColor.lightYellow.rawValue
+
+        case .series:
+            return ComponentColor.lightBlue.rawValue
+
+        case .rounds:
+            return ComponentColor.lightGreen.rawValue
+
+        case .reset:
+            return ComponentColor.braun.rawValue
+
+        default:
+            return ComponentColor.mainText.rawValue
         }
-        .frame(width: width, alignment: .center)
     }
 
     func getValueByType(_ type: ActivityType) -> String {

@@ -16,7 +16,10 @@ struct WorkOutEditScene: View {
     var body: some View {
         BaseView(
             header: {
-                TitleText(text: "\(viewModel.isEditing ? "Edit" : "Add") workout", alignment: .center)
+                TitleText(text: viewModel.isEditing ?
+                    LocalizationKey.editWorkout.rawValue :
+                    LocalizationKey.addWorkout.rawValue,
+                    alignment: .center)
             },
             content: {
                 WorkOutEditContent()
@@ -33,30 +36,37 @@ struct WorkOutEditScene: View {
         )
         .environmentObject(viewModel)
         .sheet(item: $activeSheetType) { activitySheet in
-            let color = ComponentColor.allCases.first(where: { activitySheet.rawValue.contains($0.rawValue) })!
-            IntervalPicker(
-                title: activitySheet.rawValue,
-                color: color,
-                backgroundColor: Background.allCases.first(where: { $0.rawValue.contains(activitySheet.rawValue) })!
-            ) {
-                switch activitySheet {
-                case .work:
-                    TimePicker(textColor: color, interval: $viewModel.work)
-
-                case .rest:
-                    TimePicker(textColor: color, interval: $viewModel.rest)
-
-                case .series:
-                    NumberPicker(textColor: color, value: $viewModel.series)
-
-                case .rounds:
-                    NumberPicker(textColor: color, value: $viewModel.rounds)
-
-                case .reset:
-                    TimePicker(textColor: color, interval: $viewModel.reset)
+            switch activitySheet {
+            case .work:
+                IntervalPicker(title: activitySheet.rawValue, color: .lightPink) {
+                    TimePicker(textColor: ComponentColor.lightPink, interval: $viewModel.work)
                 }
+                .presentationDetents([.fraction(0.4)])
+
+            case .rest:
+                IntervalPicker(title: activitySheet.rawValue, color: .lightYellow) {
+                    TimePicker(textColor: ComponentColor.lightYellow, interval: $viewModel.rest)
+                }
+                .presentationDetents([.fraction(0.4)])
+
+            case .series:
+                IntervalPicker(title: activitySheet.rawValue, color: .lightBlue) {
+                    NumberPicker(textColor: ComponentColor.lightBlue, value: $viewModel.series)
+                }
+                .presentationDetents([.fraction(0.4)])
+
+            case .rounds:
+                IntervalPicker(title: activitySheet.rawValue, color: .lightGreen) {
+                    NumberPicker(textColor: ComponentColor.lightGreen, value: $viewModel.rounds)
+                }
+                .presentationDetents([.fraction(0.4)])
+
+            case .reset:
+                IntervalPicker(title: activitySheet.rawValue, color: .braun) {
+                    TimePicker(textColor: ComponentColor.braun, interval: $viewModel.reset)
+                }
+                .presentationDetents([.fraction(0.4)])
             }
-            .presentationDetents([.fraction(0.4)])
         }
     }
 }

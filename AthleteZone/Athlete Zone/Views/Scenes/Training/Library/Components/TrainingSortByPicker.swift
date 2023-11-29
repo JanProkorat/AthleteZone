@@ -27,7 +27,7 @@ struct TrainingSortByPicker: View {
             RoundedRectangle(cornerRadius: 20)
                 .overlay(
                     HStack(alignment: .center, spacing: 1) {
-                        Text("Sort by")
+                        Text(LocalizationKey.sortBy.localizedKey)
                             .padding(.leading, 5)
                             .foregroundColor(Color(ComponentColor.darkBlue.rawValue))
                     }

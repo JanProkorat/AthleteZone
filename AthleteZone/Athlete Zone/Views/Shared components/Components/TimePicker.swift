@@ -57,7 +57,7 @@ struct TimePicker: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 20)
                     .stroke(Color(ComponentColor.menu.rawValue), lineWidth: 3)
-                    .foregroundColor(Color(Background.work.rawValue))
+                    .foregroundColor(Color(ComponentColor.darkGrey.rawValue))
             }
         )
         .pickerStyle(InlinePickerStyle())
@@ -69,7 +69,7 @@ struct TimePicker: View {
     @ViewBuilder
     private var divider: some View {
         Text(":")
-            .foregroundColor(Color(ComponentColor.work.rawValue))
+            .foregroundColor(Color(ComponentColor.lightPink.rawValue))
             .font(.custom("Lato-Black", size: 60))
     }
 }
@@ -77,6 +77,6 @@ struct TimePicker: View {
 struct TimePicker_Previews: PreviewProvider {
     static var previews: some View {
         let bindingInt = Binding.constant(61)
-        TimePicker(textColor: ComponentColor.work, interval: bindingInt)
+        TimePicker(textColor: ComponentColor.lightPink, interval: bindingInt)
     }
 }

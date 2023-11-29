@@ -41,7 +41,7 @@ struct BaseView<Header: View, Content: View, Footer: View>: View {
                     .frame(maxWidth: .infinity)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .background(Color(Background.background.rawValue))
+            .background(Color(ComponentColor.darkBlue.rawValue))
             .environment(\.colorScheme, .dark)
         }
         .ignoresSafeArea(.keyboard, edges: [.bottom])

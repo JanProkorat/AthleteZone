@@ -36,7 +36,7 @@ struct SectionButton: View {
                         .foregroundColor(
                             expectedSection == section ?
                                 Color(ComponentColor.buttonGreen.rawValue) :
-                                Color(Background.listItemBackground.rawValue)
+                                Color(ComponentColor.darkGrey.rawValue)
                         )
                 }
             )

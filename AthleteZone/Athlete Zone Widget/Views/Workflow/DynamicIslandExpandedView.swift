@@ -54,7 +54,7 @@ struct DynamicIslandExpandedView: View {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 10)
                                         .frame(height: 68)
-                                        .foregroundColor(Color(Background.listItemBackground.rawValue))
+                                        .foregroundColor(Color(ComponentColor.darkGrey.rawValue))
                                 }
                             )
 

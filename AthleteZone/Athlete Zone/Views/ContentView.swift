@@ -33,7 +33,7 @@ struct ContentView: View {
         .onAppear {
             self.launchScreenStateManager.dismiss()
         }
-        .background(Color(Background.background.rawValue))
+        .background(Color(ComponentColor.darkBlue.rawValue))
         .animation(.default, value: viewModel.currentSection)
     }
 }

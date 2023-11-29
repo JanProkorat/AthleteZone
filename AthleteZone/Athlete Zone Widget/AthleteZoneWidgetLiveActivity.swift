@@ -35,7 +35,7 @@ struct AthleteZoneWidgetLiveActivity: Widget {
                     .frame(alignment: .trailing)
                     .padding(.trailing)
             }
-            .activityBackgroundTint(Color(Background.listItemBackground.rawValue))
+            .activityBackgroundTint(Color(ComponentColor.darkGrey.rawValue))
             .frame(maxWidth: .infinity, maxHeight: .infinity)
 
         } dynamicIsland: { context in

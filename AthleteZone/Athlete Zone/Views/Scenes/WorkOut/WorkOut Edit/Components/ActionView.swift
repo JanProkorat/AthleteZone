@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ActionView: View {
-    let text: String
+    let text: LocalizationKey
     let color: ComponentColor
     let backgoundColor: String?
     let image: String?
@@ -26,7 +26,7 @@ struct ActionView: View {
                         .frame(width: 40, height: 40)
                 }
 
-                Text(LocalizedStringKey(text))
+                Text(text.localizedKey)
                     .font(.custom("Lato-Black", size: height * 0.5))
                     .foregroundColor(Color(color.rawValue))
                     .bold()
@@ -38,7 +38,7 @@ struct ActionView: View {
             RoundedRectangle(cornerRadius: cornerRadius == nil ? 20 : cornerRadius!)
                 .frame(height: height)
                 .frame(maxWidth: .infinity)
-                .foregroundColor(Color(backgoundColor == nil ? "\(color)_background" : backgoundColor!))
+                .foregroundColor(Color(backgoundColor == nil ? ComponentColor.darkGrey.rawValue : backgoundColor!))
         )
         .frame(maxWidth: .infinity)
         .padding([.top, .bottom], 3)
@@ -48,8 +48,8 @@ struct ActionView: View {
 struct ActionView_Previews: PreviewProvider {
     static var previews: some View {
         ActionView(
-            text: "Save",
-            color: ComponentColor.rounds,
+            text: LocalizationKey.save,
+            color: ComponentColor.lightGreen,
             backgoundColor: nil,
             image: Icons.check.rawValue,
             height: 60,

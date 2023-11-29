@@ -13,7 +13,7 @@ struct WorkoutPicker: View {
 
     var body: some View {
         BaseView {
-            TitleText(text: "Select workouts", alignment: .center)
+            TitleText(text: LocalizationKey.selectWorkouts.rawValue, alignment: .center)
         } content: {
             ZStack(alignment: .top) {
                 List(workoutLibrary, id: \._id) { workout in
@@ -26,14 +26,14 @@ struct WorkoutPicker: View {
                     } label: {
                         listItem(item: workout)
                     }
-                    .padding(.bottom, 150)
+                    .padding(.bottom, 130)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                    .background(Color(Background.background.rawValue))
+                    .background(Color(ComponentColor.darkBlue.rawValue))
                 }
                 .listStyle(.plain)
 
                 if workoutLibrary.isEmpty {
-                    Text(LocalizedStringKey("No workouts to display."))
+                    Text(LocalizationKey.noWorkoutsToDisplay.localizedKey)
                         .font(.headline)
                         .bold()
                         .padding(.top, 100)

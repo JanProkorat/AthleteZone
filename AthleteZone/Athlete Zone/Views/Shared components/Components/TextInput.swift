@@ -13,7 +13,7 @@ struct TextInput: View {
 
     var body: some View {
         HStack {
-            TextField(LocalizedStringKey("Enter name..."), text: $text)
+            TextField(LocalizationKey.enterName.localizedKey, text: $text)
                 .textFieldStyle(TextInputStyle(height: 50))
                 .frame(height: 50)
                 .overlay(
@@ -51,7 +51,7 @@ struct TextInput: View {
                         )
                     }
                 } label: {
-                    Text("Close")
+                    Text(LocalizationKey.close.localizedKey)
                         .foregroundColor(Color(ComponentColor.mainText.rawValue))
                 }
                 .padding(.trailing, 20)

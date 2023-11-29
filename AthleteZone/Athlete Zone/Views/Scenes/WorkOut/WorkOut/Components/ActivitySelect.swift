@@ -32,8 +32,8 @@ struct ActivitySelect: View {
                         .foregroundColor(Color(color))
 
                     Text(LocalizedStringKey(activity.rawValue))
-                        .font(.custom("Lato-Black", size: 20))
-                        .bold()
+                        .font(.title3)
+//                        .bold()
                         .foregroundColor(Color(color))
                         .padding(.leading, 5)
                 }
@@ -47,8 +47,8 @@ struct ActivitySelect: View {
             .background(
                 ZStack {
                     RoundedRectangle(cornerRadius: 20)
-                        .frame(height: 55)
-                        .foregroundColor(Color("\(color)_background"))
+                        .frame(height: height)
+                        .foregroundColor(Color(ComponentColor.darkGrey.rawValue))
                 }
             )
             .frame(maxWidth: .infinity)
@@ -62,7 +62,7 @@ struct ActivitySelect: View {
 
 struct ActivitySelect_Previews: PreviewProvider {
     static var previews: some View {
-        ActivitySelect(image: "forward.circle", color: ComponentColor.work.rawValue,
+        ActivitySelect(image: "forward.circle", color: ComponentColor.lightPink.rawValue,
                        activity: .work, interval: 40, type: .time, height: 50)
     }
 }

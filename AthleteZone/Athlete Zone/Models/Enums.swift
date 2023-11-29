@@ -16,20 +16,20 @@ enum ActivityType: String, Identifiable, CaseIterable, Encodable {
         hashValue
     }
 
-    case work = "Work"
-    case rest = "Rest"
-    case series = "Series"
-    case rounds = "Rounds"
-    case reset = "Reset"
+    case work
+    case rest
+    case series
+    case rounds
+    case reset
 }
 
 enum WorkFlowType: String, Codable {
-    case preparation = "Get ready!"
-    case work = "Work"
-    case rest = "Rest"
-    case series = "Series"
-    case rounds = "Rounds"
-    case reset = "Reset"
+    case preparation
+    case work
+    case rest
+    case series
+    case rounds
+    case reset
 }
 
 enum WorkFlowState {
@@ -47,7 +47,7 @@ enum InputType {
 enum Language: String, Equatable, CaseIterable, Codable {
     case cze = "CZ"
     case de = "DE"
-    case en = "GB"
+    case en = "EN"
 }
 
 enum SortOrder: String, CaseIterable, Identifiable {
@@ -55,8 +55,8 @@ enum SortOrder: String, CaseIterable, Identifiable {
         hashValue
     }
 
-    case ascending = "Ascending"
-    case descending = "Descending"
+    case ascending
+    case descending
 }
 
 protocol SortByProperty: CaseIterable, Hashable, Identifiable {}
@@ -66,14 +66,14 @@ enum WorkOutSortByProperty: String, SortByProperty {
         hashValue
     }
 
-    case name = "Name"
-    case work = "Work"
-    case rest = "Rest"
-    case series = "Series"
-    case rounds = "Rounds"
-    case reset = "Reset"
-    case createdDate = "Created date"
-    case workoutLength = "Workout length"
+    case name
+    case work
+    case rest
+    case series
+    case rounds
+    case reset
+    case createdDate
+    case workoutLength
 }
 
 enum TrainingSortByProperty: String, SortByProperty {
@@ -81,15 +81,15 @@ enum TrainingSortByProperty: String, SortByProperty {
         hashValue
     }
 
-    case name = "Name"
-    case createdDate = "Created date"
-    case numOfWorkouts = "Number of workouts"
-    case trainingLength = "Training length"
+    case name
+    case createdDate
+    case numOfWorkouts
+    case trainingLength
 }
 
 enum Section: String, CaseIterable, Codable {
-    case workout = "Workout"
-    case training = "Training"
+    case workout
+    case training
 }
 
 enum LaunchScreenStep {

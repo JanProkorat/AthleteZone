@@ -14,7 +14,7 @@ struct LibraryHeader: View {
         HStack(alignment: .center) {
             HStack(alignment: .center) {
                 SectionSwitch()
-                TitleText(text: "Library")
+                TitleText(text: LocalizationKey.library.rawValue)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 

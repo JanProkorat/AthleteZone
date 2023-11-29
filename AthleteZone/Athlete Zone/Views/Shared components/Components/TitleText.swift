@@ -31,6 +31,6 @@ struct TitleText: View {
 
 struct TitleText_Previews: PreviewProvider {
     static var previews: some View {
-        TitleText(text: "Text")
+        TitleText(text: LocalizationKey.actions.rawValue)
     }
 }

@@ -10,16 +10,16 @@ import SwiftUI
 struct SettingsItem<Content: View>: View {
     let content: Content
 
-    var title: String
+    var title: LocalizationKey
 
-    init(title: String, @ViewBuilder content: () -> Content) {
+    init(title: LocalizationKey, @ViewBuilder content: () -> Content) {
         self.content = content()
         self.title = title
     }
 
     var body: some View {
         HStack(alignment: .center, spacing: 5) {
-            Text(LocalizedStringKey(title))
+            Text(title.localizedKey)
                 .frame(height: 80)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundColor(Color(ComponentColor.mainText.rawValue))
@@ -37,7 +37,7 @@ struct SettingsItem<Content: View>: View {
 
 struct SettingsItem_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsItem(title: "Haptik aktivieren (nur Uhr") {
+        SettingsItem(title: .haptics) {
             Text("test")
         }
     }

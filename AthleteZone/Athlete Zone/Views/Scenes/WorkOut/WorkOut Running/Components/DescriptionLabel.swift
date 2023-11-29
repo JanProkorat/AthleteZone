@@ -22,10 +22,10 @@ struct DescriptionLabel: View {
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(Color(ComponentColor.darkBlue.rawValue), lineWidth: 3)
                         .frame(height: 60)
-                        .foregroundColor(Color("\(color.rawValue)_background"))
+                        .foregroundColor(Color(ComponentColor.darkGrey.rawValue))
                     RoundedRectangle(cornerRadius: 20)
                         .frame(height: 60)
-                        .foregroundColor(Color("\(color.rawValue)_background"))
+                        .foregroundColor(Color(ComponentColor.darkGrey.rawValue))
                 }
             )
             .frame(minWidth: 0, maxWidth: .infinity)
@@ -36,6 +36,6 @@ struct DescriptionLabel: View {
 
 struct DescriptionLabel_Previews: PreviewProvider {
     static var previews: some View {
-        DescriptionLabel(title: "Test", color: .work)
+        DescriptionLabel(title: "Test", color: .lightPink)
     }
 }

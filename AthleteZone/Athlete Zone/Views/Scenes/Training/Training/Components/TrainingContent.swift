@@ -24,8 +24,8 @@ struct TrainingContent: View {
                     VStack {
                         EditSection(
                             icon: "square.and.pencil.circle",
-                            label: "Description",
-                            color: ComponentColor.series
+                            label: LocalizationKey.description,
+                            color: ComponentColor.lightBlue
                         ) {
                             ScrollView {
                                 Text(selectedTraining.trainingDescription)
@@ -51,13 +51,13 @@ struct TrainingContent: View {
                                 Image(systemName: "figure.run.circle")
                                     .resizable()
                                     .scaledToFill()
-                                    .foregroundColor(Color(ComponentColor.rounds.rawValue))
+                                    .foregroundColor(Color(ComponentColor.lightGreen.rawValue))
                                     .frame(maxWidth: 35, maxHeight: 35)
                                     .padding(.top, 5)
 
-                                Text(LocalizedStringKey("Workouts"))
+                                Text(LocalizationKey.workouts.localizedKey)
                                     .font(.title)
-                                    .foregroundColor(Color(ComponentColor.rounds.rawValue))
+                                    .foregroundColor(Color(ComponentColor.lightGreen.rawValue))
                                     .padding(.leading, 5)
                             }
 
@@ -81,20 +81,20 @@ struct TrainingContent: View {
                     HStack {
                         EditSection(
                             icon: "play.circle",
-                            label: "Summary",
-                            color: ComponentColor.work,
+                            label: LocalizationKey.summary,
+                            color: ComponentColor.lightPink,
                             disabled: true
                         ) {
                             VStack(spacing: 7) {
                                 HStack {
-                                    Text(LocalizedStringKey("Length"))
+                                    Text(LocalizationKey.length.localizedKey)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Text(selectedTraining.trainingLength.toFormattedTime())
                                 }
                                 .padding([.leading, .trailing])
 
                                 HStack {
-                                    Text(LocalizedStringKey("Workouts"))
+                                    Text(LocalizationKey.workouts.localizedKey)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Text(selectedTraining.workoutCount.toFormattedNumber())
                                 }
@@ -141,7 +141,7 @@ struct TrainingContent: View {
                             .padding(.leading)
                             .padding(.top, 5)
                         }
-                        Text("No training selected. Create new one or choose existing from the library")
+                        Text(LocalizationKey.noTrainingSelected.localizedKey)
                             .padding(.top)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)

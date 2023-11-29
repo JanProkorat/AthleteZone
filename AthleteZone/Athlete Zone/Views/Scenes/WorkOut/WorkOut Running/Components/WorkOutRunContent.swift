@@ -15,9 +15,9 @@ struct WorkOutRunContent: View {
         VStack(alignment: .center, spacing: 5) {
             if let flow = self.viewModel.selectedFlow {
                 DescriptionLabel(title: "Round \(flow.round)/\(flow.totalRounds)",
-                                 color: ComponentColor.rounds)
+                                 color: ComponentColor.lightGreen)
                 DescriptionLabel(title: "Exercise \(flow.serie)/\(flow.totalSeries)",
-                                 color: ComponentColor.series)
+                                 color: ComponentColor.lightBlue)
 
                 Text(LocalizedStringKey(flow.type.rawValue))
                     .font(.custom("Lato-Black", size: 20))

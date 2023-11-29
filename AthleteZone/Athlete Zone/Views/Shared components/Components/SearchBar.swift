@@ -13,7 +13,7 @@ struct SearchBar: View {
 
     var body: some View {
         HStack {
-            TextField("Search ...", text: $text)
+            TextField(LocalizationKey.search.localizedKey, text: $text)
                 .frame(height: 40)
                 .padding([.leading], 10)
                 .padding(.horizontal, 25)
@@ -55,7 +55,7 @@ struct SearchBar: View {
                         )
                     }
                 } label: {
-                    Text("Cancel")
+                    Text(LocalizationKey.cancel.localizedKey)
                         .foregroundColor(Color(ComponentColor.mainText.rawValue))
                         .padding(.leading, 10)
                 }

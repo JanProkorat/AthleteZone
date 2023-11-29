@@ -14,47 +14,42 @@ struct SettingsContent: View {
 
     var body: some View {
         VStack(spacing: 5) {
-            SettingsItem(title: "Language", content: {
+            SettingsItem(title: LocalizationKey.language, content: {
                 LanguagePicker(selectedLanguage: $viewModel.languageManager.language)
             })
             .padding(.top, 20)
 
-            SettingsItem(title: "Sounds", content: {
+            SettingsItem(title: LocalizationKey.sounds, content: {
                 Toggle("", isOn: $viewModel.appStorageManager.soundsEnabled)
                     .frame(width: 0)
                     .padding(.trailing, 30)
             })
 
-            SettingsItem(title: "Allow notifications", content: {
+            SettingsItem(title: LocalizationKey.allowNotifications, content: {
                 Toggle("", isOn: $viewModel.appStorageManager.notificationsEnabled)
                     .frame(width: 0)
                     .padding(.trailing, 30)
             })
 
             if isWatchInstalled {
-                SettingsItem(title: "Haptics (Watch only)", content: {
+                SettingsItem(title: LocalizationKey.haptics, content: {
                     Toggle("", isOn: $viewModel.appStorageManager.hapticsEnabled)
                         .frame(width: 0)
                         .padding(.trailing, 30)
                 })
 
                 VStack {
-                    SettingsItem(title: "HealthKit access", content: {
+                    SettingsItem(title: LocalizationKey.healthKitAccess, content: {
                         Toggle("", isOn: $viewModel.healthKitAccess)
                             .frame(width: 0)
                             .padding(.trailing, 30)
                     })
 
-                    HStack {
-                        if viewModel.hkAuthStatus == .sharingAuthorized {
-                            Text("Removing access can only be done in settings of the Health app")
-                                .padding(.bottom)
-                        } else if viewModel.hkAuthStatus == .sharingDenied {
-                            Text("Access denied in the settings of the Health app. It can only be reenabled from there")
-                                .padding(.bottom)
-                        }
-                    }
-                    .padding([.leading, .trailing])
+                    Text(viewModel.hkAuthStatus == .sharingAuthorized ?
+                        LocalizationKey.healthKitAccessDescription1.localizedKey :
+                        viewModel.hkAuthStatus == .sharingDenied ?
+                        LocalizationKey.healthKitAccessDescription2.localizedKey : "")
+                        .padding([.leading, .trailing, .bottom])
                 }
                 .roundedBackground(cornerRadius: 20)
                 .disabled(viewModel.hkAuthStatus != .notDetermined)

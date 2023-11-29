@@ -55,7 +55,7 @@ struct WorkFlow: Equatable, Codable, Hashable {
         self.originalInterval = 0
         self.totalRounds = 0
         self.totalSeries = 0
-        self.color = .work
+        self.color = .lightPink
     }
 
     init(interval: Int, type: WorkFlowType, round: Int, serie: Int, totalSeries: Int, totalRounds: Int) {

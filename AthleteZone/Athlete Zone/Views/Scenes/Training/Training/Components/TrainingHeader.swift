@@ -15,7 +15,11 @@ struct TrainingHeader: View {
         HStack {
             HStack(alignment: .center) {
                 SectionSwitch()
-                TitleText(text: name ?? "Training")
+                if let name = self.name {
+                    TitleText(text: name)
+                } else {
+                    TitleText(text: LocalizationKey.training.rawValue)
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 

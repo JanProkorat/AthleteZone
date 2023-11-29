@@ -14,11 +14,11 @@ struct WorkOutContent: View {
     var onStartTab: (() -> Void)?
 
     var buttons = [
-        WorkOutButtonConfig(id: .work, image: "play.circle", color: .work, type: .time),
-        WorkOutButtonConfig(id: .rest, image: "pause.circle", color: .rest, type: .time),
-        WorkOutButtonConfig(id: .series, image: "forward.circle", color: .series, type: .number),
-        WorkOutButtonConfig(id: .rounds, image: "repeat.circle", color: .rounds, type: .number),
-        WorkOutButtonConfig(id: .reset, image: "clock.arrow.circlepath", color: .reset, type: .time)
+        WorkOutButtonConfig(id: .work, image: "play.circle", color: .lightPink, type: .time),
+        WorkOutButtonConfig(id: .rest, image: "pause.circle", color: .lightYellow, type: .time),
+        WorkOutButtonConfig(id: .series, image: "forward.circle", color: .lightBlue, type: .number),
+        WorkOutButtonConfig(id: .rounds, image: "repeat.circle", color: .lightGreen, type: .number),
+        WorkOutButtonConfig(id: .reset, image: "clock.arrow.circlepath", color: .braun, type: .time)
     ]
 
     var body: some View {

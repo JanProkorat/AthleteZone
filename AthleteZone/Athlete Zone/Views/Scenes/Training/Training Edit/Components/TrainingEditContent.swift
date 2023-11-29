@@ -20,13 +20,13 @@ struct TrainingEditContent: View {
 
     init(isModalVisible: Binding<Bool>) {
         self._isModalVisible = isModalVisible
-        UICollectionView.appearance().backgroundColor = UIColor(Color(Background.background.rawValue))
+        UICollectionView.appearance().backgroundColor = UIColor(Color(ComponentColor.darkBlue.rawValue))
     }
 
     var body: some View {
         GeometryReader { geo in
             VStack {
-                EditSection(icon: "pencil.circle", label: "Name", color: ComponentColor.work) {
+                EditSection(icon: "pencil.circle", label: LocalizationKey.name, color: ComponentColor.lightPink) {
                     EditField {
                         TextInput(text: $viewModel.name)
                     }
@@ -34,8 +34,10 @@ struct TrainingEditContent: View {
                     .frame(maxHeight: geo.size.height * 0.1)
                 }
 
-                EditSection(icon: "square.and.pencil.circle", label: "Description", color: ComponentColor.series) {
-                    TextField("Enter description...",
+                EditSection(icon: "square.and.pencil.circle",
+                            label: LocalizationKey.description,
+                            color: ComponentColor.lightBlue) {
+                    TextField(LocalizationKey.enterDescription.localizedKey,
                               text: $viewModel.description,
                               axis: .vertical)
                         .lineLimit(descriptionLineLimit, reservesSpace: true)
@@ -54,13 +56,13 @@ struct TrainingEditContent: View {
                         Image(systemName: "figure.run.circle")
                             .resizable()
                             .scaledToFill()
-                            .foregroundColor(Color(ComponentColor.rounds.rawValue))
+                            .foregroundColor(Color(ComponentColor.lightGreen.rawValue))
                             .frame(maxWidth: 35, maxHeight: 35)
                             .padding(.top, 5)
 
-                        Text("Workouts")
+                        Text(LocalizationKey.workouts.localizedKey)
                             .font(.title)
-                            .foregroundColor(Color(ComponentColor.rounds.rawValue))
+                            .foregroundColor(Color(ComponentColor.lightGreen.rawValue))
                             .padding(.leading, 5)
 
                     } content: {
@@ -74,7 +76,7 @@ struct TrainingEditContent: View {
                                         .scaledToFit()
                                         .frame(width: 30, height: 30)
 
-                                    Text("Add workouts")
+                                    Text(LocalizationKey.addWorkouts.localizedKey)
                                         .font(.title2)
                                         .padding(.leading, 5)
                                 }
@@ -83,12 +85,12 @@ struct TrainingEditContent: View {
                                         .foregroundColor(Color(ComponentColor.menu.rawValue))
                                         .frame(width: geo.size.width * 0.98, height: geo.size.height * 0.096)
                                     RoundedRectangle(cornerRadius: 10)
-                                        .foregroundColor(Color(Background.background.rawValue))
+                                        .foregroundColor(Color(ComponentColor.darkBlue.rawValue))
                                         .frame(width: geo.size.width * 0.96, height: geo.size.height * 0.089)
                                 })
                                 .frame(maxWidth: .infinity)
                                 .frame(height: geo.size.height * 0.09)
-                                .background(Color(Background.background.rawValue))
+                                .background(Color(ComponentColor.darkBlue.rawValue))
                                 .padding(.top, 2)
                             }
                             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))

@@ -7,89 +7,85 @@
 */
 
 //Actions
-"Save" = "Save";
-"Cancel" = "Cancel";
-"Delete" = "Delete";
-"Edit" = "Edit";
-"Close" = "Close";
+"save" = "Save";
+"cancel" = "Cancel";
+"delete" = "Delete";
+"edit" = "Edit";
+"close" = "Close";
 
 //Menu
-"Home" = "Home";
-"Library" = "Library";
-"Profile" = "Profile";
-"Settings" = "Settings";
+"home" = "Home";
+"library" = "Library";
+"profile" = "Profile";
+"settings" = "Settings";
 
-//Workout
-"Work" = "Work";
-"Rest" = "Rest";
-"Series" = "Series";
-"Rounds" = "Rounds";
-"ResetTime" = "Reset Time";
-"Created date" = "Created date";
-"Workout length" = "Workout length";
-"Name" = "Name";
+//Exercise
+"work" = "Work";
+"rest" = "Rest";
+"series" = "Series";
+"rounds" = "Rounds";
+"reset" = "Reset";
+"createdDate" = "Created date";
+"workoutLength" = "Workout length";
+"name" = "Name";
 
 //Library
-"No workouts to display." = "No workouts to display.";
-"No trainings to display." = "No trainings to display.";
-"Sort by" = "Sort by";
-"Sort order" = "Sort order";
-"Search ..." = "Search ...";
-"Ascending" = "Ascending";
-"Descending" = "Descending";
-"Work:" = "Work:";
-"Rest:" = "Rest:";
-"Series:" = "Series:";
-"Rounds:" = "Rounds:";
-"Reset:" = "Reset:";
-"Total:" = "Total:";
+"noWorkoutsToDisplay" = "No workouts to display.";
+"noTrainingsToDisplay" = "No trainings to display.";
+"sortBy" = "Sort by";
+"sortOrder" = "Sort order";
+"search" = "Search ...";
+"ascending" = "Ascending";
+"descending" = "Descending";
 
 //Settings
-"Language" = "Language";
-"Sounds" = "Sounds";
-"Haptics (Watch only)" = "Haptics (Watch only)";
-"Allow notifications" = "Allow notifications";
+"language" = "Language";
+"sounds" = "Sounds";
+"haptics" = "Haptics (Watch only)";
+"allowNotifications" = "Allow notifications";
+"healthKitAccess" = "Health app Access";
+"healthKitAccessDescription1" = "Removing access can only be done in settings of the Health app";
+"healthKitAccessDescription2" = "Access denied in the settings of the Health app. It can only be reenabled from there";
 
 //Workout edit
-"Add workout" = "Add workout";
-"Edit workout" = "Edit workout";
-"Enter name..." = "Enter name...";
+"addWorkout" = "Add workout";
+"editWorkout" = "Edit workout";
+"enterName" = "Enter name...";
 
 //Workout run
 "Round %lld/%lld" = "Round %lld/%lld";
 "Exercise %lld/%lld" = "Exercise %lld/%lld";
-"Get ready!" = "Get ready!";
-"Previous exercise" = "Previous exercise";
-"Quit workout" = "Quit workout";
+"preparation" = "Get ready!";
+"previousExercise" = "Previous exercise";
+"quitWorkout" = "Quit workout";
 
 //Watch
-"Filters" = "Filters";
-"Actions" = "Actions";
+"filters" = "Filters";
+"actions" = "Actions";
 
 //Notifications
-"Don't forget to workout today" = "Don't forget to workout today";
-"Don't forget to crush your workout today!" = "Don't forget to crush your workout today!";
-"Time to sweat it out - your workout is waiting!" = "Time to sweat it out - your workout is waiting!";
-"Get up, get moving, get your workout in!" = "Get up, get moving, get your workout in!";
+"notification1" = "Don't forget to workout today";
+"notification2" = "Don't forget to crush your workout today!";
+"notification3" = "Time to sweat it out - your workout is waiting!";
+"notification4" = "Get up, get moving, get your workout in!";
 
 //Training
-"Number of workouts" = "Number of workouts";
-"Training length" = "Training length";
-"Length:" = "Length:";
-"Workouts:" = "Workouts:";
-"Created date:" = "Created date:";
-"Workouts" = "Workouts";
-"Description" = "Description";
-"Summary" = "Summary";
-"No training selected. Create new one or choose existing from the library" = "No training selected. Create new one or choose existing from the library";
+"numOfWorkouts" = "Number of workouts";
+"trainingLength" = "Training length";
+"length" = "Length";
+"workouts" = "Workouts";
+"description" = "Description";
+"summary" = "Summary";
+"noTrainingSelected" = "No training selected. Create new one or choose existing from the library";
 
 //Section
-"Workout" = "Workout";
-"Training" = "Training";
+"workout" = "Workout";
+"training" = "Training";
 
 //Edit training
-"Enter description..." = "Enter description...";
-"Add workouts" = "Add workouts";
-"Select workouts" = "Select workouts";
-"Add training" = "Add training";
-"Edit training" = "Edit training";
+"enterDescription" = "Enter description...";
+"addWorkouts" = "Add workouts";
+"selectWorkouts" = "Select workouts";
+"addTraining" = "Add training";
+"editTraining" = "Edit training";
+"total" = "Total";

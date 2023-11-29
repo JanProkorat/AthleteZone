@@ -14,18 +14,18 @@ struct WorkOutEditContent: View {
     var onEditTab: ((_ value: ActivityType) -> Void)?
 
     var buttons = [
-        WorkOutButtonConfig(id: .work, image: "play.circle", color: .work, type: .time),
-        WorkOutButtonConfig(id: .rest, image: "pause.circle", color: .rest, type: .time),
-        WorkOutButtonConfig(id: .series, image: "forward.circle", color: .series, type: .number),
-        WorkOutButtonConfig(id: .rounds, image: "repeat.circle", color: .rounds, type: .number),
-        WorkOutButtonConfig(id: .reset, image: "clock.arrow.circlepath", color: .reset, type: .time)
+        WorkOutButtonConfig(id: .work, image: "play.circle", color: .lightPink, type: .time),
+        WorkOutButtonConfig(id: .rest, image: "pause.circle", color: .lightYellow, type: .time),
+        WorkOutButtonConfig(id: .series, image: "forward.circle", color: .lightBlue, type: .number),
+        WorkOutButtonConfig(id: .rounds, image: "repeat.circle", color: .lightGreen, type: .number),
+        WorkOutButtonConfig(id: .reset, image: "clock.arrow.circlepath", color: .braun, type: .time)
     ]
 
     var body: some View {
         GeometryReader { geo in
             VStack(spacing: 15) {
                 VStack(alignment: .leading, spacing: 5) {
-                    EditField(label: "Name", labelSize: 23, color: ComponentColor.mainText) {
+                    EditField(label: LocalizationKey.name, labelSize: 23, color: ComponentColor.mainText) {
                         TextInput(text: $viewModel.name)
                     }
                     .padding([.top, .bottom])
@@ -113,7 +113,7 @@ struct TextInputStyle: TextFieldStyle {
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: 10)
-                    .foregroundColor(Color(Background.background.rawValue))
+                    .foregroundColor(Color(ComponentColor.darkBlue.rawValue))
                     .frame(height: height * 0.7)
             ).padding()
     }

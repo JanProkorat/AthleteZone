@@ -13,7 +13,7 @@ struct SettingsScene: View {
     var body: some View {
         BaseView(
             header: {
-                TitleText(text: "Settings")
+                TitleText(text: LocalizationKey.settings.rawValue)
             },
             content: {
                 SettingsContent()

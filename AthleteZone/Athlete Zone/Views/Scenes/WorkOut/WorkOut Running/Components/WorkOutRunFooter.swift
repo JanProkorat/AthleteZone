@@ -18,7 +18,7 @@ struct WorkOutRunFooter: View {
                 viewModel.state = .quit
             }
         } label: {
-            Text(LocalizedStringKey(getLabel()))
+            Text(getLabel())
                 .font(.custom("Lato-ThinItalic", size: 20))
                 .bold()
         }
@@ -28,18 +28,21 @@ struct WorkOutRunFooter: View {
         .foregroundColor(Color(ComponentColor.mainText.rawValue))
     }
 
-    func getLabel() -> String {
+    func getLabel() -> LocalizedStringKey {
         if viewModel.selectedFlowIndex > 0 {
             switch viewModel.state {
             case .paused:
-                return "Quit workout"
+                return LocalizationKey.quitWorkout.localizedKey
+
             case .finished:
-                return "Quit workout"
+                return LocalizationKey.quitWorkout.localizedKey
+
             default:
-                return "Previous exercise"
+                return LocalizationKey.previousExercise.localizedKey
             }
         }
-        return viewModel.state == .paused || viewModel.state == .finished ? "Quit workout" : ""
+        return viewModel.state == .paused || viewModel.state == .finished ?
+            LocalizationKey.quitWorkout.localizedKey : ""
     }
 }
 

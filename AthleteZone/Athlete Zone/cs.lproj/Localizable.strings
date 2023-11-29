@@ -3,95 +3,91 @@
   Athlete Zone
 
   Created by Jan Prokorát on 07.11.2022.
-  
 */
 
 //Actions
-"Save" = "Uložit";
-"Cancel" = "Zrušit";
-"Delete" = "Smazat";
-"Edit" = "Upravit";
-"Close" = "Zavřít";
+"save" = "Uložit";
+"cancel" = "Zrušit";
+"delete" = "Smazat";
+"edit" = "Upravit";
+"close" = "Zavřít";
 
 //Menu
-"Home" = "Domov";
-"Library" = "Knihovna";
-"Profile" = "Profil";
-"Settings" = "Nastavení";
+"home" = "Domov";
+"library" = "Knihovna";
+"profile" = "Profil";
+"settings" = "Nastavení";
 
 //Exercise
-"Work" = "Práce";
-"Rest" = "Pauza";
-"Series" = "Série";
-"Rounds" = "Kola";
-"ResetTime" = "Reset";
-"Created date" = "Datum vytvoření";
-"Workout length" = "Délka workoutu";
-"Name" = "Jméno";
+"work" = "Práce";
+"rest" = "Pauza";
+"series" = "Série";
+"rounds" = "Kola";
+"reset" = "Reset";
+"createdDate" = "Datum vytvoření";
+"workoutLength" = "Délka workoutu";
+"name" = "Jméno";
 
 //Library
-"No workouts to display." = "Žádné workouty k zobrazení";
-"No trainings to display." = "Žádné tréninky k zobrazení";
-"Sort by" = "Řadit podle";
-"Sort order" = "Směr řazení";
-"Search ..." = "Hledat ...";
-"Ascending" = "Vzestupně";
-"Descending" = "Sestupně";
-"Work:" = "Práce:";
-"Rest:" = "Pauza:";
-"Series:" = "Série:";
-"Rounds:" = "Kola:";
-"Reset:" = "Reset:";
-"Total:" = "Celkem:";
+"noWorkoutsToDisplay" = "Žádné workouty k zobrazení";
+"noTrainingsToDisplay" = "Žádné tréninky k zobrazení";
+"sortBy" = "Řadit podle";
+"sortOrder" = "Směr řazení";
+"search" = "Hledat ...";
+"ascending" = "Vzestupně";
+"descending" = "Sestupně";
+
 
 //Settings
-"Language" = "Jazyk";
-"Sounds" = "Zvuky";
-"Haptics (Watch only)" = "Vibrace (Jen hodinky)";
-"Allow notifications" = "Povolit notifikace";
+"language" = "Jazyk";
+"sounds" = "Zvuky";
+"haptics" = "Vibrace (Jen hodinky)";
+"allowNotifications" = "Povolit notifikace";
+"healthKitAccess" = "Přístup do aplikace Zdraví";
+"healthKitAccessDescription1" = "Odebrání přístupu lze provést pouze v nastavení aplikace Zdraví";
+"healthKitAccessDescription2" = "Přístup odepřen v nastavení aplikace Zdraví. Pouze odtud jej lze znovu aktivovat";
 
 //Workout edit
-"Add workout" = "Přidat workout";
-"Edit workout" = "Upravit workout";
-"Enter name..." = "Zadejte název...";
+"addWorkout" = "Přidat workout";
+"editWorkout" = "Upravit workout";
+"enterName" = "Zadejte název...";
 
 //Workout run
 "Round %lld/%lld" = "Kolo %lld/%lld";
 "Exercise %lld/%lld" = "Cvik %lld/%lld";
-"Get ready!" = "Připrav se!";
-"Previous exercise" = "Předchozí cvik";
-"Quit workout" = "Ukončit workout";
+"preparation" = "Připrav se!";
+"previousExercise" = "Předchozí cvik";
+"quitWorkout" = "Ukončit workout";
 
 //Watch
-"Filters" = "Filtry";
-"Actions" = "Akce";
+"filters" = "Filtry";
+"actions" = "Akce";
 
 
 //Notifications
-"Don't forget to workout today" = "Nezapomeňte si dnes zacvičit!";
-"Don't forget to crush your workout today!" = "Nezapomeň se dnes pořádně zničit!";
-"Time to sweat it out - your workout is waiting!" = "Čas to vypotit - Váš dnešní workout čeká";
-"Get up, get moving, get your workout in!" = "Vstaňte, začněte se hýbat, zacvičte si!";
+"notification1" = "Nezapomeňte si dnes zacvičit!";
+"notification2" = "Nezapomeň se dnes pořádně zničit!";
+"notification3" = "Čas to vypotit - Váš dnešní workout čeká";
+"notification4" = "Vstaňte, začněte se hýbat, zacvičte si!";
 
 //Training
-"Number of workouts" = "Počet workoutů";
-"Training length" = "Délka tréninku";
-"Length:" = "Délka:";
-"Workouts:" = "Workouty:";
-"Created date:" = "Datum vytvoření:";
-"Workouts" = "Workouty";
-"Description" = "Popis";
-"Summary" = "Souhrn";
-"No training selected. Create new one or choose existing from the library" = "Není vybrán žádný trénink. Vytvořte nový nebo vyberte existující z knihovny";
+"numOfWorkouts" = "Počet workoutů";
+"trainingLength" = "Délka tréninku";
+"length" = "Délka";
+"workouts" = "Workouty";
+"description" = "Popis";
+"summary" = "Souhrn";
+"noTrainingSelected" = "Není vybrán žádný trénink. Vytvořte nový nebo vyberte existující z knihovny";
 
 //Section
-"Workout" = "Workout";
-"Training" = "Trénink";
+"workout" = "Workout";
+"training" = "Trénink";
 
 //Edit training
-"Enter description..." = "Zadejte popis...";
-"Add workouts" = "Přidat workouty";
-"Select workouts" = "Vyberte workouty";
-"Add training" = "Přidat trénink";
-"Edit training" = "Upravit trénink";
+"enterDescription" = "Zadejte popis...";
+"addWorkouts" = "Přidat workouty";
+"selectWorkouts" = "Vyberte workouty";
+"addTraining" = "Přidat trénink";
+"editTraining" = "Upravit trénink";
+"total" = "Celkem";
 

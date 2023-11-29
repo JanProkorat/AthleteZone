@@ -7,89 +7,85 @@
 */
 
 //Actions
-"Save" = "Speichern";
-"Cancel" = "Abbrechen";
-"Delete" = "Löschen";
-"Edit" = "Bearbeiten";
-"Close" = "Schließen";
+"save" = "Speichern";
+"cancel" = "Abbrechen";
+"delete" = "Löschen";
+"edit" = "Bearbeiten";
+"close" = "Schließen";
 
 //Menu
-"Home" = "Haus";
-"Library" = "Bibliothek";
-"Profile" = "Profil";
-"Settings" = "Einstellungen";
+"home" = "Haus";
+"library" = "Bibliothek";
+"profile" = "Profil";
+"settings" = "Einstellungen";
 
-//Workout
-"Work" = "Arbeit";
-"Rest" = "Pause";
-"Series" = "Serien";
-"Rounds" = "Runden";
-"ResetTime" = "Reset";
-"Created date" = "Erstellungsdatum";
-"Workout length" = "Workoutsdauer";
-"Name" = "Name";
+//Exercise
+"work" = "Arbeit";
+"rest" = "Pause";
+"series" = "Serien";
+"rounds" = "Runden";
+"reset" = "Reset";
+"createdDate" = "Erstellungsdatum";
+"workoutLength" = "Workoutsdauer";
+"name" = "Name";
 
 //Library
-"No workouts to display." = "Keine workouts vorhanden.";
-"No trainings to display." = "Keine trainings vorhanden.";
-"Sort by" = "Sortieren nach";
-"Sort order" = "Sortierfolge";
-"Search ..." = "Suchen ...";
-"Ascending" = "Aufsteigend";
-"Descending" = "Absteigend";
-"Work:" = "Arbeit:";
-"Rest:" = "Pause:";
-"Series:" = "Serien:";
-"Rounds:" = "Runden:";
-"Reset:" = "Reset:";
-"Total:" = "Gesamt:";
+"noWorkoutsToDisplay" = "Keine workouts vorhanden.";
+"noTrainingsToDisplay" = "Keine trainings vorhanden.";
+"sortBy" = "Sortieren nach";
+"sortOrder" = "Sortierfolge";
+"search" = "Suchen ...";
+"ascending" = "Aufsteigend";
+"descending" = "Absteigend";
 
 //Settings
-"Language" = "Sprache";
-"Sounds" = "Töne";
-"Haptics (Watch only)" = "Haptik (nur Uhr)";
-"Allow notifications" = "Benachrichtigungen zulassen";
+"language" = "Sprache";
+"sounds" = "Töne";
+"haptics" = "Haptik (nur Uhr)";
+"allowNotifications" = "Benachrichtigungen zulassen";
+"healthKitAccess" = "Health app Zugang";
+"healthKitAccessDescription1" = "Der Zugang kann nur in den Einstellungen der Health app widerrufen werden";
+"healthKitAccessDescription2" = "Zugriff in den Einstellungen der Health-App verweigert. Nur von dort aus kann es wieder aktiviert werden";
 
 //Workout edit
-"Add workout" = "Workout hinzufügen";
-"Edit workout" = "Workout bearbeiten";
-"Enter name..." = "Namen angeben...";
+"addWorkout" = "Workout hinzufügen";
+"editWorkout" = "Workout bearbeiten";
+"enterName" = "Namen angeben...";
 
 //Workout run
 "Round %lld/%lld" = "Runde %lld/%lld";
 "Exercise %lld/%lld" = "Übung %lld/%lld";
-"Get ready!" = "Bereite dich!";
-"Previous exercise" = "Vorherige Übung";
-"Quit workout" = "Workout beenden";
+"preparation" = "Bereite dich!";
+"previousExercise" = "Vorherige Übung";
+"quitWorkout" = "Workout beenden";
 
 //Watch
-"Filters" = "Filter";
-"Actions" = "Aktionen";
+"filters" = "Filter";
+"actions" = "Aktionen";
 
 //Notifications
-"Don't forget to workout today" = "Vergessen Sie nicht, heute zu trainieren!";
-"Don't forget to crush your workout today!" = "Vergisst nicht, ihnen Training heute zu beenden!";
-"Time to sweat it out - your workout is waiting!" = "Zeit zum Schwitzen – ihr Workout wartet!";
-"Get up, get moving, get your workout in!" = "Aufstehen, bewegen, trainieren!";
+"notification1" = "Vergessen Sie nicht, heute zu trainieren!";
+"notification2" = "Vergisst nicht, ihnen Training heute zu beenden!";
+"notification3" = "Zeit zum Schwitzen – ihr Workout wartet!";
+"notification4" = "Aufstehen, bewegen, trainieren!";
 
 //Training
-"Number of workouts" = "Anzahl der Workouts";
-"Training length" = "Trainingsdauer";
-"Length:" = "Dauer:";
-"Workouts:" = "Workouts:";
-"Created date:" = "Erstellungsdatum:";
-"Workouts" = "Workouts";
-"Description" = "Beschreibung";
-"Summary" = "Übersicht";
-"No training selected. Create new one or choose existing from the library" = "Kein Training ausgewählt. Erstellen Sie ein neues oder wählen Sie eines aus der Bibliothek aus";
+"numOfWorkouts" = "Anzahl der Workouts";
+"trainingLength" = "Trainingsdauer";
+"length" = "Dauer";
+"workouts" = "Workouts";
+"description" = "Beschreibung";
+"summary" = "Übersicht";
+"noTrainingSelected" = "Kein Training ausgewählt. Erstellen Sie ein neues oder wählen Sie eines aus der Bibliothek aus";
 
 //Section
-"Workout" = "Workout";
-"Training" = "Training";
+"workout" = "Workout";
+"training" = "Training";
 
 //Edit training
-"Enter description..." = "Beschreibung eingeben...";
-"Add workouts" = "Workouts hinzufügen";
-"Select workouts" = "Workouts auswählen";
-"Add training" = "Training hinzufügen";
-"Edit training" = "Training bearbeiten";
+"enterDescription" = "Beschreibung eingeben...";
+"addWorkouts" = "Workouts hinzufügen";
+"selectWorkouts" = "Workouts auswählen";
+"addTraining" = "Training hinzufügen";
+"editTraining" = "Training bearbeiten";
+"total" = "Gesamt";

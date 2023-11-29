@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum Icons: String, CaseIterable {
     case actionsForward = "Actions_forward"
@@ -20,7 +21,7 @@ enum Icons: String, CaseIterable {
     case donate = "Donate"
     case flagCZ = "CZ"
     case flagDE = "DE"
-    case flagGB = "GB"
+    case flagGB = "EN"
     case forward = "Forward"
     case home = "Home"
     case homeActive = "Home_active"
@@ -58,11 +59,6 @@ enum ComponentColor: String, CaseIterable, Codable {
     case menuItemSelected = "Menu_item_selected"
     case menu = "Menu"
     case purple = "Light_Purple"
-    case reset = "Reset"
-    case rest = "Rest"
-    case rounds = "Rounds"
-    case series = "Series"
-    case work = "Work"
 
     case lightPink = "Light_Pink"
     case lightYellow = "Light_Yellow"
@@ -70,17 +66,6 @@ enum ComponentColor: String, CaseIterable, Codable {
     case lightBlue = "Light_blue"
     case lightGreen = "Light_green"
     case none = ""
-}
-
-enum Background: String, CaseIterable {
-    case background = "Background"
-    case sheetBackground = "Sheet_background"
-    case reset = "Reset_background"
-    case rest = "Rest_background"
-    case rounds = "Rounds_background"
-    case series = "Series_background"
-    case work = "Work_background"
-    case listItemBackground = "List_item_Background"
 }
 
 enum DefaultItem: String {
@@ -106,4 +91,92 @@ enum UserDefaultValues: String {
     case workoutId = "selectedWorkout"
     case trainingId = "selectedTraining"
     case widgetId = "AthleteZoneWidget"
+}
+
+enum LocalizationKey: String {
+    var localizedKey: LocalizedStringKey {
+        LocalizedStringKey(rawValue)
+    }
+
+    // Actions
+    case save
+    case cancel
+    case delete
+    case edit
+    case close
+
+    // Menu
+    case home
+    case library
+    case profile
+    case settings
+
+    // Workout
+    case work
+    case rest
+    case series
+    case rounds
+    case reset
+    case createdDate
+    case workoutLength
+    case name
+
+    // Library
+    case noWorkoutsToDisplay
+    case noTrainingsToDisplay
+    case sortBy
+    case sortOrder
+    case search
+    case ascending
+    case descending
+
+    // Settings
+    case language
+    case sounds
+    case allowNotifications
+    case haptics
+    case healthKitAccess
+    case healthKitAccessDescription1
+    case healthKitAccessDescription2
+
+    // Workout edit
+    case addWorkout
+    case editWorkout
+    case enterName
+
+    // Workout run
+    case preparation
+    case previousExercise
+    case quitWorkout
+
+    // Watch
+    case filters
+    case actions
+
+    // Notifications
+    case notification1
+    case notification2
+    case notification3
+    case notification4
+
+    // Training
+    case numOfWorkouts
+    case trainingLength
+    case length
+    case workouts
+    case description
+    case summary
+    case noTrainingSelected
+
+    // Sections
+    case workout
+    case training
+
+    // Edit training
+    case enterDescription
+    case addWorkouts
+    case selectWorkouts
+    case addTraining
+    case editTraining
+    case total
 }

@@ -16,8 +16,8 @@ struct WorkOutEditFooter: View {
         VStack(spacing: 5) {
             ActionButton(content: {
                 ActionView(
-                    text: "Save",
-                    color: viewModel.saveDisabled ? .grey : .rounds,
+                    text: LocalizationKey.save,
+                    color: viewModel.saveDisabled ? .grey : .lightGreen,
                     backgoundColor: ComponentColor.menu.rawValue,
                     image: Icons.check.rawValue,
                     height: 60,
@@ -29,8 +29,8 @@ struct WorkOutEditFooter: View {
 
             ActionButton(content: {
                 ActionView(
-                    text: "Cancel",
-                    color: ComponentColor.work,
+                    text: LocalizationKey.cancel,
+                    color: ComponentColor.lightPink,
                     backgoundColor: ComponentColor.menu.rawValue,
                     image: Icons.clear.rawValue,
                     height: 60,

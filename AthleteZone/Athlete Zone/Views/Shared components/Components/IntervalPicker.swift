@@ -11,12 +11,10 @@ struct IntervalPicker<Picker: View>: View {
     let picker: Picker
     let title: String
     let color: ComponentColor
-    let backgroundColor: Background
 
-    init(title: String, color: ComponentColor, backgroundColor: Background, @ViewBuilder picker: () -> Picker) {
+    init(title: String, color: ComponentColor, @ViewBuilder picker: () -> Picker) {
         self.title = title
         self.color = color
-        self.backgroundColor = backgroundColor
         self.picker = picker()
     }
 
@@ -24,10 +22,10 @@ struct IntervalPicker<Picker: View>: View {
         VStack(spacing: 0) {
             ZStack {
                 RoundedRectangle(cornerRadius: 20)
-                    .stroke(Color(ComponentColor.darkBlue.rawValue), lineWidth: 3)
-                    .foregroundColor(Color(backgroundColor.rawValue))
+                    .stroke(Color(ComponentColor.darkGrey.rawValue), lineWidth: 3)
+                    .foregroundColor(Color(ComponentColor.darkGrey.rawValue))
                 RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(Color(backgroundColor.rawValue))
+                    .foregroundColor(Color(ComponentColor.darkBlue.rawValue))
                 Text(LocalizedStringKey(title))
                     .font(.title)
                     .foregroundColor(Color(color.rawValue))
@@ -40,16 +38,16 @@ struct IntervalPicker<Picker: View>: View {
             picker
                 .frame(maxHeight: .infinity)
         }
-        .background(Color(Background.sheetBackground.rawValue))
+        .background(Color(ComponentColor.darkBlue.rawValue))
         .environment(\.colorScheme, .dark)
     }
 }
 
 struct ActivityPicker_Previews: PreviewProvider {
     static var previews: some View {
-        IntervalPicker(title: "Work", color: ComponentColor.work, backgroundColor: Background.work) {
+        IntervalPicker(title: "Work", color: ComponentColor.lightPink) {
             let bindingInt = Binding.constant(40)
-            TimePicker(textColor: ComponentColor.work, interval: bindingInt)
+            TimePicker(textColor: ComponentColor.lightPink, interval: bindingInt)
         }
     }
 }

@@ -45,7 +45,7 @@ struct WidgetLargeView: View {
 
             Spacer()
         }
-        .background(Color(Background.background.rawValue))
+        .background(Color(ComponentColor.darkBlue.rawValue))
         .frame(maxWidth: .infinity)
     }
 }

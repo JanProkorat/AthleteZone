@@ -27,7 +27,7 @@ struct TrainingRunView: View {
                 .environmentObject(viewModel.selectedWorkFlowViewModel)
                 .tag(2)
         }
-        .background(Color(Background.background.rawValue))
+        .background(Color(ComponentColor.darkBlue.rawValue))
         .animation(.easeIn, value: selectedTab)
         .transition(.slide)
     }

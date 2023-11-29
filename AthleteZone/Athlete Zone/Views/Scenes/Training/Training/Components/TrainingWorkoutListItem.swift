@@ -28,7 +28,7 @@ struct TrainingWorkoutListItem: View {
                 Image(systemName: "line.3.horizontal")
                     .frame(height: height * 0.03)
                     .padding(.leading)
-                    .foregroundColor(Color(Background.background.rawValue))
+                    .foregroundColor(Color(ComponentColor.darkBlue.rawValue))
             }
             .padding([.leading, .trailing])
             .background(ZStack {
@@ -39,7 +39,7 @@ struct TrainingWorkoutListItem: View {
             .frame(maxWidth: .infinity)
             .frame(height: height)
             .padding(.bottom, 2)
-            .background(Color(Background.background.rawValue))
+            .background(Color(ComponentColor.darkBlue.rawValue))
         }
         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
     }
