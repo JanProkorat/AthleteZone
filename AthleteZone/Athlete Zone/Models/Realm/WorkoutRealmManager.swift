@@ -8,20 +8,8 @@
 import Realm
 import RealmSwift
 
-class WorkoutRealmManager: ObservableObject, WorkOutRealmManagerProtocol {
+class WorkoutRealmManager: RealmManager, WorkOutRealmManagerProtocol {
     @ObservedResults(WorkOut.self) private var workOutLibrary
-
-    private(set) var realm: Realm!
-
-    init() {
-        let config = Realm.Configuration(schemaVersion: 7)
-        Realm.Configuration.defaultConfiguration = config
-        do {
-            self.realm = try Realm()
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
 
     func add(_ value: WorkOut) {
         $workOutLibrary.append(value)

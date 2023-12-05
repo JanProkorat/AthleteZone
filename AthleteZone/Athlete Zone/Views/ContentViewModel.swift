@@ -59,6 +59,8 @@ class ContentViewModel: ObservableObject {
     }
 
     private func setupLanguageWatcher() {
+        languageCancellable?.cancel()
+
         languageCancellable = languageManager.languagePublisher
             .sink { newValue in
                 if newValue != self.appStorageManager.language {

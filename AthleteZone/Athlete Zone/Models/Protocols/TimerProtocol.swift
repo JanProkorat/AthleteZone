@@ -11,7 +11,7 @@ protocol TimerProtocol: ObservableObject {
     var timeElapsed: TimeInterval { get }
     var timeElapsedPublisher: Published<TimeInterval>.Publisher { get }
 
-    func startTimer()
+    func startTimer(_ interval: TimeInterval, kind: TimerKind)
     func stopTimer()
     func pauseTimer()
 }

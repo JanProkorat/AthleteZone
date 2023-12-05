@@ -87,9 +87,25 @@ enum TrainingSortByProperty: String, SortByProperty {
     case trainingLength
 }
 
-enum Section: String, CaseIterable, Codable {
+enum StopWatchSortByProperty: String, SortByProperty {
+    var id: Int {
+        hashValue
+    }
+
+    case name
+    case startDate
+    case endDate
+    case activityLength
+}
+
+enum Section: String, CaseIterable, Codable, Identifiable {
+    var id: Int {
+        hashValue
+    }
+
     case workout
     case training
+    case stopWatch
 }
 
 enum LaunchScreenStep {
@@ -109,4 +125,14 @@ enum TransferDataKey: String {
     case trainingAdd
     case trainingEdit
     case trainingRemove
+}
+
+enum TimerType: String {
+    case stopWatch
+    case timer
+}
+
+enum TimerKind: String {
+    case workout
+    case stopWatch
 }

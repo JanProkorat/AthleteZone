@@ -36,4 +36,17 @@ extension View {
                     .foregroundColor(color)
             )
     }
+
+    func roundedBackground(cornerRadius: CGFloat, color: ComponentColor, border: ComponentColor) -> some View {
+        return self
+            .background(
+                ZStack {
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .stroke(Color(border.rawValue), lineWidth: 5)
+//                        .foregroundColor(Color(border.rawValue))
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .foregroundColor(Color(color.rawValue))
+                }
+            )
+    }
 }

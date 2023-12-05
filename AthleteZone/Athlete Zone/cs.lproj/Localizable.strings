@@ -82,6 +82,8 @@
 //Section
 "workout" = "Workout";
 "training" = "Trénink";
+"stopWatch" = "Stopky";
+"timer" = "Časovač";
 
 //Edit training
 "enterDescription" = "Zadejte popis...";
@@ -91,3 +93,16 @@
 "editTraining" = "Upravit trénink";
 "total" = "Celkem";
 
+//StopWatch
+"history" = "Historie";
+"start" = "Začátek";
+"end" = "Konec";
+"noActivities" = "Žádné aktivity k zobrazení";
+"splitTimes" = "Mezičasy";
+"%lld. Split time:" = "%lld. Mezičas:";
+"quitTracking" = "Ukončit stopování";
+"enterNameLabel" = "Zadejte jméno aktivity";
+"namePlaceholder" = "Jméno ...";
+"startDate" = "Datum startu";
+"endDate" = "Datum ukončení";
+"activityLength" = "Délka aktivity";

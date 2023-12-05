@@ -14,7 +14,7 @@ struct CounterText: View {
     var body: some View {
         Text(text)
             .scaledToFill()
-            .font(.custom("Lato-Black", size: size))
+            .font(Font.monospacedDigit(Font.system(size: size).weight(.light))())
             .scaledToFit()
             .minimumScaleFactor(0.01)
             .lineLimit(1)

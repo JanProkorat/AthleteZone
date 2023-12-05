@@ -18,11 +18,11 @@ class TimerManager: ObservableObject, TimerProtocol {
 
     @Published var timeElapsed: TimeInterval = 0
 
-    func startTimer() {
-        timer = Timer.publish(every: 1, on: .main, in: .common)
+    func startTimer(_ interval: TimeInterval, kind: TimerKind) {
+        timer = Timer.publish(every: interval, on: .main, in: .common)
             .autoconnect()
             .sink { [weak self] _ in
-                self?.timeElapsed += 1
+                self?.timeElapsed += interval
             }
     }
 

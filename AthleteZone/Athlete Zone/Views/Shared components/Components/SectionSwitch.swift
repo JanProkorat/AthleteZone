@@ -12,16 +12,13 @@ struct SectionSwitch: View {
 
     var body: some View {
         Menu {
-            Button(action: {
-                router.currentSection = .workout
-            }, label: {
-                Text(LocalizedStringKey(Section.workout.rawValue))
-            })
-            Button(action: {
-                router.currentSection = .training
-            }, label: {
-                Text(LocalizedStringKey(Section.training.rawValue))
-            })
+            ForEach(Section.allCases.sorted(by: { $0.rawValue > $1.rawValue }), id: \.self) { section in
+                Button(action: {
+                    router.currentSection = section
+                }, label: {
+                    Text(LocalizedStringKey(section.rawValue))
+                })
+            }
         } label: {
             Image(Icons.arrowDown.rawValue)
                 .resizable()

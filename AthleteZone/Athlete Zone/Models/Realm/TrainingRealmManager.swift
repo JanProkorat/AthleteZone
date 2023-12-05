@@ -8,20 +8,8 @@
 import Foundation
 import RealmSwift
 
-class TrainingRealmManager: ObservableObject, TrainingRealmManagerProtocol {
+class TrainingRealmManager: RealmManager, TrainingRealmManagerProtocol {
     @ObservedResults(Training.self) private var trainingLibrary
-
-    private(set) var realm: Realm!
-
-    init() {
-        let config = Realm.Configuration(schemaVersion: 7)
-        Realm.Configuration.defaultConfiguration = config
-        do {
-            self.realm = try Realm()
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
 
     func load(_ searchText: String, _ sortBy: TrainingSortByProperty, _ sortOrder: SortOrder) -> [Training] {
         let filteredTrainings: [Training]

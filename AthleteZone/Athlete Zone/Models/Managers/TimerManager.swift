@@ -20,28 +20,30 @@ class TimerManager: TimerProtocol {
 
     private var timer: Timer?
     private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
-    static let timerUpdatedNotification = Notification.Name("BackgroundTimerUpdatedNotification")
+    static let workoutTimerNotification = Notification.Name(TimerKind.workout.rawValue)
+    static let stopWatchTimerNotification = Notification.Name(TimerKind.stopWatch.rawValue)
 
     private init() {}
 
     var timePublisher: AnyPublisher<TimeInterval, Never> {
         Just(timeElapsed)
             .merge(with: NotificationCenter
-                .default.publisher(for: TimerManager.timerUpdatedNotification).map { _ in
+                .default.publisher(for: TimerManager.workoutTimerNotification).map { _ in
                     self.timeElapsed
                 })
             .eraseToAnyPublisher()
     }
 
-    func startTimer() {
-        timeElapsed = 0
+    func startTimer(_ interval: TimeInterval, kind: TimerKind) {
         scheduleBackgroundTask()
 
         DispatchQueue.main.async {
-            self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
+            self.timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] timer in
                 guard let self = self else { return }
                 self.timeElapsed += timer.timeInterval
-                NotificationCenter.default.post(name: TimerManager.timerUpdatedNotification, object: nil)
+                NotificationCenter.default.post(name: kind == .workout ?
+                    TimerManager.workoutTimerNotification :
+                    TimerManager.stopWatchTimerNotification, object: nil)
             }
         }
     }
@@ -50,11 +52,13 @@ class TimerManager: TimerProtocol {
         timer?.invalidate()
         timer = nil
         endBackgroundTask()
+        timeElapsed = 0
     }
 
     func pauseTimer() {
         timer?.invalidate()
         timer = nil
+        endBackgroundTask()
     }
 
     private func scheduleBackgroundTask() {

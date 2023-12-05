@@ -81,6 +81,8 @@
 //Section
 "workout" = "Workout";
 "training" = "Training";
+"stopWatch" = "Stoppuhr";
+"timer" = "Timer";
 
 //Edit training
 "enterDescription" = "Beschreibung eingeben...";
@@ -89,3 +91,17 @@
 "addTraining" = "Training hinzufügen";
 "editTraining" = "Training bearbeiten";
 "total" = "Gesamt";
+
+//StopWatch
+"history" = "Verlauf";
+"start" = "Start";
+"end" = "Ende";
+"noActivities" = "Keine Aktivitäten vorhanden.";
+"splitTimes" = "Zwischenzeiten";
+"%lld. Split time:" = "%lld. Zwischenzeit:";
+"quitTracking" = "Tracking beenden";
+"enterNameLabel" = "Aktivitätsname eingeben";
+"namePlaceholder" = "Name ...";
+"startDate" = "Start datum";
+"endDate" = "End datum";
+"activityLength" = "Aktivitätsdauer";

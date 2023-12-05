@@ -15,6 +15,7 @@ protocol AppStorageProtocol: ObservableObject {
     var soundsEnabled: Bool { get set }
     var hapticsEnabled: Bool { get set }
     var notificationsEnabled: Bool { get set }
+    var stopWatchType: TimerType { get set }
 
     /// Stores data to be displayed in widget do user defaults
     /// - Parameters:

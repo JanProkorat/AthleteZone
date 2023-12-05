@@ -27,6 +27,17 @@ struct TimePicker: View {
         self._selectedSecs = State<Int>(initialValue: interval.wrappedValue.toSeconds())
     }
 
+    init(textColor: ComponentColor, interval: Binding<TimeInterval>) {
+        self.textColor = textColor
+        self._interval = Binding<Int>(
+            get: { Int(interval.wrappedValue) },
+            set: { interval.wrappedValue = TimeInterval($0) }
+        )
+        self._selectedHours = State<Int>(initialValue: Int(interval.wrappedValue).toHours())
+        self._selectedMins = State<Int>(initialValue: Int(interval.wrappedValue).toMinutes())
+        self._selectedSecs = State<Int>(initialValue: Int(interval.wrappedValue).toSeconds())
+    }
+
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
             HStack(alignment: .center, spacing: 5) {
@@ -42,6 +53,15 @@ struct TimePicker: View {
             Spacer()
         }
         .padding([.leading, .trailing], 10)
+        .onChange(of: interval) { oldValue, newValue in
+            if newValue != oldValue {
+                withAnimation {
+                    selectedHours = newValue.toHours()
+                    selectedMins = newValue.toMinutes()
+                    selectedSecs = newValue.toSeconds()
+                }
+            }
+        }
     }
 
     @ViewBuilder

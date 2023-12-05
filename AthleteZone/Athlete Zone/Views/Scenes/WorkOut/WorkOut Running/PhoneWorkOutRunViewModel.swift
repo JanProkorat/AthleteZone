@@ -21,7 +21,7 @@ class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
 
         super.init()
 
-        NotificationCenter.default.publisher(for: TimerManager.timerUpdatedNotification)
+        NotificationCenter.default.publisher(for: TimerManager.workoutTimerNotification)
             .sink { [weak self] _ in
                 if self?.selectedFlow != nil {
                     self?.updateInterval()
@@ -64,7 +64,7 @@ class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
                 }
 
             case .running:
-                timerManager.startTimer()
+                timerManager.startTimer(1, kind: .workout)
                 if previous == .ready {
                     liveActivityManager.startActivity(
                         workFlow: selectedFlow!,

@@ -35,6 +35,7 @@ enum Icons: String, CaseIterable {
     case settingActive = "Setting_active"
     case start = "Start"
     case stop = "Stop"
+    case stopWatch = "StopWatch"
     case time = "Time"
     case trash = "Trash"
 }
@@ -78,6 +79,7 @@ enum DefaultItem: String {
     case notificationsAllowed
     case selectedSection
     case backupData
+    case stopWatchType
 }
 
 enum Sound: String, CaseIterable {
@@ -171,6 +173,8 @@ enum LocalizationKey: String {
     // Sections
     case workout
     case training
+    case stopWatch
+    case timer
 
     // Edit training
     case enterDescription
@@ -179,4 +183,17 @@ enum LocalizationKey: String {
     case addTraining
     case editTraining
     case total
+
+    // StopWatch
+    case history
+    case start
+    case end
+    case noActivities
+    case splitTimes
+    case quitTracking
+    case enterNameLabel
+    case namePlaceholder
+    case startDate
+    case endDate
+    case activityLength
 }

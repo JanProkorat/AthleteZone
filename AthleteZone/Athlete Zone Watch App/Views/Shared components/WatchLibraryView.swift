@@ -30,6 +30,9 @@ struct WatchLibraryView: View {
                 case .training:
                     TrainingLibraryView()
                         .environmentObject(viewModel.trainingLibraryViewModel)
+
+                default:
+                    Text("")
                 }
             }
             .animation(.default, value: viewModel.currentSection)

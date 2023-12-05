@@ -73,7 +73,7 @@ extension UIApplication {
 }
 
 struct SearchBar_Previews: PreviewProvider {
-    @State static var str = "ahoj"
+    @State static var str = ""
 
     static var previews: some View {
         SearchBar(text: $str)

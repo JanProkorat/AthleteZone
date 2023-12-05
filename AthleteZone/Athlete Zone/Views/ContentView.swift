@@ -21,6 +21,9 @@ struct ContentView: View {
 
             case .training:
                 TrainingContentScene()
+
+            case .stopWatch:
+                StopWatchContentScene()
             }
 
             if launchScreenStateManager.state != .finished {

@@ -40,8 +40,10 @@ class SoundManager: SoundProtocol {
     }
 
     func stop() {
-        if let player = players[selectedSound!] {
-            player.pause()
+        if let sound = selectedSound {
+            if let player = players[sound] {
+                player.pause()
+            }
         }
     }
 

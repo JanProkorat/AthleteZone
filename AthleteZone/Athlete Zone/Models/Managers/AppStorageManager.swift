@@ -39,6 +39,10 @@ class AppStorageManager: AppStorageProtocol {
                 store: UserDefaults(suiteName: UserDefaultValues.groupId.rawValue))
     var notificationsEnabled = false
 
+    @AppStorage(DefaultItem.stopWatchType.rawValue,
+                store: UserDefaults(suiteName: UserDefaultValues.groupId.rawValue))
+    var stopWatchType: TimerType = .stopWatch
+
     public func storeToUserDefaults(data: String, key: UserDefaultValues) {
         UserDefaults(suiteName: UserDefaultValues.groupId.rawValue)?.set(data, forKey: key.rawValue)
     }
