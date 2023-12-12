@@ -17,6 +17,10 @@ public class Training: Object, Identifiable, Codable {
     @Persisted var createdDate: Date
     @Persisted var workouts: RealmSwift.List<WorkOut>
 
+    public var id: String {
+        _id.stringValue
+    }
+
     var workoutCount: Int {
         workouts.count
     }

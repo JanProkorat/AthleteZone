@@ -44,6 +44,7 @@ class TimerManager: TimerProtocol {
                 NotificationCenter.default.post(name: kind == .workout ?
                     TimerManager.workoutTimerNotification :
                     TimerManager.stopWatchTimerNotification, object: nil)
+                RunLoop.current.add(timer, forMode: .common)
             }
         }
     }

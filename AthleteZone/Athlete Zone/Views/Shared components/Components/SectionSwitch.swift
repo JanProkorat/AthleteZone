@@ -16,7 +16,14 @@ struct SectionSwitch: View {
                 Button(action: {
                     router.currentSection = section
                 }, label: {
-                    Text(LocalizedStringKey(section.rawValue))
+                    HStack {
+                        Text(LocalizedStringKey(section.rawValue))
+                            .frame(maxWidth: .infinity)
+
+                        if section == router.currentSection {
+                            Image(systemName: "checkmark.circle")
+                        }
+                    }
                 })
             }
         } label: {

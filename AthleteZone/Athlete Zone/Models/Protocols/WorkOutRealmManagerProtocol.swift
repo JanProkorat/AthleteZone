@@ -15,4 +15,5 @@ protocol WorkOutRealmManagerProtocol {
     func delete(entity: WorkOut)
     func update(_ id: ObjectId, _ name: String, _ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int)
     func getSortedData(_ searchText: String, _ sortBy: WorkOutSortByProperty, _ sortOrder: SortOrder) -> [WorkOut]
+    func isWorkoutAssignedToTraining(_ id: String) -> Bool
 }

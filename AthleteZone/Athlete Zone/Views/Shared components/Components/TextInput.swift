@@ -39,6 +39,9 @@ struct TextInput: View {
                         self.isEditing = true
                     }
                 }
+                .onChange(of: text) { _, newValue in
+                    text = String(newValue.prefix(20))
+                }
 
             if isEditing {
                 Button {

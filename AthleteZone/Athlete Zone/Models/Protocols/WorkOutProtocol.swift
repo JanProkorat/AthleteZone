@@ -8,7 +8,6 @@
 import Foundation
 
 protocol WorkOutProtocol: Codable, Equatable {
-    var id: String { get }
     var name: String { get set }
     var work: Int { get set }
     var rest: Int { get set }

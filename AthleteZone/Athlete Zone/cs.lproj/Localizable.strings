@@ -11,6 +11,8 @@
 "delete" = "Smazat";
 "edit" = "Upravit";
 "close" = "Zavřít";
+"yes" = "Ano";
+"no" = "Ne";
 
 //Menu
 "home" = "Domov";

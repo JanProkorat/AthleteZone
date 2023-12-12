@@ -27,11 +27,11 @@ class HistoryViewModel: ObservableObject {
 
     func updateActivity(_ id: String, _ name: String) {
         realmManager.update(id, name)
+        objectWillChange.send()
     }
 
-    func deleteActivities(at: IndexSet?) {
-        if let index = at {
-            realmManager.delete(at: index)
-        }
+    func deleteActivity(_ activity: StopWatch) {
+        realmManager.delete(entity: activity)
+        objectWillChange.send()
     }
 }

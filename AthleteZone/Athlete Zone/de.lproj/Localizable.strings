@@ -12,6 +12,8 @@
 "delete" = "Löschen";
 "edit" = "Bearbeiten";
 "close" = "Schließen";
+"yes" = "Ja";
+"no" = "Nein";
 
 //Menu
 "home" = "Haus";

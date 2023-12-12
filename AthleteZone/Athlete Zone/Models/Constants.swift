@@ -106,6 +106,8 @@ enum LocalizationKey: String {
     case delete
     case edit
     case close
+    case yes
+    case no
 
     // Menu
     case home

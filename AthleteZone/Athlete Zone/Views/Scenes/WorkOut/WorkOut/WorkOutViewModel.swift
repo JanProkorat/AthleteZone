@@ -19,7 +19,7 @@ class WorkOutViewModel: ObservableObject, Identifiable {
     var router: any ViewRoutingProtocol
 
     @Published var selectedWorkout: WorkOut?
-    @Published var name = "Title"
+    @Published var name = ""
     @Published var work = 30
     @Published var rest = 60
     @Published var series = 5
@@ -30,6 +30,10 @@ class WorkOutViewModel: ObservableObject, Identifiable {
 
     var timeOverview: Int {
         (((work * series) + (rest * (series - 1)) + reset) * rounds) - reset
+    }
+
+    var isRunDisabled: Bool {
+        work == 0 || rest == 0 || series == 0 || rounds == 0 || reset == 0
     }
 
     private var cancellables = Set<AnyCancellable>()

@@ -56,9 +56,10 @@ struct WorkOutContent: View {
                         Image(Icons.start.rawValue)
                             .resizable()
                             .scaledToFill()
-                            .foregroundColor(Color(ComponentColor.action.rawValue))
+                            .foregroundColor(viewModel.isRunDisabled ? .grey : Color(ComponentColor.action.rawValue))
                             .frame(maxWidth: geo.size.height * 0.3, maxHeight: geo.size.height * 0.3)
                     }
+                    .disabled(viewModel.isRunDisabled)
                 }
                 .frame(height: geo.size.height * 0.47)
                 .frame(maxWidth: .infinity)

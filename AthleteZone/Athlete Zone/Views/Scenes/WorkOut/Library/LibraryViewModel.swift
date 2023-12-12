@@ -56,6 +56,10 @@ extension LibraryViewModel {
             WidgetCenter.shared.reloadTimelines(ofKind: UserDefaultValues.widgetId.rawValue)
         }
     }
+
+    func isWorkoutAssignedToTraining(id: String) -> Bool {
+        return realmManager.isWorkoutAssignedToTraining(id)
+    }
 }
 
 // MARK: Watch connecctivity

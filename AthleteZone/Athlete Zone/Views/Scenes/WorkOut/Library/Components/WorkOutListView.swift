@@ -8,55 +8,78 @@
 import SwiftUI
 
 struct WorkOutListView: View {
-    let workOut: WorkOut
+    var workOut: WorkOut
+    var buttonsEnabled = true
 
     var onEditTab: (() -> Void)?
     var onDeleteTab: (() -> Void)?
 
     let fieldConfig: [[ActivityType]] = [.work, .rounds, .rest, .series, .reset].chunked(into: 2)
 
+    init(workOut: WorkOut) {
+        self.workOut = workOut
+    }
+
+    init(workOut: WorkOut, buttonsEnabled: Bool) {
+        self.workOut = workOut
+        self.buttonsEnabled = buttonsEnabled
+    }
+
     var body: some View {
         GeometryReader { reader in
+            if buttonsEnabled {
+                view(width: reader.size.width)
+            } else {
+                viewWithoutButtons(width: reader.size.width)
+            }
+        }
+    }
+
+    @ViewBuilder
+    func view(width: CGFloat) -> some View {
+        LibraryItemBaseView(name: workOut.name, infoEnabled: false) {
             VStack {
-                HStack(alignment: .center) {
-                    TitleText(text: workOut.name)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading, 10)
-                    Menu {
-                        Button(action: {
-                            performAction(onEditTab)
-                        }, label: {
-                            Label(LocalizationKey.edit.localizedKey, systemImage: "pencil")
-                        })
-
-                        Button(role: .destructive, action: {
-                            performAction(onDeleteTab)
-                        }, label: {
-                            Label(LocalizationKey.delete.localizedKey, systemImage: "trash")
-                        })
-                    } label: {
-                        Image(Icons.menu.rawValue)
-                            .foregroundColor(Color(ComponentColor.mainText.rawValue))
-                            .frame(width: 40, height: 34)
-                            .padding(.trailing, 10)
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, 5)
-
                 ForEach(fieldConfig, id: \.first?.id) { chunk in
                     HStack {
-                        listViewItem(item: chunk.first!, width: reader.size.width * 0.8 * 0.5)
-                        listViewItem(item: chunk.count > 1 ? chunk.last! : nil, width: reader.size.width * 0.9 * 0.5)
+                        listViewItem(item: chunk.first!, width: width * 0.4)
+                            .padding(.leading)
+                            .padding(.trailing, 4)
+                        listViewItem(
+                            item: chunk.count > 1 ? chunk.last! : nil, width: width * 0.4)
+                            .padding(.leading, 4)
+                            .padding(.trailing)
                     }
                     .padding(.bottom, chunk.count > 1 ? 1 : 10)
-                    .frame(maxWidth: reader.size.width * 0.9, alignment: .center)
+                    .frame(alignment: .center)
                 }
             }
-            .background(
-                RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(Color(ComponentColor.darkGrey.rawValue))
-            )
+            .padding(.top, -10)
+            .padding(.bottom, -10)
+        }
+        .onEditTab { performAction(onEditTab) }
+        .onDeleteTab { performAction(onDeleteTab) }
+    }
+
+    @ViewBuilder
+    func viewWithoutButtons(width: CGFloat) -> some View {
+        LibraryItemBaseView(name: workOut.name, buttonsDisabled: true) {
+            VStack {
+                ForEach(fieldConfig, id: \.first?.id) { chunk in
+                    HStack {
+                        listViewItem(item: chunk.first!, width: width * 0.4)
+                            .padding(.leading)
+                            .padding(.trailing, 4)
+                        listViewItem(
+                            item: chunk.count > 1 ? chunk.last! : nil, width: width * 0.4)
+                            .padding(.leading, 4)
+                            .padding(.trailing)
+                    }
+                    .padding(.bottom, chunk.count > 1 ? 1 : 10)
+                    .frame(alignment: .center)
+                }
+            }
+            .padding(.top, -10)
+            .padding(.bottom, -10)
         }
     }
 
@@ -66,7 +89,6 @@ struct WorkOutListView: View {
             Text(item == nil ? LocalizationKey.total.localizedKey : LocalizedStringKey(item!.rawValue))
                 .font(.callout)
                 .foregroundColor(Color(getColor(item)))
-                .scaledToFill()
             Text(":")
                 .font(.callout)
                 .foregroundColor(Color(getColor(item)))
@@ -75,7 +97,6 @@ struct WorkOutListView: View {
                 .font(.callout)
                 .foregroundColor(Color(getColor(item)))
                 .frame(maxWidth: .infinity, alignment: .trailing)
-                .padding(.trailing)
         }
         .frame(width: width, alignment: .leading)
     }

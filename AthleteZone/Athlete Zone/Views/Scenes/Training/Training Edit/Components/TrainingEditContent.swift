@@ -46,6 +46,9 @@ struct TrainingEditContent: View {
                         .onTapGesture {
                             hideKeyboard()
                         }
+                        .onChange(of: viewModel.description) { _, newValue in
+                            viewModel.description = String(newValue.prefix(200))
+                        }
                 }
 
                 ZStack(alignment: .top) {

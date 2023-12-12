@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 class StopWatchRealmManager: RealmManager, StopWatchRealmManagerProtocol {
-    @ObservedResults(StopWatch.self) private var stopWatchLibrary
+    @ObservedResults(StopWatch.self) var stopWatchLibrary
 
     func add(_ value: StopWatch) {
         $stopWatchLibrary.append(value)
@@ -47,7 +47,7 @@ class StopWatchRealmManager: RealmManager, StopWatchRealmManagerProtocol {
         } else {
             // Otherwise, filter based on the search text.
             filteredRecords = stopWatchLibrary.filter { stopWatch in
-                stopWatch.name != nil && stopWatch.name!.lowercased().contains(searchText.lowercased())
+                stopWatch.name.lowercased().contains(searchText.lowercased())
             }
         }
 
@@ -57,8 +57,8 @@ class StopWatchRealmManager: RealmManager, StopWatchRealmManagerProtocol {
         case .name:
             sortedRecords = filteredRecords.sorted { time1, time2 in
                 sortOrder == .ascending ?
-                    time1.name ?? "" < time2.name ?? "" :
-                    time1.name ?? "" > time2.name ?? ""
+                    time1.name < time2.name :
+                    time1.name > time2.name
             }
 
         case .startDate:
@@ -101,7 +101,7 @@ class StopWatchRealmManager: RealmManager, StopWatchRealmManagerProtocol {
         }
     }
 
-    func delete(at: IndexSet) {
-        $stopWatchLibrary.remove(atOffsets: at)
+    func delete(_ activity: StopWatch) {
+        $stopWatchLibrary.remove(activity)
     }
 }

@@ -14,5 +14,5 @@ protocol StopWatchRealmManagerProtocol {
     func delete(entity: StopWatch)
     func getSortedData(_ searchText: String, _ sortBy: StopWatchSortByProperty, _ sortOrder: SortOrder) -> [StopWatch]
     func update(_ id: String, _ name: String)
-    func delete(at: IndexSet)
+    func delete(_ activity: StopWatch)
 }

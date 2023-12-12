@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 @objcMembers
-public class WorkOut: Object, WorkOutProtocol, Identifiable {
+public class WorkOut: Object, WorkOutProtocol, RealmObjectProtocol {
     @Persisted(primaryKey: true) var _id: ObjectId
 
     @Persisted var name: String
@@ -70,10 +70,6 @@ public class WorkOut: Object, WorkOutProtocol, Identifiable {
         return dateFormatter.string(from: createdDate)
     }
 
-//    override public static func ignoredProperties() -> [String] {
-//        return ["objectWillChange"]
-//    }
-
     enum CodingKeys: String, CodingKey {
         case name, work, rest, series, rounds, reset, createdDate, _id
     }
@@ -99,6 +95,10 @@ public class WorkOut: Object, WorkOutProtocol, Identifiable {
             print(error)
             return nil
         }
+    }
+
+    public static func == (lhs: WorkOut, rhs: WorkOut) -> Bool {
+        lhs._id == rhs._id
     }
 }
 

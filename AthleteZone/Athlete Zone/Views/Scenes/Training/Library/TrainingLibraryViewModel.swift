@@ -33,11 +33,12 @@ class TrainingLibraryViewModel: ObservableObject {
     }
 
     func removeTraining(_ training: Training) {
+        let id = training.id
         realmManager.delete(entity: training)
         objectWillChange.send()
-        connectivityManager.sendValue([TransferDataKey.trainingRemove.rawValue: training._id.stringValue])
+        connectivityManager.sendValue([TransferDataKey.trainingRemove.rawValue: id])
 
-        if training._id == selectedTrainingManager.selectedTraining?._id {
+        if id == selectedTrainingManager.selectedTraining?.id {
             selectedTrainingManager.selectedTraining = nil
             storageManager.removeFromDefaults(key: UserDefaultValues.trainingId)
             WidgetCenter.shared.reloadTimelines(ofKind: UserDefaultValues.widgetId.rawValue)

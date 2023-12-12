@@ -33,16 +33,25 @@ struct ActivitySelect: View {
 
                     Text(LocalizedStringKey(activity.rawValue))
                         .font(.title3)
-//                        .bold()
                         .foregroundColor(Color(color))
                         .padding(.leading, 5)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                Text(interval.toFormattedValue(type: type))
-                    .font(.custom("Lato-Black", size: 20))
-                    .bold()
-                    .foregroundColor(Color(color))
-                    .padding(.trailing)
+
+                HStack {
+                    if interval == 0 {
+                        Image(systemName: "exclamationmark.circle")
+                            .foregroundColor(.red)
+                            .padding(.trailing)
+                    }
+
+                    Text(interval.toFormattedValue(type: type))
+                        .font(.custom("Lato-Black", size: 20))
+                        .bold()
+                        .foregroundColor(interval == 0 ? .red : Color(color))
+                        .padding(.trailing)
+                }
+                .animation(.default, value: interval)
             }
             .background(
                 ZStack {
@@ -63,7 +72,7 @@ struct ActivitySelect: View {
 struct ActivitySelect_Previews: PreviewProvider {
     static var previews: some View {
         ActivitySelect(image: "forward.circle", color: ComponentColor.lightPink.rawValue,
-                       activity: .work, interval: 40, type: .time, height: 50)
+                       activity: .work, interval: 0, type: .time, height: 50)
     }
 }
 
