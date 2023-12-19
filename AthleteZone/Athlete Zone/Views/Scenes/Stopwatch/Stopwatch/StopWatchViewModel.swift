@@ -32,9 +32,17 @@ class StopWatchViewModel: ObservableObject {
 
         type = appStorageManager.stopWatchType
 
+        // Is triggered when timer running in background enabled
         NotificationCenter.default.publisher(for: TimerManager.stopWatchTimerNotification)
             .sink { [weak self] _ in
                 self?.setInterval()
+            }
+            .store(in: &cancellables)
+
+        // Is triggered when timer running in background disabled
+        timerManager.timeElapsedPublisher
+            .sink { _ in
+                self.setInterval()
             }
             .store(in: &cancellables)
 
@@ -78,7 +86,10 @@ class StopWatchViewModel: ObservableObject {
     func resolveState(_ state: WorkFlowState) {
         if state == .running {
             startDate = Date()
-            timerManager.startTimer(type == .stopWatch ? 0.01 : 1, kind: .stopWatch)
+            timerManager.startTimer(
+                type == .stopWatch ? 0.01 : 1,
+                kind: .stopWatch,
+                inBackground: appStorageManager.runInBackground)
         }
         if state == .paused {
             timerManager.pauseTimer()
