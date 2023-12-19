@@ -72,7 +72,7 @@ class WatchWorkOutRunViewModel: WorkOutRunViewModel<WorkOutDto> {
                 }
 
             case .running:
-                timerManager.startTimer(1, kind: .workout)
+                timerManager.startTimer(1, kind: .workout, inBackground: false)
                 startHealthWorkout()
 
             case .quit:

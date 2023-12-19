@@ -20,16 +20,16 @@ struct SettingsItem<Content: View>: View {
     var body: some View {
         HStack(alignment: .center, spacing: 5) {
             Text(title.localizedKey)
-                .frame(height: 80)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundColor(Color(ComponentColor.mainText.rawValue))
-                .font(.title2)
+                .font(.title3)
                 .padding(.leading)
                 .lineLimit(1)
 
             content
                 .padding()
         }
+        .frame(height: 60)
         .roundedBackground(cornerRadius: 20)
         .frame(maxWidth: .infinity)
     }

@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import SwiftUI
 
 class StopWatchViewModel: ObservableObject {
     var router: any ViewRoutingProtocol
@@ -108,6 +109,14 @@ class StopWatchViewModel: ObservableObject {
             startDate = nil
             splitTimes.removeAll()
             interval = 0
+        }
+    }
+
+    func setStateAccordingToScenePhase(oldPhase: ScenePhase, newPhase: ScenePhase) {
+        if !appStorageManager.runInBackground && oldPhase == ScenePhase.active &&
+            (newPhase == ScenePhase.inactive || newPhase == ScenePhase.background)
+        {
+            state = .paused
         }
     }
 }

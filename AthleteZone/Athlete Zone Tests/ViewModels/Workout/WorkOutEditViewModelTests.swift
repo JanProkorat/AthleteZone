@@ -71,7 +71,7 @@ class WorkOutEditViewModelTests: XCTestCase {
         viewModel.saveWorkout()
 
         // Then
-        expect(self.connectivityManager.lastSentMessage?.first(where: { $0.key == "workout_add" })).notTo(beNil())
+        expect(self.connectivityManager.lastSentMessage?.first(where: { $0.key == TransferDataKey.workoutAdd.rawValue })).notTo(beNil())
         expect(self.router.currentTab).to(equal(.home))
     }
 

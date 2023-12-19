@@ -14,44 +14,61 @@ struct SettingsContent: View {
 
     var body: some View {
         VStack(spacing: 5) {
+            detailedPanel(
+                title: LocalizationKey.premiumSubscription,
+                description: LocalizationKey.subscriptionDescription)
+            {
+                Button {
+                    viewModel.subscriptionManager.isSubscriptionViewVisible.toggle()
+                } label: {
+                    Text(viewModel.subscriptionActive ?
+                        LocalizationKey.active.localizedKey :
+                        LocalizationKey.activate.localizedKey)
+                        .font(.subheadline)
+                        .bold()
+                        .foregroundStyle(Color(ComponentColor.mainText.rawValue))
+                        .padding(8)
+                }
+                .frame(width: 100)
+                .disabled(viewModel.subscriptionActive)
+                .roundedBackground(
+                    cornerRadius: 15,
+                    color: viewModel.subscriptionActive ? .grey : .accent)
+            }
+            .padding(.top, 20)
+
             SettingsItem(title: LocalizationKey.language, content: {
                 LanguagePicker(selectedLanguage: $viewModel.languageManager.language)
             })
-            .padding(.top, 20)
 
             SettingsItem(title: LocalizationKey.sounds, content: {
-                Toggle("", isOn: $viewModel.appStorageManager.soundsEnabled)
-                    .frame(width: 0)
-                    .padding(.trailing, 30)
+                toggle(value: $viewModel.appStorageManager.soundsEnabled)
             })
 
             SettingsItem(title: LocalizationKey.allowNotifications, content: {
-                Toggle("", isOn: $viewModel.appStorageManager.notificationsEnabled)
-                    .frame(width: 0)
-                    .padding(.trailing, 30)
+                toggle(value: $viewModel.appStorageManager.notificationsEnabled)
             })
+
+            detailedPanel(
+                title: LocalizationKey.runInBackground,
+                description: LocalizationKey.runInBackgroundDescription)
+            {
+                toggle(value: $viewModel.appStorageManager.runInBackground)
+            }
 
             if isWatchInstalled {
                 SettingsItem(title: LocalizationKey.haptics, content: {
-                    Toggle("", isOn: $viewModel.appStorageManager.hapticsEnabled)
-                        .frame(width: 0)
-                        .padding(.trailing, 30)
+                    toggle(value: $viewModel.appStorageManager.hapticsEnabled)
                 })
 
-                VStack {
-                    SettingsItem(title: LocalizationKey.healthKitAccess, content: {
-                        Toggle("", isOn: $viewModel.healthKitAccess)
-                            .frame(width: 0)
-                            .padding(.trailing, 30)
-                    })
-
-                    Text(viewModel.hkAuthStatus == .sharingAuthorized ?
-                        LocalizationKey.healthKitAccessDescription1.localizedKey :
-                        viewModel.hkAuthStatus == .sharingDenied ?
-                        LocalizationKey.healthKitAccessDescription2.localizedKey : "")
-                        .padding([.leading, .trailing, .bottom])
+                detailedPanel(
+                    title: LocalizationKey.healthKitAccess,
+                    description: viewModel.hkAuthStatus == .sharingAuthorized ?
+                        LocalizationKey.healthKitAccessDescription1 :
+                        LocalizationKey.healthKitAccessDescription2)
+                {
+                    toggle(value: $viewModel.healthKitAccess)
                 }
-                .roundedBackground(cornerRadius: 20)
                 .disabled(viewModel.hkAuthStatus != .notDetermined)
                 .animation(.easeInOut, value: viewModel.hkAuthStatus)
             }
@@ -61,6 +78,30 @@ struct SettingsContent: View {
         .onAppear {
             isWatchInstalled = viewModel.connectivityManager.checkIfPairedAppInstalled()
         }
+    }
+
+    @ViewBuilder
+    func toggle(value: Binding<Bool>) -> some View {
+        Toggle("", isOn: value)
+            .frame(width: 0)
+            .padding(.trailing, 30)
+    }
+
+    @ViewBuilder
+    func detailedPanel<Content: View>(title: LocalizationKey, description: LocalizationKey, content: @escaping () -> Content) -> some View {
+        VStack {
+            SettingsItem(title: title, content: {
+                content()
+            })
+
+            Text(description.localizedKey)
+                .padding([.leading, .trailing], 20)
+                .padding(.top, -10)
+                .font(.footnote)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(.bottom)
+        .roundedBackground(cornerRadius: 20)
     }
 }
 

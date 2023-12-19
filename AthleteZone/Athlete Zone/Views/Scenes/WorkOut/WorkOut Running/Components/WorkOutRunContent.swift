@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WorkOutRunContent: View {
     @EnvironmentObject var viewModel: PhoneWorkOutRunViewModel
-    @State private var timeElapsed: TimeInterval = 0
+    @Environment(\.scenePhase) var scenePhase: ScenePhase
 
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
@@ -66,9 +66,6 @@ struct WorkOutRunContent: View {
         .onAppear {
             viewModel.setState(.running)
         }
-        .onReceive(TimerManager.shared.timePublisher) { elapsed in
-            timeElapsed = elapsed // Update the timeElapsed value whenever the timer updates
-        }
         .onChange(of: viewModel.state) { _, newValue in
             switch newValue {
             case .running:
@@ -77,6 +74,9 @@ struct WorkOutRunContent: View {
             default:
                 UIApplication.shared.isIdleTimerDisabled = false
             }
+        }
+        .onChange(of: scenePhase) { oldValue, newValue in
+            viewModel.setStateAccordingToScenePhase(oldPhase: oldValue, newPhase: newValue)
         }
     }
 }

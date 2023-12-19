@@ -14,6 +14,7 @@
 "close" = "Close";
 "yes" = "Yes";
 "no" = "No";
+"activate" = "Activate";
 
 //Menu
 "home" = "Home";
@@ -48,6 +49,8 @@
 "healthKitAccess" = "Health app Access";
 "healthKitAccessDescription1" = "Removing access can only be done in settings of the Health app";
 "healthKitAccessDescription2" = "Access denied in the settings of the Health app. It can only be reenabled from there";
+"runInBackground" = "Run in background";
+"runInBackgroundDescription" = "Keep timer running when display is turned off or when user is out of the app";
 
 //Workout edit
 "addWorkout" = "Add workout";
@@ -107,3 +110,7 @@
 "startDate" = "Start date";
 "endDate" = "End date";
 "activityLength" = "Activity length";
+
+//Subscription
+"active" = "Active";
+"subscriptionDescription" = "Grants access to all functions.";

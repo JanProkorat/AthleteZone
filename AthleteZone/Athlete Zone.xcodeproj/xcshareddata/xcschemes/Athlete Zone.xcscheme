@@ -86,6 +86,9 @@
             ReferencedContainer = "container:Athlete Zone.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <StoreKitConfigurationFileReference
+         identifier = "../AthleteZone/Athlete Zone/Models/Subscription/store.storekit">
+      </StoreKitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

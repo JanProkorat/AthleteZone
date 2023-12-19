@@ -39,6 +39,10 @@ class AppStorageManager: AppStorageProtocol {
                 store: UserDefaults(suiteName: UserDefaultValues.groupId.rawValue))
     var notificationsEnabled = false
 
+    @AppStorage(DefaultItem.runInBackground.rawValue,
+                store: UserDefaults(suiteName: UserDefaultValues.groupId.rawValue))
+    var runInBackground = false
+
     @AppStorage(DefaultItem.stopWatchType.rawValue,
                 store: UserDefaults(suiteName: UserDefaultValues.groupId.rawValue))
     var stopWatchType: TimerType = .stopWatch

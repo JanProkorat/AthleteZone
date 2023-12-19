@@ -26,4 +26,8 @@ class TimerManagerMock: TimerProtocol {
     func pauseTimer() {
         timeElapsed = 2
     }
+
+    func startTimer(_ interval: TimeInterval, kind: Athlete_Zone.TimerKind, inBackground: Bool) {
+        timeElapsed = 1
+    }
 }

@@ -55,8 +55,8 @@ class TrainingEditViewModelTests: XCTestCase {
         expect(self.viewModel.training.name).to(equal(name))
         expect(self.viewModel.training.trainingDescription).to(equal(description))
         expect(self.viewModel.training.workouts).to(contain(workout))
-        expect(self.connectivityManager.lastSentMessage?.keys).to(contain("training_add"))
-        expect(self.viewModel.selectedTrainingManager.selectedTraining).to(equal(self.viewModel.training))
+        expect(self.connectivityManager.lastSentMessage?.keys).to(contain(TransferDataKey.trainingAdd.rawValue))
+        expect(self.viewModel.selectedTrainingManager.selectedTraining).to(equal(viewModel.training))
     }
 
     func testSaveTraining_updateTraining() {
@@ -76,6 +76,6 @@ class TrainingEditViewModelTests: XCTestCase {
         // Assert
         expect(self.viewModel.training.name).to(equal(name))
         expect(self.viewModel.training.trainingDescription).to(equal(description))
-        expect(self.connectivityManager.lastSentMessage?.keys).to(contain("training_edit"))
+        expect(self.connectivityManager.lastSentMessage?.keys).to(contain(TransferDataKey.trainingEdit.rawValue))
     }
 }

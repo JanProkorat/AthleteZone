@@ -70,7 +70,7 @@ class TrainingLibraryViewModelTests: XCTestCase {
 
         // Assert
         expect(self.realmManager.load(primaryKey: training._id.stringValue)).to(beNil())
-        expect(self.connectivityManager.lastSentMessage?.keys).to(contain("training_remove"))
+        expect(self.connectivityManager.lastSentMessage?.keys).to(contain(TransferDataKey.trainingRemove.rawValue))
         expect(self.viewModel.selectedTrainingManager.selectedTraining).to(beNil())
     }
 }

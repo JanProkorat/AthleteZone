@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import WidgetKit
 
 class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
@@ -21,10 +22,24 @@ class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
 
         super.init()
 
+        // Is triggered when timer running in background enabled
         NotificationCenter.default.publisher(for: TimerManager.workoutTimerNotification)
             .sink { [weak self] _ in
                 if self?.selectedFlow != nil {
                     self?.updateInterval()
+                }
+            }
+            .store(in: &cancellables)
+
+        // Is triggered when timer running in background disabled
+        timerManager.timeElapsedPublisher
+            .sink { _ in
+                if self.appStorageManager.runInBackground {
+                    return
+                }
+
+                if self.selectedFlow != nil {
+                    self.updateInterval()
                 }
             }
             .store(in: &cancellables)
@@ -64,7 +79,7 @@ class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
                 }
 
             case .running:
-                timerManager.startTimer(1, kind: .workout)
+                timerManager.startTimer(1, kind: .workout, inBackground: appStorageManager.runInBackground)
                 if previous == .ready {
                     liveActivityManager.startActivity(
                         workFlow: selectedFlow!,
@@ -83,6 +98,15 @@ class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
             default:
                 break
             }
+        }
+    }
+
+    func setStateAccordingToScenePhase(oldPhase: ScenePhase, newPhase: ScenePhase) {
+        if appStorageManager.runInBackground {
+            return
+        }
+        if oldPhase == ScenePhase.active && (newPhase == ScenePhase.inactive || newPhase == ScenePhase.background) {
+            setState(.paused)
         }
     }
 }

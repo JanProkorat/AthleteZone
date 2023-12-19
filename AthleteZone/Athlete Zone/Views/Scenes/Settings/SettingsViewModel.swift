@@ -16,6 +16,7 @@ class SettingsViewModel: ObservableObject {
     var healthManager = HealthManager.shared
 
     @ObservedObject var router = ViewRouter.shared
+    @ObservedObject var subscriptionManager = SubscriptionManager.shared
 
     var connectivityManager: WatchConnectivityProtocol
     private let notificationManager = NotificationManager.shared
@@ -23,6 +24,8 @@ class SettingsViewModel: ObservableObject {
 
     @Published var healthKitAccess = false
     @Published var hkAuthStatus: HKAuthorizationStatus = .notDetermined
+
+    @Published var subscriptionActive = false
 
     init() {
         connectivityManager = WatchConnectivityManager.shared
@@ -49,6 +52,12 @@ class SettingsViewModel: ObservableObject {
                 } else {
                     self.healthKitAccess = false
                 }
+            }
+            .store(in: &cancellables)
+
+        subscriptionManager.$subscriptionActivated
+            .sink { isActivated in
+                self.subscriptionActive = isActivated
             }
             .store(in: &cancellables)
     }

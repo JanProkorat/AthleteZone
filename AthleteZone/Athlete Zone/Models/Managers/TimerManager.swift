@@ -34,17 +34,21 @@ class TimerManager: TimerProtocol {
             .eraseToAnyPublisher()
     }
 
-    func startTimer(_ interval: TimeInterval, kind: TimerKind) {
-        scheduleBackgroundTask()
+    func startTimer(_ interval: TimeInterval, kind: TimerKind, inBackground: Bool = false) {
+        if inBackground {
+            scheduleBackgroundTask()
+        }
 
         DispatchQueue.main.async {
             self.timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] timer in
                 guard let self = self else { return }
                 self.timeElapsed += timer.timeInterval
-                NotificationCenter.default.post(name: kind == .workout ?
-                    TimerManager.workoutTimerNotification :
-                    TimerManager.stopWatchTimerNotification, object: nil)
-                RunLoop.current.add(timer, forMode: .common)
+                if inBackground {
+                    NotificationCenter.default.post(name: kind == .workout ?
+                        TimerManager.workoutTimerNotification :
+                        TimerManager.stopWatchTimerNotification, object: nil)
+                    RunLoop.current.add(timer, forMode: .common)
+                }
             }
         }
     }

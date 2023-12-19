@@ -16,10 +16,12 @@ class AppStorageManagerMock: AppStorageProtocol {
     var selectedTrainingId: String = ""
     var selectedSection: Section = .workout
     var language: Language = .en
+    var stopWatchType: Athlete_Zone.TimerType = .stopWatch
 
     var soundsEnabled: Bool = false
     var hapticsEnabled: Bool = false
     var notificationsEnabled: Bool = false
+    var runInBackground: Bool = false
 
     func storeToUserDefaults(data: String, key: Athlete_Zone.UserDefaultValues) {
         switch key {

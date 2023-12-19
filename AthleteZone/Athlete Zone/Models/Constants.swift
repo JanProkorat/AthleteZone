@@ -80,6 +80,7 @@ enum DefaultItem: String {
     case selectedSection
     case backupData
     case stopWatchType
+    case runInBackground
 }
 
 enum Sound: String, CaseIterable {
@@ -100,6 +101,8 @@ enum LocalizationKey: String {
         LocalizedStringKey(rawValue)
     }
 
+    case premiumSubscription = "Athlete Zone+"
+
     // Actions
     case save
     case cancel
@@ -108,6 +111,7 @@ enum LocalizationKey: String {
     case close
     case yes
     case no
+    case activate
 
     // Menu
     case home
@@ -142,6 +146,8 @@ enum LocalizationKey: String {
     case healthKitAccess
     case healthKitAccessDescription1
     case healthKitAccessDescription2
+    case runInBackground
+    case runInBackgroundDescription
 
     // Workout edit
     case addWorkout
@@ -198,4 +204,8 @@ enum LocalizationKey: String {
     case startDate
     case endDate
     case activityLength
+
+    // Subscription
+    case active
+    case subscriptionDescription
 }

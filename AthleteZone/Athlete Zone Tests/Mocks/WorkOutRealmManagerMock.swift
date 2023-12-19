@@ -59,4 +59,8 @@ class WorkOutRealmManagerMock: WorkOutRealmManagerProtocol {
     func getSortedData(_ searchText: String, _ sortBy: WorkOutSortByProperty, _ sortOrder: SortOrder) -> [WorkOut] {
         return objects
     }
+
+    func isWorkoutAssignedToTraining(_ id: String) -> Bool {
+        return false
+    }
 }

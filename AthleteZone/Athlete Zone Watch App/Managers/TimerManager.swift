@@ -18,7 +18,7 @@ class TimerManager: ObservableObject, TimerProtocol {
 
     @Published var timeElapsed: TimeInterval = 0
 
-    func startTimer(_ interval: TimeInterval, kind: TimerKind) {
+    func startTimer(_ interval: TimeInterval, kind: TimerKind, inBackground: Bool = false) {
         timer = Timer.publish(every: interval, on: .main, in: .common)
             .autoconnect()
             .sink { [weak self] _ in

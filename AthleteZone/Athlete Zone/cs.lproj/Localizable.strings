@@ -13,6 +13,7 @@
 "close" = "Zavřít";
 "yes" = "Ano";
 "no" = "Ne";
+"activate" = "Aktivovat";
 
 //Menu
 "home" = "Domov";
@@ -48,6 +49,8 @@
 "healthKitAccess" = "Přístup do aplikace Zdraví";
 "healthKitAccessDescription1" = "Odebrání přístupu lze provést pouze v nastavení aplikace Zdraví";
 "healthKitAccessDescription2" = "Přístup odepřen v nastavení aplikace Zdraví. Pouze odtud jej lze znovu aktivovat";
+"runInBackground" = "Běh na pozadí";
+"runInBackgroundDescription" = "Ponechá běžet časovač i při vypnutém displeji nebo když je uživatel mimo aplikaci";
 
 //Workout edit
 "addWorkout" = "Přidat workout";
@@ -108,3 +111,7 @@
 "startDate" = "Datum startu";
 "endDate" = "Datum ukončení";
 "activityLength" = "Délka aktivity";
+
+//Subscription
+"active" = "Aktivní";
+"subscriptionDescription" = "Zpřístupní všechny funkce.";

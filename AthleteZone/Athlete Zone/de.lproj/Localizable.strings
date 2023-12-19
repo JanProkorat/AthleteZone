@@ -14,6 +14,7 @@
 "close" = "Schließen";
 "yes" = "Ja";
 "no" = "Nein";
+"activate" = "Aktivieren";
 
 //Menu
 "home" = "Haus";
@@ -48,6 +49,8 @@
 "healthKitAccess" = "Health app Zugang";
 "healthKitAccessDescription1" = "Der Zugang kann nur in den Einstellungen der Health app widerrufen werden";
 "healthKitAccessDescription2" = "Zugriff in den Einstellungen der Health-App verweigert. Nur von dort aus kann es wieder aktiviert werden";
+"runInBackground" = "Lauf im Hintergrund";
+"runInBackgroundDescription" = "Timer läuft im Hintergrund, auch bei ausgeschaltetem Bildschirm oder verlassenem App";
 
 //Workout edit
 "addWorkout" = "Workout hinzufügen";
@@ -107,3 +110,7 @@
 "startDate" = "Start datum";
 "endDate" = "End datum";
 "activityLength" = "Aktivitätsdauer";
+
+//Subscription
+"active" = "Aktiv";
+"subscriptionDescription" = "Gewährt Zugriff auf alle Funktionen";

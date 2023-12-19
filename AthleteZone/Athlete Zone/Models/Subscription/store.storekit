@@ -64,24 +64,14 @@
       "localizations" : [
 
       ],
-      "name" : "Athlete Zone+ USD",
+      "name" : "Athlete Zone+",
       "subscriptions" : [
         {
           "adHocOffers" : [
 
           ],
           "codeOffers" : [
-            {
-              "displayPrice" : "0.99",
-              "eligibility" : [
-                "new"
-              ],
-              "internalID" : "1220F9F1",
-              "isStackable" : true,
-              "paymentMode" : "free",
-              "referenceName" : "First week free",
-              "subscriptionPeriod" : "P1W"
-            }
+
           ],
           "displayPrice" : "4.99",
           "familyShareable" : false,
@@ -99,8 +89,13 @@
               "locale" : "en_US"
             },
             {
-              "description" : "",
-              "displayName" : "",
+              "description" : "Získejte plný přístup na jeden měsíc",
+              "displayName" : "Měsíční předplatné",
+              "locale" : "cs"
+            },
+            {
+              "description" : "Voller Zugriff für einen Monat erhalten",
+              "displayName" : "Monatliches abonnement",
               "locale" : "de"
             }
           ],
@@ -146,6 +141,11 @@
               "description" : "Získejte plný přístup na tři měsíce",
               "displayName" : "Čtvrtletní předplatné",
               "locale" : "cs"
+            },
+            {
+              "description" : "Voller Zugriff für drei Monate erhalten",
+              "displayName" : "Vierteljährliches abonnement",
+              "locale" : "de"
             }
           ],
           "productID" : "plus.quarterly.usd",
@@ -180,6 +180,11 @@
               "description" : "Získejte plný přístup na jeden rok",
               "displayName" : "Roční předplatné",
               "locale" : "cs"
+            },
+            {
+              "description" : "Voller Zugriff für ein Jahr erhalten",
+              "displayName" : "Jahresabonnement",
+              "locale" : "de"
             }
           ],
           "productID" : "plus.yearly.usd",
@@ -195,7 +200,7 @@
       "localizations" : [
 
       ],
-      "name" : "Athlete Zone+ CZK",
+      "name" : "Athlete Zone+",
       "subscriptions" : [
         {
           "adHocOffers" : [
@@ -218,6 +223,16 @@
               "description" : "Získejte plný přístup na jeden měsíc",
               "displayName" : "Měsíční předplatné",
               "locale" : "cs"
+            },
+            {
+              "description" : "Get full access for one month",
+              "displayName" : "Monthly subscription",
+              "locale" : "en_US"
+            },
+            {
+              "description" : "Voller Zugriff für einen Monat erhalten",
+              "displayName" : "Monatliches abonnement",
+              "locale" : "de"
             }
           ],
           "productID" : "plus.monthly.czech",
@@ -247,6 +262,16 @@
               "description" : "Získejte plný přístup na tři měsíce",
               "displayName" : "Čtvrtlení předplatné",
               "locale" : "cs"
+            },
+            {
+              "description" : "Get full access for three months",
+              "displayName" : "Quarterly subscription",
+              "locale" : "en_US"
+            },
+            {
+              "description" : "Voller Zugriff für drei Monate erhalten",
+              "displayName" : "Vierteljährliches abonnement",
+              "locale" : "de"
             }
           ],
           "productID" : "plus.quarterly.czech",
@@ -276,12 +301,148 @@
               "description" : "Získejte plný přístup na jeden rok",
               "displayName" : "Roční předplatné",
               "locale" : "cs"
+            },
+            {
+              "description" : "Get full accesss for one year",
+              "displayName" : "Yearly subscription",
+              "locale" : "en_US"
+            },
+            {
+              "description" : "Voller Zugriff für ein Jahr erhalten",
+              "displayName" : "Jahresabonnement",
+              "locale" : "de"
             }
           ],
           "productID" : "plus.yearly.czk",
           "recurringSubscriptionPeriod" : "P1M",
           "referenceName" : "Yearly CZK",
           "subscriptionGroupID" : "D304EBD1",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    },
+    {
+      "id" : "9A02627C",
+      "localizations" : [
+
+      ],
+      "name" : "Athlete Zone+",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "4.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "59DA95C7",
+          "introductoryOffer" : {
+            "internalID" : "319B459E",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
+          "localizations" : [
+            {
+              "description" : "Získejte plný přístup na jeden měsíc",
+              "displayName" : "Měsíční předplatné",
+              "locale" : "cs"
+            },
+            {
+              "description" : "Get full access for one month",
+              "displayName" : "Monthly subscription",
+              "locale" : "en_US"
+            },
+            {
+              "description" : "Voller Zugriff für einen Monat erhalten",
+              "displayName" : "Monatliches abonnement",
+              "locale" : "de"
+            }
+          ],
+          "productID" : "plus.monthly.eur",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Monthly EUR",
+          "subscriptionGroupID" : "9A02627C",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "12.49",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6CBC8D11",
+          "introductoryOffer" : {
+            "internalID" : "41895E00",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
+          "localizations" : [
+            {
+              "description" : "Get full access for three months",
+              "displayName" : "Quarterly subscription",
+              "locale" : "en_US"
+            },
+            {
+              "description" : "Získejte plný přístup na tři měsíce",
+              "displayName" : "Čtvrtletní předplatné",
+              "locale" : "cs"
+            },
+            {
+              "description" : "Voller Zugriff für drei Monate erhalten",
+              "displayName" : "Vierteljährliches abonnement",
+              "locale" : "de"
+            }
+          ],
+          "productID" : "plus.querterly.eur",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Quarterly EUR",
+          "subscriptionGroupID" : "9A02627C",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "49.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "ABBADD1D",
+          "introductoryOffer" : {
+            "internalID" : "3D39A7CA",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
+          "localizations" : [
+            {
+              "description" : "Get full accesss for one year",
+              "displayName" : "Yearly subscription",
+              "locale" : "en_US"
+            },
+            {
+              "description" : "Získejte plný přístup na jeden rok",
+              "displayName" : "Roční předplatné",
+              "locale" : "cs"
+            },
+            {
+              "description" : "Voller Zugriff für ein Jahr erhalten",
+              "displayName" : "Jahresabonnement",
+              "locale" : "de"
+            }
+          ],
+          "productID" : "plus.yearly.eur",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Yearly EUR",
+          "subscriptionGroupID" : "9A02627C",
           "type" : "RecurringSubscription"
         }
       ]
