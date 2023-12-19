@@ -389,7 +389,6 @@
 		7E33B66E291439A8009E4C1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "Athlete Zone/Shared Assets/Assets.xcassets"; sourceTree = SOURCE_ROOT; };
 		7E35D6A02B2A514200345198 /* StoreKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitManager.swift; sourceTree = "<group>"; };
 		7E395BCA291D58A20025F943 /* SettingsContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsContent.swift; sourceTree = "<group>"; };
-		7E3AD0652AC603BB00437EEC /* AthleteZoneMini-Watch-App-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AthleteZoneMini-Watch-App-Info.plist"; sourceTree = "<group>"; };
 		7E3AD0672AC6040900437EEC /* AthleteZoneMini Watch App.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "AthleteZoneMini Watch App.entitlements"; sourceTree = "<group>"; };
 		7E3AD06C2AC6054600437EEC /* AthleteZoneWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AthleteZoneWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E3AD0702AC6054600437EEC /* AthleteZoneWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AthleteZoneWidgetBundle.swift; sourceTree = "<group>"; };
@@ -895,7 +894,6 @@
 			children = (
 				7EDC93DC2B16A2E500C518B6 /* AthleteZoneWidgetsExtensionRelease.entitlements */,
 				7E3AD0812AC6057200437EEC /* AthleteZoneWidgetsExtensionDebug.entitlements */,
-				7E3AD0652AC603BB00437EEC /* AthleteZoneMini-Watch-App-Info.plist */,
 				7E33B65F291435BE009E4C1C /* Athlete Zone */,
 				7E17246429CA123300B90E31 /* Athlete Zone Tests */,
 				7ED73576296B76C300E1A305 /* Athlete Zone Watch App */,
@@ -2331,10 +2329,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "Athlete Zone/Athlete Zone.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = 5SV4N2J8AG;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 5SV4N2J8AG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Athlete-Zone-Info.plist";
@@ -2357,6 +2357,8 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.janprokorat.Athlete-Zone";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Athlete Zone iOS Profile";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2452,14 +2454,15 @@
 				DEVELOPMENT_TEAM = 5SV4N2J8AG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "AthleteZoneMini-Watch-App-Info.plist";
+				INFOPLIST_FILE = "";
+				"INFOPLIST_FILE[sdk=*]" = "";
 				INFOPLIST_KEY_CFBundleDisplayName = "Athlete Zone";
-				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Share data about working out";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Update health data while working out";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UIUserInterfaceStyle = "";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				"INFOPLIST_KEY_UIUserInterfaceStyle[sdk=*]" = "";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.janprokorat.Athlete-Zone";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
@@ -2494,14 +2497,14 @@
 				DEVELOPMENT_TEAM = 5SV4N2J8AG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "AthleteZoneMini-Watch-App-Info.plist";
+				INFOPLIST_FILE = "";
 				INFOPLIST_KEY_CFBundleDisplayName = "Athlete Zone";
-				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Share data about working out";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Update health data while working out";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UIUserInterfaceStyle = "";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.janprokorat.Athlete-Zone";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
