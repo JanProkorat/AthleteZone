@@ -9,11 +9,11 @@ on:
   #   - cron: 0 0 * * * #trigger once a day, according to the cron syntax
 
 jobs:
- build-and-test:
-  runs-on: macos-latest
- steps:
-  - uses: actions/checkout@v2
-  - name: Select Xcode
-    run: sudo Xcode-select -switch /Applications/Xcode_14.2.0.app
-  - name: Build & Test
-    run: xcodebuild clean build test -workspace AthleteZone.xcworkspace -scheme "Athlete Zone Tests" -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=17.2'
+  build-and-test:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Select Xcode
+      run: sudo Xcode-select -switch /Applications/Xcode_14.2.0.app
+    - name: Build & Test
+      run: xcodebuild clean build test -workspace AthleteZone.xcworkspace -scheme "Athlete Zone Tests" -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=17.2'
