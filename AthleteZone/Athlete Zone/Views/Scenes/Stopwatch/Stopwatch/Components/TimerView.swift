@@ -19,6 +19,7 @@ struct TimerView: View {
                         state == .running ? .lightPink : .braun,
                     interval: $interval)
                     .padding(.top)
+                    .disabled(state == .running)
 
                 Button {
                     state = state == .running ? .paused : .running

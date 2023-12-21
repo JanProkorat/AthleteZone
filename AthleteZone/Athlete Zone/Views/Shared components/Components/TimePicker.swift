@@ -70,7 +70,7 @@ struct TimePicker: View {
             ForEach((0 ..< range.count).reversed(), id: \.self) {
                 Text("\(range[$0])")
                     .foregroundColor(Color(textColor.rawValue))
-                    .font(.custom("Lato-Black", size: 30))
+                    .font(.title)
             }
         }
         .background(

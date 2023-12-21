@@ -35,7 +35,6 @@
 		7E17247529CA12A900B90E31 /* WorkOutRunViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E17247229CA12A900B90E31 /* WorkOutRunViewModelTests.swift */; };
 		7E17247629CA12A900B90E31 /* WorkOutEditViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E17247329CA12A900B90E31 /* WorkOutEditViewModelTests.swift */; };
 		7E17247E29CA13AB00B90E31 /* WorkOutRealmManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E17247D29CA13AB00B90E31 /* WorkOutRealmManagerProtocol.swift */; };
-		7E177AC32B32531700F11BC9 /* AthleteZoneMini-Watch-App-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7E177AC22B32531700F11BC9 /* AthleteZoneMini-Watch-App-Info.plist */; };
 		7E17CC1029A6B72B0078A9C0 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E43E47F2950856C0095559B /* Array.swift */; };
 		7E1F9AE32918EA4A006CA3AA /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1F9AE22918EA4A006CA3AA /* ViewRouter.swift */; };
 		7E1F9AE62919060D006CA3AA /* ProfileScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1F9AE52919060D006CA3AA /* ProfileScene.swift */; };
@@ -359,7 +358,7 @@
 		7E17247229CA12A900B90E31 /* WorkOutRunViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkOutRunViewModelTests.swift; sourceTree = "<group>"; };
 		7E17247329CA12A900B90E31 /* WorkOutEditViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkOutEditViewModelTests.swift; sourceTree = "<group>"; };
 		7E17247D29CA13AB00B90E31 /* WorkOutRealmManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutRealmManagerProtocol.swift; sourceTree = "<group>"; };
-		7E177AC22B32531700F11BC9 /* AthleteZoneMini-Watch-App-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AthleteZoneMini-Watch-App-Info.plist"; sourceTree = "<group>"; };
+		7E177AC42B32D3C000F11BC9 /* AthleteZoneMini-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "AthleteZoneMini-Watch-App-Info.plist"; path = "Athlete Zone Watch App/AthleteZoneMini-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		7E1F9AE22918EA4A006CA3AA /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
 		7E1F9AE52919060D006CA3AA /* ProfileScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScene.swift; sourceTree = "<group>"; };
 		7E1F9AE829190801006CA3AA /* SettingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScene.swift; sourceTree = "<group>"; };
@@ -1306,7 +1305,7 @@
 		7ED73576296B76C300E1A305 /* Athlete Zone Watch App */ = {
 			isa = PBXGroup;
 			children = (
-				7E177AC22B32531700F11BC9 /* AthleteZoneMini-Watch-App-Info.plist */,
+				7E177AC42B32D3C000F11BC9 /* AthleteZoneMini-Watch-App-Info.plist */,
 				7E3AD0672AC6040900437EEC /* AthleteZoneMini Watch App.entitlements */,
 				7ED73577296B76C300E1A305 /* AthleteZoneMiniApp.swift */,
 				7E41983E2B11E7F500B56508 /* Dtos */,
@@ -1746,7 +1745,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E177AC32B32531700F11BC9 /* AthleteZoneMini-Watch-App-Info.plist in Resources */,
 				7EE780962999351600DEC1A4 /* Assets.xcassets in Resources */,
 				7EDCAD122B17777D00AC02E7 /* Localizable.strings in Resources */,
 				7E066709299FC80700FCF8C5 /* fanfare.mp3 in Resources */,
@@ -2456,8 +2454,8 @@
 				DEVELOPMENT_TEAM = 5SV4N2J8AG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "AthleteZoneMini-Watch-App-Info";
-				"INFOPLIST_FILE[sdk=*]" = "AthleteZoneMini-Watch-App-Info";
+				INFOPLIST_FILE = "";
+				"INFOPLIST_FILE[sdk=*]" = "";
 				INFOPLIST_KEY_CFBundleDisplayName = "Athlete Zone";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Share data about working out";
@@ -2499,7 +2497,7 @@
 				DEVELOPMENT_TEAM = 5SV4N2J8AG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "AthleteZoneMini-Watch-App-Info";
+				INFOPLIST_FILE = "";
 				INFOPLIST_KEY_CFBundleDisplayName = "Athlete Zone";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Share data about working out";

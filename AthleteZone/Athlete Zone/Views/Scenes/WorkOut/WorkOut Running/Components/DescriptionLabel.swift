@@ -14,7 +14,7 @@ struct DescriptionLabel: View {
     var body: some View {
         Text(title)
             .frame(maxWidth: .infinity, alignment: .center)
-            .font(.custom("Lato-Black", size: 20))
+            .font(.headline)
             .bold()
             .foregroundColor(Color(color.rawValue))
             .background(

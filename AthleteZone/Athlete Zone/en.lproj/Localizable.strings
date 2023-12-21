@@ -45,7 +45,7 @@
 "language" = "Language";
 "sounds" = "Sounds";
 "haptics" = "Haptics (Watch only)";
-"allowNotifications" = "Allow notifications";
+"allowNotifications" = "Remind me to excersize";
 "healthKitAccess" = "Health app Access";
 "healthKitAccessDescription1" = "Removing access can only be done in settings of the Health app";
 "healthKitAccessDescription2" = "Access denied in the settings of the Health app. It can only be reenabled from there";

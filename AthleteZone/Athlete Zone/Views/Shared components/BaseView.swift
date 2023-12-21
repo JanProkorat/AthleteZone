@@ -39,10 +39,12 @@ struct BaseView<Header: View, Content: View, Footer: View>: View {
                 footer
                     .padding([.leading, .trailing], 10)
                     .frame(maxWidth: .infinity)
+                    .frame(maxHeight: geometry.size.height * 0.1)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .background(Color(ComponentColor.darkBlue.rawValue))
             .environment(\.colorScheme, .dark)
+            .environment(\.footerSize, geometry.size.height * 0.1)
         }
         .ignoresSafeArea(.keyboard, edges: [.bottom])
     }
@@ -67,8 +69,17 @@ extension EnvironmentValues {
         get { self[ContentSizeKey.self] }
         set { self[ContentSizeKey.self] = newValue }
     }
+
+    var footerSize: CGFloat {
+        get { self[FooterSizeKey.self] }
+        set { self[FooterSizeKey.self] = newValue }
+    }
 }
 
 struct ContentSizeKey: EnvironmentKey {
     static var defaultValue: CGSize { .zero }
+}
+
+struct FooterSizeKey: EnvironmentKey {
+    static var defaultValue: CGFloat { .zero }
 }

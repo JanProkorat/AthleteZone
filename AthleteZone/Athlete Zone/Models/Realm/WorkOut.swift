@@ -97,8 +97,14 @@ public class WorkOut: Object, WorkOutProtocol, RealmObjectProtocol {
         }
     }
 
-    public static func == (lhs: WorkOut, rhs: WorkOut) -> Bool {
-        lhs._id == rhs._id
+    override public func isEqual(_ object: Any?) -> Bool {
+        guard let other = object as? WorkOut else { return false }
+        return name == other.name &&
+            work == other.work &&
+            rest == other.rest &&
+            series == other.series &&
+            rounds == other.rounds &&
+            reset == other.reset
     }
 }
 

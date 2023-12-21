@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MenuBar: View {
+    @Environment(\.footerSize) var footerHeight: CGFloat
+
     let activeTab: Tab
 
     var onRouteTab: ((_ routeToGo: Tab) -> Void)?
@@ -21,42 +23,28 @@ struct MenuBar: View {
 
     var body: some View {
         HStack(alignment: .center, spacing: 5) {
-            ForEach(icons) { item in
-                RoundedRectangle(cornerRadius: 20)
-                    .overlay(
-                        Button(action: {
-                            self.performAction(onRouteTab, value: item.id)
-                        }, label: {
-                            Image(item.id == activeTab ? item.activeIcon : item.icon)
-                                .resizable()
-                                .scaledToFit()
-                                .foregroundColor(Color(item.id == activeTab ? ComponentColor.darkBlue.rawValue
-                                        : ComponentColor.menuText.rawValue))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .stroke(item.id == activeTab ? Color(ComponentColor.action.rawValue) : Color(.clear),
-                                                lineWidth: 0)
-                                        .frame(width: 40, height: 40)
-                                )
-
-                        })
-                        .frame(width: 40, height: 40)
-                    )
-                    .foregroundColor(item.id == activeTab ? Color(ComponentColor.menuItemSelected.rawValue) : Color(.clear))
-                    .frame(
-                        maxHeight: 40 + 10,
-                        alignment: .center
-                    )
-                    .cornerRadius(35)
+            HStack {
+                ForEach(icons) { item in
+                    Button {
+                        self.performAction(onRouteTab, value: item.id)
+                    } label: {
+                        Image(item.id == activeTab ? item.activeIcon : item.icon)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: footerHeight * 0.5, maxHeight: footerHeight * 0.5)
+                            .foregroundStyle(Color(item.id == activeTab ?
+                                    ComponentColor.darkBlue.rawValue
+                                    : ComponentColor.menuText.rawValue))
+                            .padding([.top, .bottom], 5)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .roundedBackground(cornerRadius: 30, color: item.id == activeTab ? ComponentColor.menuItemSelected : ComponentColor.menu)
+                }
             }
+            .padding([.leading, .trailing])
         }
-        .frame(maxWidth: .infinity)
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 35)
-                .foregroundColor(Color(ComponentColor.menu.rawValue))
-                .frame(maxHeight: 70)
-        )
+        .frame(maxWidth: .infinity, maxHeight: footerHeight)
+        .roundedBackground(cornerRadius: 30, color: ComponentColor.menu)
     }
 
     func getMenuItem(_ item: MenuBarItem) -> some View {
@@ -76,6 +64,7 @@ struct MenuBar: View {
 struct MenuBar_Previews: PreviewProvider {
     static var previews: some View {
         MenuBar(activeTab: Tab.library)
+            .environment(\.footerSize, 50)
     }
 }
 

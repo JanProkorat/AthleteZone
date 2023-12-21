@@ -89,8 +89,8 @@ identifier_name:
     - y
 
 line_length:
-  warning: 120
-  error: 120
+  warning: 140
+  error: 140
   ignores_function_declarations: true
   ignores_comments: true
   ignores_urls: true

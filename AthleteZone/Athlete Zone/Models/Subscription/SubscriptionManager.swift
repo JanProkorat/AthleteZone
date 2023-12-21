@@ -31,15 +31,16 @@ class SubscriptionManager: ObservableObject {
 
         let transaction: Transaction
         switch verificationResult {
-        case .verified(let t):
+        case let .verified(tran):
             logger.debug("""
-            Transaction ID \(t.id) for \(t.productID) is verified
+            Transaction ID \(tran.id) for \(tran.productID) is verified
             """)
-            transaction = t
-        case .unverified(let t, let error):
+            transaction = tran
+
+        case let .unverified(tran, error):
             // Log failure and ignore unverified transactions
             logger.error("""
-            Transaction ID \(t.id) for \(t.productID) is unverified: \(error)
+            Transaction ID \(tran.id) for \(tran.productID) is unverified: \(error)
             """)
             return
         }

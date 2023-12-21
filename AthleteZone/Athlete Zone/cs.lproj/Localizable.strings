@@ -45,7 +45,7 @@
 "language" = "Jazyk";
 "sounds" = "Zvuky";
 "haptics" = "Vibrace (Jen hodinky)";
-"allowNotifications" = "Povolit notifikace";
+"allowNotifications" = "Připoměň mi cvičení";
 "healthKitAccess" = "Přístup do aplikace Zdraví";
 "healthKitAccessDescription1" = "Odebrání přístupu lze provést pouze v nastavení aplikace Zdraví";
 "healthKitAccessDescription2" = "Přístup odepřen v nastavení aplikace Zdraví. Pouze odtud jej lze znovu aktivovat";

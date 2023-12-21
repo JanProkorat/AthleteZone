@@ -19,8 +19,7 @@ struct WorkOutRunFooter: View {
             }
         } label: {
             Text(getLabel())
-                .font(.custom("Lato-ThinItalic", size: 20))
-                .bold()
+                .font(.title3)
         }
         .padding(.top, 10)
         .frame(height: 20)

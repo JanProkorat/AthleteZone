@@ -33,7 +33,7 @@ struct SettingsContent: View {
                 .disabled(viewModel.subscriptionActive)
                 .roundedBackground(
                     cornerRadius: 15,
-                    color: viewModel.subscriptionActive ? .grey : .accent)
+                    color: viewModel.subscriptionActive ? ComponentColor.grey : .mainText)
             }
             .padding(.top, 20)
 

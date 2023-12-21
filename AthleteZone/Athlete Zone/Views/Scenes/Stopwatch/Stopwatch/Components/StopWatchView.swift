@@ -12,6 +12,8 @@ struct StopWatchView: View {
     @Binding var state: WorkFlowState
     @Binding var splitTimes: [TimeInterval]
 
+    var onQuitTab: (() -> Void)?
+
     var body: some View {
         GeometryReader { geo in
             VStack(alignment: .center, spacing: 0) {
@@ -25,6 +27,8 @@ struct StopWatchView: View {
                 VStack {
                     Text(LocalizationKey.splitTimes.localizedKey)
                         .font(.title2)
+                        .foregroundStyle(.white)
+
                     Divider()
                         .overlay(Color.white)
                     ScrollView {
@@ -32,9 +36,11 @@ struct StopWatchView: View {
                             HStack {
                                 Text(LocalizedStringKey("\(index + 1). Split time:"))
                                     .frame(maxWidth: .infinity)
+                                    .foregroundStyle(.white)
 
                                 Text(splitTimes[index].toFormattedTime())
                                     .frame(maxWidth: .infinity)
+                                    .foregroundStyle(.white)
                             }
                             .frame(maxWidth: .infinity)
                             .padding(.top, 5)
@@ -55,30 +61,13 @@ struct StopWatchView: View {
                         actionButton(size: geo.size.height * 0.16)
                             .padding(.leading, 25)
                     }
-
-                    guitButton()
                 }
-                .frame(maxWidth: .infinity, maxHeight: geo.size.height * 0.25)
-                .padding(.top)
+                .frame(maxWidth: .infinity, maxHeight: geo.size.height * 0.2)
             }
             .frame(maxHeight: .infinity)
             .padding([.leading, .trailing])
         }
-    }
-
-    @ViewBuilder
-    func guitButton() -> some View {
-        Button {
-            state = .quit
-        } label: {
-            Text(state == .paused ? LocalizationKey.quitTracking.localizedKey : "")
-                .font(.headline)
-                .bold()
-        }
-        .padding(.top, 5)
-        .frame(height: 15)
-        .frame(maxWidth: .infinity, alignment: .center)
-        .foregroundColor(Color(ComponentColor.mainText.rawValue))
+        .background(Color(ComponentColor.darkBlue.rawValue))
     }
 
     @ViewBuilder
@@ -105,7 +94,7 @@ struct StopWatchView: View {
             Image(state == .running ? Icons.actionsPause.rawValue : Icons.start.rawValue)
                 .resizable()
                 .scaledToFill()
-                .foregroundColor(Color(ComponentColor.action.rawValue))
+                .foregroundColor(.buttonGreen)
                 .frame(maxWidth: size, maxHeight: size)
         }
     }
@@ -121,6 +110,14 @@ struct StopWatchView: View {
         default:
             return ComponentColor.braun.rawValue
         }
+    }
+}
+
+extension StopWatchView {
+    func onQuitTab(_ handler: @escaping () -> Void) -> StopWatchView {
+        var new = self
+        new.onQuitTab = handler
+        return new
     }
 }
 

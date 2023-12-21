@@ -147,8 +147,6 @@ struct TrainingContent: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
-            .animation(.easeOut)
-            .transition(.slide)
             .sheet(item: $selectedWorkout) {
                 WorkoutDetailSheet(workout: $0)
                     .presentationDetents([.fraction(0.3)])

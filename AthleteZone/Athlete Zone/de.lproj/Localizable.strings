@@ -45,7 +45,7 @@
 "language" = "Sprache";
 "sounds" = "Töne";
 "haptics" = "Haptik (nur Uhr)";
-"allowNotifications" = "Benachrichtigungen zulassen";
+"allowNotifications" = "Erinnere mich ans trainieren";
 "healthKitAccess" = "Health app Zugang";
 "healthKitAccessDescription1" = "Der Zugang kann nur in den Einstellungen der Health app widerrufen werden";
 "healthKitAccessDescription2" = "Zugriff in den Einstellungen der Health-App verweigert. Nur von dort aus kann es wieder aktiviert werden";

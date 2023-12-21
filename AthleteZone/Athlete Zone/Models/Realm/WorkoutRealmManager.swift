@@ -140,7 +140,11 @@ class WorkoutRealmManager: RealmManager, WorkOutRealmManagerProtocol {
     func isWorkoutAssignedToTraining(_ id: String) -> Bool {
         do {
             let workoutId = try ObjectId(string: id)
-            return realm!.objects(Training.self).contains(where: { $0.workouts.contains { $0._id == workoutId }})
+            return realm!.objects(Training.self).contains(where: {
+                $0.workouts.contains {
+                    $0._id == workoutId
+                }
+            })
         } catch {
             print(error.localizedDescription)
             return false

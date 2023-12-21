@@ -20,21 +20,19 @@ class TimerManager: TimerProtocol {
 
     private var timer: Timer?
     private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
+    private var kind: TimerKind = .stopWatch
+    private var runInBackground = false
+
     static let workoutTimerNotification = Notification.Name(TimerKind.workout.rawValue)
     static let stopWatchTimerNotification = Notification.Name(TimerKind.stopWatch.rawValue)
 
     private init() {}
 
-    var timePublisher: AnyPublisher<TimeInterval, Never> {
-        Just(timeElapsed)
-            .merge(with: NotificationCenter
-                .default.publisher(for: TimerManager.workoutTimerNotification).map { _ in
-                    self.timeElapsed
-                })
-            .eraseToAnyPublisher()
-    }
-
     func startTimer(_ interval: TimeInterval, kind: TimerKind, inBackground: Bool = false) {
+        timeElapsed = 0
+        runInBackground = inBackground
+        self.kind = kind
+
         if inBackground {
             scheduleBackgroundTask()
         }
@@ -47,8 +45,8 @@ class TimerManager: TimerProtocol {
                     NotificationCenter.default.post(name: kind == .workout ?
                         TimerManager.workoutTimerNotification :
                         TimerManager.stopWatchTimerNotification, object: nil)
-                    RunLoop.current.add(timer, forMode: .common)
                 }
+                RunLoop.current.add(timer, forMode: .common)
             }
         }
     }
@@ -56,14 +54,17 @@ class TimerManager: TimerProtocol {
     func stopTimer() {
         timer?.invalidate()
         timer = nil
-        endBackgroundTask()
-        timeElapsed = 0
+        if runInBackground {
+            endBackgroundTask()
+        }
     }
 
     func pauseTimer() {
         timer?.invalidate()
         timer = nil
-        endBackgroundTask()
+        if runInBackground {
+            endBackgroundTask()
+        }
     }
 
     private func scheduleBackgroundTask() {

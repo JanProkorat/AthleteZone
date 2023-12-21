@@ -16,7 +16,8 @@ class StopWatchViewModel: ObservableObject {
     var soundManager: any SoundProtocol
     var appStorageManager: any AppStorageProtocol
 
-    @Published var interval: TimeInterval = 0
+    @Published var stopWatchInterval: TimeInterval = 0
+    @Published var timerInterval: TimeInterval = 0
     @Published var state: WorkFlowState = .ready
     @Published var splitTimes: [TimeInterval] = []
     @Published var type: TimerType = .stopWatch
@@ -35,15 +36,25 @@ class StopWatchViewModel: ObservableObject {
 
         // Is triggered when timer running in background enabled
         NotificationCenter.default.publisher(for: TimerManager.stopWatchTimerNotification)
-            .sink { [weak self] _ in
-                self?.setInterval()
+            .sink { _ in
+                if !self.appStorageManager.runInBackground {
+                    return
+                }
+                if self.state == .running {
+                    self.setInterval()
+                }
             }
             .store(in: &cancellables)
 
         // Is triggered when timer running in background disabled
         timerManager.timeElapsedPublisher
             .sink { _ in
-                self.setInterval()
+                if self.appStorageManager.runInBackground {
+                    return
+                }
+                if self.state == .running {
+                    self.setInterval()
+                }
             }
             .store(in: &cancellables)
 
@@ -53,12 +64,10 @@ class StopWatchViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
-        $interval
+        $timerInterval
             .sink { newInterval in
                 if self.state == .running {
-                    if self.type == .timer {
-                        self.playSound()
-                    }
+                    self.playSound()
                     if newInterval == 0 {
                         self.state = .quit
                         self.soundManager.playSound(sound: .fanfare, numOfLoops: 0)
@@ -77,10 +86,10 @@ class StopWatchViewModel: ObservableObject {
     func setInterval() {
         switch type {
         case .stopWatch:
-            interval = timerManager.timeElapsed
+            stopWatchInterval = timerManager.timeElapsed
 
         case .timer:
-            interval -= 1
+            timerInterval -= 1
         }
     }
 
@@ -104,18 +113,23 @@ class StopWatchViewModel: ObservableObject {
     func quitActivity() {
         timerManager.stopTimer()
         if type == .stopWatch {
-            let entity = StopWatch(startDate: startDate!, endDate: Date(), splitTimes: splitTimes)
-            realmManager.add(entity)
-            startDate = nil
+            if let date = startDate {
+                let entity = StopWatch(startDate: date, endDate: Date(), splitTimes: splitTimes)
+                realmManager.add(entity)
+                startDate = nil
+                stopWatchInterval = 0
+            }
             splitTimes.removeAll()
-            interval = 0
         }
+        state = .ready
     }
 
     func setStateAccordingToScenePhase(oldPhase: ScenePhase, newPhase: ScenePhase) {
-        if !appStorageManager.runInBackground && oldPhase == ScenePhase.active &&
-            (newPhase == ScenePhase.inactive || newPhase == ScenePhase.background)
-        {
+        if appStorageManager.runInBackground {
+            return
+        }
+
+        if oldPhase == ScenePhase.active && (newPhase == ScenePhase.inactive || newPhase == ScenePhase.background) {
             state = .paused
         }
     }
@@ -123,10 +137,16 @@ class StopWatchViewModel: ObservableObject {
 
 extension StopWatchViewModel {
     func playSound() {
-        if state == .running {
-            if interval <= 3 && interval > 0 && (!soundManager.isSoundPlaying || soundManager.selectedSound != .beep) {
-                soundManager.playSound(sound: .beep, numOfLoops: Int(interval) - 1)
-            }
+        if state != .running {
+            return
+        }
+
+        if timerInterval > 3 || timerInterval == 0 {
+            return
+        }
+
+        if !soundManager.isSoundPlaying || soundManager.selectedSound != .beep {
+            soundManager.playSound(sound: .beep, numOfLoops: Int(timerInterval) - 1)
         }
     }
 }

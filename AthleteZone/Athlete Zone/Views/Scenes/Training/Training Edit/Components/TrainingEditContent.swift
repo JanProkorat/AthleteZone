@@ -78,10 +78,12 @@ struct TrainingEditContent: View {
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 30, height: 30)
+                                        .foregroundStyle(Color(ComponentColor.mainText.rawValue))
 
                                     Text(LocalizationKey.addWorkouts.localizedKey)
                                         .font(.title2)
                                         .padding(.leading, 5)
+                                        .foregroundStyle(Color(ComponentColor.mainText.rawValue))
                                 }
                                 .background(ZStack {
                                     RoundedRectangle(cornerRadius: 13)
@@ -119,8 +121,6 @@ struct TrainingEditContent: View {
                     }
                 }
             }
-            .animation(.easeOut)
-            .transition(.slide)
         }
     }
 

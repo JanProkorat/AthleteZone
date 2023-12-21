@@ -53,7 +53,7 @@ struct WorkOutRunContent: View {
                             .font(.headline)
                             .padding(.top, 10)
                             .frame(maxWidth: .infinity, alignment: .center)
-                            .foregroundStyle(.accent)
+                            .foregroundStyle(.mainText)
 
                         //                        TimelineView(.periodic(from: Date(), by: 0.1)) { _ in
                         Text(flow.interval.toFormattedTime())

@@ -19,7 +19,7 @@ struct TrainingRunFooter: View {
             }
         } label: {
             Text(getLabel())
-                .font(.custom("Lato-ThinItalic", size: 20))
+                .font(.headline)
                 .bold()
         }
         .padding(.top, 10)

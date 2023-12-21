@@ -46,7 +46,7 @@ struct ActivitySelect: View {
                     }
 
                     Text(interval.toFormattedValue(type: type))
-                        .font(.custom("Lato-Black", size: 20))
+                        .font(.headline)
                         .bold()
                         .foregroundColor(interval == 0 ? .red : Color(color))
                         .padding(.trailing)

@@ -29,6 +29,7 @@ struct StopWatchHeader: View {
         }
         .disabled(state == .running || state == .paused)
         .padding(.trailing, 7)
+        .opacity(state == .running || state == .paused ? 0 : 1)
     }
 
     @ViewBuilder

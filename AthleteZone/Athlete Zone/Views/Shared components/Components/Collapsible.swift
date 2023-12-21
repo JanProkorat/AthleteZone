@@ -16,7 +16,8 @@ struct Collapsible<Label: View, Content: View>: View {
 
     init(collapsed: Binding<Bool>? = nil, disabled: Bool = false,
          @ViewBuilder label: () -> Label,
-         @ViewBuilder content: () -> Content) {
+         @ViewBuilder content: () -> Content)
+    {
         _collapsed = State(initialValue: collapsed?.wrappedValue ?? false)
         _disabled = State(initialValue: disabled)
         self.label = label()
@@ -26,13 +27,18 @@ struct Collapsible<Label: View, Content: View>: View {
     var body: some View {
         VStack {
             Button(
-                action: { self.collapsed.toggle() },
+                action: {
+                    withAnimation {
+                        self.collapsed.toggle()
+                    }
+                },
                 label: {
                     HStack {
                         label
                         Spacer()
                         if !disabled {
                             Image(systemName: self.collapsed ? "chevron.left" : "chevron.down")
+                                .foregroundStyle(Color(ComponentColor.mainText.rawValue))
                         }
                     }
                     .padding([.top, .bottom], 4)

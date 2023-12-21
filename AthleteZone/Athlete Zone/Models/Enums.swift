@@ -127,7 +127,11 @@ enum TransferDataKey: String {
     case trainingRemove
 }
 
-enum TimerType: String {
+enum TimerType: String, Identifiable {
+    var id: Int {
+        hashValue
+    }
+
     case stopWatch
     case timer
 }

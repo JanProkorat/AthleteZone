@@ -17,7 +17,7 @@ struct Description: View {
             .font(.headline)
             .foregroundColor(color != nil ?
                 Color(color!.rawValue) :
-                Color.accentColor)
+                Color(ComponentColor.mainText.rawValue))
             .background(
                 ZStack {
                     RoundedRectangle(cornerRadius: 10)

@@ -20,7 +20,7 @@ struct WorkOutRunContent: View {
                                  color: ComponentColor.lightBlue)
 
                 Text(LocalizedStringKey(flow.type.rawValue))
-                    .font(.custom("Lato-Black", size: 20))
+                    .font(.headline)
                     .bold()
                     .padding(.top, 10)
                     .frame(maxWidth: .infinity, alignment: .center)

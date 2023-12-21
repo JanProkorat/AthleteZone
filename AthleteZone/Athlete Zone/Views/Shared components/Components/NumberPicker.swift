@@ -25,7 +25,7 @@ struct NumberPicker: View {
                 ForEach((1 ..< self.numbers.count).reversed(), id: \.self) {
                     Text("\(self.numbers[$0])")
                         .foregroundColor(Color(textColor.rawValue))
-                        .font(.custom("Lato-Black", size: 30))
+                        .font(.title)
                 }
             }
             .background(
