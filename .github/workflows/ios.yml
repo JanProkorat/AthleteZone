@@ -24,9 +24,4 @@ jobs:
             platform: ${{ matrix.platform }}
             configuration: release
             scheme: "Athlete Zone Tests"
-            workspace: "./AthleteZone.xcworkspace"
-            
-        - name: Display root folder content
-        run: |
-          echo "Content of root folder:"
-          ls -l
+            workspace: "./work/Athlete Zone/Athlete Zone/AthleteZone/AthleteZone.xcworkspace"
