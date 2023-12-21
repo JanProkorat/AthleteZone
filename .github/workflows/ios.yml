@@ -23,4 +23,5 @@ jobs:
             xcode: ${{ matrix.xcode }}
             platform: ${{ matrix.platform }}
             configuration: release
-            scheme: "/Athlete Zone/Athlete Zone Tests"
+            scheme: "Athlete Zone Tests"
+            project: "AthleteZone/AthleteZone.xcodeproj"
