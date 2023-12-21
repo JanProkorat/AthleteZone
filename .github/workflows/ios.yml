@@ -24,4 +24,4 @@ jobs:
             platform: ${{ matrix.platform }}
             configuration: release
             scheme: "Athlete Zone Tests"
-            project: "AthleteZone/AthleteZone.xcodeproj"
+            workspace: "./AthleteZone.xcworkspace"
