@@ -59,7 +59,7 @@
          </BuildableReference>
       </BuildableProductRunnable>
       <StoreKitConfigurationFileReference
-         identifier = "../AthleteZone/Athlete Zone/Models/Subscription/store.storekit">
+         identifier = "../AthleteZone/Athlete Zone/Models/Subscription/Athlete Zone.storekit">
       </StoreKitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction

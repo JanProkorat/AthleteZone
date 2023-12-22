@@ -121,6 +121,7 @@ struct TrainingEditContent: View {
                     }
                 }
             }
+            .padding(.bottom, 25)
         }
     }
 

@@ -27,7 +27,7 @@ struct TrainingHeader: View {
                 performAction(self.onAddTab)
             } label: {
                 if name != nil {
-                    Image(Icons.add.rawValue)
+                    Image(Icons.save.rawValue)
                         .resizable()
                         .scaledToFit()
                         .foregroundColor(Color(ComponentColor.mainText.rawValue))

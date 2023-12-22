@@ -32,7 +32,7 @@ struct BaseView<Header: View, Content: View, Footer: View>: View {
 
                 content
                     .padding([.leading, .trailing], 10)
-                    .padding(.top, 5)
+                    .padding([.top, .bottom], 5)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .environment(\.contentSize, geometry.size)
 

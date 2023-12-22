@@ -29,17 +29,30 @@ struct TrainingScene: View {
         .fullScreenCover(isPresented: $isEditModalActive, content: {
             TrainingEditScene()
                 .onCloseTab { isEditModalActive.toggle() }
-                .environmentObject(TrainingEditViewModel())
+                .environmentObject(getViewModel())
         })
         .fullScreenCover(isPresented: $isRunViewVisible, content: {
             TrainingRunScene(viewModel: viewModel.runViewModel)
         })
     }
+
+    private func getViewModel() -> TrainingEditViewModel {
+        if let training = viewModel.selectedTraining {
+            return TrainingEditViewModel(
+                name: training.name,
+                description: training.trainingDescription,
+                workouts: viewModel.workouts)
+        }
+        return TrainingEditViewModel()
+    }
 }
 
 struct TrainingScene_Previews: PreviewProvider {
     static var previews: some View {
-        TrainingScene(isRunViewVisible: .constant(false))
-            .environmentObject(TrainingViewModel())
+        let viewModel = TrainingViewModel()
+        viewModel.workouts = [WorkOut(), WorkOut(), WorkOut(), WorkOut()]
+        viewModel.selectedTraining = Training(name: "test", description: "", workouts: [])
+        return TrainingScene(isRunViewVisible: .constant(false))
+            .environmentObject(viewModel)
     }
 }

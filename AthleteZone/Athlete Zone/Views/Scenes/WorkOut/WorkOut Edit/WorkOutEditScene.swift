@@ -32,6 +32,7 @@ struct WorkOutEditScene: View {
                         viewModel.saveWorkout()
                         performAction(self.onCloseTab)
                     }
+                    .padding(.bottom)
             }
         )
         .environmentObject(viewModel)

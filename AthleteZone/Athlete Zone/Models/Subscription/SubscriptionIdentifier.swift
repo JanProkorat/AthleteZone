@@ -19,10 +19,10 @@ struct SubscriptionIdentifier {
 extension EnvironmentValues {
     private enum SubscriptionIDsKey: EnvironmentKey {
         static var defaultValue = SubscriptionIdentifier(
-            group: "4F77BCDA",
-            monthly: "plus.monthly.usd",
-            quarterly: "plus.quarterly.usd",
-            yearly: "plus.yearly.usd"
+            group: "21426130",
+            monthly: "plus.monthly",
+            quarterly: "plus.quarterly",
+            yearly: "plus.yearly"
         )
     }
 

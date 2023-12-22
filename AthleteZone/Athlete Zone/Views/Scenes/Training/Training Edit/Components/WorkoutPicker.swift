@@ -16,7 +16,7 @@ struct WorkoutPicker: View {
             TitleText(text: LocalizationKey.selectWorkouts.rawValue, alignment: .center)
         } content: {
             ZStack(alignment: .top) {
-                List(workoutLibrary, id: \._id) { workout in
+                List(workoutLibrary.sorted(by: { $0.name < $1.name }), id: \._id) { workout in
                     Button {
                         if let index = selectedWorkouts.firstIndex(where: { $0._id == workout._id }) {
                             selectedWorkouts.remove(at: index)

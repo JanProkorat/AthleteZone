@@ -43,7 +43,7 @@ struct ContentView: View {
         .animation(.default, value: viewModel.currentSection)
         .sheet(isPresented: $subscriptionManager.isSubscriptionViewVisible) {
             SubscriptionStoreView(groupID: passIDs.group)
-                .storeButton(.visible, for: .redeemCode)
+                .storeButton(.visible)
                 .subscriptionStorePolicyDestination(for: .privacyPolicy) {
                     PrivacyPolicyView()
                 }

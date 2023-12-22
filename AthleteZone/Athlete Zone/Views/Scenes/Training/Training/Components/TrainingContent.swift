@@ -147,6 +147,7 @@ struct TrainingContent: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
+            .padding(.bottom, 7)
             .sheet(item: $selectedWorkout) {
                 WorkoutDetailSheet(workout: $0)
                     .presentationDetents([.fraction(0.3)])

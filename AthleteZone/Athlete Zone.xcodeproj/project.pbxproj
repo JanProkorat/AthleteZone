@@ -19,7 +19,6 @@
 		7E01681B2B0D57190054C797 /* TrainingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E01681A2B0D57190054C797 /* TrainingViewModelTests.swift */; };
 		7E036EB22B28F0CF00A1ACBF /* TrainingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E036EB12B28F0CF00A1ACBF /* TrainingDetailView.swift */; };
 		7E036EB82B2903F900A1ACBF /* TextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E036EB72B2903F900A1ACBF /* TextInput.swift */; };
-		7E036EBB2B29078B00A1ACBF /* store.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 7E036EBA2B29078B00A1ACBF /* store.storekit */; };
 		7E03709A29A25E5B00261B2A /* AppStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E03709929A25E5B00261B2A /* AppStorageManager.swift */; };
 		7E04F3AA2A9767D300FCC04F /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E04F3A92A9767D300FCC04F /* SettingsManager.swift */; };
 		7E066705299FC70E00FCF8C5 /* beep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7E066704299FC70E00FCF8C5 /* beep.mp3 */; };
@@ -157,6 +156,7 @@
 		7E6E9CA12A6A5D7E00CA9C57 /* WorkOutContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6E9CA02A6A5D7E00CA9C57 /* WorkOutContentViewModelTests.swift */; };
 		7E6FBFC3296E0D90006519B0 /* WorkOutLibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6FBFC2296E0D90006519B0 /* WorkOutLibraryViewModel.swift */; };
 		7E6FBFC6296E10D6006519B0 /* WatchConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6FBFC5296E10D6006519B0 /* WatchConnectivityManager.swift */; };
+		7E77A2C82B35C2D100A462F6 /* Athlete Zone.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 7E77A2C72B35C2D100A462F6 /* Athlete Zone.storekit */; };
 		7E77F1C22A5B4C19008BBBF2 /* TrainingEditScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77F1C12A5B4C19008BBBF2 /* TrainingEditScene.swift */; };
 		7E77F1C42A5B4C32008BBBF2 /* TrainingEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77F1C32A5B4C32008BBBF2 /* TrainingEditViewModel.swift */; };
 		7E77F1C82A5B5498008BBBF2 /* TrainingEditFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77F1C72A5B5498008BBBF2 /* TrainingEditFooter.swift */; };
@@ -342,7 +342,6 @@
 		7E01681A2B0D57190054C797 /* TrainingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingViewModelTests.swift; sourceTree = "<group>"; };
 		7E036EB12B28F0CF00A1ACBF /* TrainingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingDetailView.swift; sourceTree = "<group>"; };
 		7E036EB72B2903F900A1ACBF /* TextInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInput.swift; sourceTree = "<group>"; };
-		7E036EBA2B29078B00A1ACBF /* store.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = store.storekit; sourceTree = "<group>"; };
 		7E03709929A25E5B00261B2A /* AppStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorageManager.swift; sourceTree = "<group>"; };
 		7E04F3A92A9767D300FCC04F /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		7E066704299FC70E00FCF8C5 /* beep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beep.mp3; sourceTree = "<group>"; };
@@ -473,6 +472,7 @@
 		7E6E9CA02A6A5D7E00CA9C57 /* WorkOutContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutContentViewModelTests.swift; sourceTree = "<group>"; };
 		7E6FBFC2296E0D90006519B0 /* WorkOutLibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutLibraryViewModel.swift; sourceTree = "<group>"; };
 		7E6FBFC5296E10D6006519B0 /* WatchConnectivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityManager.swift; sourceTree = "<group>"; };
+		7E77A2C72B35C2D100A462F6 /* Athlete Zone.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Athlete Zone.storekit"; sourceTree = "<group>"; };
 		7E77F1C12A5B4C19008BBBF2 /* TrainingEditScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingEditScene.swift; sourceTree = "<group>"; };
 		7E77F1C32A5B4C32008BBBF2 /* TrainingEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingEditViewModel.swift; sourceTree = "<group>"; };
 		7E77F1C72A5B5498008BBBF2 /* TrainingEditFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingEditFooter.swift; sourceTree = "<group>"; };
@@ -655,8 +655,8 @@
 			isa = PBXGroup;
 			children = (
 				7E5767542B30E727006F5803 /* privacyPolicy.html */,
+				7E77A2C72B35C2D100A462F6 /* Athlete Zone.storekit */,
 				7E57674A2B30D56D006F5803 /* tos.html */,
-				7E036EBA2B29078B00A1ACBF /* store.storekit */,
 				7ED80CC42B2B2FB700DA34AA /* SubscriptionIdentifier.swift */,
 				7EB8113E2B2DA7B600855C1D /* SubscriptionManager.swift */,
 			);
@@ -1722,8 +1722,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E036EBB2B29078B00A1ACBF /* store.storekit in Resources */,
 				7EE47B5429407B61000FC098 /* .swiftformat in Resources */,
+				7E77A2C82B35C2D100A462F6 /* Athlete Zone.storekit in Resources */,
 				7E1F9B0529198603006CA3AA /* Localizable.strings in Resources */,
 				7EE47B5029407901000FC098 /* .swiftlint.yml in Resources */,
 				7EF13C9429A7F2C800CB4F22 /* Assets.xcassets in Resources */,
@@ -2139,14 +2139,19 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5SV4N2J8AG;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 5SV4N2J8AG;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jan.prokorat.Athlete-Zone-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2491,10 +2496,10 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "AthleteZoneMini Watch App/AthleteZoneMini Watch App.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = 5SV4N2J8AG;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "";
