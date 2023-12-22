@@ -44,12 +44,6 @@ struct ContentView: View {
         .sheet(isPresented: $subscriptionManager.isSubscriptionViewVisible) {
             SubscriptionStoreView(groupID: passIDs.group)
                 .storeButton(.visible)
-                .subscriptionStorePolicyDestination(for: .privacyPolicy) {
-                    PrivacyPolicyView()
-                }
-                .subscriptionStorePolicyDestination(for: .termsOfService) {
-                    TermsOfServiceView()
-                }
                 .subscriptionStoreControlStyle(.prominentPicker)
         }
         .subscriptionStatusTask(for: passIDs.group) { taskStatus in

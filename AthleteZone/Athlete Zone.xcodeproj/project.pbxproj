@@ -110,11 +110,9 @@
 		7E4A9952299FDACD0031504A /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4A9951299FDACD0031504A /* LaunchScreenView.swift */; };
 		7E4F04792A68697200B42B88 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4F04782A68697200B42B88 /* LanguageManager.swift */; };
 		7E55C95529D576D8003EAFFF /* TrainingWorkoutListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E55C95429D576D8003EAFFF /* TrainingWorkoutListItem.swift */; };
-		7E57674B2B30D56D006F5803 /* tos.html in Resources */ = {isa = PBXBuildFile; fileRef = 7E57674A2B30D56D006F5803 /* tos.html */; };
 		7E57674E2B30D680006F5803 /* TermsOfServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E57674D2B30D680006F5803 /* TermsOfServiceView.swift */; };
 		7E5767512B30E21C006F5803 /* RichText in Frameworks */ = {isa = PBXBuildFile; productRef = 7E5767502B30E21C006F5803 /* RichText */; };
 		7E5767532B30E626006F5803 /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5767522B30E626006F5803 /* PrivacyPolicyView.swift */; };
-		7E5767552B30E727006F5803 /* privacyPolicy.html in Resources */ = {isa = PBXBuildFile; fileRef = 7E5767542B30E727006F5803 /* privacyPolicy.html */; };
 		7E5981982B186A8600555EC8 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5981972B186A8600555EC8 /* RealmManager.swift */; };
 		7E59819A2B186B9200555EC8 /* StopWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5981992B186B9200555EC8 /* StopWatch.swift */; };
 		7E59819C2B186EEA00555EC8 /* StopWatchRealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E59819B2B186EEA00555EC8 /* StopWatchRealmManager.swift */; };
@@ -431,10 +429,8 @@
 		7E4DA0362A7E8C3E006B433B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		7E4F04782A68697200B42B88 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		7E55C95429D576D8003EAFFF /* TrainingWorkoutListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWorkoutListItem.swift; sourceTree = "<group>"; };
-		7E57674A2B30D56D006F5803 /* tos.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = tos.html; sourceTree = "<group>"; };
 		7E57674D2B30D680006F5803 /* TermsOfServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceView.swift; sourceTree = "<group>"; };
 		7E5767522B30E626006F5803 /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
-		7E5767542B30E727006F5803 /* privacyPolicy.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = privacyPolicy.html; sourceTree = "<group>"; };
 		7E5981972B186A8600555EC8 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		7E5981992B186B9200555EC8 /* StopWatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatch.swift; sourceTree = "<group>"; };
 		7E59819B2B186EEA00555EC8 /* StopWatchRealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchRealmManager.swift; sourceTree = "<group>"; };
@@ -654,9 +650,7 @@
 		7E036EB92B29063700A1ACBF /* Subscription */ = {
 			isa = PBXGroup;
 			children = (
-				7E5767542B30E727006F5803 /* privacyPolicy.html */,
 				7E77A2C72B35C2D100A462F6 /* Athlete Zone.storekit */,
-				7E57674A2B30D56D006F5803 /* tos.html */,
 				7ED80CC42B2B2FB700DA34AA /* SubscriptionIdentifier.swift */,
 				7EB8113E2B2DA7B600855C1D /* SubscriptionManager.swift */,
 			);
@@ -1727,8 +1721,6 @@
 				7E1F9B0529198603006CA3AA /* Localizable.strings in Resources */,
 				7EE47B5029407901000FC098 /* .swiftlint.yml in Resources */,
 				7EF13C9429A7F2C800CB4F22 /* Assets.xcassets in Resources */,
-				7E57674B2B30D56D006F5803 /* tos.html in Resources */,
-				7E5767552B30E727006F5803 /* privacyPolicy.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
