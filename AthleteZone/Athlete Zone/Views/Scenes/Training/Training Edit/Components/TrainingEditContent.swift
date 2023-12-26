@@ -31,7 +31,7 @@ struct TrainingEditContent: View {
                         TextInput(text: $viewModel.name)
                     }
                     .padding(.bottom)
-                    .frame(maxHeight: geo.size.height * 0.1)
+                    .frame(maxHeight: geo.size.height * 0.12)
                 }
 
                 EditSection(icon: "square.and.pencil.circle",
@@ -60,13 +60,14 @@ struct TrainingEditContent: View {
                             .resizable()
                             .scaledToFill()
                             .foregroundColor(Color(ComponentColor.lightGreen.rawValue))
-                            .frame(maxWidth: 35, maxHeight: 35)
+                            .frame(maxWidth: 25, maxHeight: 25)
                             .padding(.top, 5)
 
                         Text(LocalizationKey.workouts.localizedKey)
-                            .font(.title)
+                            .font(.title2)
                             .foregroundColor(Color(ComponentColor.lightGreen.rawValue))
                             .padding(.leading, 5)
+                            .padding(.top, 3)
 
                     } content: {
                         VStack {
@@ -96,7 +97,7 @@ struct TrainingEditContent: View {
                                 .frame(maxWidth: .infinity)
                                 .frame(height: geo.size.height * 0.09)
                                 .background(Color(ComponentColor.darkBlue.rawValue))
-                                .padding(.top, 2)
+                                .padding(.top, 10)
                             }
                             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
 
@@ -115,13 +116,11 @@ struct TrainingEditContent: View {
                         }
                     }
                     .padding([.leading, .trailing], 5)
-                    .padding(.bottom, 7)
                     .onTapGesture {
                         hideKeyboard()
                     }
                 }
             }
-            .padding(.bottom, 25)
         }
     }
 

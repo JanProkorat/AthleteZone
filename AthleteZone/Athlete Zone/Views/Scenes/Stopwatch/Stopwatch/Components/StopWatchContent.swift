@@ -15,12 +15,23 @@ struct StopWatchContent: View {
     @Binding var type: TimerType
 
     var body: some View {
-        switch type {
-        case .stopWatch:
-            StopWatchView(interval: $stopWatchInterval, state: $state, splitTimes: $splitTimes)
+        VStack {
+            switch type {
+            case .stopWatch:
+                StopWatchView(interval: $stopWatchInterval, state: $state, splitTimes: $splitTimes)
 
-        case .timer:
-            TimerView(interval: $timerInterval, state: $state)
+            case .timer:
+                TimerView(interval: $timerInterval, state: $state)
+            }
+        }
+        .onChange(of: state) { _, newValue in
+            switch newValue {
+            case .running:
+                UIApplication.shared.isIdleTimerDisabled = true
+
+            default:
+                UIApplication.shared.isIdleTimerDisabled = false
+            }
         }
     }
 }

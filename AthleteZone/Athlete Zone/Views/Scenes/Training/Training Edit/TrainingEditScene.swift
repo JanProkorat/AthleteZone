@@ -14,19 +14,30 @@ struct TrainingEditScene: View {
     var onCloseTab: (() -> Void)?
 
     var body: some View {
-        BaseView {
+        VStack {
             TitleText(text: viewModel.isEditing ? LocalizationKey.editTraining.rawValue :
                 LocalizationKey.addTraining.rawValue, alignment: .center)
-        } content: {
+                .padding([.leading, .trailing], 10)
+                .frame(maxWidth: .infinity)
+
             TrainingEditContent(isModalVisible: $isModalVisible)
-        } footer: {
+                .padding([.leading, .trailing], 10)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.top, -10)
+
             TrainingEditFooter()
                 .onCloseTab { performAction(self.onCloseTab) }
                 .onSaveTab {
                     viewModel.saveTraining()
                     performAction(self.onCloseTab)
                 }
+                .padding([.leading, .trailing], 10)
+                .frame(maxWidth: .infinity)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .background(Color(ComponentColor.darkBlue.rawValue))
+        .environment(\.colorScheme, .dark)
+        .ignoresSafeArea(.keyboard, edges: [.bottom])
         .sheet(isPresented: $isModalVisible) {
             WorkoutPicker(
                 selectedWorkouts: $viewModel.workouts,

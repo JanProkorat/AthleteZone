@@ -33,7 +33,7 @@ struct SettingsContent: View {
                 .disabled(viewModel.subscriptionActive)
                 .roundedBackground(
                     cornerRadius: 15,
-                    color: viewModel.subscriptionActive ? ComponentColor.grey : .mainText)
+                    color: viewModel.subscriptionActive ? .grey : .accent)
             }
             .padding(.top, 20)
 
@@ -49,10 +49,7 @@ struct SettingsContent: View {
                 toggle(value: $viewModel.appStorageManager.notificationsEnabled)
             })
 
-            detailedPanel(
-                title: LocalizationKey.runInBackground,
-                description: LocalizationKey.runInBackgroundDescription)
-            {
+            detailedPanel(title: LocalizationKey.runInBackground, description: LocalizationKey.runInBackgroundDescription) {
                 toggle(value: $viewModel.appStorageManager.runInBackground)
             }
 

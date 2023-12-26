@@ -52,14 +52,16 @@ struct TrainingContent: View {
                                     .resizable()
                                     .scaledToFill()
                                     .foregroundColor(Color(ComponentColor.lightGreen.rawValue))
-                                    .frame(maxWidth: 35, maxHeight: 35)
+                                    .frame(maxWidth: 25, maxHeight: 25)
                                     .padding(.top, 5)
 
                                 Text(LocalizationKey.workouts.localizedKey)
-                                    .font(.title)
+                                    .font(.title2)
                                     .foregroundColor(Color(ComponentColor.lightGreen.rawValue))
                                     .padding(.leading, 5)
+                                    .padding(.top, 4)
                             }
+                            .padding(.top, 4)
 
                         } content: {
                             List {
@@ -116,7 +118,7 @@ struct TrainingContent: View {
                         }
                         .frame(maxWidth: geo.size.width * 0.35)
                     }
-                    .frame(maxWidth: .infinity, maxHeight: geo.size.height * 0.19)
+                    .frame(maxWidth: .infinity, maxHeight: geo.size.height * 0.2)
                     .roundedBackground(cornerRadius: 20)
                 } else {
                     VStack(alignment: .center) {
@@ -147,7 +149,6 @@ struct TrainingContent: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
-            .padding(.bottom, 7)
             .sheet(item: $selectedWorkout) {
                 WorkoutDetailSheet(workout: $0)
                     .presentationDetents([.fraction(0.3)])

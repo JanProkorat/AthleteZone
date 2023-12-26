@@ -10,6 +10,7 @@ import SwiftUI
 struct StopWatchScene: View {
     @EnvironmentObject var viewModel: StopWatchViewModel
     @Environment(\.footerSize) var footerSize: CGFloat
+    @Environment(\.scenePhase) var scenePhase: ScenePhase
 
     var body: some View {
         BaseView(
@@ -49,6 +50,9 @@ struct StopWatchScene: View {
             }
         )
         .animation(.easeInOut, value: viewModel.state)
+        .onChange(of: scenePhase) { oldValue, newValue in
+            viewModel.setStateAccordingToScenePhase(oldPhase: oldValue, newPhase: newValue)
+        }
     }
 }
 

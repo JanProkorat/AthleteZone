@@ -14,28 +14,31 @@ struct WorkOutEditScene: View {
     @EnvironmentObject var viewModel: WorkOutEditViewModel
 
     var body: some View {
-        BaseView(
-            header: {
-                TitleText(text: viewModel.isEditing ?
-                    LocalizationKey.editWorkout.rawValue :
-                    LocalizationKey.addWorkout.rawValue,
-                    alignment: .center)
-            },
-            content: {
-                WorkOutEditContent()
-                    .onEditTab { activeSheetType = $0 }
-            },
-            footer: {
-                WorkOutEditFooter()
-                    .onCloseTab { performAction(self.onCloseTab) }
-                    .onSaveTab {
-                        viewModel.saveWorkout()
-                        performAction(self.onCloseTab)
-                    }
-                    .padding(.bottom)
-            }
-        )
-        .environmentObject(viewModel)
+        VStack {
+            TitleText(text: viewModel.isEditing ?
+                LocalizationKey.editWorkout.rawValue :
+                LocalizationKey.addWorkout.rawValue,
+                alignment: .center)
+                .padding([.leading, .trailing], 10)
+                .frame(maxWidth: .infinity)
+
+            WorkOutEditContent()
+                .onEditTab { activeSheetType = $0 }
+                .padding([.leading, .trailing], 10)
+                .padding([.top, .bottom], 5)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+            WorkOutEditFooter()
+                .onCloseTab { performAction(self.onCloseTab) }
+                .onSaveTab {
+                    viewModel.saveWorkout()
+                    performAction(self.onCloseTab)
+                }
+                .padding([.leading, .trailing], 10)
+        }
+        .background(Color(ComponentColor.darkBlue.rawValue))
+        .environment(\.colorScheme, .dark)
+        .ignoresSafeArea(.keyboard, edges: [.bottom])
         .sheet(item: $activeSheetType) { activitySheet in
             switch activitySheet {
             case .work:

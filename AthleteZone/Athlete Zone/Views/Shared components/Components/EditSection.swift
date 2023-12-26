@@ -34,12 +34,13 @@ struct EditSection<Content: View>: View {
                 .resizable()
                 .scaledToFill()
                 .foregroundColor(Color(color.rawValue))
-                .frame(maxWidth: 35, maxHeight: 35)
+                .frame(maxWidth: 25, maxHeight: 25)
                 .padding(.top, 5)
 
             Text(label.localizedKey)
-                .font(.title)
+                .font(.title2)
                 .padding(.leading, 5)
+                .padding(.top, 3)
                 .foregroundColor(Color(color.rawValue))
         } content: {
             content

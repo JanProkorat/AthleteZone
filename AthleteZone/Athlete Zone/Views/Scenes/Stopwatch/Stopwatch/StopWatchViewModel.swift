@@ -125,6 +125,10 @@ class StopWatchViewModel: ObservableObject {
     }
 
     func setStateAccordingToScenePhase(oldPhase: ScenePhase, newPhase: ScenePhase) {
+        if state != .running {
+            return
+        }
+
         if appStorageManager.runInBackground {
             return
         }

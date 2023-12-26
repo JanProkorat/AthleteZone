@@ -21,7 +21,7 @@ struct TrainingEditFooter: View {
                     color: viewModel.saveDisabled ? .grey : .lightGreen,
                     backgoundColor: ComponentColor.menu.rawValue,
                     image: Icons.check.rawValue,
-                    height: 60,
+                    height: 45,
                     cornerRadius: nil
                 )
             })
@@ -34,7 +34,7 @@ struct TrainingEditFooter: View {
                     color: ComponentColor.lightPink,
                     backgoundColor: ComponentColor.menu.rawValue,
                     image: Icons.clear.rawValue,
-                    height: 60,
+                    height: 45,
                     cornerRadius: nil
                 )
             })
