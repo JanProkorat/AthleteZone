@@ -20,10 +20,11 @@ struct TrainingWorkoutListItem: View {
             HStack {
                 Text(workout.name)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.title2)
+                    .font(.subheadline)
 
                 Text(workout.workoutLength.toFormattedTime())
-                    .font(.title2)
+                    .font(.subheadline)
+                    .padding(.leading)
 
                 Image(systemName: "line.3.horizontal")
                     .frame(height: height * 0.03)

@@ -89,10 +89,10 @@ struct TrainingEditContent: View {
                                 .background(ZStack {
                                     RoundedRectangle(cornerRadius: 13)
                                         .foregroundColor(Color(ComponentColor.menu.rawValue))
-                                        .frame(width: geo.size.width * 0.98, height: geo.size.height * 0.096)
+                                        .frame(width: geo.size.width * 0.94, height: geo.size.height * 0.096)
                                     RoundedRectangle(cornerRadius: 10)
                                         .foregroundColor(Color(ComponentColor.darkBlue.rawValue))
-                                        .frame(width: geo.size.width * 0.96, height: geo.size.height * 0.089)
+                                        .frame(width: geo.size.width * 0.93, height: geo.size.height * 0.089)
                                 })
                                 .frame(maxWidth: .infinity)
                                 .frame(height: geo.size.height * 0.09)
@@ -103,7 +103,7 @@ struct TrainingEditContent: View {
 
                             List {
                                 ForEach(viewModel.workouts, id: \._id) { workout in
-                                    TrainingWorkoutListItem(workout: workout, height: geo.size.height * 0.1)
+                                    TrainingWorkoutListItem(workout: workout, height: geo.size.height * 0.07)
                                 }
                                 .onDelete { indexSet in
                                     viewModel.workouts.remove(atOffsets: indexSet)
@@ -115,7 +115,7 @@ struct TrainingEditContent: View {
                             .listStyle(.plain)
                         }
                     }
-                    .padding([.leading, .trailing], 5)
+                    .padding([.leading, .trailing], 10)
                     .onTapGesture {
                         hideKeyboard()
                     }
@@ -133,8 +133,10 @@ struct TrainingEditContent: View {
 
 struct TrainingEditContent_Previews: PreviewProvider {
     static var previews: some View {
-        TrainingEditContent(isModalVisible: Binding.constant(false))
-            .environmentObject(TrainingEditViewModel())
+        let viewModel = TrainingEditViewModel()
+        viewModel.workouts = [WorkOut()]
+        return TrainingEditContent(isModalVisible: Binding.constant(false))
+            .environmentObject(viewModel)
     }
 }
 

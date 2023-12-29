@@ -66,7 +66,7 @@ struct TrainingContent: View {
                         } content: {
                             List {
                                 ForEach(viewModel.workouts, id: \._id) { workout in
-                                    TrainingWorkoutListItem(workout: workout, height: geo.size.height * 0.1)
+                                    TrainingWorkoutListItem(workout: workout, height: geo.size.height * 0.07)
                                         .onInfoTab { selectedWorkout = workout }
                                 }
                                 .onMove { from, to in
@@ -75,7 +75,8 @@ struct TrainingContent: View {
                             }
                             .listStyle(.plain)
                         }
-                        .padding([.leading, .trailing], 5)
+                        .padding([.leading, .trailing], 10)
+                        .padding(.top, 2)
                     }
 
                     Spacer()
@@ -165,6 +166,7 @@ struct TrainingContent_Previews: PreviewProvider {
             description: "des cript ionwe we wwewe wew ew wewe wewewe wewew ewewe weeweweww wewewewewew",
             workouts: RealmSwift.List()
         )
+        viewModel.workouts = [WorkOut()]
 
         return TrainingContent()
             .environmentObject(viewModel)

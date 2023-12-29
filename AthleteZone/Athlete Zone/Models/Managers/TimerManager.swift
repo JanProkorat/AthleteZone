@@ -29,7 +29,6 @@ class TimerManager: TimerProtocol {
     private init() {}
 
     func startTimer(_ interval: TimeInterval, kind: TimerKind, inBackground: Bool = false) {
-        timeElapsed = 0
         runInBackground = inBackground
         self.kind = kind
 
@@ -54,6 +53,7 @@ class TimerManager: TimerProtocol {
     func stopTimer() {
         timer?.invalidate()
         timer = nil
+        timeElapsed = 0
         if runInBackground {
             endBackgroundTask()
         }

@@ -37,9 +37,6 @@ class StopWatchViewModel: ObservableObject {
         // Is triggered when timer running in background enabled
         NotificationCenter.default.publisher(for: TimerManager.stopWatchTimerNotification)
             .sink { _ in
-                if !self.appStorageManager.runInBackground {
-                    return
-                }
                 if self.state == .running {
                     self.setInterval()
                 }
@@ -49,9 +46,6 @@ class StopWatchViewModel: ObservableObject {
         // Is triggered when timer running in background disabled
         timerManager.timeElapsedPublisher
             .sink { _ in
-                if self.appStorageManager.runInBackground {
-                    return
-                }
                 if self.state == .running {
                     self.setInterval()
                 }
@@ -94,19 +88,21 @@ class StopWatchViewModel: ObservableObject {
     }
 
     func resolveState(_ state: WorkFlowState) {
-        if state == .running {
-            startDate = Date()
-            timerManager.startTimer(
-                type == .stopWatch ? 0.01 : 1,
-                kind: .stopWatch,
-                inBackground: appStorageManager.runInBackground)
-        }
-        if state == .paused {
-            timerManager.pauseTimer()
-            soundManager.stop()
-        }
-        if state == .quit {
-            quitActivity()
+        DispatchQueue.main.async {
+            if state == .running {
+                self.startDate = Date()
+                self.timerManager.startTimer(
+                    self.type == .stopWatch ? 0.01 : 1,
+                    kind: .stopWatch,
+                    inBackground: self.appStorageManager.runInBackground)
+            }
+            if state == .paused {
+                self.timerManager.pauseTimer()
+                self.soundManager.stop()
+            }
+            if state == .quit {
+                self.quitActivity()
+            }
         }
     }
 
@@ -120,6 +116,8 @@ class StopWatchViewModel: ObservableObject {
                 stopWatchInterval = 0
             }
             splitTimes.removeAll()
+        } else {
+            timerInterval = 0
         }
         state = .ready
     }
