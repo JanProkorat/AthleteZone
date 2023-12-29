@@ -2220,7 +2220,6 @@
 		};
 		7E33B66A291435BF009E4C1C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7E77A2C72B35C2D100A462F6 /* Athlete Zone.storekit */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
