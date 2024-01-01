@@ -17,28 +17,15 @@ struct TrainingContentScene: View {
     @StateObject var settingsViewModel = SettingsViewModel()
 
     var body: some View {
-        GeometryReader { _ in
-            VStack {
-                switch viewModel.currentTab {
-                case .home:
-                    TrainingScene(isRunViewVisible: $trainingViewModel.isRunViewVisible)
-                        .environmentObject(trainingViewModel)
-
-                case .library:
-                    TrainingLibraryScene()
-                        .environmentObject(libraryViewModel)
-
-                case .setting:
-                    SettingsScene()
-                        .environmentObject(settingsViewModel)
-
-                default:
-                    Text("Scene for this route not implemented")
-                }
-            }
-            .onChange(of: scenePhase) { _, newValue in
-                trainingViewModel.scenePhase = newValue
-            }
+        NavigationBaseView(currentTab: viewModel.currentTab) {
+            TrainingScene(isRunViewVisible: $trainingViewModel.isRunViewVisible)
+                .environmentObject(trainingViewModel)
+        } library: {
+            TrainingLibraryScene()
+                .environmentObject(libraryViewModel)
+        }
+        .onChange(of: scenePhase) { _, newValue in
+            trainingViewModel.scenePhase = newValue
         }
     }
 }

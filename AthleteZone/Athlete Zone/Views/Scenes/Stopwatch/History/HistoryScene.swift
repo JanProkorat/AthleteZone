@@ -32,10 +32,6 @@ struct HistoryScene: View {
                 .onDeleteTab { activity in
                     viewModel.deleteActivity(activity)
                 }
-            },
-            footer: {
-                MenuBar(activeTab: viewModel.router.currentTab)
-                    .onRouteTab { viewModel.router.currentTab = $0 }
             }
         )
     }

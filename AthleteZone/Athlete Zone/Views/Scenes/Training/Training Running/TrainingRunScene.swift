@@ -12,7 +12,7 @@ struct TrainingRunScene: View {
     @StateObject var viewModel: TrainingRunViewModel
 
     var body: some View {
-        BaseView {
+        RunBaseView {
             TitleText(text: viewModel.trainingName, alignment: .center)
         } content: {
             TrainingRunContent()

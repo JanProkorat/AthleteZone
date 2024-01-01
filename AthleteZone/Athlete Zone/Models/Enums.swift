@@ -7,8 +7,10 @@
 
 import Foundation
 
-enum Tab {
-    case home, library, setting
+enum Tab: Int, CaseIterable {
+    case home = 0
+    case library = 1
+    case setting = 2
 }
 
 enum ActivityType: String, Identifiable, CaseIterable, Encodable {

@@ -14,31 +14,17 @@ struct WorkOutContentScene: View {
 
     @StateObject var workOutViewModel = WorkOutViewModel()
     @StateObject var libraryViewModel = LibraryViewModel()
-    @StateObject var settingsViewModel = SettingsViewModel()
 
     var body: some View {
-        GeometryReader { _ in
-            VStack {
-                switch viewModel.currentTab {
-                case .home:
-                    WorkOutScene(isRunViewVisible: $workOutViewModel.isRunViewVisible)
-                        .environmentObject(workOutViewModel)
-
-                case .library:
-                    LibraryScene()
-                        .environmentObject(libraryViewModel)
-
-                case .setting:
-                    SettingsScene()
-                        .environmentObject(settingsViewModel)
-
-                default:
-                    Text("Scene for this route not implemented")
-                }
-            }
-            .onChange(of: scenePhase) { _, newValue in
-                workOutViewModel.scenePhase = newValue
-            }
+        NavigationBaseView(currentTab: viewModel.currentTab) {
+            WorkOutScene(isRunViewVisible: $workOutViewModel.isRunViewVisible)
+                .environmentObject(workOutViewModel)
+        } library: {
+            LibraryScene()
+                .environmentObject(libraryViewModel)
+        }
+        .onChange(of: scenePhase) { _, newValue in
+            workOutViewModel.scenePhase = newValue
         }
     }
 }

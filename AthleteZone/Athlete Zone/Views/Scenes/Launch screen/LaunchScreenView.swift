@@ -18,7 +18,7 @@ struct LaunchScreenView: View {
         .autoconnect()
 
     var body: some View {
-        BaseView(
+        RunBaseView(
             header: {},
             content: {
                 ZStack {

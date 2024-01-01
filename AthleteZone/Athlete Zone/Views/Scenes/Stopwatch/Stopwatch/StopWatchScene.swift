@@ -13,7 +13,7 @@ struct StopWatchScene: View {
     @Environment(\.scenePhase) var scenePhase: ScenePhase
 
     var body: some View {
-        BaseView(
+        RunBaseView(
             header: {
                 StopWatchHeader(
                     state: $viewModel.state,

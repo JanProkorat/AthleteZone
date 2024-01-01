@@ -26,9 +26,6 @@ struct TrainingScene: View {
                         viewModel.router.currentTab = .library
                     }
                 }
-        } footer: {
-            MenuBar(activeTab: viewModel.router.currentTab)
-                .onRouteTab { viewModel.router.currentTab = $0 }
         }
         .sheet(isPresented: $isEditModalActive, content: {
             TrainingEditScene()

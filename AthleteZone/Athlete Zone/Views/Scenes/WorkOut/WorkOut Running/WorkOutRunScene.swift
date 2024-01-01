@@ -11,7 +11,7 @@ struct WorkOutRunScene: View {
     @StateObject var viewModel: PhoneWorkOutRunViewModel
 
     var body: some View {
-        BaseView(
+        RunBaseView(
             header: {
                 TitleText(text: viewModel.workoutName, alignment: .center)
             },

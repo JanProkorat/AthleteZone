@@ -49,10 +49,6 @@ struct LibraryScene: View {
                     }
                 }
                 .id(showModal)
-            },
-            footer: {
-                MenuBar(activeTab: viewModel.router.currentTab)
-                    .onRouteTab { viewModel.router.currentTab = $0 }
             }
         )
         .sheet(isPresented: $showModal, content: {

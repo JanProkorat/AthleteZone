@@ -17,10 +17,6 @@ struct SettingsScene: View {
             },
             content: {
                 SettingsContent()
-            },
-            footer: {
-                MenuBar(activeTab: viewModel.router.currentTab)
-                    .onRouteTab { viewModel.router.currentTab = $0 }
             }
         )
     }

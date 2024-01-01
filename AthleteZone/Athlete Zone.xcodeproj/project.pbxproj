@@ -29,6 +29,8 @@
 		7E06670F299FD11E00FCF8C5 /* HapticProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E06670D299FD11E00FCF8C5 /* HapticProtocol.swift */; };
 		7E0B5A2E2B42DAA3004743CF /* ActivityEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0B5A2D2B42DAA3004743CF /* ActivityEditView.swift */; };
 		7E0B5A302B42ED11004743CF /* SplitTimesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0B5A2F2B42ED11004743CF /* SplitTimesView.swift */; };
+		7E0B5A322B43309F004743CF /* NavigationBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0B5A312B43309F004743CF /* NavigationBaseView.swift */; };
+		7E0B5A342B4341A5004743CF /* RunBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0B5A332B4341A5004743CF /* RunBaseView.swift */; };
 		7E103A2229D5B26200B12120 /* WorkoutDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E103A2129D5B26200B12120 /* WorkoutDetailSheet.swift */; };
 		7E17246F29CA127D00B90E31 /* SoundManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E17246D29CA127C00B90E31 /* SoundManagerMock.swift */; };
 		7E17247029CA127D00B90E31 /* WorkOutRealmManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E17246E29CA127C00B90E31 /* WorkOutRealmManagerMock.swift */; };
@@ -273,7 +275,6 @@
 		7EEF576D2B1943640042D965 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEF576C2B1943640042D965 /* Date.swift */; };
 		7EEF576F2B1947910042D965 /* StopWatchListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEF576E2B1947910042D965 /* StopWatchListItem.swift */; };
 		7EEF57742B19FDB90042D965 /* CustomAlert in Frameworks */ = {isa = PBXBuildFile; productRef = 7EEF57732B19FDB90042D965 /* CustomAlert */; };
-		7EEF57762B1D09550042D965 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEF57752B1D09550042D965 /* CustomTextField.swift */; };
 		7EEF57782B1D12B80042D965 /* StopWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEF57772B1D12B80042D965 /* StopWatchView.swift */; };
 		7EEF577A2B1D15310042D965 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEF57792B1D15310042D965 /* TimerView.swift */; };
 		7EF13C9329A7DFFE00CB4F22 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF13C9229A7DFFE00CB4F22 /* NotificationManager.swift */; };
@@ -349,6 +350,8 @@
 		7E06670D299FD11E00FCF8C5 /* HapticProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticProtocol.swift; sourceTree = "<group>"; };
 		7E0B5A2D2B42DAA3004743CF /* ActivityEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityEditView.swift; sourceTree = "<group>"; };
 		7E0B5A2F2B42ED11004743CF /* SplitTimesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitTimesView.swift; sourceTree = "<group>"; };
+		7E0B5A312B43309F004743CF /* NavigationBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBaseView.swift; sourceTree = "<group>"; };
+		7E0B5A332B4341A5004743CF /* RunBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunBaseView.swift; sourceTree = "<group>"; };
 		7E103A2129D5B26200B12120 /* WorkoutDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetailSheet.swift; sourceTree = "<group>"; };
 		7E17246329CA123300B90E31 /* Athlete Zone Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Athlete Zone Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E17246D29CA127C00B90E31 /* SoundManagerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundManagerMock.swift; sourceTree = "<group>"; };
@@ -565,7 +568,6 @@
 		7EEF576A2B193A0B0042D965 /* StopWatchSortByPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchSortByPicker.swift; sourceTree = "<group>"; };
 		7EEF576C2B1943640042D965 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		7EEF576E2B1947910042D965 /* StopWatchListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchListItem.swift; sourceTree = "<group>"; };
-		7EEF57752B1D09550042D965 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		7EEF57772B1D12B80042D965 /* StopWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchView.swift; sourceTree = "<group>"; };
 		7EEF57792B1D15310042D965 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		7EF13C9229A7DFFE00CB4F22 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
@@ -709,7 +711,6 @@
 				7E036EB72B2903F900A1ACBF /* TextInput.swift */,
 				7EF9158329D0FB5500F20870 /* Collapsible.swift */,
 				7EED1F96294E44B7002EC362 /* CounterText.swift */,
-				7EEF57752B1D09550042D965 /* CustomTextField.swift */,
 				7EBA93A92A6437600062194E /* EditSection.swift */,
 				7ED59F832915599B0077DF39 /* IconButton.swift */,
 				7E669B4D291C2F0100529298 /* IntervalPicker.swift */,
@@ -836,6 +837,8 @@
 				7EBEA1F6294BBEC1006DB920 /* BaseView.swift */,
 				7EEC35FD2B21A68F007DE6A1 /* LibraryBaseView.swift */,
 				7EEC36072B21B640007DE6A1 /* LibraryItemBaseView.swift */,
+				7E0B5A312B43309F004743CF /* NavigationBaseView.swift */,
+				7E0B5A332B4341A5004743CF /* RunBaseView.swift */,
 			);
 			path = "Shared components";
 			sourceTree = "<group>";
@@ -1801,6 +1804,7 @@
 				7EEF57782B1D12B80042D965 /* StopWatchView.swift in Sources */,
 				7EEC36022B21B303007DE6A1 /* RealmObjectProtocol.swift in Sources */,
 				7E831A6129AA5D51009DA0CE /* WorkOutEditViewModel.swift in Sources */,
+				7E0B5A322B43309F004743CF /* NavigationBaseView.swift in Sources */,
 				7E1F9AE32918EA4A006CA3AA /* ViewRouter.swift in Sources */,
 				7EED1F95294E4390002EC362 /* TitleText.swift in Sources */,
 				7E3EDCD4295DB5130047EB25 /* SortByPicker.swift in Sources */,
@@ -1868,7 +1872,6 @@
 				7EBE6B532AC5D4FC0007994D /* WorkOutDto.swift in Sources */,
 				7E5981AC2B187CA300555EC8 /* HistoryScene.swift in Sources */,
 				7EC90AF92A66634C00830AE3 /* TrainingContentViewModel.swift in Sources */,
-				7EEF57762B1D09550042D965 /* CustomTextField.swift in Sources */,
 				7EB8113F2B2DA7B600855C1D /* SubscriptionManager.swift in Sources */,
 				7E33B663291435BE009E4C1C /* WorkOutScene.swift in Sources */,
 				7E35D6A12B2A514200345198 /* StoreKitManager.swift in Sources */,
@@ -1932,6 +1935,7 @@
 				7E272F642B1FA03D0037AD0F /* DescriptionView.swift in Sources */,
 				7EEF57662B192BF40042D965 /* StopWatchHeader.swift in Sources */,
 				7E5981A82B187B3000555EC8 /* StopWatchScene.swift in Sources */,
+				7E0B5A342B4341A5004743CF /* RunBaseView.swift in Sources */,
 				7EF389282923F1D2008420C2 /* WorkOutEditContent.swift in Sources */,
 				7E395BCB291D58A20025F943 /* SettingsContent.swift in Sources */,
 				7ED59F8A291587A30077DF39 /* SelectedMenuItem.swift in Sources */,

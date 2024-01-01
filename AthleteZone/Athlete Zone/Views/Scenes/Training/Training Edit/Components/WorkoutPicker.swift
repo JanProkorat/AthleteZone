@@ -39,7 +39,7 @@ struct WorkoutPicker: View {
                         .padding(.top, 100)
                 }
             }
-        } footer: {}
+        }
     }
 
     @ViewBuilder

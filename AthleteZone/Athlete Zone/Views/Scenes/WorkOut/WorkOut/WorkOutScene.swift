@@ -26,10 +26,6 @@ struct WorkOutScene: View {
                 WorkOutContent()
                     .onTab { self.activeSheetType = $0 }
                     .onStartTab { viewModel.setupRunViewModel() }
-            },
-            footer: {
-                MenuBar(activeTab: viewModel.router.currentTab)
-                    .onRouteTab { viewModel.router.currentTab = $0 }
             }
         )
         .sheet(isPresented: $isEditModalActive, content: {

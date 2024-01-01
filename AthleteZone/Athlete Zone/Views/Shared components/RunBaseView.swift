@@ -1,24 +1,25 @@
 //
-//  BaseView.swift
+//  RunBaseView.swift
 //  Athlete Zone
 //
-//  Created by Jan Prokorát on 15.12.2022.
+//  Created by Jan Prokorát on 01.01.2024.
 //
 
 import SwiftUI
 
-struct BaseView<Header: View, Content: View>: View {
+struct RunBaseView<Header: View, Content: View, Footer: View>: View {
     let header: Header
     let content: Content
-
-    @StateObject var router = ViewRouter.shared
+    let footer: Footer
 
     init(
         @ViewBuilder header: () -> Header,
-        @ViewBuilder content: () -> Content
+        @ViewBuilder content: () -> Content,
+        @ViewBuilder footer: () -> Footer
     ) {
         self.header = header()
         self.content = content()
+        self.footer = footer()
     }
 
     var body: some View {
@@ -33,10 +34,8 @@ struct BaseView<Header: View, Content: View>: View {
                     .padding([.leading, .trailing], 10)
                     .padding([.top, .bottom], 5)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .environment(\.contentSize, geometry.size)
 
-                MenuBar(activeTab: router.currentTab)
-                    .onRouteTab { router.currentTab = $0 }
+                footer
                     .padding([.leading, .trailing], 10)
                     .frame(maxWidth: .infinity)
                     .frame(maxHeight: geometry.size.height * 0.1)
@@ -50,35 +49,14 @@ struct BaseView<Header: View, Content: View>: View {
     }
 }
 
-struct BaseView_Previews: PreviewProvider {
-    static var previews: some View {
-        BaseView(
-            header: {
-                Text("Place header here")
-            },
-            content: {
-                Text("Place content here")
-            }
-        )
-    }
-}
-
-extension EnvironmentValues {
-    var contentSize: CGSize {
-        get { self[ContentSizeKey.self] }
-        set { self[ContentSizeKey.self] = newValue }
-    }
-
-    var footerSize: CGFloat {
-        get { self[FooterSizeKey.self] }
-        set { self[FooterSizeKey.self] = newValue }
-    }
-}
-
-struct ContentSizeKey: EnvironmentKey {
-    static var defaultValue: CGSize { .zero }
-}
-
-struct FooterSizeKey: EnvironmentKey {
-    static var defaultValue: CGFloat { .zero }
+#Preview {
+    RunBaseView(
+        header: {
+            Text("Place header here")
+        },
+        content: {
+            Text("Place content here")
+        },
+        footer: {}
+    )
 }
