@@ -14,7 +14,7 @@ struct StopWatchSortByPicker: View {
 
     var body: some View {
         Menu {
-            ForEach(StopWatchSortByProperty.allCases.sorted { $0.rawValue < $1.rawValue }) { property in
+            ForEach(StopWatchSortByProperty.allCases) { property in
                 Button(action: {
                     selectedProperty = property
                 }, label: {

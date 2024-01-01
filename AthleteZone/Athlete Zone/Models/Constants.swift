@@ -116,7 +116,6 @@ enum LocalizationKey: String {
     // Menu
     case home
     case library
-    case profile
     case settings
 
     // Workout
@@ -142,6 +141,7 @@ enum LocalizationKey: String {
     case language
     case sounds
     case allowNotifications
+    case allowNotificationsDescription
     case haptics
     case healthKitAccess
     case healthKitAccessDescription1
@@ -153,6 +153,9 @@ enum LocalizationKey: String {
     case addWorkout
     case editWorkout
     case enterName
+
+    // Workout remove
+    case removeConfirm
 
     // Workout run
     case preparation
@@ -177,6 +180,7 @@ enum LocalizationKey: String {
     case description
     case summary
     case noTrainingSelected
+    case noWorkoutsInTraining
 
     // Sections
     case workout
@@ -204,6 +208,8 @@ enum LocalizationKey: String {
     case startDate
     case endDate
     case activityLength
+    case editActivity
+    case noSplitTimes
 
     // Subscription
     case active

@@ -65,6 +65,13 @@ struct WorkOutContent: View {
                 .frame(maxWidth: .infinity)
             }
         }
+        .onChange(of: viewModel.selectedWorkoutUpdated) { _, newValue in
+            if newValue {
+                withAnimation {
+                    viewModel.removeSelectedWorkout()
+                }
+            }
+        }
     }
 
     func getProperty(for activityType: ActivityType) -> Int {

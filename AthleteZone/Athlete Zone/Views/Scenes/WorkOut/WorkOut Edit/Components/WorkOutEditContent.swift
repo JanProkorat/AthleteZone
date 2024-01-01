@@ -84,7 +84,7 @@ struct WorkOutEditContent: View {
     }
 }
 
-struct ExerciseEditContent_Previews: PreviewProvider {
+struct WorkOutEditContent_Previews: PreviewProvider {
     static var previews: some View {
         WorkOutEditContent()
             .environmentObject(WorkOutEditViewModel(workout: WorkOut()))

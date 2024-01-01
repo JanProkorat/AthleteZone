@@ -41,7 +41,7 @@ struct BaseView<Header: View, Content: View, Footer: View>: View {
                     .frame(maxWidth: .infinity)
                     .frame(maxHeight: geometry.size.height * 0.1)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height, alignment: .top)
             .background(Color(ComponentColor.darkBlue.rawValue))
             .environment(\.colorScheme, .dark)
             .environment(\.footerSize, geometry.size.height * 0.1)

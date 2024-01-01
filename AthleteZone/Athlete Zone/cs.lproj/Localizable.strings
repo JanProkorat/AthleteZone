@@ -18,7 +18,6 @@
 //Menu
 "home" = "Domov";
 "library" = "Knihovna";
-"profile" = "Profil";
 "settings" = "Nastavení";
 
 //Exercise
@@ -40,12 +39,12 @@
 "ascending" = "Vzestupně";
 "descending" = "Sestupně";
 
-
 //Settings
 "language" = "Jazyk";
 "sounds" = "Zvuky";
 "haptics" = "Vibrace (Jen hodinky)";
 "allowNotifications" = "Připoměň mi cvičení";
+"allowNotificationsDescription" = "Povolí notifikaci s připomínkou cvičení";
 "healthKitAccess" = "Přístup do aplikace Zdraví";
 "healthKitAccessDescription1" = "Odebrání přístupu lze provést pouze v nastavení aplikace Zdraví";
 "healthKitAccessDescription2" = "Přístup odepřen v nastavení aplikace Zdraví. Pouze odtud jej lze znovu aktivovat";
@@ -56,6 +55,9 @@
 "addWorkout" = "Přidat workout";
 "editWorkout" = "Upravit workout";
 "enterName" = "Zadejte název...";
+
+//Workout remove
+"removeConfirm" = "Workout je přiřazen k tréninku, chcete ho opravdu smazat?";
 
 //Workout run
 "Round %lld/%lld" = "Kolo %lld/%lld";
@@ -83,6 +85,7 @@
 "description" = "Popis";
 "summary" = "Souhrn";
 "noTrainingSelected" = "Není vybrán žádný trénink. Vytvořte nový nebo vyberte existující z knihovny";
+"noWorkoutsInTraining" = "V tréninku nejsou žádná workouty. Pravděpodobně byly odebrány z databáze";
 
 //Section
 "workout" = "Workout";
@@ -111,6 +114,8 @@
 "startDate" = "Datum startu";
 "endDate" = "Datum ukončení";
 "activityLength" = "Délka aktivity";
+"editActivity" = "Upravit aktivitu";
+"noSplitTimes" = "Aktivita neobsahuje žázné mezičasy.";
 
 //Subscription
 "active" = "Aktivní";

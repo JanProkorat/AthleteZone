@@ -26,7 +26,7 @@ struct TextInput: View {
                                     .foregroundColor(.gray)
                             }
                         }
-                        if text.isEmpty {
+                        if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                             Image(systemName: "exclamationmark.circle")
                                 .foregroundColor(.red)
                         }

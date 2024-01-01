@@ -14,7 +14,7 @@ struct TrainingSortByPicker: View {
 
     var body: some View {
         Menu {
-            ForEach(TrainingSortByProperty.allCases.sorted { $0.rawValue < $1.rawValue }) { property in
+            ForEach(TrainingSortByProperty.allCases) { property in
                 Button(action: {
                     selectedProperty = property
                 }, label: {

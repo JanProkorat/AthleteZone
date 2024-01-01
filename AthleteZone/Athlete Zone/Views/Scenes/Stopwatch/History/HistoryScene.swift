@@ -20,8 +20,18 @@ struct HistoryScene: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             },
             content: {
-                HistoryContent()
-                    .environmentObject(viewModel)
+                HistoryContent(
+                    library: viewModel.library,
+                    searchText: $viewModel.searchText,
+                    sortOrder: $viewModel.sortOrder,
+                    sortBy: $viewModel.sortBy
+                )
+                .onEditSaveTab { activityInfo in
+                    viewModel.updateActivity(activityInfo.id, activityInfo.name)
+                }
+                .onDeleteTab { activity in
+                    viewModel.deleteActivity(activity)
+                }
             },
             footer: {
                 MenuBar(activeTab: viewModel.router.currentTab)

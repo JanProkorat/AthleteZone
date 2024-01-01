@@ -19,7 +19,6 @@
 //Menu
 "home" = "Haus";
 "library" = "Bibliothek";
-"profile" = "Profil";
 "settings" = "Einstellungen";
 
 //Exercise
@@ -45,7 +44,8 @@
 "language" = "Sprache";
 "sounds" = "Töne";
 "haptics" = "Haptik (nur Uhr)";
-"allowNotifications" = "Erinnere mich ans trainieren";
+"allowNotifications" = "Training erinnern";
+"allowNotificationsDescription" = "Benachrichtigungen mit Trainingserinnerungen";
 "healthKitAccess" = "Health app Zugang";
 "healthKitAccessDescription1" = "Der Zugang kann nur in den Einstellungen der Health app widerrufen werden";
 "healthKitAccessDescription2" = "Zugriff in den Einstellungen der Health-App verweigert. Nur von dort aus kann es wieder aktiviert werden";
@@ -56,6 +56,9 @@
 "addWorkout" = "Workout hinzufügen";
 "editWorkout" = "Workout bearbeiten";
 "enterName" = "Namen angeben...";
+
+//Workout remove
+"removeConfirm" = "Das Workout ist einem Training zugeordnet, möchten Sie es wirklich löschen?";
 
 //Workout run
 "Round %lld/%lld" = "Runde %lld/%lld";
@@ -82,6 +85,7 @@
 "description" = "Beschreibung";
 "summary" = "Übersicht";
 "noTrainingSelected" = "Kein Training ausgewählt. Erstellen Sie ein neues oder wählen Sie eines aus der Bibliothek aus";
+"noWorkoutsInTraining" = "Keine Workouts im Training. Sie wurden wahrscheinlich aus der Datenbank gelöscht";
 
 //Section
 "workout" = "Workout";
@@ -110,6 +114,8 @@
 "startDate" = "Start datum";
 "endDate" = "End datum";
 "activityLength" = "Aktivitätsdauer";
+"editActivity" = "Aktivität bearbeiten";
+"noSplitTimes" = "Diese Aktivität beinhaltet keine Zwischenzeiten.";
 
 //Subscription
 "active" = "Aktiv";

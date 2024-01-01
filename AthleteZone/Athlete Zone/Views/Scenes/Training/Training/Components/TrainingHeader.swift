@@ -27,11 +27,16 @@ struct TrainingHeader: View {
                 performAction(self.onAddTab)
             } label: {
                 if name != nil {
-                    Image(Icons.save.rawValue)
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundColor(Color(ComponentColor.mainText.rawValue))
-                        .frame(maxHeight: 50)
+                    HStack {
+                        Image(systemName: "pencil")
+                            .resizable()
+                            .scaledToFit()
+                            .foregroundColor(Color(ComponentColor.mainText.rawValue))
+                            .frame(maxHeight: 20)
+                            .padding(10)
+                    }
+                    .roundedBackground(cornerRadius: 10, color: .darkBlue, border: ComponentColor.mainText, borderWidth: 3)
+                    .padding(.trailing, 5)
                 }
             }
         }

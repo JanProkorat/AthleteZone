@@ -27,7 +27,7 @@ final class WorkOutContentViewModelTests: XCTestCase {
 
     func testCurrentTabUpdatesCorrectly() {
         // Given
-        let expectedTab: Tab = .profile
+        let expectedTab: Tab = .setting
 
         // When
         viewModel.router.currentTab = expectedTab

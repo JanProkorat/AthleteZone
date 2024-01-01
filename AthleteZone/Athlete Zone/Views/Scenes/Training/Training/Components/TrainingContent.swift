@@ -29,7 +29,7 @@ struct TrainingContent: View {
                         ) {
                             ScrollView {
                                 Text(selectedTraining.trainingDescription)
-                                    .font(.title2)
+                                    .font(.subheadline)
                                     .padding(.top, 7)
                                     .frame(maxWidth: .infinity)
                                     .padding([.leading, .trailing])
@@ -74,8 +74,15 @@ struct TrainingContent: View {
                                 }
                             }
                             .listStyle(.plain)
+                            .overlay(alignment: .top) {
+                                if viewModel.workouts.isEmpty {
+                                    Text(LocalizationKey.noWorkoutsInTraining.localizedKey)
+                                        .font(.footnote)
+                                        .padding([.top, .leading, .trailing])
+                                }
+                            }
                         }
-                        .padding([.leading, .trailing], 10)
+                        .padding([.leading, .trailing], 5)
                         .padding(.top, 2)
                     }
 
@@ -113,9 +120,12 @@ struct TrainingContent: View {
                                 Image(Icons.start.rawValue)
                                     .resizable()
                                     .scaledToFill()
-                                    .foregroundColor(Color(ComponentColor.action.rawValue))
+                                    .foregroundColor(Color(viewModel.isRunDisabled ?
+                                            ComponentColor.grey.rawValue :
+                                            ComponentColor.action.rawValue))
                                     .frame(maxWidth: geo.size.height * 0.15, maxHeight: geo.size.height * 0.15)
                             }
+                            .disabled(viewModel.isRunDisabled)
                         }
                         .frame(maxWidth: geo.size.width * 0.35)
                     }

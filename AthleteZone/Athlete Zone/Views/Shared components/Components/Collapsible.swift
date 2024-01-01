@@ -47,6 +47,7 @@ struct Collapsible<Label: View, Content: View>: View {
                 }
             )
             .disabled(disabled)
+            .buttonStyle(NoTapAnimationStyle())
 
             VStack {
                 content
@@ -71,5 +72,13 @@ struct Collapsible_Previews: PreviewProvider {
         } content: {
             Text("test")
         }
+    }
+}
+
+struct NoTapAnimationStyle: PrimitiveButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .contentShape(Rectangle())
+            .onTapGesture(perform: configuration.trigger)
     }
 }

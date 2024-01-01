@@ -18,7 +18,7 @@ class TrainingEditViewModel: ObservableObject {
     @Published var isEditing = false
 
     var saveDisabled: Bool {
-        name.isEmpty || workouts.isEmpty
+        name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || workouts.isEmpty
     }
 
     var trainingRealmManager: TrainingRealmManagerProtocol

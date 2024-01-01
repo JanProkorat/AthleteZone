@@ -13,34 +13,41 @@ struct TrainingListView: View {
     var onInfoTab: (() -> Void)?
     var onEditTab: (() -> Void)?
     var onDeleteTab: (() -> Void)?
+    var onSelectTab: (() -> Void)?
 
     var body: some View {
-        LibraryItemBaseView(name: training.name) {
-            VStack(spacing: 7) {
-                descriptionView(
-                    property: LocalizationKey.length.localizedKey,
-                    value: training.trainingLength.toFormattedTime(),
-                    color: ComponentColor.lightPink
-                )
+        Button(action: {
+            performAction(onSelectTab)
+        }, label: {
+            LibraryItemBaseView(name: training.name) {
+                VStack(spacing: 7) {
+                    descriptionView(
+                        property: LocalizationKey.length.localizedKey,
+                        value: training.trainingLength.toFormattedTime(),
+                        color: ComponentColor.lightPink
+                    )
 
-                descriptionView(
-                    property: LocalizationKey.workouts.localizedKey,
-                    value: training.workoutCount.toFormattedNumber(),
-                    color: ComponentColor.lightYellow
-                )
+                    descriptionView(
+                        property: LocalizationKey.workouts.localizedKey,
+                        value: training.workoutCount.toFormattedNumber(),
+                        color: ComponentColor.lightYellow
+                    )
 
-                descriptionView(
-                    property: LocalizationKey.createdDate.localizedKey,
-                    value: training.formattedCreatedDate,
-                    color: ComponentColor.braun
-                )
+                    descriptionView(
+                        property: LocalizationKey.createdDate.localizedKey,
+                        value: training.formattedCreatedDate,
+                        color: ComponentColor.braun
+                    )
+                }
+                .padding([.leading, .trailing], 30)
+                .padding(.top, -10)
             }
-            .padding(.top, -10)
-            .padding([.leading, .trailing], 30)
-        }
-        .onEditTab { performAction(onEditTab) }
-        .onDeleteTab { performAction(onDeleteTab) }
-        .onInfoTab { performAction(onInfoTab) }
+            .onEditTab { performAction(onEditTab) }
+            .onDeleteTab { performAction(onDeleteTab) }
+            .onInfoTab { performAction(onInfoTab) }
+        })
+        .padding(.bottom, 5)
+        .background(Color(ComponentColor.darkBlue.rawValue))
     }
 
     @ViewBuilder
@@ -84,6 +91,12 @@ extension TrainingListView {
     func onDeleteTab(_ handler: @escaping () -> Void) -> TrainingListView {
         var new = self
         new.onDeleteTab = handler
+        return new
+    }
+
+    func onSelectTab(_ handler: @escaping () -> Void) -> TrainingListView {
+        var new = self
+        new.onSelectTab = handler
         return new
     }
 }

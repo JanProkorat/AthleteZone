@@ -19,11 +19,12 @@ struct TrainingEditScene: View {
                 LocalizationKey.addTraining.rawValue, alignment: .center)
                 .padding([.leading, .trailing], 10)
                 .frame(maxWidth: .infinity)
+                .padding(.top)
 
             TrainingEditContent(isModalVisible: $isModalVisible)
                 .padding([.leading, .trailing], 10)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding(.top, -10)
+                .padding(.top, -5)
 
             TrainingEditFooter()
                 .onCloseTab { performAction(self.onCloseTab) }

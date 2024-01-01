@@ -20,27 +20,43 @@ struct TrainingLibraryScene: View {
                     .onAddTab { self.showModal.toggle() }
             },
             content: {
-                TrainingLibraryContent()
-                    .onEditTab { newValue in
-                        self.trainingToEdit = newValue
-                        self.showModal.toggle()
+                TrainingLibraryContent(
+                    library: viewModel.library,
+                    searchText: $viewModel.searchText,
+                    sortOrder: $viewModel.sortOrder,
+                    sortBy: $viewModel.sortBy
+                )
+                .onEditTab { training in
+                    self.trainingToEdit = training
+                    self.showModal.toggle()
+                }
+                .onSelectTab { training in
+                    self.viewModel.setSelectedTraining(training)
+                    withAnimation {
+                        self.viewModel.router.currentTab = .home
                     }
-                    .id(showModal)
+                }
+                .onDeleteTab { training in
+                    viewModel.removeTraining(training)
+                }
+                .id(showModal)
             },
             footer: {
                 MenuBar(activeTab: viewModel.router.currentTab)
                     .onRouteTab { viewModel.router.currentTab = $0 }
             }
         )
-        .fullScreenCover(isPresented: $showModal, content: {
+        .sheet(isPresented: $showModal, content: {
             TrainingEditScene()
                 .onCloseTab {
                     showModal.toggle()
-                    trainingToEdit = nil
                 }
                 .environmentObject(trainingToEdit == nil ?
                     TrainingEditViewModel() :
                     TrainingEditViewModel(training: trainingToEdit!))
+                .onDisappear {
+                    trainingToEdit = nil
+                }
         })
     }
 }

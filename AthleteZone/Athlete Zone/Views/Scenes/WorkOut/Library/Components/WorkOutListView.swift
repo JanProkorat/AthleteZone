@@ -13,8 +13,9 @@ struct WorkOutListView: View {
 
     var onEditTab: (() -> Void)?
     var onDeleteTab: (() -> Void)?
+    var onSelectTab: (() -> Void)?
 
-    let fieldConfig: [[ActivityType]] = [.work, .rounds, .rest, .series, .reset].chunked(into: 2)
+    let fieldConfig: [[ActivityType]] = [.work, .series, .rest, .rounds, .reset].chunked(into: 2)
 
     init(workOut: WorkOut) {
         self.workOut = workOut
@@ -27,11 +28,17 @@ struct WorkOutListView: View {
 
     var body: some View {
         GeometryReader { reader in
-            if buttonsEnabled {
-                view(width: reader.size.width)
-            } else {
-                viewWithoutButtons(width: reader.size.width)
+            Button {
+                performAction(onSelectTab)
+            } label: {
+                if buttonsEnabled {
+                    view(width: reader.size.width)
+                } else {
+                    viewWithoutButtons(width: reader.size.width)
+                }
             }
+            .padding(.bottom, 10)
+            .background(Color(ComponentColor.darkBlue.rawValue))
         }
     }
 
@@ -159,6 +166,12 @@ extension WorkOutListView {
     func onDeleteTab(_ handler: @escaping () -> Void) -> WorkOutListView {
         var new = self
         new.onDeleteTab = handler
+        return new
+    }
+
+    func onSelectTab(_ handler: @escaping () -> Void) -> WorkOutListView {
+        var new = self
+        new.onSelectTab = handler
         return new
     }
 }

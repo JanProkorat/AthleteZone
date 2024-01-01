@@ -45,9 +45,9 @@ struct SettingsContent: View {
                 toggle(value: $viewModel.appStorageManager.soundsEnabled)
             })
 
-            SettingsItem(title: LocalizationKey.allowNotifications, content: {
+            detailedPanel(title: LocalizationKey.allowNotifications, description: LocalizationKey.allowNotificationsDescription) {
                 toggle(value: $viewModel.appStorageManager.notificationsEnabled)
-            })
+            }
 
             detailedPanel(title: LocalizationKey.runInBackground, description: LocalizationKey.runInBackgroundDescription) {
                 toggle(value: $viewModel.appStorageManager.runInBackground)

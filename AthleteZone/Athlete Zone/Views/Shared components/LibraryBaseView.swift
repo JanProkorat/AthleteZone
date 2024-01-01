@@ -30,7 +30,7 @@ struct LibraryBaseView<SortByPicker: View, Content: View>: View {
     var body: some View {
         VStack {
             SearchBar(text: $searchText)
-                .padding(5)
+                .padding([.top, .bottom], 5)
             HStack {
                 sortByPicker
 
@@ -42,6 +42,7 @@ struct LibraryBaseView<SortByPicker: View, Content: View>: View {
             content
         }
         .frame(maxHeight: .infinity, alignment: .top)
+        .padding([.leading, .trailing], 10)
     }
 }
 

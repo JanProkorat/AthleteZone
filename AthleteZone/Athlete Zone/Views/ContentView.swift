@@ -48,8 +48,11 @@ struct ContentView: View {
         }
         .subscriptionStatusTask(for: passIDs.group) { taskStatus in
             if let value = taskStatus.value {
-                self.subscriptionManager.subscriptionActivated = value
-                    .contains(where: { $0.state != .revoked && $0.state != .expired })
+                let activated = value.contains(where: { $0.state != .revoked && $0.state != .expired })
+                self.subscriptionManager.subscriptionActivated = activated
+                if !activated && viewModel.currentSection != .workout {
+                    viewModel.router.currentSection = .workout
+                }
             } else {
                 self.subscriptionManager.subscriptionActivated = false
             }

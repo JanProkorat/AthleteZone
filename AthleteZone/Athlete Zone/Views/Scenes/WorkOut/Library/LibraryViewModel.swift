@@ -47,7 +47,7 @@ extension LibraryViewModel {
     func removeWorkout(_ workout: WorkOut) {
         let id = workout._id.stringValue
         realmManager.delete(entity: workout)
-        objectWillChange.send()
+        objectWillChange.send() // tu to pada
         removeFromWatch(id)
 
         if id == storageManager.selectedWorkoutId {

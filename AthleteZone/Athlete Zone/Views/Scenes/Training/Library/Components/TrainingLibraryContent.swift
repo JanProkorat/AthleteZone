@@ -8,39 +8,37 @@
 import SwiftUI
 
 struct TrainingLibraryContent: View {
-    @EnvironmentObject var viewModel: TrainingLibraryViewModel
+    var library: [Training]
+    @Binding var searchText: String
+    @Binding var sortOrder: SortOrder
+    @Binding var sortBy: TrainingSortByProperty
+
     @State var trainingForDetailt: Training?
 
-    var onEditTab: ((_ value: Training) -> Void)?
-
-    init() {
-        UICollectionView.appearance().backgroundColor = UIColor(Color(ComponentColor.darkBlue.rawValue))
-    }
+    var onEditTab: ((_ training: Training) -> Void)?
+    var onDeleteTab: ((_ training: Training) -> Void)?
+    var onSelectTab: ((_ training: Training) -> Void)?
 
     var body: some View {
-        LibraryBaseView(searchText: $viewModel.searchText, sortOrder: $viewModel.sortOrder) {
+        LibraryBaseView(searchText: $searchText, sortOrder: $sortOrder) {
             TrainingSortByPicker()
-                .onPropertySelected { viewModel.sortBy = $0 }
+                .onPropertySelected { sortBy = $0 }
         } content: {
-            List(viewModel.library, id: \._id) { training in
-                Button {
-                    self.viewModel.setSelectedTraining(training)
-                    self.viewModel.router.currentTab = .home
-                } label: {
+            List {
+                ForEach(library, id: \.id) { training in
                     TrainingListView(training: training)
-                        .onDeleteTab { viewModel.removeTraining(training) }
+                        .onDeleteTab { performAction(onDeleteTab, value: training) }
                         .onEditTab { performAction(onEditTab, value: training) }
                         .onInfoTab { trainingForDetailt = training }
-                        .padding([.leading, .trailing], 2)
+                        .onSelectTab { performAction(onSelectTab, value: training) }
+                        .id(training.id)
+                        .transition(.scale)
+                        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 }
-                .padding(.bottom, 7)
-                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                .background(Color(ComponentColor.darkBlue.rawValue))
             }
             .listStyle(.plain)
-            .id(viewModel.library)
             .overlay(alignment: .top) {
-                if viewModel.library.isEmpty {
+                if library.isEmpty {
                     Text(LocalizationKey.noTrainingsToDisplay.localizedKey)
                         .font(.headline)
                         .bold()
@@ -57,15 +55,31 @@ struct TrainingLibraryContent: View {
 
 struct TrainingLibraryContent_Previews: PreviewProvider {
     static var previews: some View {
-        TrainingLibraryContent()
-            .environmentObject(TrainingLibraryViewModel())
+        TrainingLibraryContent(
+            library: [Training(), Training()],
+            searchText: Binding.constant(""),
+            sortOrder: Binding.constant(.ascending),
+            sortBy: Binding.constant(.name)
+        )
     }
 }
 
 extension TrainingLibraryContent {
-    func onEditTab(_ handler: @escaping (_ value: Training) -> Void) -> TrainingLibraryContent {
+    func onEditTab(_ handler: @escaping (_ training: Training) -> Void) -> TrainingLibraryContent {
         var new = self
         new.onEditTab = handler
+        return new
+    }
+
+    func onSelectTab(_ handler: @escaping (_ training: Training) -> Void) -> TrainingLibraryContent {
+        var new = self
+        new.onSelectTab = handler
+        return new
+    }
+
+    func onDeleteTab(_ handler: @escaping (_ training: Training) -> Void) -> TrainingLibraryContent {
+        var new = self
+        new.onDeleteTab = handler
         return new
     }
 }

@@ -24,7 +24,8 @@ class WorkOutEditViewModel: ObservableObject {
     }
 
     var saveDisabled: Bool {
-        name.isEmpty || work == 0 || rest == 0 || series == 0 || rounds == 0 || reset == 0
+        name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
+            work == 0 || rest == 0 || series == 0 || rounds == 0 || reset == 0
     }
 
     var realmManager: WorkOutRealmManagerProtocol

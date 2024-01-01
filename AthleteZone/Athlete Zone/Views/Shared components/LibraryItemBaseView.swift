@@ -91,7 +91,9 @@ struct LibraryItemBaseView<Content: View>: View {
 
                 if deleteEnabled {
                     Button {
-                        performAction(onDeleteTab)
+                        withAnimation {
+                            performAction(onDeleteTab)
+                        }
                     } label: {
                         Image(systemName: "trash.circle")
                             .padding([.leading, .top, .bottom], 5)

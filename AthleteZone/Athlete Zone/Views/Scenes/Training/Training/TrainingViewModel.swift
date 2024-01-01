@@ -22,6 +22,10 @@ class TrainingViewModel: ObservableObject {
     @Published var scenePhase: ScenePhase?
     @Published var isRunViewVisible = false
 
+    var isRunDisabled: Bool {
+        workouts.isEmpty
+    }
+
     private var cancellables = Set<AnyCancellable>()
 
     init() {

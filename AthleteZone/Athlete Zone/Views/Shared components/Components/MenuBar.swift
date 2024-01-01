@@ -17,7 +17,6 @@ struct MenuBar: View {
     let icons = [
         MenuBarItem(id: Tab.home, icon: Icons.home.rawValue, activeIcon: Icons.homeActive.rawValue),
         MenuBarItem(id: Tab.library, icon: Icons.book.rawValue, activeIcon: Icons.bookActive.rawValue),
-        //        MenuBarItem(id: Tab.profile, icon: Icons.Avatar, activeIcon: Icons.AvatarActive, activeText: "Profile"),
         MenuBarItem(id: Tab.setting, icon: Icons.setting.rawValue, activeIcon: Icons.settingActive.rawValue)
     ]
 
@@ -26,7 +25,9 @@ struct MenuBar: View {
             HStack {
                 ForEach(icons) { item in
                     Button {
-                        self.performAction(onRouteTab, value: item.id)
+                        withAnimation {
+                            self.performAction(onRouteTab, value: item.id)
+                        }
                     } label: {
                         Image(item.id == activeTab ? item.activeIcon : item.icon)
                             .resizable()

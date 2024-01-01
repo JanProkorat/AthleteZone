@@ -32,7 +32,7 @@ struct WorkOutScene: View {
                     .onRouteTab { viewModel.router.currentTab = $0 }
             }
         )
-        .fullScreenCover(isPresented: $isEditModalActive, content: {
+        .sheet(isPresented: $isEditModalActive, content: {
             WorkOutEditScene()
                 .onCloseTab { isEditModalActive.toggle() }
                 .environmentObject(getViewModel())

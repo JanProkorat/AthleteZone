@@ -5,38 +5,40 @@
 //  Created by Jan Prokorát on 30.11.2023.
 //
 
+import CustomAlert
 import SwiftUI
 
 struct HistoryContent: View {
-    @EnvironmentObject var viewModel: HistoryViewModel
-    @State var itemForSheet: StopWatch?
+    var library: [StopWatch]
+    @Binding var searchText: String
+    @Binding var sortOrder: SortOrder
+    @Binding var sortBy: StopWatchSortByProperty
 
-    var onSubmitTab: ((_ name: String) -> Void)?
+    @State var itemForDetail: StopWatch?
+    @State var itemForEdit: StopWatch?
+
+    var onEditSaveTab: ((_ activityInfo: (id: String, name: String)) -> Void)?
+    var onDeleteTab: ((_ value: StopWatch) -> Void)?
 
     var body: some View {
-        LibraryBaseView(searchText: $viewModel.searchText, sortOrder: $viewModel.sortOrder) {
+        LibraryBaseView(searchText: $searchText, sortOrder: $sortOrder) {
             StopWatchSortByPicker()
-                .onPropertySelected { viewModel.sortBy = $0 }
+                .onPropertySelected { sortBy = $0 }
         } content: {
-            List(viewModel.library, id: \.id) { activity in
-                Button {
-                    itemForSheet = activity
-                } label: {
+            List {
+                ForEach(library, id: \.id) { activity in
                     StopWatchListItem(activity: activity)
-                        .onSubmitTab { name in
-                            viewModel.updateActivity(activity.id, name)
-                        }
-                        .onDeleteTab {
-                            viewModel.deleteActivity(activity)
-                        }
+                        .onSelectTab { itemForDetail = activity }
+                        .onDeleteTab { performAction(onDeleteTab, value: activity) }
+                        .onEditTab { itemForEdit = activity }
+                        .id(activity.id)
+                        .transition(.scale)
+                        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 }
-                .listRowInsets(EdgeInsets(top: 3, leading: 0, bottom: 3, trailing: 0))
-                .listRowBackground(Color(ComponentColor.darkBlue.rawValue))
             }
             .listStyle(.plain)
-            .id(viewModel.library)
             .overlay(alignment: .top) {
-                if viewModel.library.isEmpty {
+                if library.isEmpty {
                     Text(LocalizationKey.noActivities.localizedKey)
                         .font(.headline)
                         .bold()
@@ -44,14 +46,41 @@ struct HistoryContent: View {
                 }
             }
         }
-        .sheet(item: $itemForSheet) { activity in
+        .sheet(item: $itemForDetail) { activity in
             ActivityDetailView(activity: activity)
                 .presentationDetents([.fraction(0.7)])
+        }
+        .sheet(item: $itemForEdit) { activity in
+            ActivityEditView(name: activity.name, splitTimes: activity.splitTimes)
+                .onCloseTab { itemForEdit = nil }
+                .onSaveTab {
+                    performAction(onEditSaveTab, value: (activity.id, $0))
+                    itemForEdit = nil
+                }
         }
     }
 }
 
 #Preview {
-    HistoryContent()
-        .environmentObject(HistoryViewModel())
+    HistoryContent(
+        library: [StopWatch(), StopWatch()],
+        searchText: Binding.constant(""),
+        sortOrder: Binding.constant(.ascending),
+        sortBy: Binding.constant(.name)
+    )
+    .environmentObject(HistoryViewModel())
+}
+
+extension HistoryContent {
+    func onEditSaveTab(_ handler: @escaping (_ activityInfo: (id: String, name: String)) -> Void) -> HistoryContent {
+        var new = self
+        new.onEditSaveTab = handler
+        return new
+    }
+
+    func onDeleteTab(_ handler: @escaping (_ value: StopWatch) -> Void) -> HistoryContent {
+        var new = self
+        new.onDeleteTab = handler
+        return new
+    }
 }

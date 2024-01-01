@@ -36,6 +36,13 @@ class WorkOutViewModel: ObservableObject, Identifiable {
         work == 0 || rest == 0 || series == 0 || rounds == 0 || reset == 0
     }
 
+    var selectedWorkoutUpdated: Bool {
+        selectedWorkout != nil &&
+            (work != selectedWorkout!.work || rest != selectedWorkout!.rest ||
+                series != selectedWorkout!.series || rounds != selectedWorkout!.rounds ||
+                reset != selectedWorkout!.reset)
+    }
+
     private var cancellables = Set<AnyCancellable>()
 
     init() {
@@ -95,5 +102,10 @@ class WorkOutViewModel: ObservableObject, Identifiable {
             appStorageManager.storeToUserDefaults(data: data, key: UserDefaultValues.workoutId)
             WidgetCenter.shared.reloadTimelines(ofKind: UserDefaultValues.widgetId.rawValue)
         }
+    }
+
+    func removeSelectedWorkout() {
+        selectedWorkout = nil
+        name = ""
     }
 }

@@ -42,31 +42,8 @@ struct ActivityDetailView: View {
             }
             .padding([.top, .leading, .trailing])
 
-            VStack {
-                Text(LocalizationKey.splitTimes.localizedKey)
-                    .font(.title2)
-                Divider()
-                    .overlay(Color.white)
-                    .padding([.leading, .trailing])
-                ScrollView {
-                    ForEach(activity.splitTimes.indices, id: \.self) { index in
-                        HStack {
-                            Text(LocalizedStringKey("\(index + 1). Split time:"))
-                                .frame(maxWidth: .infinity)
-
-                            Text(activity.splitTimes[index].toFormattedTime())
-                                .frame(maxWidth: .infinity)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.top, 5)
-                    }
-                }
-                .frame(maxHeight: .infinity)
-
-                Divider()
-                    .overlay(Color.white)
-            }
-            .padding(.top)
+            SplitTimesView(splitTimes: activity.splitTimes)
+                .padding(.top)
 
             Spacer()
         }

@@ -21,6 +21,12 @@ extension View {
         }
     }
 
+    func performAction<T>(_ action: ((_ values: [T]) -> Void)?, values: [T]) {
+        if let localAction = action {
+            localAction(values)
+        }
+    }
+
     func roundedBackground(cornerRadius: CGFloat, color: ComponentColor = ComponentColor.menu) -> some View {
         return self
             .background(
@@ -43,6 +49,18 @@ extension View {
                 ZStack {
                     RoundedRectangle(cornerRadius: cornerRadius)
                         .stroke(Color(border.rawValue), lineWidth: 5)
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .foregroundColor(Color(color.rawValue))
+                }
+            )
+    }
+
+    func roundedBackground(cornerRadius: CGFloat, color: ComponentColor, border: ComponentColor, borderWidth: CGFloat) -> some View {
+        return self
+            .background(
+                ZStack {
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .stroke(Color(border.rawValue), lineWidth: borderWidth)
                     RoundedRectangle(cornerRadius: cornerRadius)
                         .foregroundColor(Color(color.rawValue))
                 }

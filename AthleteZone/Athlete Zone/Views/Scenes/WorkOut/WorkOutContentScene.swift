@@ -36,7 +36,6 @@ struct WorkOutContentScene: View {
                     Text("Scene for this route not implemented")
                 }
             }
-            .animation(.easeInOut, value: viewModel.currentTab)
             .onChange(of: scenePhase) { _, newValue in
                 workOutViewModel.scenePhase = newValue
             }

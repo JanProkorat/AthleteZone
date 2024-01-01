@@ -59,7 +59,8 @@ struct TrainingDetailView: View {
                             .padding(.top, 100)
                     }
                 }
-                .padding([.leading, .trailing])
+                .padding([.leading, .trailing], 10)
+                .padding(.top, 5)
             }
             .background(Color(ComponentColor.darkBlue.rawValue))
             .environment(\.colorScheme, .dark)

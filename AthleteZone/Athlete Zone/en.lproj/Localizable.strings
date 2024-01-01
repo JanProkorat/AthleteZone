@@ -19,7 +19,6 @@
 //Menu
 "home" = "Home";
 "library" = "Library";
-"profile" = "Profile";
 "settings" = "Settings";
 
 //Exercise
@@ -46,6 +45,7 @@
 "sounds" = "Sounds";
 "haptics" = "Haptics (Watch only)";
 "allowNotifications" = "Remind me to excersize";
+"allowNotificationsDescription" = "Get notifications reminding you to work out";
 "healthKitAccess" = "Health app Access";
 "healthKitAccessDescription1" = "Removing access can only be done in settings of the Health app";
 "healthKitAccessDescription2" = "Access denied in the settings of the Health app. It can only be reenabled from there";
@@ -56,6 +56,9 @@
 "addWorkout" = "Add workout";
 "editWorkout" = "Edit workout";
 "enterName" = "Enter name...";
+
+//Workout remove
+"removeConfirm" = "Workout is assigned to a training, are you sure you want to delete it?";
 
 //Workout run
 "Round %lld/%lld" = "Round %lld/%lld";
@@ -82,6 +85,7 @@
 "description" = "Description";
 "summary" = "Summary";
 "noTrainingSelected" = "No training selected. Create new one or choose existing from the library";
+"noWorkoutsInTraining" = "No workouts in training. They were probably removed from database";
 
 //Section
 "workout" = "Workout";
@@ -110,6 +114,8 @@
 "startDate" = "Start date";
 "endDate" = "End date";
 "activityLength" = "Activity length";
+"editActivity" = "Edit activity";
+"noSplitTimes" = "This activity does not contain any aplit time.";
 
 //Subscription
 "active" = "Active";

@@ -8,7 +8,7 @@
 import Foundation
 
 enum Tab {
-    case home, library, profile, setting
+    case home, library, setting
 }
 
 enum ActivityType: String, Identifiable, CaseIterable, Encodable {
@@ -69,11 +69,11 @@ enum WorkOutSortByProperty: String, SortByProperty {
     case name
     case work
     case rest
+    case reset
     case series
     case rounds
-    case reset
-    case createdDate
     case workoutLength
+    case createdDate
 }
 
 enum TrainingSortByProperty: String, SortByProperty {
@@ -82,9 +82,9 @@ enum TrainingSortByProperty: String, SortByProperty {
     }
 
     case name
-    case createdDate
-    case numOfWorkouts
     case trainingLength
+    case numOfWorkouts
+    case createdDate
 }
 
 enum StopWatchSortByProperty: String, SortByProperty {

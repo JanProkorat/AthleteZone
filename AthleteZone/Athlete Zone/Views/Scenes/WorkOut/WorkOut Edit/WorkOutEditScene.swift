@@ -21,6 +21,7 @@ struct WorkOutEditScene: View {
                 alignment: .center)
                 .padding([.leading, .trailing], 10)
                 .frame(maxWidth: .infinity)
+                .padding(.top)
 
             WorkOutEditContent()
                 .onEditTab { activeSheetType = $0 }

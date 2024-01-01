@@ -19,14 +19,18 @@ struct TrainingScene: View {
                 .onAddTab { isEditModalActive.toggle() }
         } content: {
             TrainingContent()
-                .onStartTab { viewModel.setupRunViewModel() }
-                .onLibraryTab { viewModel.router.currentTab = .library }
                 .onCreateTab { isEditModalActive.toggle() }
+                .onStartTab { viewModel.setupRunViewModel() }
+                .onLibraryTab {
+                    withAnimation {
+                        viewModel.router.currentTab = .library
+                    }
+                }
         } footer: {
             MenuBar(activeTab: viewModel.router.currentTab)
                 .onRouteTab { viewModel.router.currentTab = $0 }
         }
-        .fullScreenCover(isPresented: $isEditModalActive, content: {
+        .sheet(isPresented: $isEditModalActive, content: {
             TrainingEditScene()
                 .onCloseTab { isEditModalActive.toggle() }
                 .environmentObject(getViewModel())
@@ -38,10 +42,7 @@ struct TrainingScene: View {
 
     private func getViewModel() -> TrainingEditViewModel {
         if let training = viewModel.selectedTraining {
-            return TrainingEditViewModel(
-                name: training.name,
-                description: training.trainingDescription,
-                workouts: viewModel.workouts)
+            return TrainingEditViewModel(training: training)
         }
         return TrainingEditViewModel()
     }

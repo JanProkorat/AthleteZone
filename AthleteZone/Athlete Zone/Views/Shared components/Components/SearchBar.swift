@@ -38,7 +38,7 @@ struct SearchBar: View {
                     }
                 )
                 .onTapGesture {
-                    withAnimation(.easeInOut(duration: 0.1)) { // Adjust the duration here
+                    withAnimation(.easeInOut(duration: 0.1)) {
                         self.isEditing = true
                     }
                 }
