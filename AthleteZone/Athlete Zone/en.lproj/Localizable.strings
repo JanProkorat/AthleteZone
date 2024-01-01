@@ -44,7 +44,7 @@
 "language" = "Language";
 "sounds" = "Sounds";
 "haptics" = "Haptics (Watch only)";
-"allowNotifications" = "Remind me to excersize";
+"allowNotifications" = "Remind me to exercise";
 "allowNotificationsDescription" = "Get notifications reminding you to work out";
 "healthKitAccess" = "Health app Access";
 "healthKitAccessDescription1" = "Removing access can only be done in settings of the Health app";
