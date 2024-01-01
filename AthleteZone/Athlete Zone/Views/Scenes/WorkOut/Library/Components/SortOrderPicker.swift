@@ -23,20 +23,13 @@ struct SortOrderPicker: View {
             }
 
         } label: {
-            RoundedRectangle(cornerRadius: 20)
-                .overlay(
-                    HStack(alignment: .center, spacing: 1) {
-                        Text(LocalizationKey.sortOrder.localizedKey)
-                            .padding(.leading, 5)
-                            .foregroundColor(Color(ComponentColor.darkBlue.rawValue))
-                    }
-                )
-                .foregroundColor(Color(ComponentColor.menuItemSelected.rawValue))
-                .frame(width: .infinity,
-                       height: 40,
-                       alignment: .center)
-                .cornerRadius(35)
+            Text(LocalizationKey.sortOrder.localizedKey)
+                .padding(.leading, 5)
+                .foregroundColor(Color(ComponentColor.darkBlue.rawValue))
+                .frame(maxWidth: .infinity)
+                .padding([.top, .bottom], 10)
         }
+        .roundedBackground(cornerRadius: 35, color: ComponentColor.action)
         .onChange(of: selectedOrder) { _, newValue in
             performAction(onOrderSelected, value: newValue)
         }

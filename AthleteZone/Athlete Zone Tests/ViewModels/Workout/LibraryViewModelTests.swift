@@ -86,6 +86,7 @@ class LibraryViewModelTests: XCTestCase {
         let workout = WorkOut()
         viewModel.removeFromWatch(workout._id.stringValue)
 
-        expect(self.connectivityManager.lastSentMessage?.first(where: { $0.key == TransferDataKey.workoutRemove.rawValue })).notTo(beNil())
+        expect(self.connectivityManager.lastSentMessage?
+            .first(where: { $0.key == TransferDataKey.workoutRemove.rawValue })).notTo(beNil())
     }
 }

@@ -1638,7 +1638,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1510;
 				TargetAttributes = {
 					7E17246229CA123300B90E31 = {
 						CreatedOnToolsVersion = 14.2;
@@ -1677,6 +1677,7 @@
 				7E5C1EC929CC4EF3000B4C90 /* XCRemoteSwiftPackageReference "Nimble" */,
 				7EEF57722B19FDB90042D965 /* XCRemoteSwiftPackageReference "CustomAlert" */,
 				7E57674F2B30E21C006F5803 /* XCRemoteSwiftPackageReference "RichText" */,
+				7E0B5A352B434AD5004743CF /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			productRefGroup = 7E33B65E291435BE009E4C1C /* Products */;
 			projectDirPath = "";
@@ -2260,7 +2261,6 @@
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VALIDATE_PRODUCT = YES;
 				WATCHOS_DEPLOYMENT_TARGET = 10.0;
@@ -2621,6 +2621,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		7E0B5A352B434AD5004743CF /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.54.0;
+			};
+		};
 		7E3D4CAB29689B0E00B54852 /* XCRemoteSwiftPackageReference "ViewInspector" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/nalexn/ViewInspector";
