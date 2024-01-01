@@ -42,7 +42,6 @@ struct LibraryBaseView<SortByPicker: View, Content: View>: View {
             content
         }
         .frame(maxHeight: .infinity, alignment: .top)
-        .padding([.leading, .trailing], 10)
     }
 }
 
