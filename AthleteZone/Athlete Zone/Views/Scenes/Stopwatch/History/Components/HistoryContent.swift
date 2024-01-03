@@ -46,8 +46,8 @@ struct HistoryContent: View {
                 }
             }
         }
-        .sheet(item: $itemForDetail) { activity in
-            ActivityDetailView(activity: activity)
+        .sheet(item: $itemForDetail) { _ in
+            ActivityDetailView(activity: $itemForDetail)
                 .presentationDetents([.fraction(0.7)])
         }
         .sheet(item: $itemForEdit) { activity in

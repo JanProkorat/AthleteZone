@@ -18,6 +18,7 @@ struct DescriptionView: View {
                 .font(.callout)
                 .foregroundColor(Color(color.rawValue))
                 .scaledToFill()
+                .padding(.leading)
             Text(":")
                 .font(.callout)
                 .foregroundColor(Color(color.rawValue))

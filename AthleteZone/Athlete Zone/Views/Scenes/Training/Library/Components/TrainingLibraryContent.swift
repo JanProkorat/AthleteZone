@@ -46,8 +46,8 @@ struct TrainingLibraryContent: View {
                 }
             }
         }
-        .sheet(item: $trainingForDetailt) { training in
-            TrainingDetailView(training: training)
+        .sheet(item: $trainingForDetailt) { _ in
+            TrainingDetailView(training: $trainingForDetailt)
                 .presentationDetents([.fraction(0.9)])
         }
     }

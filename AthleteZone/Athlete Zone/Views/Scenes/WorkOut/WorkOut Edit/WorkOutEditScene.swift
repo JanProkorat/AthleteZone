@@ -41,37 +41,27 @@ struct WorkOutEditScene: View {
         .environment(\.colorScheme, .dark)
         .ignoresSafeArea(.keyboard, edges: [.bottom])
         .sheet(item: $activeSheetType) { activitySheet in
-            switch activitySheet {
-            case .work:
-                IntervalPicker(title: activitySheet.rawValue, color: .lightPink) {
-                    TimePicker(textColor: ComponentColor.lightPink, interval: $viewModel.work)
-                }
-                .presentationDetents([.fraction(0.4)])
+            IntervalPicker(type: $activeSheetType, interval: getInterval(activitySheet))
+                .presentationDetents([.fraction(0.5)])
+        }
+    }
 
-            case .rest:
-                IntervalPicker(title: activitySheet.rawValue, color: .lightYellow) {
-                    TimePicker(textColor: ComponentColor.lightYellow, interval: $viewModel.rest)
-                }
-                .presentationDetents([.fraction(0.4)])
+    private func getInterval(_ type: ActivityType) -> Binding<Int> {
+        switch type {
+        case .work:
+            return $viewModel.work
 
-            case .series:
-                IntervalPicker(title: activitySheet.rawValue, color: .lightBlue) {
-                    NumberPicker(textColor: ComponentColor.lightBlue, value: $viewModel.series)
-                }
-                .presentationDetents([.fraction(0.4)])
+        case .rest:
+            return $viewModel.rest
 
-            case .rounds:
-                IntervalPicker(title: activitySheet.rawValue, color: .lightGreen) {
-                    NumberPicker(textColor: ComponentColor.lightGreen, value: $viewModel.rounds)
-                }
-                .presentationDetents([.fraction(0.4)])
+        case .series:
+            return $viewModel.series
 
-            case .reset:
-                IntervalPicker(title: activitySheet.rawValue, color: .braun) {
-                    TimePicker(textColor: ComponentColor.braun, interval: $viewModel.reset)
-                }
-                .presentationDetents([.fraction(0.4)])
-            }
+        case .rounds:
+            return $viewModel.rounds
+
+        case .reset:
+            return $viewModel.reset
         }
     }
 }

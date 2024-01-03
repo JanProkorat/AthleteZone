@@ -44,6 +44,7 @@ struct SplitTimesView: View {
                     .bold()
                     .padding(.top, 65)
                     .foregroundStyle(Color(ComponentColor.mainText.rawValue))
+                    .padding([.leading, .trailing])
             }
         }
     }

@@ -160,9 +160,9 @@ struct TrainingContent: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
-            .sheet(item: $selectedWorkout) {
-                WorkoutDetailSheet(workout: $0)
-                    .presentationDetents([.fraction(0.3)])
+            .sheet(item: $selectedWorkout) { _ in
+                WorkoutDetailSheet(workout: $selectedWorkout)
+                    .presentationDetents([.fraction(0.4)])
             }
         }
     }
