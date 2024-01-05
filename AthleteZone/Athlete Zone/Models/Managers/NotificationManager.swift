@@ -15,10 +15,10 @@ class NotificationManager: NotiificationProtocol, ObservableObject {
     let notificationIdentifier1 = "workoutReminder1"
     let notificationIdentifier2 = "workoutReminder2"
     let messages = [
-        "Don't forget to workout today",
-        "Don't forget to crush your workout today!",
-        "Time to sweat it out - your workout is waiting!",
-        "Get up, get moving, get your workout in!"
+        LocalizationKey.notification1,
+        LocalizationKey.notification2,
+        LocalizationKey.notification3,
+        LocalizationKey.notification4
     ]
 
     @Published var enabled = false
@@ -44,8 +44,8 @@ class NotificationManager: NotiificationProtocol, ObservableObject {
 
     func setupNotification() {
         let content = UNMutableNotificationContent()
-        content.title = "Athlete Zone"
-        content.body = NSLocalizedString(messages.randomElement() ?? "", comment: "")
+        content.title = String(describing: LocalizationKey.appTitle.localizedKey)
+        content.body = NSLocalizedString(String(describing: messages.randomElement()?.localizedKey ?? ""), comment: "")
         content.sound = UNNotificationSound.default
 
         var dateComponents = DateComponents()

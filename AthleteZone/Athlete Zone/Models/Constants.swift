@@ -101,6 +101,7 @@ enum LocalizationKey: String {
         LocalizedStringKey(rawValue)
     }
 
+    case appTitle
     case premiumSubscription = "Athlete Zone+"
 
     // Actions

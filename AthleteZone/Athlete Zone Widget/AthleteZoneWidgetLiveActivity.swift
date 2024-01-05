@@ -53,14 +53,13 @@ struct AthleteZoneWidgetLiveActivity: Widget {
                         .frame(maxWidth: 15, maxHeight: 15)
                         .foregroundColor(Color(context.state.workFlow.color.rawValue))
 
-                    Text(context.state.workFlow.type.rawValue)
-                        .font(.headline)
+                    Text(context.state.workFlow.label)
+                        .font(.subheadline)
                         .foregroundStyle(Color(context.state.workFlow.color.rawValue))
-                        .padding(.leading, 2)
                 }
             } compactTrailing: {
                 Text(context.state.workFlow.interval.toFormattedTime())
-                    .font(.headline)
+                    .font(.subheadline)
                     .foregroundStyle(Color(context.state.workFlow.color.rawValue))
             } minimal: {
                 Image(systemName: context.state.workFlow.icon)

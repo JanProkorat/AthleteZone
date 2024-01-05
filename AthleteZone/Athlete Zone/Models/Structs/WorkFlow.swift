@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct WorkFlow: Equatable, Codable, Hashable {
     var interval: Int
@@ -44,6 +45,28 @@ struct WorkFlow: Equatable, Codable, Hashable {
 
         case .reset:
             return "clock.arrow.circlepath"
+        }
+    }
+
+    var label: LocalizedStringKey {
+        switch type {
+        case .preparation:
+            return LocalizedStringKey(type.rawValue)
+
+        case .work:
+            return LocalizationKey.work.localizedKey
+
+        case .rest:
+            return LocalizationKey.rest.localizedKey
+
+        case .series:
+            return LocalizationKey.series.localizedKey
+
+        case .rounds:
+            return LocalizationKey.rounds.localizedKey
+
+        case .reset:
+            return LocalizationKey.reset.localizedKey
         }
     }
 

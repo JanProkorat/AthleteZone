@@ -162,6 +162,7 @@
 		7E77F1C42A5B4C32008BBBF2 /* TrainingEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77F1C32A5B4C32008BBBF2 /* TrainingEditViewModel.swift */; };
 		7E77F1C82A5B5498008BBBF2 /* TrainingEditFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77F1C72A5B5498008BBBF2 /* TrainingEditFooter.swift */; };
 		7E77F1CA2A5BD8D5008BBBF2 /* TrainingEditContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77F1C92A5BD8D5008BBBF2 /* TrainingEditContent.swift */; };
+		7E7C898D2B469345004907B3 /* AthleteZoneWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7E3AD06C2AC6054600437EEC /* AthleteZoneWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		7E7E9C5929B28F7500E8D3CF /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7E9C5829B28F7500E8D3CF /* SettingsViewModel.swift */; };
 		7E8224502954AE75004CA77E /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E82244F2954AE75004CA77E /* SearchBar.swift */; };
 		7E831A6129AA5D51009DA0CE /* WorkOutEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E831A6029AA5D51009DA0CE /* WorkOutEditViewModel.swift */; };
@@ -307,6 +308,13 @@
 			remoteGlobalIDString = 7E33B65C291435BE009E4C1C;
 			remoteInfo = "Athlete Zone";
 		};
+		7E7C898E2B469345004907B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7E33B655291435BE009E4C1C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E3AD06B2AC6054600437EEC;
+			remoteInfo = AthleteZoneWidgetsExtension;
+		};
 		7EFCDBA72B0E84E20074AACE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7E33B655291435BE009E4C1C /* Project object */;
@@ -317,6 +325,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		7E7C89902B469345004907B3 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				7E7C898D2B469345004907B3 /* AthleteZoneWidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		7EAC716E29658C9C004CEBA7 /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1560,10 +1579,12 @@
 				7E33B65B291435BE009E4C1C /* Resources */,
 				7EE47B4E29400089000FC098 /* ShellScript */,
 				7EAC716E29658C9C004CEBA7 /* Embed Watch Content */,
+				7E7C89902B469345004907B3 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				7E7C898F2B469345004907B3 /* PBXTargetDependency */,
 			);
 			name = "Athlete Zone";
 			packageProductDependencies = (
@@ -2078,6 +2099,11 @@
 			target = 7E33B65C291435BE009E4C1C /* Athlete Zone */;
 			targetProxy = 7E17246729CA123300B90E31 /* PBXContainerItemProxy */;
 		};
+		7E7C898F2B469345004907B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E3AD06B2AC6054600437EEC /* AthleteZoneWidgetsExtension */;
+			targetProxy = 7E7C898E2B469345004907B3 /* PBXContainerItemProxy */;
+		};
 		7EFCDBA82B0E84E20074AACE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7ED73574296B76C300E1A305 /* AthleteZoneMini Watch App */;
@@ -2364,7 +2390,8 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = AthleteZoneWidgetsExtensionDebug.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Athlete Zone Widget/AthleteZoneWidgetsExtensionDebug.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5SV4N2J8AG;
@@ -2387,6 +2414,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.janprokorat.Athlete-Zone.Widgets";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2402,7 +2430,8 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = AthleteZoneWidgetsExtensionRelease.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Athlete Zone Widget/AthleteZoneWidgetsExtensionRelease.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5SV4N2J8AG;
@@ -2424,6 +2453,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.janprokorat.Athlete-Zone.Widgets";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

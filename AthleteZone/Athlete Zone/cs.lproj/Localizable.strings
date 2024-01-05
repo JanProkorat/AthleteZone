@@ -5,6 +5,8 @@
   Created by Jan Prokorát on 07.11.2022.
 */
 
+"appTitle" = "Athlete Zone";
+
 //Actions
 "save" = "Uložit";
 "cancel" = "Zrušit";

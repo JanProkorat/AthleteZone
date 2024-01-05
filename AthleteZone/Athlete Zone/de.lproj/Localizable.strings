@@ -6,6 +6,8 @@
   
 */
 
+"appTitle" = "Athlete Zone";
+
 //Actions
 "save" = "Speichern";
 "cancel" = "Abbrechen";
