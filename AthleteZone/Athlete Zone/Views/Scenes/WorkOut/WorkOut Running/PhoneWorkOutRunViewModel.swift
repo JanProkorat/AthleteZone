@@ -48,12 +48,12 @@ class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
             .sink { newValue in
 //                self.widgetManager.saveWidgetData(self.workoutName, newValue)
 
-                if newValue != nil && self.appStorageManager.runInBackground {
-                    self.liveActivityManager.updateActivity(
-                        workFlow: newValue!,
-                        workoutName: self.workoutName
-                    )
-                }
+//                if newValue != nil && self.appStorageManager.runInBackground {
+//                    self.liveActivityManager.updateActivity(
+//                        workFlow: newValue!,
+//                        workoutName: self.workoutName
+//                    )
+//                }
 //                WidgetCenter.shared.reloadTimelines(ofKind: UserDefaultValues.widgetId.rawValue)
 
                 if self.appStorageManager.soundsEnabled {
