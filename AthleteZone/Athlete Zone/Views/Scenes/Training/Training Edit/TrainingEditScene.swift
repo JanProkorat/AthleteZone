@@ -44,6 +44,9 @@ struct TrainingEditScene: View {
                 selectedWorkouts: $viewModel.workouts,
                 workoutLibrary: viewModel.workoutRealmManager.load()
             )
+            .onCloseTab {
+                isModalVisible = false
+            }
         }
     }
 }

@@ -21,6 +21,12 @@ struct DetailBaseView<Content: View>: View {
         color = .mainText
     }
 
+    init(title: LocalizedStringKey, @ViewBuilder content: () -> Content) {
+        self.content = content()
+        localizetTitle = title
+        color = .mainText
+    }
+
     init(title: String, color: ComponentColor, @ViewBuilder content: () -> Content) {
         self.content = content()
         self.title = title

@@ -18,7 +18,11 @@ struct LibraryContent: View {
     var onSelectTab: ((_ workOut: WorkOut) -> Void)?
 
     var body: some View {
-        LibraryBaseView(searchText: $searchText, sortOrder: $sortOrder) {
+        LibraryBaseView(
+            searchText: $searchText, 
+            sortOrder: $sortOrder,
+            noContentText: library.isEmpty ? LocalizationKey.noWorkoutsToDisplay : nil
+        ) {
             SortByPicker()
                 .onPropertySelected { sortBy = $0 }
         } content: {
@@ -35,14 +39,6 @@ struct LibraryContent: View {
                 }
             }
             .listStyle(.plain)
-            .overlay(alignment: .top) {
-                if library.isEmpty {
-                    Text(LocalizationKey.noWorkoutsToDisplay.localizedKey)
-                        .font(.headline)
-                        .bold()
-                        .padding(.top, 100)
-                }
-            }
         }
     }
 }

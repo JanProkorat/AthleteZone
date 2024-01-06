@@ -45,27 +45,18 @@ extension LibraryViewModel {
     }
 
     func removeWorkout(_ workout: WorkOut) {
-        let id = workout._id.stringValue
-        realmManager.delete(entity: workout)
-        objectWillChange.send() // tu to pada
-        removeFromWatch(id)
-
-        if id == storageManager.selectedWorkoutId {
+        let id = workout.id
+        if id == selectedWorkoutManager.selectedWorkout?.id {
             selectedWorkoutManager.selectedWorkout = nil
             storageManager.removeFromDefaults(key: UserDefaultValues.workoutId)
-            WidgetCenter.shared.reloadTimelines(ofKind: UserDefaultValues.widgetId.rawValue)
+//            WidgetCenter.shared.reloadTimelines(ofKind: UserDefaultValues.widgetId.rawValue)
         }
+        realmManager.delete(entity: workout)
+        objectWillChange.send()
+        connectivityManager.sendValue([TransferDataKey.workoutRemove.rawValue: id])
     }
 
     func isWorkoutAssignedToTraining(id: String) -> Bool {
         return realmManager.isWorkoutAssignedToTraining(id)
-    }
-}
-
-// MARK: Watch connecctivity
-
-extension LibraryViewModel {
-    func removeFromWatch(_ id: String) {
-        connectivityManager.sendValue([TransferDataKey.workoutRemove.rawValue: id])
     }
 }

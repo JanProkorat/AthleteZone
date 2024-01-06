@@ -17,8 +17,6 @@ struct TrainingHeader: View {
                 SectionSwitch()
                 if let name = self.name {
                     TitleText(text: name)
-                } else {
-                    TitleText(text: LocalizationKey.training.rawValue)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)

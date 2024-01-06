@@ -44,8 +44,8 @@ class NotificationManager: NotiificationProtocol, ObservableObject {
 
     func setupNotification() {
         let content = UNMutableNotificationContent()
-        content.title = String(describing: LocalizationKey.appTitle.localizedKey)
-        content.body = NSLocalizedString(String(describing: messages.randomElement()?.localizedKey ?? ""), comment: "")
+        content.title = NSLocalizedString(LocalizationKey.appTitle.rawValue, comment: "")
+        content.body = NSLocalizedString(messages.randomElement()?.rawValue ?? "", comment: "")
         content.sound = UNNotificationSound.default
 
         var dateComponents = DateComponents()

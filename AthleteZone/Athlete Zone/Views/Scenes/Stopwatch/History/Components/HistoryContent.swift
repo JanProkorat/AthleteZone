@@ -21,7 +21,11 @@ struct HistoryContent: View {
     var onDeleteTab: ((_ value: StopWatch) -> Void)?
 
     var body: some View {
-        LibraryBaseView(searchText: $searchText, sortOrder: $sortOrder) {
+        LibraryBaseView(
+            searchText: $searchText, 
+            sortOrder: $sortOrder,
+            noContentText: library.isEmpty ? LocalizationKey.noActivities : nil
+        ) {
             StopWatchSortByPicker()
                 .onPropertySelected { sortBy = $0 }
         } content: {
@@ -37,14 +41,6 @@ struct HistoryContent: View {
                 }
             }
             .listStyle(.plain)
-            .overlay(alignment: .top) {
-                if library.isEmpty {
-                    Text(LocalizationKey.noActivities.localizedKey)
-                        .font(.headline)
-                        .bold()
-                        .padding(.top, 100)
-                }
-            }
         }
         .sheet(item: $itemForDetail) { _ in
             ActivityDetailView(activity: $itemForDetail)

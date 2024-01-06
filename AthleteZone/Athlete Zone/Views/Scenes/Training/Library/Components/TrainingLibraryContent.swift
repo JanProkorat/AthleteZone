@@ -20,7 +20,11 @@ struct TrainingLibraryContent: View {
     var onSelectTab: ((_ training: Training) -> Void)?
 
     var body: some View {
-        LibraryBaseView(searchText: $searchText, sortOrder: $sortOrder) {
+        LibraryBaseView(
+            searchText: $searchText, 
+            sortOrder: $sortOrder,
+            noContentText: library.isEmpty ? LocalizationKey.noTrainingsToDisplay : nil
+        ) {
             TrainingSortByPicker()
                 .onPropertySelected { sortBy = $0 }
         } content: {
@@ -37,14 +41,6 @@ struct TrainingLibraryContent: View {
                 }
             }
             .listStyle(.plain)
-            .overlay(alignment: .top) {
-                if library.isEmpty {
-                    Text(LocalizationKey.noTrainingsToDisplay.localizedKey)
-                        .font(.headline)
-                        .bold()
-                        .padding(.top, 100)
-                }
-            }
         }
         .sheet(item: $trainingForDetailt) { _ in
             TrainingDetailView(training: $trainingForDetailt)
