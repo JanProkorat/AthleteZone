@@ -9,7 +9,7 @@ import Combine
 import HealthKit
 
 class WatchWorkOutRunViewModel: WorkOutRunViewModel<WorkOutDto> {
-    private var healthManager = HealthWorkouthManager()
+//    private var healthManager = HealthWorkouthManager()
     private var hapticManager = HapticManager()
     private var soundManager: SoundProtocol?
     private var settingsManager: any SettingsProtocol
@@ -40,17 +40,17 @@ class WatchWorkOutRunViewModel: WorkOutRunViewModel<WorkOutDto> {
             }
             .store(in: &cancellables)
 
-        healthManager.$activeEnergy
-            .sink { self.activeEnergy = $0 }
-            .store(in: &cancellables)
-
-        healthManager.$baseEnergy
-            .sink { self.baseEnergy = $0 }
-            .store(in: &cancellables)
-
-        healthManager.$averageHeartRate
-            .sink { self.heartRate = $0 }
-            .store(in: &cancellables)
+//        healthManager.$activeEnergy
+//            .sink { self.activeEnergy = $0 }
+//            .store(in: &cancellables)
+//
+//        healthManager.$baseEnergy
+//            .sink { self.baseEnergy = $0 }
+//            .store(in: &cancellables)
+//
+//        healthManager.$averageHeartRate
+//            .sink { self.heartRate = $0 }
+//            .store(in: &cancellables)
     }
 
     override func updateTimerOnStateChange(_ previous: WorkFlowState, _ newState: WorkFlowState) {
@@ -58,7 +58,7 @@ class WatchWorkOutRunViewModel: WorkOutRunViewModel<WorkOutDto> {
             switch newState {
             case .paused:
                 timerManager.pauseTimer()
-                togglePauseHealthWorkout()
+//                togglePauseHealthWorkout()
 
             case .finished:
                 timerManager.pauseTimer()
@@ -68,12 +68,12 @@ class WatchWorkOutRunViewModel: WorkOutRunViewModel<WorkOutDto> {
                     currentWorkout = next
                     nextWorkout = nil
                 } else {
-                    endHealthWorkout()
+//                    endHealthWorkout()
                 }
 
             case .running:
                 timerManager.startTimer(1, kind: .workout, inBackground: false)
-                startHealthWorkout()
+//                startHealthWorkout()
 
             case .quit:
                 timerManager.stopTimer()
@@ -91,30 +91,30 @@ class WatchWorkOutRunViewModel: WorkOutRunViewModel<WorkOutDto> {
 
 // MARK: Health extension
 
-extension WatchWorkOutRunViewModel {
-    func startHealthWorkout() {
-        let status = healthManager.checkAuthorizationStatus()
-        if status != .sharingAuthorized {
-            return
-        }
-
-        if healthManager.paused {
-            healthManager.resume()
-        } else {
-            healthManager.startWorkout(workoutType: .traditionalStrengthTraining, workoutName: workoutName)
-        }
-    }
-
-    func endHealthWorkout() {
-        if healthManager.running {
-            healthManager.endWorkout()
-        }
-    }
-
-    func togglePauseHealthWorkout() {
-        healthManager.togglePuase()
-    }
-}
+// extension WatchWorkOutRunViewModel {
+//    func startHealthWorkout() {
+//        let status = healthManager.checkAuthorizationStatus()
+//        if status != .sharingAuthorized {
+//            return
+//        }
+//
+//        if healthManager.paused {
+//            healthManager.resume()
+//        } else {
+//            healthManager.startWorkout(workoutType: .traditionalStrengthTraining, workoutName: workoutName)
+//        }
+//    }
+//
+//    func endHealthWorkout() {
+//        if healthManager.running {
+//            healthManager.endWorkout()
+//        }
+//    }
+//
+//    func togglePauseHealthWorkout() {
+//        healthManager.togglePuase()
+//    }
+// }
 
 // MARK: Haptic extension
 

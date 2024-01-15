@@ -13,7 +13,7 @@ import WatchConnectivity
 class ContentViewModel: ObservableObject {
     var settingsManager: any SettingsProtocol
     var connectivityManager: any ConnectivityProtocol
-    var healthManager: any HealthProtocol
+//    var healthManager: any HealthProtocol
 
     @Published var currentSection: Section = .workout
     @Published var launchScreenState: LaunchScreenStep = .firstStep
@@ -29,9 +29,9 @@ class ContentViewModel: ObservableObject {
     init() {
         settingsManager = SettingsManager.shared
         connectivityManager = ConnectivityManager.shared
-        healthManager = HealthManager.shared
+//        healthManager = HealthManager.shared
 
-        healthManager.requestAuthorization()
+//        healthManager.requestAuthorization()
 
         settingsManager
             .currentSectionPublished

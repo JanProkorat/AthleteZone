@@ -43,8 +43,14 @@ struct ContentView: View {
         .animation(.default, value: viewModel.currentSection)
         .sheet(isPresented: $subscriptionManager.isSubscriptionViewVisible) {
             SubscriptionStoreView(groupID: passIDs.group)
-                .storeButton(.visible)
+                .storeButton(.visible, for: .policies)
                 .subscriptionStoreControlStyle(.prominentPicker)
+                .subscriptionStorePolicyDestination(for: .privacyPolicy) {
+                    WebView(url: URL(string: "https://sites.google.com/view/athlete-zone-privacy/domovsk%C3%A1-str%C3%A1nka")!)
+                }
+                .subscriptionStorePolicyDestination(for: .termsOfService) {
+                    WebView(url: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
+                }
         }
         .subscriptionStatusTask(for: passIDs.group) { taskStatus in
             if let value = taskStatus.value {

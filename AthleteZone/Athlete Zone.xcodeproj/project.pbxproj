@@ -233,6 +233,7 @@
 		7ED7D0922A61229400691C69 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED7D0912A61229400691C69 /* ContentView.swift */; };
 		7ED7DE742A6AE1EE003C421C /* ContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED7DE732A6AE1EE003C421C /* ContentViewModelTests.swift */; };
 		7ED80CC52B2B2FB700DA34AA /* SubscriptionIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED80CC42B2B2FB700DA34AA /* SubscriptionIdentifier.swift */; };
+		7EDB888B2B5517CA0061CE7C /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDB888A2B5517CA0061CE7C /* WebView.swift */; };
 		7EDCAD122B17777D00AC02E7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7E1F9B0729198603006CA3AA /* Localizable.strings */; };
 		7EDDF9BF299B7FE300BEC1CD /* SettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDDF9BE299B7FE300BEC1CD /* SettingsItem.swift */; };
 		7EDDF9C2299B81CB00BEC1CD /* LanguagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDDF9C1299B81CB00BEC1CD /* LanguagePicker.swift */; };
@@ -535,6 +536,7 @@
 		7ED7D0912A61229400691C69 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7ED7DE732A6AE1EE003C421C /* ContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModelTests.swift; sourceTree = "<group>"; };
 		7ED80CC42B2B2FB700DA34AA /* SubscriptionIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionIdentifier.swift; sourceTree = "<group>"; };
+		7EDB888A2B5517CA0061CE7C /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		7EDC93DC2B16A2E500C518B6 /* AthleteZoneWidgetsExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AthleteZoneWidgetsExtensionRelease.entitlements; sourceTree = "<group>"; };
 		7EDDF9BE299B7FE300BEC1CD /* SettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsItem.swift; sourceTree = "<group>"; };
 		7EDDF9C1299B81CB00BEC1CD /* LanguagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePicker.swift; sourceTree = "<group>"; };
@@ -842,6 +844,7 @@
 				7E0B5A312B43309F004743CF /* NavigationBaseView.swift */,
 				7E0B5A332B4341A5004743CF /* RunBaseView.swift */,
 				7E252CB02B454D75001BA70E /* DetailBaseView.swift */,
+				7EDB888A2B5517CA0061CE7C /* WebView.swift */,
 			);
 			path = "Shared components";
 			sourceTree = "<group>";
@@ -1836,6 +1839,7 @@
 				7E68E5922A530C9A0083C2E0 /* TrainingListView.swift in Sources */,
 				7ED59F842915599B0077DF39 /* IconButton.swift in Sources */,
 				7E5981AA2B187B6C00555EC8 /* StopWatchViewModel.swift in Sources */,
+				7EDB888B2B5517CA0061CE7C /* WebView.swift in Sources */,
 				7E77F1C82A5B5498008BBBF2 /* TrainingEditFooter.swift in Sources */,
 				7EFC06142A53722700959513 /* SelectedTrainingManager.swift in Sources */,
 				7E5981A12B18728300555EC8 /* StopWatchContentScene.swift in Sources */,

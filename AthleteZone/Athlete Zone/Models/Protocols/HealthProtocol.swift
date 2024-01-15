@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import HealthKit
+// import HealthKit
 
-protocol HealthProtocol: NSObject, ObservableObject {
-    func requestAuthorization()
-    func checkAuthorizationStatus() -> HKAuthorizationStatus
-}
+// protocol HealthProtocol: NSObject, ObservableObject {
+//    func requestAuthorization()
+//    func checkAuthorizationStatus() -> HKAuthorizationStatus
+// }

@@ -53,22 +53,22 @@ struct SettingsContent: View {
                 toggle(value: $viewModel.appStorageManager.runInBackground)
             }
 
-            if isWatchInstalled {
-                SettingsItem(title: LocalizationKey.haptics, content: {
-                    toggle(value: $viewModel.appStorageManager.hapticsEnabled)
-                })
-
-                detailedPanel(
-                    title: LocalizationKey.healthKitAccess,
-                    description: viewModel.hkAuthStatus == .sharingAuthorized ?
-                        LocalizationKey.healthKitAccessDescription1 :
-                        LocalizationKey.healthKitAccessDescription2)
-                {
-                    toggle(value: $viewModel.healthKitAccess)
-                }
-                .disabled(viewModel.hkAuthStatus != .notDetermined)
-                .animation(.easeInOut, value: viewModel.hkAuthStatus)
-            }
+//            if isWatchInstalled {
+//                SettingsItem(title: LocalizationKey.haptics, content: {
+//                    toggle(value: $viewModel.appStorageManager.hapticsEnabled)
+//                })
+//
+//                detailedPanel(
+//                    title: LocalizationKey.healthKitAccess,
+//                    description: viewModel.hkAuthStatus == .sharingAuthorized ?
+//                        LocalizationKey.healthKitAccessDescription1 :
+//                        LocalizationKey.healthKitAccessDescription2)
+//                {
+//                    toggle(value: $viewModel.healthKitAccess)
+//                }
+//                .disabled(viewModel.hkAuthStatus != .notDetermined)
+//                .animation(.easeInOut, value: viewModel.hkAuthStatus)
+//            }
 
             Spacer()
         }
