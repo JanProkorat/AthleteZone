@@ -27,7 +27,7 @@ extension WorkOutProtocol {
         var serieCount = 1
         var interval = 0
         for round in 1 ... rounds {
-            for serie in 1 ... (series + (series - 1)) {
+            for serie in 1 ... 2 * series {
                 interval = serie.isOdd() ? work : rest
                 if interval != 0 {
                     flow.append(
@@ -41,7 +41,7 @@ extension WorkOutProtocol {
                         )
                     )
                 }
-                if serie.isIven() {
+                if serie.isEven() {
                     serieCount += 1
                 }
             }
