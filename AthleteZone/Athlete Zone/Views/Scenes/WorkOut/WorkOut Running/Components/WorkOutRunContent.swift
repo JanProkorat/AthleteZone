@@ -29,7 +29,7 @@ struct WorkOutRunContent: View {
                     VStack(spacing: 0) {
                         ZStack {
                             CircularProgressBar(color: flow.color, progress: flow.getProgress())
-                            CounterText(text: flow.interval.toFormattedTime(), size: geo.size.height * 0.14)
+                            CounterText(text: flow.interval.toFormattedTimeForWorkout(), size: geo.size.height * 0.14)
                         }
                         .frame(maxWidth: .infinity)
 

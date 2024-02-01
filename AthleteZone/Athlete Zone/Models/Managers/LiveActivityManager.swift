@@ -16,7 +16,8 @@ class LiveActivityManager: LiveActivityProtocol {
         if ActivityAuthorizationInfo().areActivitiesEnabled, activity == nil {
             let initialState = AthleteZoneWidgetAttributes.ContentState(
                 workFlow: workFlow,
-                name: workoutName
+                name: workoutName,
+                state: .running
             )
             do {
                 activity = try Activity.request(
@@ -32,19 +33,19 @@ class LiveActivityManager: LiveActivityProtocol {
         }
     }
 
-    func updateActivity(workFlow: WorkFlow, workoutName: String) {
+    func updateActivity(workFlow: WorkFlow, workoutName: String, state: WorkFlowState) {
         Task {
             let updatedContentState = AthleteZoneWidgetAttributes.ContentState(
                 workFlow: workFlow,
-                name: workoutName
+                name: workoutName,
+                state: state
             )
-            await activity?
-                .update(
-                    ActivityContent(
-                        state: updatedContentState,
-                        staleDate: Date().addingTimeInterval(0.01)
-                    )
+            await activity?.update(
+                ActivityContent<AthleteZoneWidgetAttributes.ContentState>(
+                    state: updatedContentState,
+                    staleDate: Date().addingTimeInterval(0.01)
                 )
+            )
         }
     }
 

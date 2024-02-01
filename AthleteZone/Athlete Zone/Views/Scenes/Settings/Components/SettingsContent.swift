@@ -41,9 +41,9 @@ struct SettingsContent: View {
                 LanguagePicker(selectedLanguage: $viewModel.languageManager.language)
             })
 
-            SettingsItem(title: LocalizationKey.sounds, content: {
+            detailedPanel(title: LocalizationKey.sounds, description: LocalizationKey.soundsDescription) {
                 toggle(value: $viewModel.appStorageManager.soundsEnabled)
-            })
+            }
 
             detailedPanel(title: LocalizationKey.allowNotifications, description: LocalizationKey.allowNotificationsDescription) {
                 toggle(value: $viewModel.appStorageManager.notificationsEnabled)
@@ -53,22 +53,22 @@ struct SettingsContent: View {
                 toggle(value: $viewModel.appStorageManager.runInBackground)
             }
 
-//            if isWatchInstalled {
-//                SettingsItem(title: LocalizationKey.haptics, content: {
-//                    toggle(value: $viewModel.appStorageManager.hapticsEnabled)
-//                })
-//
-//                detailedPanel(
-//                    title: LocalizationKey.healthKitAccess,
-//                    description: viewModel.hkAuthStatus == .sharingAuthorized ?
-//                        LocalizationKey.healthKitAccessDescription1 :
-//                        LocalizationKey.healthKitAccessDescription2)
-//                {
-//                    toggle(value: $viewModel.healthKitAccess)
-//                }
-//                .disabled(viewModel.hkAuthStatus != .notDetermined)
-//                .animation(.easeInOut, value: viewModel.hkAuthStatus)
-//            }
+            if isWatchInstalled {
+                SettingsItem(title: LocalizationKey.haptics, content: {
+                    toggle(value: $viewModel.appStorageManager.hapticsEnabled)
+                })
+
+                detailedPanel(
+                    title: LocalizationKey.healthKitAccess,
+                    description: viewModel.hkAuthStatus == .sharingAuthorized ?
+                        LocalizationKey.healthKitAccessDescription1 :
+                        LocalizationKey.healthKitAccessDescription2)
+                {
+                    toggle(value: $viewModel.healthKitAccess)
+                }
+                .disabled(viewModel.hkAuthStatus != .notDetermined)
+                .animation(.easeInOut, value: viewModel.hkAuthStatus)
+            }
 
             Spacer()
         }

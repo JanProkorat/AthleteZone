@@ -20,7 +20,7 @@ class WorkOutEditViewModel: ObservableObject {
     @Published var isEditing = false
 
     var timeOverview: Int {
-        (((work * series) + (rest * (series - 1)) + reset) * rounds) - reset
+        (((work * series) + (rest * series) + reset) * rounds) - reset
     }
 
     var saveDisabled: Bool {

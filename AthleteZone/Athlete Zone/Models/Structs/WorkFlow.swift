@@ -9,11 +9,11 @@ import Foundation
 import SwiftUI
 
 struct WorkFlow: Equatable, Codable, Hashable {
-    var interval: Int
+    var interval: TimeInterval
     let type: WorkFlowType
     let round: Int
     let serie: Int
-    let originalInterval: Int
+    let originalInterval: TimeInterval
     let totalSeries: Int
     let totalRounds: Int
     var color: ComponentColor
@@ -81,7 +81,7 @@ struct WorkFlow: Equatable, Codable, Hashable {
         self.color = .lightPink
     }
 
-    init(interval: Int, type: WorkFlowType, round: Int, serie: Int, totalSeries: Int, totalRounds: Int) {
+    init(interval: TimeInterval, type: WorkFlowType, round: Int, serie: Int, totalSeries: Int, totalRounds: Int) {
         self.interval = interval
         self.type = type
         self.round = round
@@ -96,6 +96,12 @@ struct WorkFlow: Equatable, Codable, Hashable {
 
         case .rest:
             self.color = .lightYellow
+
+        case .series:
+            self.color = .lightBlue
+
+        case .rounds:
+            self.color = .lightGreen
 
         default:
             self.color = .braun

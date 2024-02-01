@@ -42,7 +42,7 @@ class WorkOutEditViewModelTests: XCTestCase {
         viewModel.reset = 60
 
         // When
-        let expectedTimeOverview = (((40 * 5) + (70 * (5 - 1)) + 60) * 3) - 60
+        let expectedTimeOverview = (((40 * 5) + (70 * 5) + 60) * 3) - 60
 
         // Then
         expect(self.viewModel.timeOverview).to(equal(expectedTimeOverview))

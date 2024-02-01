@@ -18,7 +18,6 @@ class WorkOutRunViewModel<T: WorkOutProtocol>: ObservableObject, Identifiable {
 
     @Published var workoutName = ""
     @Published var selectedFlowIndex = 0
-
     @Published var state: WorkFlowState = .ready
 
     var isLastRunning: Bool {
@@ -33,14 +32,24 @@ class WorkOutRunViewModel<T: WorkOutProtocol>: ObservableObject, Identifiable {
     }
 
     var timerManager: any TimerProtocol
+    var stateManager: any StateProtocol
 
     var cancellables = Set<AnyCancellable>()
 
     init() {
         timerManager = TimerManager.shared
+        stateManager = StateManager.shared
+
+        stateManager.statePublisher
+            .sink { newState in
+                DispatchQueue.main.async {
+                    self.state = newState
+                }
+            }
+            .store(in: &cancellables)
 
         $state
-            .scan((state, state)) { previous, current -> (WorkFlowState, WorkFlowState) in
+            .scan((stateManager.state, stateManager.state)) { previous, current -> (WorkFlowState, WorkFlowState) in
                 (previous.1, current)
             }
             .receive(on: DispatchQueue.main)
@@ -51,7 +60,7 @@ class WorkOutRunViewModel<T: WorkOutProtocol>: ObservableObject, Identifiable {
             .sink { self.updateFlowOnIndexChange($0) }
             .store(in: &cancellables)
 
-        $state
+        stateManager.statePublisher
             .sink { self.setupNextWorkout($0) }
             .store(in: &cancellables)
 
@@ -64,18 +73,18 @@ class WorkOutRunViewModel<T: WorkOutProtocol>: ObservableObject, Identifiable {
         currentWorkout = workout
         workoutName = workout.name
         workoutLibrary = [workout]
-        state = .ready
+        stateManager.setState(.ready)
     }
 
     func setupViewModel(workouts: [T]) {
         workoutLibrary = workouts
         currentWorkout = workouts.first
         workoutName = workouts.first?.name ?? ""
-        state = .ready
+        stateManager.setState(.ready)
     }
 
     func setState(_ state: WorkFlowState) {
-        self.state = state
+        stateManager.setState(state)
     }
 
     func setupNextWorkout(_ state: WorkFlowState) {

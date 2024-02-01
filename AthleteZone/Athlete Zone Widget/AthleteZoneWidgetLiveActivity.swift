@@ -6,6 +6,7 @@
 //
 
 import ActivityKit
+import Intents
 import SwiftUI
 import WidgetKit
 
@@ -14,22 +15,35 @@ struct AthleteZoneWidgetLiveActivity: Widget {
         ActivityConfiguration(for: AthleteZoneWidgetAttributes.self) { context in
             // Lock screen/banner UI goes here
             HStack {
-                Image(systemName: context.state.workFlow.icon)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(maxWidth: 30, maxHeight: 30)
-                    .padding(.leading, 10)
-                    .padding([.top, .bottom], 2)
-                    .foregroundColor(Color(context.state.workFlow.color.rawValue))
+                Button(intent: LiveActivityActionIntent(context.state.state == .running ? .paused : .running)) {
+                    Image(systemName: context.state.state == .running ? "pause.circle.fill" : "play.circle.fill")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(maxWidth: 30, maxHeight: 30)
+                        .padding(.leading, 20)
+                        .padding([.top, .bottom], 2)
+                        .foregroundColor(Color(context.state.workFlow.color.rawValue))
+                }
+                .buttonStyle(.plain)
 
-                Text(context.state.workFlow.type.rawValue)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                Button(intent: LiveActivityActionIntent(.quit)) {
+                    Image(systemName: "stop.circle.fill")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(maxWidth: 30, maxHeight: 30)
+                        .padding([.top, .bottom], 2)
+                        .foregroundColor(Color(context.state.workFlow.color.rawValue))
+                }
+                .buttonStyle(.plain)
+
+                Text(context.state.workFlow.label)
+                    .frame(alignment: .leading)
                     .foregroundStyle(Color(context.state.workFlow.color.rawValue))
-                    .font(.title)
+                    .font(.title3)
                     .padding(.leading, 5)
 
-                Text(context.state.workFlow.interval.toFormattedTime())
-//                    .frame(maxWidth: .infinity)
+                Text(context.state.workFlow.interval.toFormattedTimeForWorkout())
+                    .frame(maxWidth: .infinity, alignment: .trailing)
                     .foregroundStyle(Color(context.state.workFlow.color.rawValue))
                     .font(.title)
                     .frame(alignment: .trailing)
@@ -43,7 +57,11 @@ struct AthleteZoneWidgetLiveActivity: Widget {
                 // Expanded UI goes here.  Compose the expanded UI through
                 // various regions, like leading/trailing/center/bottom
                 DynamicIslandExpandedRegion(.bottom) {
-                    DynamicIslandExpandedView(workflow: context.state.workFlow, name: context.state.name)
+                    DynamicIslandExpandedView(
+                        workflow: context.state.workFlow,
+                        name: context.state.name,
+                        state: context.state.state
+                    )
                 }
             } compactLeading: {
                 HStack {
@@ -52,20 +70,22 @@ struct AthleteZoneWidgetLiveActivity: Widget {
                         .scaledToFill()
                         .frame(maxWidth: 15, maxHeight: 15)
                         .foregroundColor(Color(context.state.workFlow.color.rawValue))
+                        .padding([.leading], 5)
 
                     Text(context.state.workFlow.label)
                         .font(.subheadline)
                         .foregroundStyle(Color(context.state.workFlow.color.rawValue))
                 }
             } compactTrailing: {
-                Text(context.state.workFlow.interval.toFormattedTime())
+                Text(context.state.workFlow.interval.toFormattedTimeForWorkout())
                     .font(.subheadline)
                     .foregroundStyle(Color(context.state.workFlow.color.rawValue))
+                    .padding(.trailing, 5)
             } minimal: {
                 Image(systemName: context.state.workFlow.icon)
                     .resizable()
                     .scaledToFill()
-                    .frame(maxWidth: 30, maxHeight: 30)
+                    .frame(maxWidth: 20, maxHeight: 20)
                     .foregroundColor(Color(context.state.workFlow.color.rawValue))
             }
         }
@@ -83,57 +103,63 @@ struct AthleteZoneWidgetLiveActivity: Widget {
             serie: 1,
             totalSeries: 3,
             totalRounds: 4
-        ), name: "Workout"
+        ), name: "Workout",
+        state: .running
     )
     AthleteZoneWidgetAttributes.ContentState(
         workFlow: WorkFlow(
             interval: 9,
-            type: .preparation,
+            type: .work,
             round: 1,
             serie: 1,
             totalSeries: 3,
             totalRounds: 4
-        ), name: "Workout"
+        ), name: "Workout",
+        state: .running
     )
     AthleteZoneWidgetAttributes.ContentState(
         workFlow: WorkFlow(
             interval: 8,
-            type: .preparation,
+            type: .rest,
             round: 1,
             serie: 1,
             totalSeries: 3,
             totalRounds: 4
-        ), name: "Workout"
+        ), name: "Workout",
+        state: .running
     )
     AthleteZoneWidgetAttributes.ContentState(
         workFlow: WorkFlow(
             interval: 7,
-            type: .preparation,
+            type: .rounds,
             round: 1,
             serie: 1,
             totalSeries: 3,
             totalRounds: 4
-        ), name: "Workout"
+        ), name: "Workout",
+        state: .running
     )
     AthleteZoneWidgetAttributes.ContentState(
         workFlow: WorkFlow(
             interval: 6,
-            type: .preparation,
+            type: .series,
             round: 1,
             serie: 1,
             totalSeries: 3,
             totalRounds: 4
-        ), name: "Workout"
+        ), name: "Workout",
+        state: .running
     )
     AthleteZoneWidgetAttributes.ContentState(
         workFlow: WorkFlow(
             interval: 5,
-            type: .preparation,
+            type: .reset,
             round: 1,
             serie: 1,
             totalSeries: 3,
             totalRounds: 4
-        ), name: "Workout"
+        ), name: "Workout",
+        state: .running
     )
     AthleteZoneWidgetAttributes.ContentState(
         workFlow: WorkFlow(
@@ -143,7 +169,8 @@ struct AthleteZoneWidgetLiveActivity: Widget {
             serie: 1,
             totalSeries: 3,
             totalRounds: 4
-        ), name: "Workout"
+        ), name: "Workout",
+        state: .running
     )
     AthleteZoneWidgetAttributes.ContentState(
         workFlow: WorkFlow(
@@ -153,6 +180,7 @@ struct AthleteZoneWidgetLiveActivity: Widget {
             serie: 1,
             totalSeries: 3,
             totalRounds: 4
-        ), name: "Workout"
+        ), name: "Workout",
+        state: .running
     )
 }

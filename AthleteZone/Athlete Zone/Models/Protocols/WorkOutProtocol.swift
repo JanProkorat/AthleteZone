@@ -32,7 +32,7 @@ extension WorkOutProtocol {
                 if interval != 0 {
                     flow.append(
                         WorkFlow(
-                            interval: interval - 1,
+                            interval: TimeInterval(interval - 1),
                             type: serie.isOdd() ? .work : .rest,
                             round: round,
                             serie: serieCount,
@@ -48,7 +48,7 @@ extension WorkOutProtocol {
             if round < rounds {
                 flow.append(
                     WorkFlow(
-                        interval: reset,
+                        interval: TimeInterval(reset),
                         type: .reset,
                         round: round,
                         serie: flow[flow.count - 1].serie,

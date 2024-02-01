@@ -12,7 +12,7 @@ protocol LiveActivityProtocol {
     var activity: Activity<AthleteZoneWidgetAttributes>? { get set }
 
     func startActivity(workFlow: WorkFlow, workoutName: String)
-    func updateActivity(workFlow: WorkFlow, workoutName: String)
+    func updateActivity(workFlow: WorkFlow, workoutName: String, state: WorkFlowState)
     func listAllActivities() -> [[String: String]]
     func endActivity()
 }

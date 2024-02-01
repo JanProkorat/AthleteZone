@@ -36,7 +36,7 @@ struct WidgetLargeView: View {
                         .frame(maxWidth: .infinity)
                         .foregroundColor(Color(workflow.color.rawValue))
 
-                    Text(workflow.interval.toFormattedTime())
+                    Text(workflow.interval.toFormattedTimeForWorkout())
                         .font(.title)
                         .foregroundColor(Color(workflow.color.rawValue))
                         .frame(maxWidth: .infinity, alignment: .center)

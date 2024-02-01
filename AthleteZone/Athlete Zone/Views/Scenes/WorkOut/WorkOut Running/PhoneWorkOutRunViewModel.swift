@@ -24,6 +24,7 @@ class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
 
         // Is triggered when timer running in background enabled
         NotificationCenter.default.publisher(for: TimerManager.workoutTimerNotification)
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 if self?.selectedFlow != nil {
                     self?.updateInterval()
@@ -33,6 +34,7 @@ class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
 
         // Is triggered when timer running in background disabled
         timerManager.timeElapsedPublisher
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 if self.appStorageManager.runInBackground {
                     return
@@ -45,16 +47,18 @@ class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
             .store(in: &cancellables)
 
         $selectedFlow
+            .receive(on: DispatchQueue.global())
             .sink { newValue in
 //                self.widgetManager.saveWidgetData(self.workoutName, newValue)
+//                WidgetCenter.shared.reloadTimelines(ofKind: UserDefaultValues.widgetId.rawValue)
 
 //                if newValue != nil && self.appStorageManager.runInBackground {
 //                    self.liveActivityManager.updateActivity(
 //                        workFlow: newValue!,
-//                        workoutName: self.workoutName
+//                        workoutName: self.workoutName,
+//                        state: self.state
 //                    )
 //                }
-//                WidgetCenter.shared.reloadTimelines(ofKind: UserDefaultValues.widgetId.rawValue)
 
                 if self.appStorageManager.soundsEnabled {
                     self.playSound(newValue)
@@ -68,6 +72,13 @@ class PhoneWorkOutRunViewModel: WorkOutRunViewModel<WorkOut> {
             switch newState {
             case .paused:
                 timerManager.stopTimer()
+//                if appStorageManager.runInBackground {
+//                    liveActivityManager.updateActivity(
+//                        workFlow: selectedFlow!,
+//                        workoutName: workoutName,
+//                        state: state
+//                    )
+//                }
 
             case .finished:
                 timerManager.stopTimer()
@@ -119,7 +130,7 @@ extension PhoneWorkOutRunViewModel {
             if let flow = worflow {
                 if flow.interval > 0 {
                     if flow.interval <= 3 && (!soundManager.isSoundPlaying || soundManager.selectedSound != .beep) {
-                        soundManager.playSound(sound: .beep, numOfLoops: flow.interval - 1)
+                        soundManager.playSound(sound: .beep, numOfLoops: Int(flow.interval) - 1)
                     }
                 } else {
                     if isLastRunning {

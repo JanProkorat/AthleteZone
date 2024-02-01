@@ -29,7 +29,7 @@ class WorkOutViewModel: ObservableObject, Identifiable {
     @Published var isRunViewVisible = false
 
     var timeOverview: Int {
-        (((work * series) + (rest * (series - 1)) + reset) * rounds) - reset
+        (((work * series) + (rest * series) + reset) * rounds) - reset
     }
 
     var isRunDisabled: Bool {

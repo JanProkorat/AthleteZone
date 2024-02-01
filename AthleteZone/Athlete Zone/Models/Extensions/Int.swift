@@ -8,12 +8,12 @@
 import Foundation
 
 extension Int {
-    func isIven() -> Bool {
+    func isEven() -> Bool {
         return self.isMultiple(of: 2)
     }
 
     func isOdd() -> Bool {
-        return !self.isMultiple(of: 2)
+        return !self.isEven()
     }
 
     func toHours() -> Int {

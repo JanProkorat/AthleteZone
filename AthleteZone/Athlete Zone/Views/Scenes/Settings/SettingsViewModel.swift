@@ -7,13 +7,13 @@
 
 import Combine
 import Foundation
-// import HealthKit
+ import HealthKit
 import SwiftUI
 
 class SettingsViewModel: ObservableObject {
     @Published var appStorageManager = AppStorageManager.shared
     @Published var languageManager = LanguageManager.shared
-//    var healthManager = HealthManager.shared
+    var healthManager = HealthManager.shared
 
     @ObservedObject var router = ViewRouter.shared
     @ObservedObject var subscriptionManager = SubscriptionManager.shared
@@ -22,8 +22,8 @@ class SettingsViewModel: ObservableObject {
     private let notificationManager = NotificationManager.shared
     private var cancellables = Set<AnyCancellable>()
 
-//    @Published var healthKitAccess = false
-//    @Published var hkAuthStatus: HKAuthorizationStatus = .notDetermined
+    @Published var healthKitAccess = false
+    @Published var hkAuthStatus: HKAuthorizationStatus = .notDetermined
 
     @Published var subscriptionActive = false
 
@@ -40,20 +40,20 @@ class SettingsViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
-//        $healthKitAccess
-//            .sink { self.grantAccess($0) }
-//            .store(in: &cancellables)
+        $healthKitAccess
+            .sink { self.grantAccess($0) }
+            .store(in: &cancellables)
 
-//        healthManager.$hkAccessStatus
-//            .sink { newValue in
-//                self.hkAuthStatus = newValue
-//                if newValue == .sharingAuthorized {
-//                    self.healthKitAccess = true
-//                } else {
-//                    self.healthKitAccess = false
-//                }
-//            }
-//            .store(in: &cancellables)
+        healthManager.$hkAccessStatus
+            .sink { newValue in
+                self.hkAuthStatus = newValue
+                if newValue == .sharingAuthorized {
+                    self.healthKitAccess = true
+                } else {
+                    self.healthKitAccess = false
+                }
+            }
+            .store(in: &cancellables)
 
         subscriptionManager.$subscriptionActivated
             .sink { isActivated in
@@ -62,18 +62,18 @@ class SettingsViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-//    func grantAccess(_ access: Bool) {
-//        if !access {
-//            return
-//        }
-//
-//        let status = healthManager.checkAuthorizationStatus()
-//        if status == .sharingAuthorized {
-//            return
-//        }
-//
-//        healthManager.requestAuthorization()
-//    }
+    func grantAccess(_ access: Bool) {
+        if !access {
+            return
+        }
+
+        let status = healthManager.checkAuthorizationStatus()
+        if status == .sharingAuthorized {
+            return
+        }
+
+        healthManager.requestAuthorization()
+    }
 
     func shareLanguage(_ language: Language) {
         connectivityManager.sendValue([TransferDataKey.language.rawValue: language.rawValue])

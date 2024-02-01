@@ -45,6 +45,7 @@
 //Settings
 "language" = "Sprache";
 "sounds" = "Töne";
+"soundsDescription" = "Ermöglicht akustische Benachrichtigungen, wenn das Zeitintervall dem Ende zugeht";
 "haptics" = "Haptik (nur Uhr)";
 "allowNotifications" = "Training erinnern";
 "allowNotificationsDescription" = "Benachrichtigungen mit Trainingserinnerungen";

@@ -44,6 +44,7 @@
 //Settings
 "language" = "Jazyk";
 "sounds" = "Zvuky";
+"soundsDescription" = "Povolí zvukové notifikace, když se časový interval blíží ke konci";
 "haptics" = "Vibrace (Jen hodinky)";
 "allowNotifications" = "Připoměň mi cvičení";
 "allowNotificationsDescription" = "Povolí notifikaci s připomínkou cvičení";

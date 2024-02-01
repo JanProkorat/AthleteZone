@@ -13,5 +13,6 @@ struct AthleteZoneWidgetAttributes: ActivityAttributes {
         // Dynamic stateful properties about your activity go here!
         var workFlow: WorkFlow
         var name: String
+        var state: WorkFlowState
     }
 }

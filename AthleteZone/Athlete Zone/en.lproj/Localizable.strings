@@ -45,6 +45,7 @@
 //Settings
 "language" = "Language";
 "sounds" = "Sounds";
+"soundsDescription" = "Enables sound notification when time interval is comming to an end";
 "haptics" = "Haptics (Watch only)";
 "allowNotifications" = "Remind me to exercise";
 "allowNotificationsDescription" = "Get notifications reminding you to work out";

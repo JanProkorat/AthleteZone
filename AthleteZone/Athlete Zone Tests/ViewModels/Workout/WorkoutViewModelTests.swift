@@ -35,7 +35,7 @@ final class WorkOutViewModelTests: XCTestCase {
         viewModel.reset = 60
 
         // When
-        let expectedTimeOverview = (((30 * 5) + (60 * (5 - 1)) + 60) * 3) - 60
+        let expectedTimeOverview = (((30 * 5) + (60 * 5) + 60) * 3) - 60
 
         // Then
         expect(self.viewModel.timeOverview) == expectedTimeOverview

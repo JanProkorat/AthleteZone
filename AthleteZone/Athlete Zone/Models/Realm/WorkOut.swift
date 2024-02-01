@@ -61,7 +61,7 @@ public class WorkOut: Object, WorkOutProtocol, RealmObjectProtocol {
     }
 
     var workoutLength: Int {
-        (((work * series) + (rest * (series - 1)) + reset) * rounds) - reset
+        (((work * series) + (rest * series) + reset) * rounds) - reset
     }
 
     var formattedCreatedDate: String {

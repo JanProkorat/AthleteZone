@@ -141,6 +141,7 @@ enum LocalizationKey: String {
     // Settings
     case language
     case sounds
+    case soundsDescription
     case allowNotifications
     case allowNotificationsDescription
     case haptics

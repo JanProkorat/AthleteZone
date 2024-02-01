@@ -34,7 +34,7 @@ enum WorkFlowType: String, Codable {
     case reset
 }
 
-enum WorkFlowState {
+enum WorkFlowState: String, Codable {
     case ready, running, paused, finished, quit
 }
 
