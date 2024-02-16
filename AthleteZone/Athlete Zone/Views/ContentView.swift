@@ -13,6 +13,7 @@ struct ContentView: View {
     @StateObject var launchScreenStateManager = LaunchScreenStateManager()
     @StateObject var subscriptionManager = SubscriptionManager.shared
     @State var showingSignIn = false
+    @State var isOfferCodeRedepmtionPresented = false
 
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.passIDs) private var passIDs
@@ -43,7 +44,7 @@ struct ContentView: View {
         .animation(.default, value: viewModel.currentSection)
         .sheet(isPresented: $subscriptionManager.isSubscriptionViewVisible) {
             SubscriptionStoreView(groupID: passIDs.group)
-                .storeButton(.visible, for: .policies)
+                .storeButton(.visible, for: .policies, .redeemCode)
                 .subscriptionStoreControlStyle(.prominentPicker)
                 .subscriptionStorePolicyDestination(for: .privacyPolicy) {
                     WebView(url: URL(string: "https://sites.google.com/view/athlete-zone-privacy/domovsk%C3%A1-str%C3%A1nka")!)
@@ -70,6 +71,7 @@ struct ContentView: View {
         .onInAppPurchaseCompletion { _, _ in
             self.subscriptionManager.isSubscriptionViewVisible.toggle()
         }
+        .offerCodeRedemption(isPresented: $isOfferCodeRedepmtionPresented)
     }
 }
 
