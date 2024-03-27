@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class TrainingRealmManagerMock: TrainingRealmManagerProtocol {
+class TrainingRealmManagerMock: TrainingRealmProtocol {
     var objects: [Training] = []
 
     func load() -> [Athlete_Zone.Training] {

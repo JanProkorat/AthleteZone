@@ -7,8 +7,10 @@
 
 import Foundation
 import RealmSwift
+import ComposableArchitecture
 
-class StopWatchRealmManager: RealmManager, StopWatchRealmManagerProtocol {
+class StopWatchRealmManager: RealmManager, StopWatchRealmProtocol {
+    static let shared = StopWatchRealmManager()
     @ObservedResults(StopWatch.self) var stopWatchLibrary
 
     func add(_ value: StopWatch) {
@@ -35,11 +37,11 @@ class StopWatchRealmManager: RealmManager, StopWatchRealmManagerProtocol {
         return objects
     }
 
-    func delete(entity: StopWatch) {
-        $stopWatchLibrary.remove(entity)
+    func delete(entityId: String) {
+        $stopWatchLibrary.remove(stopWatchLibrary.first(where: { $0.id == entityId })!)
     }
 
-    func getSortedData(_ searchText: String, _ sortBy: StopWatchSortByProperty, _ sortOrder: SortOrder) -> [StopWatch] {
+    func getSortedData(_ searchText: String, _ sortBy: StopWatchSortByProperty, _ sortOrder: SortOrder) -> [StopwatchDto] {
         let filteredRecords: [StopWatch]
         if searchText.isEmpty {
             // If the search text is empty, return all records without filtering.
@@ -85,7 +87,7 @@ class StopWatchRealmManager: RealmManager, StopWatchRealmManagerProtocol {
             })
         }
 
-        return sortedRecords
+        return sortedRecords.map { $0.toDto() }
     }
 
     func update(_ id: String, _ name: String) {
@@ -101,7 +103,11 @@ class StopWatchRealmManager: RealmManager, StopWatchRealmManagerProtocol {
         }
     }
 
-    func delete(_ activity: StopWatch) {
-        $stopWatchLibrary.remove(activity)
+    func loadLast() -> StopwatchDto? {
+        return stopWatchLibrary.sorted(by: \.startDate, ascending: false).first?.toDto()
     }
+}
+
+extension StopWatchRealmManager : DependencyKey {
+    static var liveValue: any StopWatchRealmProtocol = StopWatchRealmManager.shared
 }

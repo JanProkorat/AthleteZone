@@ -6,45 +6,19 @@
 //
 
 import AVKit
+import ComposableArchitecture
 import Foundation
 
 class SoundManager: SoundProtocol {
+    var selectedSound: Sound?
+
     static let shared = SoundManager()
 
     private var audioSession: AVAudioSession?
-    private var players: [Sound: AVAudioPlayer]
+    private var players: [Sound: AVAudioPlayer] = [:]
 
-    var selectedSound: Sound?
     var isSoundPlaying: Bool {
-        players.contains(where: { $0.value.isPlaying })
-    }
-
-    init() {
-        players = [:]
-
-        for sound in Sound.allCases {
-            if let player = setupVideoPlayer(sound) {
-                players[sound] = player
-            }
-        }
-
-        setupAudioSession()
-    }
-
-    func playSound(sound: Sound, numOfLoops: Int) {
-        selectedSound = sound
-        if let player = players[sound] {
-            player.numberOfLoops = numOfLoops
-            player.play()
-        }
-    }
-
-    func stop() {
-        if let sound = selectedSound {
-            if let player = players[sound] {
-                player.pause()
-            }
-        }
+        players.values.contains { $0.isPlaying }
     }
 
     private func setupAudioSession() {
@@ -57,16 +31,30 @@ class SoundManager: SoundProtocol {
         }
     }
 
-    private func setupVideoPlayer(_ sound: Sound) -> AVAudioPlayer? {
-        if let asset = NSDataAsset(name: sound.rawValue) {
-            do {
-                return try AVAudioPlayer(data: asset.data, fileTypeHint: "mp3")
-            } catch {
-                print(error.localizedDescription)
-                return nil
-            }
+    private func setupPlayer(for sound: Sound) -> AVAudioPlayer? {
+        guard let asset = NSDataAsset(name: sound.rawValue) else { return nil }
+        do {
+            return try AVAudioPlayer(data: asset.data, fileTypeHint: "mp3")
+        } catch {
+            print(error.localizedDescription)
+            return nil
         }
-        return nil
+    }
+
+    func playSound(sound: Sound, numOfLoops: Int) {
+        if isSoundPlaying, players[sound]?.isPlaying == true {
+            return // Avoid replaying the same sound
+        }
+        if let player = players[sound] ?? setupPlayer(for: sound) {
+            selectedSound = sound
+            players[sound] = player
+            player.numberOfLoops = numOfLoops
+            player.play()
+        }
+    }
+
+    func stop() {
+        players.values.forEach { $0.pause() }
     }
 
     deinit {
@@ -77,4 +65,8 @@ class SoundManager: SoundProtocol {
             print("Failed to deactivate audio session: \(error.localizedDescription)")
         }
     }
+}
+
+extension SoundManager: DependencyKey {
+    static var liveValue: SoundProtocol = SoundManager.shared
 }

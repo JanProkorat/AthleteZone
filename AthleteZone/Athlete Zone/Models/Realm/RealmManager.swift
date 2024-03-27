@@ -12,7 +12,7 @@ class RealmManager: ObservableObject {
     private(set) var realm: Realm!
 
     init() {
-        let config = Realm.Configuration(schemaVersion: 13)
+        let config = Realm.Configuration(schemaVersion: 16)
         Realm.Configuration.defaultConfiguration = config
         do {
             self.realm = try Realm()

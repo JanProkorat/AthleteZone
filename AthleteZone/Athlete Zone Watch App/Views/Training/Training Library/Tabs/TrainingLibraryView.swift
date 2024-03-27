@@ -35,11 +35,6 @@ struct TrainingLibraryView: View {
                 .background(Color(ComponentColor.darkBlue.rawValue))
                 .padding(.bottom)
         }
-        .fullScreenCover(isPresented: $viewModel.isRunSheetPresented, content: {
-            TrainingRunView()
-                .environmentObject(viewModel.runViewModel)
-                .navigationBarHidden(true)
-        })
     }
 }
 
@@ -54,7 +49,7 @@ struct TrainingLibraryView: View {
             trainingLength: 587,
             createdDate: Date(),
             workouts: [
-                WorkOutDto(
+                WorkoutDto(
                     id: "1",
                     name: "Prvni",
                     work: 2,
@@ -65,7 +60,7 @@ struct TrainingLibraryView: View {
                     createdDate: Date(),
                     workoutLength: 50
                 ),
-                WorkOutDto(
+                WorkoutDto(
                     id: "2",
                     name: "Druhy",
                     work: 3,
@@ -76,7 +71,7 @@ struct TrainingLibraryView: View {
                     createdDate: Date(),
                     workoutLength: 50
                 ),
-                WorkOutDto(
+                WorkoutDto(
                     id: "sadsdsa",
                     name: "Test",
                     work: 30,

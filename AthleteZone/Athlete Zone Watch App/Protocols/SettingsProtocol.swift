@@ -15,6 +15,6 @@ protocol SettingsProtocol: ObservableObject {
 
     var currentSectionPublished: Published<Section>.Publisher { get }
 
-    func backupData(_ workouts: [WorkOutDto], _ trainings: [TrainingDto])
+    func backupData(_ workouts: [WorkoutDto], _ trainings: [TrainingDto])
     func loadBackupData() -> BackUpDto?
 }

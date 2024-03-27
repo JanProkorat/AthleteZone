@@ -8,12 +8,8 @@
 import SwiftUI
 
 struct WorkoutPickerItem: View {
-    let workOut: WorkOut
-    @Binding var selectedWorkouts: [WorkOut]
-
-    var isSelected: Bool {
-        selectedWorkouts.contains { $0._id == workOut._id }
-    }
+    let workout: WorkoutDto
+    let isSelected: Bool
 
     let fieldConfig: [[ActivityType]] = [.work, .rounds, .rest, .series, .reset].chunked(into: 2)
 
@@ -21,7 +17,7 @@ struct WorkoutPickerItem: View {
         GeometryReader { reader in
             VStack {
                 HStack(alignment: .center) {
-                    TitleText(text: workOut.name)
+                    TitleText(text: workout.name)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 10)
 
@@ -63,7 +59,7 @@ struct WorkoutPickerItem: View {
                 .font(.callout)
                 .foregroundColor(Color(getColor(item)))
                 .padding(.leading, -7)
-            Text(item == nil ? self.workOut.workoutLength.toFormattedTime() : getValueByType(item!))
+            Text(item == nil ? self.workout.workoutLength.toFormattedTime() : getValueByType(item!))
                 .font(.callout)
                 .foregroundColor(Color(getColor(item)))
                 .frame(maxWidth: .infinity, alignment: .trailing)
@@ -97,26 +93,37 @@ struct WorkoutPickerItem: View {
     func getValueByType(_ type: ActivityType) -> String {
         switch type {
         case .work:
-            return workOut.work.toFormattedTime()
+            return workout.work.toFormattedTime()
 
         case .rest:
-            return workOut.rest.toFormattedTime()
+            return workout.rest.toFormattedTime()
 
         case .series:
-            return workOut.series.toFormattedValue(type: .number)
+            return workout.series.toFormattedValue(type: .number)
 
         case .rounds:
-            return workOut.rounds.toFormattedValue(type: .number)
+            return workout.rounds.toFormattedValue(type: .number)
 
         case .reset:
-            return workOut.reset.toFormattedTime()
+            return workout.reset.toFormattedTime()
         }
     }
 }
 
 struct WorkoutPickerItem_Previews: PreviewProvider {
     static var previews: some View {
-        let workouts = [WorkOut]()
-        WorkoutPickerItem(workOut: WorkOut(), selectedWorkouts: Binding.constant(workouts))
+        WorkoutPickerItem(
+            workout: WorkoutDto(
+                id: "1",
+                name: "Prvni",
+                work: 2,
+                rest: 2,
+                series: 2,
+                rounds: 2,
+                reset: 30,
+                createdDate: Date(),
+                workoutLength: 50
+            ), isSelected: true
+        )
     }
 }

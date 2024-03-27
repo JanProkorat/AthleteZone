@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WorkOutListView: View {
-    var workOut: WorkOut
+    var workOut: WorkoutDto
     var buttonsEnabled = true
 
     var onEditTab: (() -> Void)?
@@ -17,11 +17,11 @@ struct WorkOutListView: View {
 
     let fieldConfig: [[ActivityType]] = [.work, .series, .rest, .rounds, .reset].chunked(into: 2)
 
-    init(workOut: WorkOut) {
+    init(workOut: WorkoutDto) {
         self.workOut = workOut
     }
 
-    init(workOut: WorkOut, buttonsEnabled: Bool) {
+    init(workOut: WorkoutDto, buttonsEnabled: Bool) {
         self.workOut = workOut
         self.buttonsEnabled = buttonsEnabled
     }
@@ -52,9 +52,10 @@ struct WorkOutListView: View {
                             .padding(.leading)
                             .padding(.trailing, 4)
                         listViewItem(
-                            item: chunk.count > 1 ? chunk.last! : nil, width: width * 0.4)
-                            .padding(.leading, 4)
-                            .padding(.trailing)
+                            item: chunk.count > 1 ? chunk.last! : nil, width: width * 0.4
+                        )
+                        .padding(.leading, 4)
+                        .padding(.trailing)
                     }
                     .padding(.bottom, chunk.count > 1 ? 1 : 10)
                     .frame(alignment: .center)
@@ -77,9 +78,10 @@ struct WorkOutListView: View {
                             .padding(.leading)
                             .padding(.trailing, 4)
                         listViewItem(
-                            item: chunk.count > 1 ? chunk.last! : nil, width: width * 0.4)
-                            .padding(.leading, 4)
-                            .padding(.trailing)
+                            item: chunk.count > 1 ? chunk.last! : nil, width: width * 0.4
+                        )
+                        .padding(.leading, 4)
+                        .padding(.trailing)
                     }
                     .padding(.bottom, chunk.count > 1 ? 1 : 10)
                     .frame(alignment: .center)
@@ -152,7 +154,20 @@ struct WorkOutListView: View {
 
 struct WorkOutListView_Previews: PreviewProvider {
     static var previews: some View {
-        WorkOutListView(workOut: WorkOut())
+        WorkOutListView(
+            workOut:
+            WorkoutDto(
+                id: "1",
+                name: "asdas",
+                work: 5,
+                rest: 5,
+                series: 5,
+                rounds: 5,
+                reset: 5,
+                createdDate: Date(),
+                workoutLength: 180
+            )
+        )
     }
 }
 

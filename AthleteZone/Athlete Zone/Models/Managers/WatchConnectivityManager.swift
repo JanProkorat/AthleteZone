@@ -5,6 +5,7 @@
 //  Created by Jan Prokorát on 10.01.2023.
 //
 
+import ComposableArchitecture
 import Foundation
 import WatchConnectivity
 
@@ -77,7 +78,7 @@ extension WatchConnectivityManager: WCSessionDelegate {
 
     func loadReplyData() -> String {
         let workoutManager = WorkoutRealmManager()
-        let workouts = workoutManager.load().map { $0.toDto() }
+        let workouts = workoutManager.load()
 
         let trainingManager = TrainingRealmManager()
         let trainings = trainingManager.load().map { $0.toDto() }
@@ -89,4 +90,8 @@ extension WatchConnectivityManager: WCSessionDelegate {
             WCSession.default.sendMessage(value) { _ in }
         }
     }
+}
+
+extension WatchConnectivityManager: DependencyKey {
+    static var liveValue: any WatchConnectivityProtocol = WatchConnectivityManager.shared
 }

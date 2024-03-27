@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct WorkoutPicker: View {
-    @Binding var selectedWorkouts: [WorkOut]
-    var workoutLibrary: [WorkOut] = []
+    @Binding var workouts: [WorkoutDto]
+    var workoutsLibrary: [WorkoutDto]
 
     var onCloseTab: (() -> Void)?
 
     var body: some View {
         DetailBaseView(title: LocalizedStringKey(LocalizationKey.selectWorkouts.rawValue)) {
-            List(workoutLibrary.sorted(by: { $0.name < $1.name }), id: \._id) { workout in
+            List(workoutsLibrary, id: \.id) { workout in
                 Button {
-                    if let index = selectedWorkouts.firstIndex(where: { $0._id == workout._id }) {
-                        selectedWorkouts.remove(at: index)
+                    if let index = workouts.firstIndex(where: { $0.id == workout.id }) {
+                        workouts.remove(at: index)
                     } else {
-                        selectedWorkouts.append(workout)
+                        workouts.append(workout)
                     }
                 } label: {
                     listItem(item: workout)
@@ -30,9 +30,9 @@ struct WorkoutPicker: View {
                 .background(Color(ComponentColor.darkBlue.rawValue))
             }
             .listStyle(.plain)
-            .padding([.top, .bottom])
+            .padding([.top, .bottom], 5)
             .overlay(alignment: .top) {
-                if workoutLibrary.isEmpty {
+                if workoutsLibrary.isEmpty {
                     Text(LocalizationKey.noWorkoutsToDisplay.localizedKey)
                         .font(.headline)
                         .bold()
@@ -46,20 +46,86 @@ struct WorkoutPicker: View {
     }
 
     @ViewBuilder
-    func listItem(item: WorkOut) -> some View {
+    func listItem(item: WorkoutDto) -> some View {
         WorkoutPickerItem(
-            workOut: item,
-            selectedWorkouts: $selectedWorkouts
+            workout: item,
+            isSelected: workouts.contains(item)
         )
         .padding([.leading, .trailing], 2)
-        .id(item._id)
+        .id(item.id)
     }
 }
 
 struct WorkoutPicker_Previews: PreviewProvider {
     static var previews: some View {
-        let bind = Binding.constant([WorkOut]())
-        WorkoutPicker(selectedWorkouts: bind, workoutLibrary: [])
+        WorkoutPicker(workouts: Binding.constant([]), workoutsLibrary: [
+            WorkoutDto(
+                id: "2",
+                name: "Druhy",
+                work: 3,
+                rest: 3,
+                series: 3,
+                rounds: 3,
+                reset: 30,
+                createdDate: Date(),
+                workoutLength: 50
+            ),
+            WorkoutDto(
+                id: "3",
+                name: "Treti",
+                work: 2,
+                rest: 2,
+                series: 2,
+                rounds: 2,
+                reset: 30,
+                createdDate: Date(),
+                workoutLength: 50
+            ),
+            WorkoutDto(
+                id: "2",
+                name: "Druhy",
+                work: 3,
+                rest: 3,
+                series: 3,
+                rounds: 3,
+                reset: 30,
+                createdDate: Date(),
+                workoutLength: 50
+            ),
+            WorkoutDto(
+                id: "3",
+                name: "Treti",
+                work: 2,
+                rest: 2,
+                series: 2,
+                rounds: 2,
+                reset: 30,
+                createdDate: Date(),
+                workoutLength: 50
+            ),
+            WorkoutDto(
+                id: "2",
+                name: "Druhy",
+                work: 3,
+                rest: 3,
+                series: 3,
+                rounds: 3,
+                reset: 30,
+                createdDate: Date(),
+                workoutLength: 50
+            ),
+            WorkoutDto(
+                id: "3",
+                name: "Treti",
+                work: 2,
+                rest: 2,
+                series: 2,
+                rounds: 2,
+                reset: 30,
+                createdDate: Date(),
+                workoutLength: 50
+            )
+        ])
     }
 }
 

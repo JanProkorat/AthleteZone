@@ -8,7 +8,7 @@
 import Foundation
 
 struct BackUpDto: Codable {
-    var workouts: [WorkOutDto] = []
+    var workouts: [WorkoutDto] = []
     var trainings: [TrainingDto] = []
     var currentSection: Section = .workout
     var currentLanguage: Language = .en

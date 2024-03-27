@@ -5,8 +5,8 @@
 //  Created by Jan Prokorát on 03.11.2022.
 //
 
+import ComposableArchitecture
 import SwiftUI
-import WidgetKit
 
 @main
 struct AthleteZoneApp: App {
@@ -14,7 +14,10 @@ struct AthleteZoneApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(store: ComposableArchitecture.Store(initialState: ContentFeature.State()) {
+                ContentFeature()
+                    ._printChanges()
+            })
         }
     }
 }

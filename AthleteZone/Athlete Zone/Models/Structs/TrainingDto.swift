@@ -15,7 +15,13 @@ struct TrainingDto: Codable, Identifiable {
     var workoutsCount: Int
     var trainingLength: Int
     var createdDate: Date
-    var workouts: [WorkOutDto]
+    var workouts: [WorkoutDto]
+
+    var formattedCreatedDate: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        return dateFormatter.string(from: createdDate)
+    }
 }
 
 extension TrainingDto {

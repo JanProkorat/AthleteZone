@@ -15,9 +15,9 @@ struct MenuBar: View {
     var onRouteTab: ((_ routeToGo: Tab) -> Void)?
 
     let icons = [
-        MenuBarItem(id: Tab.home, icon: Icons.home.rawValue, activeIcon: Icons.homeActive.rawValue),
-        MenuBarItem(id: Tab.library, icon: Icons.book.rawValue, activeIcon: Icons.bookActive.rawValue),
-        MenuBarItem(id: Tab.setting, icon: Icons.setting.rawValue, activeIcon: Icons.settingActive.rawValue)
+        MenuBarItem(id: Tab.home, icon: Icon.home.rawValue, activeIcon: Icon.homeActive.rawValue),
+        MenuBarItem(id: Tab.library, icon: Icon.book.rawValue, activeIcon: Icon.bookActive.rawValue),
+        MenuBarItem(id: Tab.settings, icon: Icon.setting.rawValue, activeIcon: Icon.settingActive.rawValue)
     ]
 
     var body: some View {

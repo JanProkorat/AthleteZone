@@ -22,7 +22,7 @@ class SettingsManager: SettingsProtocol {
                 store: UserDefaults(suiteName: UserDefaultValues.groupId.rawValue))
     var backupData: String = ""
 
-    func backupData(_ workouts: [WorkOutDto], _ trainings: [TrainingDto]) {
+    func backupData(_ workouts: [WorkoutDto], _ trainings: [TrainingDto]) {
         let backup = BackUpDto(
             workouts: workouts,
             trainings: trainings,

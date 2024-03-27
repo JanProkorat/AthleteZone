@@ -24,7 +24,7 @@ protocol AppStorageProtocol: ObservableObject {
     ///   - key: Key of the property in user defaults
     func storeToUserDefaults(data: String, key: UserDefaultValues)
 
-    /// Retrieves stored datafor widget  in JSON format from user defaults by given key
+    /// Retrieves stored data for widget  in JSON format from user defaults by given key
     /// - Parameter key: Key of the property in user defaults
     /// - Returns: DTO in JSON format
     func loadFromDefaults(key: UserDefaultValues) -> String?

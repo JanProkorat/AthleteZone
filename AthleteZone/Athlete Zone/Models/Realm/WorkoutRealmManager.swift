@@ -5,10 +5,12 @@
 //  Created by Jan Prokorát on 24.11.2022.
 //
 
+import ComposableArchitecture
 import Realm
 import RealmSwift
 
-class WorkoutRealmManager: RealmManager, WorkOutRealmManagerProtocol {
+class WorkoutRealmManager: RealmManager, WorkOutRealmProtocol {
+    static let shared = WorkoutRealmManager()
     @ObservedResults(WorkOut.self) private var workOutLibrary
 
     func add(_ value: WorkOut) {
@@ -26,7 +28,7 @@ class WorkoutRealmManager: RealmManager, WorkOutRealmManagerProtocol {
         }
     }
 
-    func load() -> [WorkOut] {
+    func load() -> [WorkoutDto] {
         var objects: [WorkOut] = []
         let queue = DispatchQueue(label: "realmQueue", qos: .background)
         queue.sync {
@@ -37,17 +39,17 @@ class WorkoutRealmManager: RealmManager, WorkOutRealmManagerProtocol {
                 print(error.localizedDescription)
             }
         }
-        return objects
+        return objects.map { $0.toDto() }
     }
 
-    func delete(entity: WorkOut) {
-        $workOutLibrary.remove(entity)
+    func delete(entityId: String) {
+        $workOutLibrary.remove(workOutLibrary.first(where: { $0.id == entityId })!)
     }
 
-    func update(_ id: ObjectId, _ name: String, _ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int) {
+    func update(_ id: String, _ name: String, _ work: Int, _ rest: Int, _ series: Int, _ rounds: Int, _ reset: Int) {
         do {
             try realm.write {
-                let workout = realm.objects(WorkOut.self).first { $0._id == id }
+                let workout = realm.objects(WorkOut.self).first { $0.id == id }
                 workout?.name = name
                 workout?.work = work
                 workout?.rest = rest
@@ -60,7 +62,7 @@ class WorkoutRealmManager: RealmManager, WorkOutRealmManagerProtocol {
         }
     }
 
-    func getSortedData(_ searchText: String, _ sortBy: WorkOutSortByProperty, _ sortOrder: SortOrder) -> [WorkOut] {
+    func getSortedData(_ searchText: String, _ sortBy: WorkOutSortByProperty, _ sortOrder: SortOrder) -> [WorkoutDto] {
         // Step 1: Filter the list of workouts based on the search text (name).
         let filteredWorkouts: [WorkOut]
         if searchText.isEmpty {
@@ -134,7 +136,7 @@ class WorkoutRealmManager: RealmManager, WorkOutRealmManagerProtocol {
         }
 
         // Step 3: Return the sorted and filtered list as an array.
-        return sortedWorkouts
+        return sortedWorkouts.map { $0.toDto() }
     }
 
     func isWorkoutAssignedToTraining(_ id: String) -> Bool {
@@ -150,4 +152,8 @@ class WorkoutRealmManager: RealmManager, WorkOutRealmManagerProtocol {
             return false
         }
     }
+}
+
+extension WorkoutRealmManager: DependencyKey {
+    static var liveValue: any WorkOutRealmProtocol = WorkoutRealmManager.shared
 }

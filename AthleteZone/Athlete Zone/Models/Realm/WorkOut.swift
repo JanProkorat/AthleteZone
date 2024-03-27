@@ -109,9 +109,9 @@ public class WorkOut: Object, WorkOutProtocol, RealmObjectProtocol {
 }
 
 extension WorkOut {
-    func toDto() -> WorkOutDto {
-        return WorkOutDto(
-            id: _id.stringValue,
+    func toDto() -> WorkoutDto {
+        return WorkoutDto(
+            id: id,
             name: name,
             work: work,
             rest: rest,

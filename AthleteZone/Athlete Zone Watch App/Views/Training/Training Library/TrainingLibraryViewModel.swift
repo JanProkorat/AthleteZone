@@ -17,19 +17,19 @@ class TrainingLibraryViewModel: ObservableObject {
 
     @Published var isRunSheetPresented = false
 
-    @ObservedObject var runViewModel = TrainingRunViewModel()
+//    @ObservedObject var runViewModel = TrainingRunViewModel()
 
     private var cancellables = Set<AnyCancellable>()
 
     init() {
-        runViewModel
-            .$closeSheet
-            .sink { close in
-                if close {
-                    self.isRunSheetPresented.toggle()
-                }
-            }
-            .store(in: &cancellables)
+//        runViewModel
+//            .$closeSheet
+//            .sink { close in
+//                if close {
+//                    self.isRunSheetPresented.toggle()
+//                }
+//            }
+//            .store(in: &cancellables)
     }
 
     func setLibrary(_ trainings: [TrainingDto]) {
@@ -73,7 +73,7 @@ class TrainingLibraryViewModel: ObservableObject {
     }
 
     func setupViewModel(_ training: TrainingDto) {
-        runViewModel.setupViewModel(trainingName: training.name, workouts: training.workouts)
+//        runViewModel.setupViewModel(trainingName: training.name, workouts: training.workouts)
         isRunSheetPresented.toggle()
     }
 }

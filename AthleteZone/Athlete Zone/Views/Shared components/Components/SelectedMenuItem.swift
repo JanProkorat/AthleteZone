@@ -32,6 +32,6 @@ struct SelectedMenuItem: View {
 
 struct SelectedMenuItem_Previews: PreviewProvider {
     static var previews: some View {
-        SelectedMenuItem(height: 40, icon: Icons.homeActive.rawValue)
+        SelectedMenuItem(height: 40, icon: Icon.homeActive.rawValue)
     }
 }

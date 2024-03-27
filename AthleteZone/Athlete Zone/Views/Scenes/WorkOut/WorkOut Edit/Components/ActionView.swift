@@ -51,7 +51,7 @@ struct ActionView_Previews: PreviewProvider {
             text: LocalizationKey.save,
             color: ComponentColor.lightGreen,
             backgoundColor: nil,
-            image: Icons.check.rawValue,
+            image: Icon.check.rawValue,
             height: 60,
             cornerRadius: 10
         )

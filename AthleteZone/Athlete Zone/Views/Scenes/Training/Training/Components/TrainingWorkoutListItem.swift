@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TrainingWorkoutListItem: View {
-    let workout: WorkOut
+    let workout: WorkoutDto
     let height: CGFloat
 
     var onInfoTab: (() -> Void)?
@@ -48,7 +48,20 @@ struct TrainingWorkoutListItem: View {
 
 struct TrainingWorkoutListItem_Previews: PreviewProvider {
     static var previews: some View {
-        TrainingWorkoutListItem(workout: WorkOut(), height: 50)
+        TrainingWorkoutListItem(
+            workout: WorkoutDto(
+                id: "123",
+                name: "test",
+                work: 30,
+                rest: 60,
+                series: 5,
+                rounds: 3,
+                reset: 60,
+                createdDate: Date(),
+                workoutLength: 180
+            ),
+            height: 50
+        )
     }
 }
 

@@ -5,13 +5,15 @@
 //  Created by Jan Prokorát on 03.07.2023.
 //
 
+import ComposableArchitecture
 import Foundation
 import RealmSwift
 
-class TrainingRealmManager: RealmManager, TrainingRealmManagerProtocol {
+class TrainingRealmManager: RealmManager, TrainingRealmProtocol {
+    static let shared = TrainingRealmManager()
     @ObservedResults(Training.self) private var trainingLibrary
 
-    func load(_ searchText: String, _ sortBy: TrainingSortByProperty, _ sortOrder: SortOrder) -> [Training] {
+    func load(_ searchText: String, _ sortBy: TrainingSortByProperty, _ sortOrder: SortOrder) -> [TrainingDto] {
         let filteredTrainings: [Training]
         if searchText.isEmpty {
             filteredTrainings = Array(trainingLibrary)
@@ -52,32 +54,25 @@ class TrainingRealmManager: RealmManager, TrainingRealmManagerProtocol {
             }
         }
 
-        return sortedTrainings
+        return sortedTrainings.map { $0.toDto() }
     }
 
-    func delete(entity: Training) {
-        $trainingLibrary.remove(entity)
+    func delete(entityId: String) {
+        $trainingLibrary.remove(trainingLibrary.first(where: { $0.id == entityId })!)
     }
 
-    func load(primaryKey: String) -> Training? {
-        do {
-            let objectId = try ObjectId(string: primaryKey)
-            return trainingLibrary.first(where: { $0._id == objectId })
-
-        } catch {
-            print(error.localizedDescription)
-            return nil
-        }
+    func load(primaryKey: String) -> TrainingDto? {
+        return trainingLibrary.first(where: { $0.id == primaryKey })?.toDto()
     }
 
     func add(_ training: Training) {
         $trainingLibrary.append(training)
     }
 
-    func update(_ id: ObjectId, _ name: String, _ description: String, _ workouts: [WorkOut]) {
+    func update(_ id: String, _ name: String, _ description: String, _ workouts: [WorkOut]) {
         do {
             try realm.write {
-                let training = realm.objects(Training.self).first { $0._id == id }
+                let training = realm.objects(Training.self).first { $0.id == id }
                 training?.name = name
                 training?.trainingDescription = description
                 training?.workouts.removeAll()
@@ -91,4 +86,8 @@ class TrainingRealmManager: RealmManager, TrainingRealmManagerProtocol {
     func load() -> [Training] {
         return Array(trainingLibrary)
     }
+}
+
+extension TrainingRealmManager: DependencyKey {
+    static var liveValue: any TrainingRealmProtocol = TrainingRealmManager.shared
 }

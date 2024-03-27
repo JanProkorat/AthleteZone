@@ -14,30 +14,30 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             TabView(selection: $selectedTab) {
-                WorkOutView()
-                    .tag(0)
+//                WorkOutView()
+//                    .tag(0)
 
                 WatchLibraryView()
                     .environmentObject(viewModel)
                     .tag(1)
 
-                Group {
-                    if viewModel.currentSection == .workout {
-                        WorkoutFiltersView()
-                            .environmentObject(viewModel.workoutLibraryViewModel)
-
-                    } else {
-                        TrainingFiltersView()
-                            .environmentObject(viewModel.trainingLibraryViewModel)
-                    }
-                }
-                .tag(2)
+//                Group {
+//                    if viewModel.currentSection == .workout {
+//                WorkoutFiltersView()
+//                            .environmentObject(viewModel.workoutLibraryViewModel)
+//
+//                    } else {
+//                        TrainingFiltersView()
+//                            .environmentObject(viewModel.trainingLibraryViewModel)
+//                    }
+//                }
+//                .tag(2)
             }
 
-            if viewModel.launchScreenState != .finished {
-                LaunchScreenView()
-                    .environmentObject(viewModel.launchScreenStateManager)
-            }
+//            if viewModel.launchScreenState != .finished {
+//                LaunchScreenView()
+            ////                    .environmentObject(viewModel.launchScreenStateManager)
+//            }
         }
     }
 }

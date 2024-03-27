@@ -55,6 +55,7 @@
 "runInBackgroundDescription" = "Ponechá běžet časovač i při vypnutém displeji nebo když je uživatel mimo aplikaci";
 
 //Workout edit
+"saveWorkout" = "Uložit workout";
 "addWorkout" = "Přidat workout";
 "editWorkout" = "Upravit workout";
 "enterName" = "Zadejte název...";
@@ -118,7 +119,10 @@
 "endDate" = "Datum ukončení";
 "activityLength" = "Délka aktivity";
 "editActivity" = "Upravit aktivitu";
-"noSplitTimes" = "Aktivita neobsahuje žázné mezičasy.";
+"noSplitTimes" = "Aktivita neobsahuje žádné mezičasy.";
+"lastActivity" = "Poslední aktivita";
+"recent" = "Nedávné";
+"newActivity" = "Nová aktivita";
 
 //Subscription
 "active" = "Aktivní";
