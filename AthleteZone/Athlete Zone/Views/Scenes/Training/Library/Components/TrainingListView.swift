@@ -80,7 +80,7 @@ struct TrainingListView_Previews: PreviewProvider {
                 trainingLength: 3600,
                 createdDate: Date(),
                 workouts: [WorkoutDto(
-                    id: "1",
+                    id: UUID(),
                     name: "Prvni",
                     work: 2,
                     rest: 2,
@@ -91,7 +91,7 @@ struct TrainingListView_Previews: PreviewProvider {
                     workoutLength: 50
                 ),
                 WorkoutDto(
-                    id: "1",
+                    id: UUID(),
                     name: "Prvni",
                     work: 2,
                     rest: 2,
@@ -102,7 +102,7 @@ struct TrainingListView_Previews: PreviewProvider {
                     workoutLength: 50
                 ),
                 WorkoutDto(
-                    id: "1",
+                    id: UUID(),
                     name: "Prvni",
                     work: 2,
                     rest: 2,
@@ -113,7 +113,7 @@ struct TrainingListView_Previews: PreviewProvider {
                     workoutLength: 50
                 ),
                 WorkoutDto(
-                    id: "1",
+                    id: UUID(),
                     name: "Prvni",
                     work: 2,
                     rest: 2,
@@ -124,7 +124,7 @@ struct TrainingListView_Previews: PreviewProvider {
                     workoutLength: 50
                 ),
                 WorkoutDto(
-                    id: "1",
+                    id: UUID(),
                     name: "Prvni",
                     work: 2,
                     rest: 2,

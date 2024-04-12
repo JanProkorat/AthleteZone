@@ -24,7 +24,6 @@ struct TrainingEditFeature {
         }
 
         var workoutsLibrary: [WorkoutDto] = []
-        var selectedWorkouts: [WorkoutDto] = []
         var isWorkoutsSheetVisible = false
     }
 
@@ -45,7 +44,7 @@ struct TrainingEditFeature {
         }
     }
 
-    @Dependency(\.workoutRealmManager) var realmManager
+    @Dependency(\.workoutRepository) var realmManager
     @Dependency(\.dismiss) var dismiss
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -73,16 +72,17 @@ struct TrainingEditFeature {
 
             case .sheetVisibleChanged(let visible):
                 if visible {
-                    state.workoutsLibrary = realmManager.getSortedData("", .name, .ascending)
-                } else {
-                    state.selectedWorkouts.forEach { state.workouts.append($0) }
-                    state.selectedWorkouts = []
+                    do {
+                        state.workoutsLibrary = try realmManager.getSortedData("", .name, .ascending)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
                 }
                 state.isWorkoutsSheetVisible = visible
                 return .none
 
             case .selectedWorkoutsChanged(let data):
-                state.selectedWorkouts = data
+                state.workouts = data
                 return .none
 
             case .move(let from, let to):

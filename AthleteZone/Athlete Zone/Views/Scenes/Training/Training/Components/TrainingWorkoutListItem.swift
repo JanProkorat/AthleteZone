@@ -50,7 +50,7 @@ struct TrainingWorkoutListItem_Previews: PreviewProvider {
     static var previews: some View {
         TrainingWorkoutListItem(
             workout: WorkoutDto(
-                id: "123",
+                id: UUID(),
                 name: "test",
                 work: 30,
                 rest: 60,

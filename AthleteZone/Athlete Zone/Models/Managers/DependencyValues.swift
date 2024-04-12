@@ -24,9 +24,9 @@ extension DependencyValues {
         set { self[SubscriptionManager.self] = newValue }
     }
 
-    var workoutRealmManager: WorkoutRealmManager {
-        get { self[WorkoutRealmManager.self] }
-        set { self[WorkoutRealmManager.self] = newValue }
+    var workoutRepository: WorkoutRepository {
+        get { self[WorkoutRepository.self] }
+        set { self[WorkoutRepository.self] = newValue }
     }
 
     var watchConnectivityManager: WatchConnectivityManager {
@@ -39,24 +39,29 @@ extension DependencyValues {
         set { self[SoundManager.self] = newValue }
     }
 
-    var trainingRealmManager: TrainingRealmManager {
-        get { self[TrainingRealmManager.self] }
-        set { self[TrainingRealmManager.self] = newValue }
+    var trainingRepository: TrainingRepository {
+        get { self[TrainingRepository.self] }
+        set { self[TrainingRepository.self] = newValue }
     }
 
-    var stopWatchRealmManager: StopWatchRealmManager {
-        get { self[StopWatchRealmManager.self] }
-        set { self[StopWatchRealmManager.self] = newValue }
+    var stopWatchRepository: StopWatchRepository {
+        get { self[StopWatchRepository.self] }
+        set { self[StopWatchRepository.self] = newValue }
     }
 
-    var timerRealmManager: TimerRealmManager {
-        get { self[TimerRealmManager.self] }
-        set { self[TimerRealmManager.self] = newValue }
+    var timerActivityRepository: TimerActivityRepository {
+        get { self[TimerActivityRepository.self] }
+        set { self[TimerActivityRepository.self] = newValue }
     }
 
     var healthManager: HealthManager {
         get { self[HealthManager.self] }
         set { self[HealthManager.self] = newValue }
+    }
+
+    var appContext: AppContext {
+        get { self[AppContext.self] }
+        set { self[AppContext.self] = newValue }
     }
 }
 

@@ -104,6 +104,7 @@
 "addTraining" = "Add training";
 "editTraining" = "Edit training";
 "total" = "Total";
+"workoutsInTraining" = "Workouts in training";
 
 //StopWatch
 "history" = "History";

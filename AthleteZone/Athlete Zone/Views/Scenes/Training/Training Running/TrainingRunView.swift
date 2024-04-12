@@ -150,7 +150,7 @@ struct TrainingRunView: View {
             name: "name",
             workouts: [
                 WorkoutDto(
-                    id: "1",
+                    id: UUID(),
                     name: "Prvni",
                     work: 2,
                     rest: 2,
@@ -161,7 +161,7 @@ struct TrainingRunView: View {
                     workoutLength: 50
                 ),
                 WorkoutDto(
-                    id: "1",
+                    id: UUID(),
                     name: "Prvni",
                     work: 2,
                     rest: 2,
@@ -172,7 +172,7 @@ struct TrainingRunView: View {
                     workoutLength: 50
                 ),
                 WorkoutDto(
-                    id: "1",
+                    id: UUID(),
                     name: "Prvni",
                     work: 2,
                     rest: 2,
@@ -183,7 +183,7 @@ struct TrainingRunView: View {
                     workoutLength: 50
                 ),
                 WorkoutDto(
-                    id: "1",
+                    id: UUID(),
                     name: "Prvni",
                     work: 2,
                     rest: 2,
@@ -194,7 +194,7 @@ struct TrainingRunView: View {
                     workoutLength: 50
                 ),
                 WorkoutDto(
-                    id: "1",
+                    id: UUID(),
                     name: "Prvni",
                     work: 2,
                     rest: 2,
@@ -205,7 +205,7 @@ struct TrainingRunView: View {
                     workoutLength: 50
                 ),
                 WorkoutDto(
-                    id: "1",
+                    id: UUID(),
                     name: "Prvni",
                     work: 2,
                     rest: 2,

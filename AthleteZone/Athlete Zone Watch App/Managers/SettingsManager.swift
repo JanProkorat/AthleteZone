@@ -22,24 +22,24 @@ class SettingsManager: SettingsProtocol {
                 store: UserDefaults(suiteName: UserDefaultValues.groupId.rawValue))
     var backupData: String = ""
 
-    func backupData(_ workouts: [WorkoutDto], _ trainings: [TrainingDto]) {
-        let backup = BackUpDto(
-            workouts: workouts,
-            trainings: trainings,
-            currentLanguage: currentLanguage,
-            soundsEnabled: soundsEnabled,
-            hapticsEnabled: hapticsEnabled
-        )
-
-        backupData = backup.encode()
-    }
-
-    func loadBackupData() -> BackUpDto? {
-        do {
-            return try backupData.decode<BackUpDto>()
-        } catch {
-            print(error.localizedDescription)
-            return nil
-        }
-    }
+//    func backupData(_ workouts: [WorkoutDto], _ trainings: [TrainingDto]) {
+//        let backup = BackUpDto(
+//            workouts: workouts,
+//            trainings: trainings,
+//            currentLanguage: currentLanguage,
+//            soundsEnabled: soundsEnabled,
+//            hapticsEnabled: hapticsEnabled
+//        )
+//
+//        backupData = backup.encode()
+//    }
+//
+//    func loadBackupData() -> BackUpDto? {
+//        do {
+//            return try backupData.decode<BackUpDto>()
+//        } catch {
+//            print(error.localizedDescription)
+//            return nil
+//        }
+//    }
 }

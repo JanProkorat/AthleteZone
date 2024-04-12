@@ -32,7 +32,7 @@ struct HistoryFeature {
         case updateActivity(String, String)
     }
 
-    @Dependency(\.stopWatchRealmManager) var realmManager
+    @Dependency(\.stopWatchRepository) var stopWatchRepository
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
@@ -52,7 +52,7 @@ struct HistoryFeature {
                 return .send(.displayData)
 
             case .displayData:
-                state.library = realmManager.getSortedData(state.searchText, state.sortBy, state.sortOrder)
+                state.library = stopWatchRepository.getSortedData(state.searchText, state.sortBy, state.sortOrder)
                 return .none
 
             case .editTapped(let activity):
@@ -64,11 +64,11 @@ struct HistoryFeature {
                 return .none
 
             case .deleteTapped(let id):
-                realmManager.delete(entityId: id)
+                stopWatchRepository.delete(id)
                 return .send(.displayData)
 
             case .updateActivity(let id, let name):
-                realmManager.update(id, name)
+                stopWatchRepository.update(id, name)
                 return .run { send in
                     await send(.editTapped(nil))
                     await send(.displayData)

@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import os
 
 // swiftlint:disable pattern_matching_keywords
 // swiftlint:disable nesting
@@ -14,7 +15,7 @@ import Foundation
 struct WorkoutFeature {
     @ObservableState
     struct State {
-        var id: String?
+        var id: UUID?
         var name = ""
         var work = 30
         var rest = 60
@@ -37,11 +38,11 @@ struct WorkoutFeature {
         case activitySelect(ActivityType)
         case intervalUpdated(ActivityType, Int)
         case nameUpdated(String)
-        case idUpdated(String?)
+        case idUpdated(UUID?)
         case destination(PresentationAction<Destination.Action>)
         case saveTapped
         case startTapped
-        case workoutChanged(WorkOut?)
+        case workoutChanged(WorkoutDto?)
         case delegate(Delegate)
 
         enum Delegate: Equatable {
@@ -50,18 +51,25 @@ struct WorkoutFeature {
     }
 
     @Dependency(\.appStorageManager) var appStorageManager
-    @Dependency(\.workoutRealmManager) var realmManager
+    @Dependency(\.workoutRepository) var realmManager
     @Dependency(\.watchConnectivityManager) var connectivityManager
+
+    private static let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: String(describing: WorkoutFeature.self)
+    )
 
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onAppear:
                 if !appStorageManager.selectedWorkoutId.isEmpty {
-                    let workout = realmManager.load(
-                        primaryKey: appStorageManager.selectedWorkoutId
-                    )
-                    return .send(.workoutChanged(workout))
+                    do {
+                        let workout = try realmManager.load(appStorageManager.selectedWorkoutId)
+                        return .send(.workoutChanged(workout))
+                    } catch {
+                        WorkoutFeature.logger.error("\(error.localizedDescription)")
+                    }
                 }
                 return .send(.nameUpdated(""))
 
@@ -70,7 +78,7 @@ struct WorkoutFeature {
                     return .send(.nameUpdated(""))
                         .concatenate(with: .send(.idUpdated(nil)))
                 }
-                appStorageManager.selectedWorkoutId = workout!.id
+                appStorageManager.selectedWorkoutId = workout!.id.uuidString
                 state.work = workout!.work
                 state.rest = workout!.rest
                 state.series = workout!.series
@@ -86,10 +94,14 @@ struct WorkoutFeature {
             case .destination(.presented(.saveSheet(.delegate(.save(
                 let name, let work, let rest, let series, let rounds, let reset
             ))))):
-                let workout = WorkOut(name, work, rest, series, rounds, reset)
-                realmManager.add(workout)
+                let workout = Workout(name, work, rest, series, rounds, reset)
+                do {
+                    try realmManager.add(workout)
+                } catch {
+                    WorkoutFeature.logger.error("\(error.localizedDescription)")
+                }
                 connectivityManager.sendValue([TransferDataKey.workoutAdd.rawValue: workout.toDto().encode() ?? ""])
-                return .send(.workoutChanged(workout))
+                return .send(.workoutChanged(workout.toDto()))
 
             case .destination(.presented(.activitySheet(.delegate(.updateValue(let value, let type))))):
                 return .send(.intervalUpdated(type, value))

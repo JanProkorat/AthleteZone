@@ -336,6 +336,7 @@ enum LocalizationKey: String {
     case addTraining
     case editTraining
     case total
+    case workoutsInTraining
 
     // StopWatch
     case history

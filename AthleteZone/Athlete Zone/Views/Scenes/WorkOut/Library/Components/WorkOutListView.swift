@@ -157,7 +157,7 @@ struct WorkOutListView_Previews: PreviewProvider {
         WorkOutListView(
             workOut:
             WorkoutDto(
-                id: "1",
+                id: UUID(),
                 name: "asdas",
                 work: 5,
                 rest: 5,

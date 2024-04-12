@@ -5,7 +5,6 @@
 //  Created by Jan Prokorát on 01.01.2024.
 //
 
-import RealmSwift
 import SwiftUI
 
 struct ActivityEditView: View {

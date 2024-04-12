@@ -46,7 +46,7 @@ struct TrainingFeature {
         }
     }
 
-    @Dependency(\.trainingRealmManager) var realmManager
+    @Dependency(\.trainingRepository) var trainingRepository
     @Dependency(\.appStorageManager) var appStorageManager
     @Dependency(\.watchConnectivityManager) var connectivityManager
 
@@ -55,10 +55,10 @@ struct TrainingFeature {
             switch action {
             case .onAppear:
                 if !appStorageManager.selectedTrainingId.isEmpty {
-                    let training = realmManager.load(
-                        primaryKey: appStorageManager.selectedTrainingId
-                    )
-                    return .send(.trainingChanged(training))
+                    if let training = trainingRepository.load(appStorageManager.selectedTrainingId) {
+                        return .send(.trainingChanged(training))
+                    }
+                    return .send(.nameUpdated(""))
                 }
                 return .send(.nameUpdated(""))
 
@@ -94,21 +94,18 @@ struct TrainingFeature {
                 return .none
 
             case .destination(.presented(.editSheet(.delegate(.save(let name, let description, let workouts))))):
-                let newWorkouts = workouts.map { dto in
-                    WorkOut(dto.name,
-                            dto.work,
-                            dto.rest,
-                            dto.series,
-                            dto.rounds,
-                            dto.reset)
+                let newWorkouts = workouts.map { WorkoutInfo(id: $0.id, workoutLength: $0.workoutLength) }
+                do {
+                    if state.selectedTraining == nil {
+                        let training = Training(name: name, description: description, workouts: newWorkouts)
+                        try trainingRepository.add(training)
+                        return .send(.trainingChanged(training.toDto()))
+                            .concatenate(with: .send(.sentItemToWatch(.trainingAdd, training.toDto())))
+                    }
+                    try trainingRepository.update(state.selectedTraining!.id, name, description, newWorkouts)
+                } catch {
+                    print(error.localizedDescription)
                 }
-                if state.selectedTraining == nil {
-                    let training = Training(name: name, description: description, workouts: newWorkouts)
-                    realmManager.add(training)
-                    return .send(.trainingChanged(training.toDto()))
-                        .concatenate(with: .send(.sentItemToWatch(.trainingAdd, training.toDto())))
-                }
-                realmManager.update(state.selectedTraining!.id, name, description, newWorkouts)
                 var training = state.selectedTraining
                 training!.name = name
                 training!.trainingDescription = description

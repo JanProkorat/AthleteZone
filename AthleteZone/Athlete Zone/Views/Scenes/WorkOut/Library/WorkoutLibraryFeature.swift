@@ -18,7 +18,7 @@ struct WorkoutLibraryFeature {
         var sortBy = WorkOutSortByProperty.name
         var sortOrder = SortOrder.ascending
         var library: [WorkoutDto] = []
-        var workoutToEditId = ""
+        var workoutToEditId: UUID?
 
         @Presents var destination: Destination.State?
     }
@@ -32,8 +32,8 @@ struct WorkoutLibraryFeature {
         case destination(PresentationAction<Destination.Action>)
         case addTapped
         case editTapped(WorkoutDto)
-        case selectTapped(String)
-        case deleteTapped(String)
+        case selectTapped(UUID)
+        case deleteTapped(UUID)
         case delegate(Delegate)
 
         enum Delegate: Equatable {
@@ -42,7 +42,7 @@ struct WorkoutLibraryFeature {
     }
 
     @Dependency(\.appStorageManager) var appStorageManager
-    @Dependency(\.workoutRealmManager) var realmManager
+    @Dependency(\.workoutRepository) var realmManager
 
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -63,7 +63,11 @@ struct WorkoutLibraryFeature {
                 return .send(.displayData)
 
             case .displayData:
-                state.library = realmManager.getSortedData(state.searchText, state.sortBy, state.sortOrder)
+                do {
+                    state.library = try realmManager.getSortedData(state.searchText, state.sortBy, state.sortOrder)
+                } catch {
+                    print(error.localizedDescription)
+                }
                 return .none
 
             case .delegate:
@@ -71,12 +75,16 @@ struct WorkoutLibraryFeature {
 
             case .destination(.presented(.addSheet(.delegate(
                 .save(let name, let work, let rest, let series, let rounds, let reset))))):
-                if state.workoutToEditId.isEmpty {
-                    let workout = WorkOut(name, work, rest, series, rounds, reset)
-                    realmManager.add(workout)
+                do {
+                    if let workoutToEditId = state.workoutToEditId {
+                        try realmManager.update(workoutToEditId, name, work, rest, series, rounds, reset)
+                    }
+                    let workout = Workout(name, work, rest, series, rounds, reset)
+                    try realmManager.add(workout)
                     return .send(.displayData)
+                } catch {
+                    print(error.localizedDescription)
                 }
-                realmManager.update(state.workoutToEditId, name, work, rest, series, rounds, reset)
                 return .send(.displayData)
 
             case .destination:
@@ -100,11 +108,15 @@ struct WorkoutLibraryFeature {
                 return .none
 
             case .selectTapped(let workoutId):
-                appStorageManager.selectedWorkoutId = workoutId
+                appStorageManager.selectedWorkoutId = workoutId.uuidString
                 return .send(.delegate(.workoutSelected))
 
             case .deleteTapped(let workoutId):
-                realmManager.delete(entityId: workoutId)
+                do {
+                    try realmManager.delete(workoutId)
+                } catch {
+                    print(error.localizedDescription)
+                }
                 return .send(.displayData)
             }
         }

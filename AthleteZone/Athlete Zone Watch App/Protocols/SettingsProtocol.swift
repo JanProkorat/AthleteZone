@@ -14,7 +14,7 @@ protocol SettingsProtocol: ObservableObject {
     var hapticsEnabled: Bool { get set }
 
     var currentSectionPublished: Published<Section>.Publisher { get }
-
-    func backupData(_ workouts: [WorkoutDto], _ trainings: [TrainingDto])
-    func loadBackupData() -> BackUpDto?
+//
+//    func backupData(_ workouts: [WorkoutDto], _ trainings: [TrainingDto])
+//    func loadBackupData() -> BackUpDto?
 }

@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct WorkoutDto: WorkOutProtocol, Identifiable {
+struct WorkoutDto: Codable, Identifiable, Equatable {
     static func == (lhs: WorkoutDto, rhs: WorkoutDto) -> Bool {
         lhs.id == rhs.id
     }
 
-    var id: String
+    var id: UUID
 
     var name: String
     var work: Int
@@ -24,7 +24,7 @@ struct WorkoutDto: WorkOutProtocol, Identifiable {
     var workoutLength: Int
 
     init(
-        id: String,
+        id: UUID,
         name: String,
         work: Int,
         rest: Int,
@@ -56,5 +56,49 @@ extension WorkoutDto {
             print(error)
             return nil
         }
+    }
+
+    var workFlow: [WorkFlow] {
+        var flow: [WorkFlow] = []
+        flow.append(WorkFlow(interval: 10, type: .preparation,
+                             round: 1, serie: 1,
+                             totalSeries: series, totalRounds: rounds))
+        var serieCount = 1
+        var interval = 0
+        for round in 1 ... rounds {
+            for serie in 1 ... 2 * series {
+                interval = serie.isOdd() ? work : rest
+                if interval != 0 {
+                    flow.append(
+                        WorkFlow(
+                            interval: TimeInterval(interval - 1),
+                            type: serie.isOdd() ? .work : .rest,
+                            round: round,
+                            serie: serieCount,
+                            totalSeries: series,
+                            totalRounds: rounds
+                        )
+                    )
+                }
+                if serie.isEven() {
+                    serieCount += 1
+                }
+            }
+            if round < rounds {
+                flow.append(
+                    WorkFlow(
+                        interval: TimeInterval(reset),
+                        type: .reset,
+                        round: round,
+                        serie: flow[flow.count - 1].serie,
+                        totalSeries: series,
+                        totalRounds: rounds
+                    )
+                )
+                serieCount = 1
+            }
+        }
+
+        return flow
     }
 }

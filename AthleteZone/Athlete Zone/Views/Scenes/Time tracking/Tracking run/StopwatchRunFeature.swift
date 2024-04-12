@@ -48,7 +48,6 @@ struct StopwatchRunFeature {
         case timer
     }
 
-    @Dependency(\.stopWatchRealmManager) var realmManager
     @Dependency(\.appStorageManager) var appStorageManager
     @Dependency(\.continuousClock) var clock
     @Dependency(\.dismiss) var dismiss

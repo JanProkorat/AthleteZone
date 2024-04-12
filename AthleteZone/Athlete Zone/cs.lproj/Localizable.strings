@@ -104,6 +104,7 @@
 "addTraining" = "Přidat trénink";
 "editTraining" = "Upravit trénink";
 "total" = "Celkem";
+"workoutsInTraining" = "Workouty v tréninku";
 
 //StopWatch
 "history" = "Historie";

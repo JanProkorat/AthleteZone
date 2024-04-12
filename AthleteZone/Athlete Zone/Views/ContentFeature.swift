@@ -52,8 +52,11 @@ struct ContentFeature {
             switch action {
             case .onAppear:
                 return .run { send in
-                    await send(.sectionChanged(appStorageManager.selectedSection))
-                    await send(.timeTractingSectionChanged(appStorageManager.stopWatchType))
+                    let section = appStorageManager.selectedSection
+                    await send(.sectionChanged(section))
+                    if section == .stopWatch {
+                        await send(.timeTractingSectionChanged(appStorageManager.stopWatchType))
+                    }
                     await send(.languageChanged(appStorageManager.language))
                     if appStorageManager.notificationsEnabled {
                         notificationManager.allowNotifications()

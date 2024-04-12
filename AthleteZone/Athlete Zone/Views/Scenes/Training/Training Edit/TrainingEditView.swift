@@ -35,7 +35,8 @@ struct TrainingEditView: View {
 
                     EditSection(icon: "square.and.pencil.circle",
                                 label: LocalizationKey.description,
-                                color: ComponentColor.lightBlue) {
+                                color: ComponentColor.lightBlue)
+                    {
                         TextField(LocalizationKey.enterDescription.localizedKey,
                                   text: $store.description.sending(\.descriptionUpdated),
                                   axis: .vertical)
@@ -150,7 +151,7 @@ struct TrainingEditView: View {
         .environment(\.colorScheme, .dark)
         .ignoresSafeArea(.keyboard, edges: [.bottom])
         .sheet(isPresented: $store.isWorkoutsSheetVisible.sending(\.sheetVisibleChanged), content: {
-            WorkoutPicker(workouts: $store.selectedWorkouts.sending(\.selectedWorkoutsChanged), workoutsLibrary: store.workoutsLibrary)
+            WorkoutPicker(workouts: $store.workouts.sending(\.selectedWorkoutsChanged), workoutsLibrary: store.workoutsLibrary)
                 .onCloseTab {
                     store.send(.sheetVisibleChanged(false))
                 }
@@ -170,7 +171,7 @@ struct TrainingEditView: View {
             headerText: .addTraining,
             workouts: [
                 WorkoutDto(
-                    id: "1",
+                    id: UUID(),
                     name: "Prvni",
                     work: 2,
                     rest: 2,
@@ -181,7 +182,7 @@ struct TrainingEditView: View {
                     workoutLength: 50
                 ),
                 WorkoutDto(
-                    id: "1",
+                    id: UUID(),
                     name: "Prvni",
                     work: 2,
                     rest: 2,
@@ -192,7 +193,7 @@ struct TrainingEditView: View {
                     workoutLength: 50
                 ),
                 WorkoutDto(
-                    id: "1",
+                    id: UUID(),
                     name: "Prvni",
                     work: 2,
                     rest: 2,
@@ -203,7 +204,7 @@ struct TrainingEditView: View {
                     workoutLength: 50
                 ),
                 WorkoutDto(
-                    id: "1",
+                    id: UUID(),
                     name: "Prvni",
                     work: 2,
                     rest: 2,
@@ -214,7 +215,7 @@ struct TrainingEditView: View {
                     workoutLength: 50
                 ),
                 WorkoutDto(
-                    id: "1",
+                    id: UUID(),
                     name: "Prvni",
                     work: 2,
                     rest: 2,
@@ -225,7 +226,7 @@ struct TrainingEditView: View {
                     workoutLength: 50
                 ),
                 WorkoutDto(
-                    id: "1",
+                    id: UUID(),
                     name: "Prvni",
                     work: 2,
                     rest: 2,

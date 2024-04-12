@@ -95,7 +95,7 @@ struct WorkoutDetailSheet: View {
 struct WorkoutDetailSheet_Previews: PreviewProvider {
     static var previews: some View {
         WorkoutDetailSheet(workout: Binding.constant(WorkoutDto(
-            id: "1",
+            id: UUID(),
             name: "Prvni",
             work: 2,
             rest: 2,

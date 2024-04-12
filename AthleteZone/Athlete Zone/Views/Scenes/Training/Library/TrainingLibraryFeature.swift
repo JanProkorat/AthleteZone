@@ -42,7 +42,7 @@ struct TrainingLibraryFeature {
     }
 
     @Dependency(\.appStorageManager) var appStorageManager
-    @Dependency(\.trainingRealmManager) var realmManager
+    @Dependency(\.trainingRepository) var trainingRepository
 
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -63,25 +63,27 @@ struct TrainingLibraryFeature {
                 return .send(.displayData)
 
             case .displayData:
-                state.library = realmManager.load(state.searchText, state.sortBy, state.sortOrder)
+                state.library = trainingRepository.getSortedData(state.searchText, state.sortBy, state.sortOrder)
                 return .none
 
             case .destination(.presented(.addSheet(.delegate(.save(
                 let name, let description, let workouts
             ))))):
-                if let trainingId = state.trainingToEditId {
-                    realmManager.update(trainingId, name, description, [])
-                    state.trainingToEditId = nil
-                } else {
-                    let newWorkouts = workouts.map { dto in
-                        WorkOut(dto.name,
-                                dto.work,
-                                dto.rest,
-                                dto.series,
-                                dto.rounds,
-                                dto.reset)
+                let newWorkouts = workouts.map { WorkoutInfo(id: $0.id, workoutLength: $0.workoutLength) }
+                do {
+                    if let trainingId = state.trainingToEditId {
+                        try trainingRepository.update(trainingId, name, description, newWorkouts)
+                        state.trainingToEditId = nil
+                    } else {
+                        try trainingRepository.add(
+                            Training(
+                                name: name,
+                                description: description,
+                                workouts: newWorkouts
+                            ))
                     }
-                    realmManager.add(Training(name: name, description: description, workouts: newWorkouts))
+                } catch {
+                    print(error.localizedDescription)
                 }
                 return .send(.displayData)
 
@@ -93,7 +95,11 @@ struct TrainingLibraryFeature {
                 return .send(.delegate(.workoutSelected))
 
             case .deleteTapped(let trainingId):
-                realmManager.delete(entityId: trainingId)
+                do {
+                    try trainingRepository.delete(trainingId)
+                } catch {
+                    print(error.localizedDescription)
+                }
                 return .send(.displayData)
 
             case .delegate:
