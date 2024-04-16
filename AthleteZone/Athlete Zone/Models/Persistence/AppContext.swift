@@ -27,6 +27,12 @@ struct AppContext {
 
 extension AppContext: DependencyKey {
     public static let liveValue = Self(
-        context: { appContext }
+        context: {
+            appContext
+        }
     )
+    public static let testValue = Self(
+        context: {
+            AppContextMock.InMemoryContext
+        })
 }

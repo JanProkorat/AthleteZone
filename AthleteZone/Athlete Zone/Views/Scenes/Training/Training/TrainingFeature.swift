@@ -54,8 +54,8 @@ struct TrainingFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                if !appStorageManager.selectedTrainingId.isEmpty {
-                    if let training = trainingRepository.load(appStorageManager.selectedTrainingId) {
+                if !appStorageManager.getSelectedTrainingId().isEmpty {
+                    if let training = trainingRepository.load(appStorageManager.getSelectedTrainingId()) {
                         return .send(.trainingChanged(training))
                     }
                     return .send(.nameUpdated(""))
@@ -68,7 +68,7 @@ struct TrainingFeature {
 
             case .trainingChanged(let training):
                 state.selectedTraining = training
-                appStorageManager.selectedTrainingId = training!.id
+                appStorageManager.storeStringToAppStorage(training!.id, .selectedTrainingId)
                 return .send(.nameUpdated(training?.name ?? ""))
 
             case .nameUpdated(let name):

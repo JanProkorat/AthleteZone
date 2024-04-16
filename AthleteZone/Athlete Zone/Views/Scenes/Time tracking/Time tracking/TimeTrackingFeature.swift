@@ -42,7 +42,7 @@ struct TimeTrackingFeature {
                 } catch {
                     print(error.localizedDescription)
                 }
-                state.displayedType = appStorageManager.stopWatchType
+                state.displayedType = appStorageManager.getStopWatchType()
                 return .send(.setLastActivity(stopWatchRepository.loadLast()))
 
             case .sectionChanged(let section):

@@ -55,11 +55,11 @@ struct SettingsFeature {
             switch action {
             case .onAppear:
                 return .run { send in
-                    await send(.languageChanged(appStorageManager.language))
-                    await send(.soundsChanged(appStorageManager.soundsEnabled))
-                    await send(.notificationsChanged(appStorageManager.notificationsEnabled))
-                    await send(.backgroundRunChanged(appStorageManager.runInBackground))
-                    await send(.hapticsChanged(appStorageManager.hapticsEnabled))
+                    await send(.languageChanged(appStorageManager.getLanguage()))
+                    await send(.soundsChanged(appStorageManager.getSoundsEnabled()))
+                    await send(.notificationsChanged(appStorageManager.getNotificationsEnabled()))
+                    await send(.backgroundRunChanged(appStorageManager.getRunInBackground()))
+                    await send(.hapticsChanged(appStorageManager.getHapticsEnabled()))
                     await send(.subscriptionChanged(subscriptionManager.subscriptionActivated))
                     await send(.watchAppInstalledChanged(connectivityManager.checkIfPairedAppInstalled()
                     ))
@@ -74,7 +74,7 @@ struct SettingsFeature {
                 }
                 state.language = language
                 connectivityManager.sendValue([TransferDataKey.language.rawValue: language.rawValue])
-                appStorageManager.language = language
+                appStorageManager.storeLanguageToAppStorage(language)
                 return .send(.delegate(.languageChanged(language)))
 
             case .soundsChanged(let enabled):
@@ -96,7 +96,7 @@ struct SettingsFeature {
 
             case .backgroundRunChanged(let enabled):
                 state.runInBackground = enabled
-                appStorageManager.runInBackground = enabled
+                appStorageManager.storeBoolToAppStorage(enabled, .runInBackground)
                 return .none
 
             case .hapticsChanged(let enabled):

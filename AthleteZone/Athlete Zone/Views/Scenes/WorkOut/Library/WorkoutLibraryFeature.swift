@@ -108,7 +108,7 @@ struct WorkoutLibraryFeature {
                 return .none
 
             case .selectTapped(let workoutId):
-                appStorageManager.selectedWorkoutId = workoutId.uuidString
+                appStorageManager.storeStringToAppStorage(workoutId.uuidString, .selectedWorkoutId)
                 return .send(.delegate(.workoutSelected))
 
             case .deleteTapped(let workoutId):

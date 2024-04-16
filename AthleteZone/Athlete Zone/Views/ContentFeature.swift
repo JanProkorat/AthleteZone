@@ -11,7 +11,12 @@ import Foundation
 @Reducer
 struct ContentFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
+        var id = UUID()
+        static func == (lhs: ContentFeature.State, rhs: ContentFeature.State) -> Bool {
+            lhs.id == rhs.id
+        }
+
         var currentSection: Section = .workout
         var currentLanguage: Language = .en
         var launchScreenState: LaunchScreenStep = .firstStep
@@ -25,7 +30,15 @@ struct ContentFeature {
         @Presents var subscriptionSheet: SubscriptionFeature.State?
     }
 
-    enum Action {
+    enum Action: Equatable, Identifiable {
+        var id: UUID {
+            UUID()
+        }
+
+        static func == (lhs: ContentFeature.Action, rhs: ContentFeature.Action) -> Bool {
+            lhs.id == rhs.id
+        }
+
         case onAppear
         case sectionChanged(Section)
         case languageChanged(Language)
@@ -52,13 +65,13 @@ struct ContentFeature {
             switch action {
             case .onAppear:
                 return .run { send in
-                    let section = appStorageManager.selectedSection
+                    let section = appStorageManager.getSelectedSection()
                     await send(.sectionChanged(section))
                     if section == .stopWatch {
-                        await send(.timeTractingSectionChanged(appStorageManager.stopWatchType))
+                        await send(.timeTractingSectionChanged(appStorageManager.getStopWatchType()))
                     }
-                    await send(.languageChanged(appStorageManager.language))
-                    if appStorageManager.notificationsEnabled {
+                    await send(.languageChanged(appStorageManager.getLanguage()))
+                    if appStorageManager.getNotificationsEnabled() {
                         notificationManager.allowNotifications()
                     }
                     await send(.launchScreenStateChanged(.secondStep))
@@ -69,7 +82,7 @@ struct ContentFeature {
             case .sectionChanged(let section):
                 if section != state.currentSection || state.destination == nil {
                     state.currentSection = section
-                    appStorageManager.selectedSection = section
+                    appStorageManager.storeSectionToAppStorage(section)
                     switch section {
                     case .workout:
                         state.destination = .workout(WorkoutContentFeature.State(currentTab: state.currentTab))
@@ -125,7 +138,7 @@ struct ContentFeature {
 
             case .languageChanged(let language):
                 state.currentLanguage = language
-                appStorageManager.language = language
+                appStorageManager.storeLanguageToAppStorage(language)
                 return .none
 
             case .launchScreenStateChanged(let launchScreenState):
@@ -167,7 +180,7 @@ struct ContentFeature {
 
             case .timeTractingSectionChanged(let section):
                 state.timeTractingSection = section
-                appStorageManager.stopWatchType = section
+                appStorageManager.storeStopWatchTypeToAppStorage(section)
                 return .run { send in
                     await send(.destination(.presented(.stopwatch(.sectionChanged(section)))))
                     await send(.titleChanged(section.rawValue))

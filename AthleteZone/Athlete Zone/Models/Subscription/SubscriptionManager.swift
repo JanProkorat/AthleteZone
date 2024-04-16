@@ -10,7 +10,7 @@ import Foundation
 import OSLog
 import StoreKit
 
-class SubscriptionManager: ObservableObject {
+class SubscriptionManager: SubscriptionProtocol {
     static var shared = SubscriptionManager()
 
     @Published var subscriptionActivated = false
@@ -65,5 +65,6 @@ class SubscriptionManager: ObservableObject {
 }
 
 extension SubscriptionManager: DependencyKey {
-    static var liveValue: SubscriptionManager = .shared
+    static var liveValue: any SubscriptionProtocol = SubscriptionManager.shared
+    static let testValue: any SubscriptionProtocol = SubscriptionManagerMock()
 }
