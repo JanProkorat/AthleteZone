@@ -19,7 +19,7 @@ extension DependencyValues {
         set { self[NotificationManager.self] = newValue }
     }
 
-    var subscriptionManager: SubscriptionManager {
+    var subscriptionManager: any SubscriptionProtocol {
         get { self[SubscriptionManager.self] }
         set { self[SubscriptionManager.self] = newValue }
     }

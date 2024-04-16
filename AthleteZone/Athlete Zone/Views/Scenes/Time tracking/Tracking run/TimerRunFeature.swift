@@ -132,7 +132,7 @@ struct TimerRunFeature {
                 return .none
 
             case .setRunInBackground:
-                state.backgroundRunAllowed = appStorageManager.runInBackground
+                state.backgroundRunAllowed = appStorageManager.getRunInBackground()
                 return .none
             }
         }

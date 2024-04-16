@@ -51,7 +51,7 @@ struct WorkoutFeature {
     }
 
     @Dependency(\.appStorageManager) var appStorageManager
-    @Dependency(\.workoutRepository) var realmManager
+    @Dependency(\.workoutRepository) var workoutRepository
     @Dependency(\.watchConnectivityManager) var connectivityManager
 
     private static let logger = Logger(
@@ -63,9 +63,9 @@ struct WorkoutFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                if !appStorageManager.selectedWorkoutId.isEmpty {
+                if !appStorageManager.getSelectedWorkoutId().isEmpty {
                     do {
-                        let workout = try realmManager.load(appStorageManager.selectedWorkoutId)
+                        let workout = try workoutRepository.load(appStorageManager.getSelectedWorkoutId())
                         return .send(.workoutChanged(workout))
                     } catch {
                         WorkoutFeature.logger.error("\(error.localizedDescription)")
@@ -78,7 +78,7 @@ struct WorkoutFeature {
                     return .send(.nameUpdated(""))
                         .concatenate(with: .send(.idUpdated(nil)))
                 }
-                appStorageManager.selectedWorkoutId = workout!.id.uuidString
+                appStorageManager.storeStringToAppStorage(workout!.id.uuidString, .selectedWorkoutId)
                 state.work = workout!.work
                 state.rest = workout!.rest
                 state.series = workout!.series
@@ -96,7 +96,7 @@ struct WorkoutFeature {
             ))))):
                 let workout = Workout(name, work, rest, series, rounds, reset)
                 do {
-                    try realmManager.add(workout)
+                    try workoutRepository.add(workout)
                 } catch {
                     WorkoutFeature.logger.error("\(error.localizedDescription)")
                 }

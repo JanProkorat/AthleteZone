@@ -25,6 +25,7 @@ struct TrainingContentFeature {
         case destination(PresentationAction<Destination.Action>)
         case saveTapped
 
+        @CasePathable
         enum Delegate: Equatable {
             case switchSection(Section)
             case switchTab(Tab)

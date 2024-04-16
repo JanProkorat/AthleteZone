@@ -12,7 +12,11 @@ import Foundation
 @Reducer
 struct WorkoutContentFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
+        static func == (lhs: WorkoutContentFeature.State, rhs: WorkoutContentFeature.State) -> Bool {
+            lhs.currentTab == rhs.currentTab
+        }
+
         var currentTab: Tab = .home
 
         @Presents var destination: Destination.State?

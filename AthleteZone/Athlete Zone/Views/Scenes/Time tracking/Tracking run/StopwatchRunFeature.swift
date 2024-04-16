@@ -112,7 +112,7 @@ struct StopwatchRunFeature {
                 return .cancel(id: CancelID.timer)
 
             case .setRunInBackground:
-                state.backgroundRunAllowed = appStorageManager.runInBackground
+                state.backgroundRunAllowed = appStorageManager.getRunInBackground()
                 return .none
 
             case .addSplitTime:

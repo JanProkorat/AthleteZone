@@ -14,7 +14,7 @@ final class WatchConnectivityManager: NSObject, ObservableObject, WatchConnectiv
 
     static let shared = WatchConnectivityManager()
 
-    var appStorageManager = AppStorageManager.shared
+    @Dependency(\.appStorageManager) var appStorageManager
     @Dependency(\.workoutRepository) var workoutRepository
     @Dependency(\.trainingRepository) var trainingRepository
 
@@ -72,9 +72,9 @@ extension WatchConnectivityManager: WCSessionDelegate {
         if message["data"] != nil {
             let replyData = loadReplyData()
             replyHandler(["data": replyData,
-                          DefaultItem.language.rawValue: appStorageManager.language.rawValue,
-                          DefaultItem.soundsEnabled.rawValue: appStorageManager.soundsEnabled,
-                          DefaultItem.hapticsEnabled.rawValue: appStorageManager.hapticsEnabled])
+                          DefaultItem.language.rawValue: appStorageManager.getLanguage().rawValue,
+                          DefaultItem.soundsEnabled.rawValue: appStorageManager.getSoundsEnabled(),
+                          DefaultItem.hapticsEnabled.rawValue: appStorageManager.getHapticsEnabled()])
         }
     }
 

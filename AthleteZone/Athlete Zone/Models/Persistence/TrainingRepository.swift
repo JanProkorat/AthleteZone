@@ -145,4 +145,6 @@ extension TrainingRepository: DependencyKey {
                 return []
             }
         })
+
+    static var testValue = liveValue
 }

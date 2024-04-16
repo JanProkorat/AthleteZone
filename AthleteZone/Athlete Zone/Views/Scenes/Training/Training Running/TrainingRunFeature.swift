@@ -186,7 +186,7 @@ struct TrainingRunFeature {
                 return .cancel(id: CancelID.timer)
 
             case .setRunInBackground:
-                state.backgroundRunAllowed = appStorageManager.runInBackground
+                state.backgroundRunAllowed = appStorageManager.getRunInBackground()
                 return .none
 
             case .playSound(let sound, let numOfLoops):
