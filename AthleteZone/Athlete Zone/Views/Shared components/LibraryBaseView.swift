@@ -5,7 +5,6 @@
 //  Created by Jan Prokorát on 07.12.2023.
 //
 
-import RealmSwift
 import SwiftUI
 
 struct LibraryBaseView<SortByPicker: View, Content: View>: View {

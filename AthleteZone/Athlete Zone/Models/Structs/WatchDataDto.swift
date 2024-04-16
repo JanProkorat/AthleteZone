@@ -8,7 +8,7 @@
 import Foundation
 
 struct WatchDataDto: Codable {
-    var workouts: [WorkOutDto]
+    var workouts: [WorkoutDto]
     var trainings: [TrainingDto]
 }
 

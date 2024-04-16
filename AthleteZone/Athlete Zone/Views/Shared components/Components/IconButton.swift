@@ -14,6 +14,24 @@ struct IconButton: View, Identifiable {
     let color: ComponentColor
     let width: CGFloat
     let height: CGFloat
+    var reversed = false
+
+    init(id: String, image: String, color: ComponentColor, width: CGFloat, height: CGFloat) {
+        self.id = id
+        self.image = image
+        self.color = color
+        self.width = width
+        self.height = height
+    }
+
+    init(id: String, image: String, color: ComponentColor, width: CGFloat, height: CGFloat, reversed: Bool) {
+        self.id = id
+        self.image = image
+        self.color = color
+        self.width = width
+        self.height = height
+        self.reversed = reversed
+    }
 
     var onTab: (() -> Void)?
 
@@ -25,6 +43,7 @@ struct IconButton: View, Identifiable {
                 .resizable()
                 .scaledToFit()
                 .foregroundColor(Color(color.rawValue))
+                .scaleEffect(x: reversed ? -1 : 1, y: 1)
         })
         .frame(width: width, height: height)
     }
@@ -34,7 +53,7 @@ struct IconButton_Previews: PreviewProvider {
     static var previews: some View {
         IconButton(
             id: "arrowDown",
-            image: Icons.arrowDown.rawValue,
+            image: Icon.arrowDown.rawValue,
             color: ComponentColor.mainText,
             width: 50,
             height: 45

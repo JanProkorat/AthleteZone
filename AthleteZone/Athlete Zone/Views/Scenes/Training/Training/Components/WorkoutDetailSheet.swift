@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WorkoutDetailSheet: View {
-    @Binding var workout: WorkOut?
+    @Binding var workout: WorkoutDto?
 
     var body: some View {
         DetailBaseView(title: workout?.name ?? "") {
@@ -94,6 +94,16 @@ struct WorkoutDetailSheet: View {
 
 struct WorkoutDetailSheet_Previews: PreviewProvider {
     static var previews: some View {
-        WorkoutDetailSheet(workout: Binding.constant(WorkOut()))
+        WorkoutDetailSheet(workout: Binding.constant(WorkoutDto(
+            id: UUID(),
+            name: "Prvni",
+            work: 2,
+            rest: 2,
+            series: 2,
+            rounds: 2,
+            reset: 30,
+            createdDate: Date(),
+            workoutLength: 50
+        )))
     }
 }

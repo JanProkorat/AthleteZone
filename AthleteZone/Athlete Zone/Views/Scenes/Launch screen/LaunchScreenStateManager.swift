@@ -8,15 +8,17 @@
 import Foundation
 
 class LaunchScreenStateManager: ObservableObject {
+    static let shared = LaunchScreenStateManager()
+
     @Published private(set) var state: LaunchScreenStep = .firstStep
 
     func dismiss() {
-        DispatchQueue.main.async {
-            Task {
-                self.state = .secondStep
-                try? await Task.sleep(for: Duration.seconds(1))
-                self.state = .finished
-            }
+//        DispatchQueue.main.async {
+        Task {
+            self.state = .secondStep
+            try? await Task.sleep(for: Duration.seconds(1))
+            self.state = .finished
         }
+//        }
     }
 }

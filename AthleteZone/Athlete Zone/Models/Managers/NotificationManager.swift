@@ -6,6 +6,7 @@
 //
 
 import Combine
+import ComposableArchitecture
 import Foundation
 import UserNotifications
 
@@ -67,4 +68,8 @@ class NotificationManager: NotiificationProtocol, ObservableObject {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationIdentifier2])
         enabled = false
     }
+}
+
+extension NotificationManager: DependencyKey {
+    static var liveValue: any NotiificationProtocol = NotificationManager.shared
 }

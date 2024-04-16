@@ -5,6 +5,7 @@
 //  Created by Jan Prokorát on 16.12.2023.
 //
 
+import ComposableArchitecture
 import Foundation
 import OSLog
 import StoreKit
@@ -61,4 +62,8 @@ class SubscriptionManager: ObservableObject {
             await process(transaction: update)
         }
     }
+}
+
+extension SubscriptionManager: DependencyKey {
+    static var liveValue: SubscriptionManager = .shared
 }

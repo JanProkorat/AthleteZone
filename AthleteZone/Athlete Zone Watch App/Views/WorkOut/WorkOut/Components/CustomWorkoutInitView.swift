@@ -20,7 +20,7 @@ struct CustomWorkoutInitView: View {
                 Button {
                     number += 1
                 } label: {
-                    Image(Icons.start.rawValue)
+                    Image(Icon.start.rawValue)
                         .resizable()
                         .scaledToFill()
                         .foregroundColor(Color(ComponentColor.buttonGreen.rawValue))

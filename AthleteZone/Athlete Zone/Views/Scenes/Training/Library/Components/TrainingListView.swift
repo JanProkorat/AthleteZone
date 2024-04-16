@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TrainingListView: View {
-    let training: Training
+    let training: TrainingDto
 
     var onInfoTab: (() -> Void)?
     var onEditTab: (() -> Void)?
@@ -29,7 +29,7 @@ struct TrainingListView: View {
 
                     descriptionView(
                         property: LocalizationKey.workouts.localizedKey,
-                        value: training.workoutCount.toFormattedNumber(),
+                        value: training.workouts.count.toFormattedNumber(),
                         color: ComponentColor.lightYellow
                     )
 
@@ -71,7 +71,70 @@ struct TrainingListView: View {
 
 struct TrainingListView_Previews: PreviewProvider {
     static var previews: some View {
-        TrainingListView(training: Training())
+        TrainingListView(
+            training: TrainingDto(
+                id: "1",
+                name: "Name",
+                trainingDescription: "description",
+                workoutsCount: 5,
+                trainingLength: 3600,
+                createdDate: Date(),
+                workouts: [WorkoutDto(
+                    id: UUID(),
+                    name: "Prvni",
+                    work: 2,
+                    rest: 2,
+                    series: 2,
+                    rounds: 2,
+                    reset: 30,
+                    createdDate: Date(),
+                    workoutLength: 50
+                ),
+                WorkoutDto(
+                    id: UUID(),
+                    name: "Prvni",
+                    work: 2,
+                    rest: 2,
+                    series: 2,
+                    rounds: 2,
+                    reset: 30,
+                    createdDate: Date(),
+                    workoutLength: 50
+                ),
+                WorkoutDto(
+                    id: UUID(),
+                    name: "Prvni",
+                    work: 2,
+                    rest: 2,
+                    series: 2,
+                    rounds: 2,
+                    reset: 30,
+                    createdDate: Date(),
+                    workoutLength: 50
+                ),
+                WorkoutDto(
+                    id: UUID(),
+                    name: "Prvni",
+                    work: 2,
+                    rest: 2,
+                    series: 2,
+                    rounds: 2,
+                    reset: 30,
+                    createdDate: Date(),
+                    workoutLength: 50
+                ),
+                WorkoutDto(
+                    id: UUID(),
+                    name: "Prvni",
+                    work: 2,
+                    rest: 2,
+                    series: 2,
+                    rounds: 2,
+                    reset: 30,
+                    createdDate: Date(),
+                    workoutLength: 50
+                )]
+            ))
     }
 }
 

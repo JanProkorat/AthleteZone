@@ -70,3 +70,17 @@ struct TextInput_Previews: PreviewProvider {
         TextInput(text: text)
     }
 }
+
+struct TextInputStyle: TextFieldStyle {
+    let height: CGFloat
+
+    func _body(configuration: TextField<Self._Label>) -> some View {
+        configuration
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .foregroundColor(Color(ComponentColor.darkBlue.rawValue))
+                    .frame(height: height * 0.7)
+            ).padding()
+    }
+}

@@ -56,6 +56,7 @@
 "runInBackgroundDescription" = "Keep timer running when display is turned off or when user is out of the app";
 
 //Workout edit
+"saveWorkout" = "Save workout";
 "addWorkout" = "Add workout";
 "editWorkout" = "Edit workout";
 "enterName" = "Enter name...";
@@ -103,6 +104,7 @@
 "addTraining" = "Add training";
 "editTraining" = "Edit training";
 "total" = "Total";
+"workoutsInTraining" = "Workouts in training";
 
 //StopWatch
 "history" = "History";
@@ -119,6 +121,9 @@
 "activityLength" = "Activity length";
 "editActivity" = "Edit activity";
 "noSplitTimes" = "This activity does not contain any aplit time.";
+"lastActivity" = "Last activity";
+"recent" = "Recent";
+"newActivity" = "New activity";
 
 //Subscription
 "active" = "Active";

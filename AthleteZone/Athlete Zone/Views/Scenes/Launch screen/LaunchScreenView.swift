@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LaunchScreenView: View {
-    @EnvironmentObject private var launchScreenState: LaunchScreenStateManager
+    var launchScreenState: LaunchScreenStep
 
     @State private var scaleAnimation = false
     @State private var startFadeoutAnimation = false
@@ -18,20 +18,18 @@ struct LaunchScreenView: View {
         .autoconnect()
 
     var body: some View {
-        RunBaseView(
-            header: {},
-            content: {
-                ZStack {
-                    background
-                    image
-                }
-                .onReceive(animationTimer) { _ in updateAnimation() }
-                .opacity(startFadeoutAnimation ? 0 : 1)
-            },
-            footer: {}
-        )
+        VStack {
+            ZStack {
+                background
+                image
+            }
+            .onReceive(animationTimer) { _ in updateAnimation() }
+            .opacity(startFadeoutAnimation ? 0 : 1)
+        }
+        .frame(maxHeight: .infinity)
         .edgesIgnoringSafeArea(.all)
         .padding(-5)
+        .environment(\.colorScheme, .dark)
     }
 
     @ViewBuilder
@@ -50,7 +48,7 @@ struct LaunchScreenView: View {
     }
 
     private func updateAnimation() {
-        switch launchScreenState.state {
+        switch launchScreenState {
         case .firstStep:
             break
 
@@ -70,7 +68,6 @@ struct LaunchScreenView: View {
 
 struct LaunchScreenView_Previews: PreviewProvider {
     static var previews: some View {
-        LaunchScreenView()
-            .environmentObject(LaunchScreenStateManager())
+        LaunchScreenView(launchScreenState: .secondStep)
     }
 }

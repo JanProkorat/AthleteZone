@@ -6,9 +6,8 @@
 //
 
 @testable import Athlete_Zone
-import RealmSwift
 
-class WorkOutRealmManagerMock: WorkOutRealmManagerProtocol {
+class WorkOutRealmManagerMock: WorkOutRealmProtocol {
     var objects: [WorkOut] = []
 
     func add(_ value: WorkOut) {
@@ -16,27 +15,22 @@ class WorkOutRealmManagerMock: WorkOutRealmManagerProtocol {
     }
 
     func load(primaryKey: String) -> WorkOut? {
-        do {
-            let objectId = try ObjectId(string: primaryKey)
-            return objects.first(where: { $0._id == objectId })
-        } catch {
-            return nil
-        }
+        return objects.first(where: { $0.id == primaryKey })
     }
 
     func load() -> [WorkOut] {
         return objects
     }
 
-    func delete(entity: WorkOut) {
-        let index = objects.firstIndex(where: { $0._id == entity._id })
-        if let removeIndex = index {
-            objects.remove(at: removeIndex)
-        }
+    func delete(entityId: String) {
+//        let index = objects.firstIndex(where: { $0._id == entity._id })
+//        if let removeIndex = index {
+//            objects.remove(at: removeIndex)
+//        }
     }
 
     func update(
-        _ id: RealmSwift.ObjectId,
+        _ id: String,
         _ name: String,
         _ work: Int,
         _ rest: Int,
@@ -44,7 +38,7 @@ class WorkOutRealmManagerMock: WorkOutRealmManagerProtocol {
         _ rounds: Int,
         _ reset: Int
     ) {
-        guard let index = objects.firstIndex(where: { $0._id == id }) else {
+        guard let index = objects.firstIndex(where: { $0.id == id }) else {
             return
         }
 
@@ -56,8 +50,8 @@ class WorkOutRealmManagerMock: WorkOutRealmManagerProtocol {
         objects[index].reset = reset
     }
 
-    func getSortedData(_ searchText: String, _ sortBy: WorkOutSortByProperty, _ sortOrder: SortOrder) -> [WorkOut] {
-        return objects
+    func getSortedData(_ searchText: String, _ sortBy: WorkOutSortByProperty, _ sortOrder: SortOrder) -> [WorkoutDto] {
+        return objects.map { $0.toDto() }
     }
 
     func isWorkoutAssignedToTraining(_ id: String) -> Bool {

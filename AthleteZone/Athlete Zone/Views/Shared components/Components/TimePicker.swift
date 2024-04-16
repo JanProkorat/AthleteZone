@@ -49,7 +49,7 @@ struct TimePicker: View {
 
                 picker(selectedValue: $selectedSecs, range: seconds, label: "Secs")
             }
-            .padding([.top], 25)
+//            .padding([.top], 25)
             Spacer()
         }
         .padding([.leading, .trailing], 10)

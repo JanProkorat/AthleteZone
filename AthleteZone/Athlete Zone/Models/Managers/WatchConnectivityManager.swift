@@ -5,6 +5,7 @@
 //  Created by Jan Prokorát on 10.01.2023.
 //
 
+import ComposableArchitecture
 import Foundation
 import WatchConnectivity
 
@@ -14,6 +15,8 @@ final class WatchConnectivityManager: NSObject, ObservableObject, WatchConnectiv
     static let shared = WatchConnectivityManager()
 
     var appStorageManager = AppStorageManager.shared
+    @Dependency(\.workoutRepository) var workoutRepository
+    @Dependency(\.trainingRepository) var trainingRepository
 
     override private init() {
         super.init()
@@ -76,12 +79,14 @@ extension WatchConnectivityManager: WCSessionDelegate {
     }
 
     func loadReplyData() -> String {
-        let workoutManager = WorkoutRealmManager()
-        let workouts = workoutManager.load().map { $0.toDto() }
-
-        let trainingManager = TrainingRealmManager()
-        let trainings = trainingManager.load().map { $0.toDto() }
-        return WatchDataDto(workouts: workouts, trainings: trainings).toJSONString() ?? ""
+        do {
+            let workouts = try workoutRepository.loadAll()
+            let trainings = trainingRepository.loadAll()
+            return WatchDataDto(workouts: workouts, trainings: trainings).toJSONString() ?? ""
+        } catch {
+            print(error.localizedDescription)
+            return ""
+        }
     }
 
     func sendValue(_ value: [String: Any]) {
@@ -89,4 +94,8 @@ extension WatchConnectivityManager: WCSessionDelegate {
             WCSession.default.sendMessage(value) { _ in }
         }
     }
+}
+
+extension WatchConnectivityManager: DependencyKey {
+    static var liveValue: any WatchConnectivityProtocol = WatchConnectivityManager.shared
 }

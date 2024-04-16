@@ -5,6 +5,7 @@
 //  Created by Jan Prokorát on 19.02.2023.
 //
 
+import Dependencies
 import Foundation
 import SwiftUI
 
@@ -58,4 +59,8 @@ class AppStorageManager: AppStorageProtocol {
     public func removeFromDefaults(key: UserDefaultValues) {
         UserDefaults(suiteName: UserDefaultValues.groupId.rawValue)?.removeObject(forKey: key.rawValue)
     }
+}
+
+extension AppStorageManager: DependencyKey {
+    static var liveValue: any AppStorageProtocol = AppStorageManager.shared
 }

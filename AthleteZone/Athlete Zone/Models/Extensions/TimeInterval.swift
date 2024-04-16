@@ -21,6 +21,14 @@ extension TimeInterval {
         }
     }
 
+    func toFormattedTimeForTimer() -> String {
+        let seconds = Int(self) % 60
+        let minutes = Int(self) / 60
+        let hours = Int(self) / 3600
+
+        return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+    }
+
     func toFormattedTimeForWorkout() -> String {
         let milliseconds = Int((self.truncatingRemainder(dividingBy: 1)) * 100)
         let seconds = Int(self) % 60

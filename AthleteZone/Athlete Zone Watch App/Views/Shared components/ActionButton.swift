@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ActionButton: View {
-    var icon: Icons
+    var icon: Icon
     var color: ComponentColor
 
     var onTab: (() -> Void)?

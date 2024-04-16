@@ -56,6 +56,7 @@
 "runInBackgroundDescription" = "Timer läuft im Hintergrund, auch bei ausgeschaltetem Bildschirm oder verlassenem App";
 
 //Workout edit
+"saveWorkout" = "Workout speichern";
 "addWorkout" = "Workout hinzufügen";
 "editWorkout" = "Workout bearbeiten";
 "enterName" = "Namen angeben...";
@@ -103,6 +104,7 @@
 "addTraining" = "Training hinzufügen";
 "editTraining" = "Training bearbeiten";
 "total" = "Gesamt";
+"workoutsInTraining" = "Workouts in Training";
 
 //StopWatch
 "history" = "Verlauf";
@@ -119,6 +121,9 @@
 "activityLength" = "Aktivitätsdauer";
 "editActivity" = "Aktivität bearbeiten";
 "noSplitTimes" = "Diese Aktivität beinhaltet keine Zwischenzeiten.";
+"lastActivity" = "Letzte Aktivität";
+"recent" = "Letzte";
+"newActivity" = "Neue Aktivität";
 
 //Subscription
 "active" = "Aktiv";
