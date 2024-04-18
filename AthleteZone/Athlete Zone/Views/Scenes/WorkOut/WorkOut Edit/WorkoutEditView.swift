@@ -91,9 +91,8 @@ struct WorkoutEditView: View {
                     })
                     .onTab { store.send(.cancelTapped) }
                 }
-                .padding(.bottom, 30)
                 .frame(maxWidth: .infinity)
-                .frame(maxHeight: geometry.size.height * 0.1)
+                .frame(maxHeight: geometry.size.height * 0.2)
             }
             .padding([.leading, .trailing], 10)
         }

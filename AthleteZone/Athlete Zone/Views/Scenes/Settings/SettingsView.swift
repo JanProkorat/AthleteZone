@@ -13,10 +13,7 @@ struct SettingsView: View {
 
     var body: some View {
         VStack(spacing: 5) {
-            detailedPanel(
-                title: LocalizationKey.premiumSubscription,
-                description: LocalizationKey.subscriptionDescription)
-            {
+            detailedPanel(title: .premiumSubscription, description: .subscriptionDescription) {
                 Button {
                     store.send(.subscriptionSheetVisibilityChanged)
                 } label: {
@@ -56,11 +53,8 @@ struct SettingsView: View {
                     toggle(value: $store.hapticsEnabled.sending(\.hapticsChanged))
                 })
 
-                detailedPanel(
-                    title: LocalizationKey.healthKitAccess,
-                    description: store.hkAuthStatus == .sharingAuthorized ?
-                        LocalizationKey.healthKitAccessDescription1 :
-                        LocalizationKey.healthKitAccessDescription2)
+                detailedPanel(title: .healthKitAccess, description: store.hkAuthStatus == .sharingAuthorized ?
+                    .healthKitAccessDescription1 : .healthKitAccessDescription2)
                 {
                     toggle(value: $store.healthKitAccess.sending(\.healthKitAccessChanged))
                 }

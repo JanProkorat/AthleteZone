@@ -209,14 +209,21 @@ struct ContentFeature {
                 return .none
 
             case .subscriptionStatusChanged(let activated):
+                if activated == state.subscriptionActivated {
+                    return .none
+                }
+
                 state.subscriptionActivated = activated
                 subscriptionManager.subscriptionActivated = activated
                 switch state.currentSection {
                 case .workout:
                     return .send(.destination(.presented(.workout(.subscriptionActivated(activated)))))
 
-                default:
-                    return .none
+                case .training:
+                    return .send(.destination(.presented(.training(.subscriptionActivated(activated)))))
+
+                case .stopWatch:
+                    return .send(.destination(.presented(.stopwatch(.subscriptionActivated(activated)))))
                 }
 
             case .saveTapped:

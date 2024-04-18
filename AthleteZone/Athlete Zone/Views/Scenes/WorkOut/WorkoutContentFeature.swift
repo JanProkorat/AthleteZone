@@ -99,6 +99,9 @@ struct WorkoutContentFeature {
                 }
 
             case .subscriptionActivated(let activated):
+                if state.currentTab != .settings {
+                    return .none
+                }
                 return .send(.destination(.presented(.settings(.subscriptionChanged(activated)))))
             }
         }

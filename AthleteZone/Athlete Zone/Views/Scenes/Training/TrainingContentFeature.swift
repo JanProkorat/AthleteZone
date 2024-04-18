@@ -24,6 +24,7 @@ struct TrainingContentFeature {
         case delegate(Delegate)
         case destination(PresentationAction<Destination.Action>)
         case saveTapped
+        case subscriptionActivated(Bool)
 
         @CasePathable
         enum Delegate: Equatable {
@@ -92,6 +93,12 @@ struct TrainingContentFeature {
                 default:
                     return .send(.destination(.presented(.training(.editTapped))))
                 }
+
+            case .subscriptionActivated(let activated):
+                if state.currentTab != .settings {
+                    return .none
+                }
+                return .send(.destination(.presented(.settings(.subscriptionChanged(activated)))))
             }
         }
         .ifLet(\.$destination, action: \.destination)

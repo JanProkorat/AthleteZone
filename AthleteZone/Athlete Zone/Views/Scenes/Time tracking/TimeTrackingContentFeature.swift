@@ -23,6 +23,7 @@ struct TimeTrackingContentFeature {
         case tabChanged(Tab)
         case delegate(Delegate)
         case destination(PresentationAction<Destination.Action>)
+        case subscriptionActivated(Bool)
 
         enum Delegate: Equatable {
             case switchTab(Tab)
@@ -66,6 +67,12 @@ struct TimeTrackingContentFeature {
 
             case .sectionChanged(let section):
                 return .send(.destination(.presented(.timeTracting(.sectionChanged(section)))))
+
+            case .subscriptionActivated(let activated):
+                if state.currentTab != .settings {
+                    return .none
+                }
+                return .send(.destination(.presented(.settings(.subscriptionChanged(activated)))))
             }
         }
         .ifLet(\.$destination, action: \.destination)

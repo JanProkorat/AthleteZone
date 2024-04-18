@@ -33,10 +33,7 @@ struct TrainingEditView: View {
                         .frame(maxHeight: geo.size.height * 0.07)
                     }
 
-                    EditSection(icon: "square.and.pencil.circle",
-                                label: LocalizationKey.description,
-                                color: ComponentColor.lightBlue)
-                    {
+                    EditSection(icon: "square.and.pencil.circle", label: LocalizationKey.description, color: .lightBlue) {
                         TextField(LocalizationKey.enterDescription.localizedKey,
                                   text: $store.description.sending(\.descriptionUpdated),
                                   axis: .vertical)
@@ -121,7 +118,7 @@ struct TrainingEditView: View {
                             color: store.saveDisabled ? .grey : .lightGreen,
                             backgoundColor: ComponentColor.menu.rawValue,
                             image: Icon.check.rawValue,
-                            height: 55,
+                            height: 60,
                             cornerRadius: nil
                         )
                     })
@@ -134,18 +131,19 @@ struct TrainingEditView: View {
                             color: ComponentColor.lightPink,
                             backgoundColor: ComponentColor.menu.rawValue,
                             image: Icon.clear.rawValue,
-                            height: 55,
+                            height: 60,
                             cornerRadius: nil
                         )
                     })
                     .onTab { store.send(.cancelTapped) }
                 }
                 .frame(maxWidth: .infinity)
-                .frame(maxHeight: geo.size.height * 0.11)
+                .frame(maxHeight: geo.size.height * 0.13)
                 .padding(.top)
-                .padding(.bottom, 5)
+                .padding(.bottom, 20)
             }
             .padding([.leading, .trailing], 10)
+            .background(Color(ComponentColor.darkBlue.rawValue))
         }
         .background(Color(ComponentColor.darkBlue.rawValue))
         .environment(\.colorScheme, .dark)

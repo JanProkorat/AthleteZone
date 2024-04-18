@@ -9,6 +9,7 @@ import ComposableArchitecture
 import Foundation
 import HealthKit
 
+// swiftlint:disable nesting
 @Reducer
 struct SettingsFeature {
     @ObservableState
@@ -37,12 +38,10 @@ struct SettingsFeature {
         case subscriptionChanged(Bool)
         case delegate(Delegate)
 
-        // swiftlint:disable nesting
         enum Delegate: Equatable {
             case seubscriptionSheetVisibilityChanged
             case languageChanged(Language)
         }
-        // swiftlint:enable nesting
     }
 
     @Dependency(\.appStorageManager) var appStorageManager
@@ -80,6 +79,7 @@ struct SettingsFeature {
             case .soundsChanged(let enabled):
                 state.soundsEnabled = enabled
                 connectivityManager.sendValue([TransferDataKey.soundsEnabled.rawValue: enabled])
+                appStorageManager.storeBoolToAppStorage(enabled, .soundsEnabled)
                 return .none
 
             case .notificationsChanged(let enabled):
@@ -92,6 +92,7 @@ struct SettingsFeature {
                     notificationManager.removeNotification()
                 }
                 state.notificationsEnabled = enabled
+                appStorageManager.storeBoolToAppStorage(enabled, .notificationsEnabled)
                 return .none
 
             case .backgroundRunChanged(let enabled):
@@ -102,6 +103,7 @@ struct SettingsFeature {
             case .hapticsChanged(let enabled):
                 state.hapticsEnabled = enabled
                 connectivityManager.sendValue([TransferDataKey.hapticsEnabled.rawValue: enabled])
+                appStorageManager.storeBoolToAppStorage(enabled, .hapticsEnabled)
                 return .none
 
             case .watchAppInstalledChanged(let installed):
