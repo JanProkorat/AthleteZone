@@ -51,15 +51,15 @@ struct WorkoutRunFeature {
         case setRunInBackground
     }
 
-    enum CancelID {
+    enum WorkoutRunCancelID {
         case timer
     }
 
-    @Dependency(\.appStorageManager) var appStorageManager
     @Dependency(\.soundManager) var soundManager
-    @Dependency(\.watchConnectivityManager) var connectivityManager
+    @Dependency(\.appStorageManager) var appStorageManager
     @Dependency(\.continuousClock) var clock
     @Dependency(\.dismiss) var dismiss
+
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
@@ -91,8 +91,11 @@ struct WorkoutRunFeature {
                     return .send(.stopTimer)
 
                 case .quit:
-                    state.isTimerActive = false
-                    return .send(.stopTimer)
+                    if state.isTimerActive {
+                        state.isTimerActive = false
+                        return .send(.stopTimer)
+                    }
+                    return .none
 
                 default:
                     return .none
@@ -146,20 +149,20 @@ struct WorkoutRunFeature {
                         await send(.timerTicked, animation: .interpolatingSpring(stiffness: 3000, damping: 40))
                     }
                 }
-                .cancellable(id: CancelID.timer, cancelInFlight: true)
+                .cancellable(id: WorkoutRunCancelID.timer, cancelInFlight: true)
 
             case .playSound(let sound, let numOfLoops):
-                if soundManager.isSoundPlaying, soundManager.selectedSound == sound {
+                if soundManager.isPlaying(), soundManager.selectedSound() == sound {
                     return .none
                 }
-                soundManager.playSound(sound: sound, numOfLoops: numOfLoops)
+                soundManager.playSound(sound, numOfLoops)
                 return .none
 
             case .stopTimer:
-                if soundManager.isSoundPlaying {
-                    soundManager.stop()
+                if soundManager.isPlaying() {
+                    soundManager.stopSound()
                 }
-                return .cancel(id: CancelID.timer)
+                return .cancel(id: WorkoutRunCancelID.timer)
 
             case .setRunInBackground:
                 state.backgroundRunAllowed = appStorageManager.getRunInBackground()

@@ -45,7 +45,7 @@ struct SettingsFeature {
     }
 
     @Dependency(\.appStorageManager) var appStorageManager
-    @Dependency(\.watchConnectivityManager) var connectivityManager
+//    @Dependency(\.watchConnectivityManager) var connectivityManager
     @Dependency(\.healthManager) var healthManager
     @Dependency(\.notificationManager) var notificationManager
     @Dependency(\.subscriptionManager) var subscriptionManager
@@ -60,8 +60,7 @@ struct SettingsFeature {
                     await send(.backgroundRunChanged(appStorageManager.getRunInBackground()))
                     await send(.hapticsChanged(appStorageManager.getHapticsEnabled()))
                     await send(.subscriptionChanged(subscriptionManager.subscriptionActivated))
-                    await send(.watchAppInstalledChanged(connectivityManager.checkIfPairedAppInstalled()
-                    ))
+//                    await send(.watchAppInstalledChanged(connectivityManager.checkIfPairedAppInstalled()))
                 }
 
             case .delegate:
@@ -72,13 +71,13 @@ struct SettingsFeature {
                     return .none
                 }
                 state.language = language
-                connectivityManager.sendValue([TransferDataKey.language.rawValue: language.rawValue])
+//                connectivityManager.sendValue([TransferDataKey.language.rawValue: language.rawValue])
                 appStorageManager.storeLanguageToAppStorage(language)
                 return .send(.delegate(.languageChanged(language)))
 
             case .soundsChanged(let enabled):
                 state.soundsEnabled = enabled
-                connectivityManager.sendValue([TransferDataKey.soundsEnabled.rawValue: enabled])
+//                connectivityManager.sendValue([TransferDataKey.soundsEnabled.rawValue: enabled])
                 appStorageManager.storeBoolToAppStorage(enabled, .soundsEnabled)
                 return .none
 
@@ -102,7 +101,7 @@ struct SettingsFeature {
 
             case .hapticsChanged(let enabled):
                 state.hapticsEnabled = enabled
-                connectivityManager.sendValue([TransferDataKey.hapticsEnabled.rawValue: enabled])
+//                connectivityManager.sendValue([TransferDataKey.hapticsEnabled.rawValue: enabled])
                 appStorageManager.storeBoolToAppStorage(enabled, .hapticsEnabled)
                 return .none
 

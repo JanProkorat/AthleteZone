@@ -34,11 +34,6 @@ extension DependencyValues {
         set { self[WatchConnectivityManager.self] = newValue }
     }
 
-    var soundManager: SoundManager {
-        get { self[SoundManager.self] }
-        set { self[SoundManager.self] = newValue }
-    }
-
     var trainingRepository: TrainingRepository {
         get { self[TrainingRepository.self] }
         set { self[TrainingRepository.self] = newValue }
@@ -62,6 +57,11 @@ extension DependencyValues {
     var appContext: AppContext {
         get { self[AppContext.self] }
         set { self[AppContext.self] = newValue }
+    }
+
+    var soundManager: SoundManager {
+        get { self[SoundManager.self] }
+        set { self[SoundManager.self] = newValue }
     }
 }
 

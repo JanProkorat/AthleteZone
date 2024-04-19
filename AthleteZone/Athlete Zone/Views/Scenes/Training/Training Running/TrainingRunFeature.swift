@@ -180,8 +180,8 @@ struct TrainingRunFeature {
                 .cancellable(id: CancelID.timer, cancelInFlight: true)
 
             case .stopTimer:
-                if soundManager.isSoundPlaying, soundManager.selectedSound != .fanfare {
-                    soundManager.stop()
+                if soundManager.isPlaying(), soundManager.selectedSound() != .fanfare {
+                    soundManager.stopSound()
                 }
                 return .cancel(id: CancelID.timer)
 
@@ -190,10 +190,10 @@ struct TrainingRunFeature {
                 return .none
 
             case .playSound(let sound, let numOfLoops):
-                if soundManager.isSoundPlaying, soundManager.selectedSound == sound {
+                if soundManager.isPlaying(), soundManager.selectedSound() == sound {
                     return .none
                 }
-                soundManager.playSound(sound: sound, numOfLoops: numOfLoops)
+                soundManager.playSound(sound, numOfLoops)
                 return .none
             }
         }

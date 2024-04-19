@@ -42,8 +42,8 @@ struct TimerRunFeature {
         case timer
     }
 
-    @Dependency(\.appStorageManager) var appStorageManager
     @Dependency(\.soundManager) var soundManager
+    @Dependency(\.appStorageManager) var appStorageManager
     @Dependency(\.continuousClock) var clock
     @Dependency(\.dismiss) var dismiss
     var body: some ReducerOf<Self> {
@@ -119,16 +119,16 @@ struct TimerRunFeature {
                 .cancellable(id: CancelID.timer, cancelInFlight: true)
 
             case .stopTimer:
-                if soundManager.isSoundPlaying {
-                    soundManager.stop()
+                if soundManager.isPlaying() {
+                    soundManager.stopSound()
                 }
                 return .cancel(id: CancelID.timer)
 
             case .playSound(let sound, let numOfLoops):
-                if soundManager.isSoundPlaying, soundManager.selectedSound == sound {
+                if soundManager.isPlaying(), soundManager.selectedSound() == sound {
                     return .none
                 }
-                soundManager.playSound(sound: sound, numOfLoops: numOfLoops)
+                soundManager.playSound(sound, numOfLoops)
                 return .none
 
             case .setRunInBackground:

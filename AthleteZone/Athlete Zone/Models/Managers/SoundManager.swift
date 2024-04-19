@@ -2,71 +2,78 @@
 //  SoundManager.swift
 //  Athlete Zone
 //
-//  Created by Jan Prokorát on 12.02.2023.
+//  Created by Jan Prokorát on 18.04.2024.
 //
 
-import AVKit
-import ComposableArchitecture
+import AVFAudio
+import Dependencies
 import Foundation
+import UIKit
 
-class SoundManager: SoundProtocol {
-    var selectedSound: Sound?
+struct AudioPlayer {
+    static var shared = AudioPlayer()
 
-    static let shared = SoundManager()
-
-    private var audioSession: AVAudioSession?
-    private var players: [Sound: AVAudioPlayer] = [:]
-
-    var isSoundPlaying: Bool {
-        players.values.contains { $0.isPlaying }
+    var players: [Sound: AVAudioPlayer] = [:]
+    var playingSound: AVAudioPlayer? {
+        players.first(where: { $0.value.isPlaying })?.value
     }
 
-    private func setupAudioSession() {
-        audioSession = AVAudioSession.sharedInstance()
-        do {
-            try audioSession?.setCategory(.playback)
-            try audioSession?.setActive(true)
-        } catch {
-            print("Failed to set up audio session: \(error.localizedDescription)")
-        }
+    var selectedSound: Sound? {
+        players.first(where: { $0.value.isPlaying })?.key
     }
 
-    private func setupPlayer(for sound: Sound) -> AVAudioPlayer? {
-        guard let asset = NSDataAsset(name: sound.rawValue) else { return nil }
-        do {
-            return try AVAudioPlayer(data: asset.data, fileTypeHint: "mp3")
-        } catch {
-            print(error.localizedDescription)
-            return nil
-        }
+    var isPlaying: Bool {
+        !players.isEmpty && playingSound != nil
     }
 
-    func playSound(sound: Sound, numOfLoops: Int) {
-        if isSoundPlaying, players[sound]?.isPlaying == true {
-            return // Avoid replaying the same sound
-        }
-        if let player = players[sound] ?? setupPlayer(for: sound) {
-            selectedSound = sound
-            players[sound] = player
-            player.numberOfLoops = numOfLoops
-            player.play()
-        }
-    }
+    mutating func setupPlayers() {
+        for sound in Sound.allCases {
+            guard let soundFileURL = Bundle.main.url(
+                forResource: sound.rawValue,
+                withExtension: "mp3"
+            ) else {
+                print("Sound \(sound.rawValue) not found")
+                return
+            }
 
-    func stop() {
-        players.values.forEach { $0.pause() }
-    }
-
-    deinit {
-        stop()
-        do {
-            try audioSession?.setActive(false)
-        } catch {
-            print("Failed to deactivate audio session: \(error.localizedDescription)")
+            do {
+                players[sound] = try AVAudioPlayer(
+                    contentsOf: soundFileURL
+                )
+            } catch {
+                print("Failed to setup player for sound \(sound.rawValue):", error.localizedDescription)
+            }
         }
     }
 }
 
+struct SoundManager {
+    var playSound: @Sendable (_ sound: Sound, _ numOfLoops: Int) -> Void
+    var stopSound: @Sendable () -> Void
+    var isPlaying: @Sendable () -> Bool
+    var selectedSound: @Sendable () -> Sound?
+}
+
 extension SoundManager: DependencyKey {
-    static var liveValue: SoundProtocol = SoundManager.shared
+    static var liveValue = Self(
+        playSound: { sound, loops in
+            if let player = AudioPlayer.shared.players[sound] {
+                player.numberOfLoops = loops
+                player.play()
+            }
+        },
+        stopSound: {
+            var audioPlayer = AudioPlayer.shared
+            if !audioPlayer.isPlaying {
+                return
+            }
+            audioPlayer.playingSound?.stop()
+        },
+        isPlaying: {
+            AudioPlayer.shared.isPlaying
+        },
+        selectedSound: {
+            AudioPlayer.shared.selectedSound
+        }
+    )
 }
