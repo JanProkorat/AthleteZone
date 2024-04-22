@@ -52,7 +52,7 @@ struct WorkoutFeature {
 
     @Dependency(\.appStorageManager) var appStorageManager
     @Dependency(\.workoutRepository) var workoutRepository
-    @Dependency(\.watchConnectivityManager) var connectivityManager
+//    @Dependency(\.watchConnectivityManager) var connectivityManager
 
     private static let logger = Logger(
         subsystem: Bundle.main.bundleIdentifier!,
@@ -100,7 +100,7 @@ struct WorkoutFeature {
                 } catch {
                     WorkoutFeature.logger.error("\(error.localizedDescription)")
                 }
-                connectivityManager.sendValue([TransferDataKey.workoutAdd.rawValue: workout.toDto().encode() ?? ""])
+//                connectivityManager.sendValue([TransferDataKey.workoutAdd.rawValue: workout.toDto().encode() ?? ""])
                 return .send(.workoutChanged(workout.toDto()))
 
             case .destination(.presented(.activitySheet(.delegate(.updateValue(let value, let type))))):

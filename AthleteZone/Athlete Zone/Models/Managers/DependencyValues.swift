@@ -29,10 +29,10 @@ extension DependencyValues {
         set { self[WorkoutRepository.self] = newValue }
     }
 
-    var watchConnectivityManager: WatchConnectivityManager {
-        get { self[WatchConnectivityManager.self] }
-        set { self[WatchConnectivityManager.self] = newValue }
-    }
+//    var watchConnectivityManager: WatchConnectivityManager {
+//        get { self[WatchConnectivityManager.self] }
+//        set { self[WatchConnectivityManager.self] = newValue }
+//    }
 
     var trainingRepository: TrainingRepository {
         get { self[TrainingRepository.self] }

@@ -10,8 +10,8 @@ import ComposableArchitecture
 import Foundation
 import UserNotifications
 
-class NotificationManager: NotiificationProtocol, ObservableObject {
-    static let shared = NotificationManager()
+class NotificationProvider {
+    static var shared = NotificationProvider()
 
     let notificationIdentifier1 = "workoutReminder1"
     let notificationIdentifier2 = "workoutReminder2"
@@ -22,28 +22,7 @@ class NotificationManager: NotiificationProtocol, ObservableObject {
         LocalizationKey.notification4
     ]
 
-    @Published var enabled = false
-    private var cancellable: AnyCancellable?
-
-    init() {
-        cancellable = $enabled.sink { newValue in
-            if newValue {
-                self.setupNotification()
-            }
-        }
-    }
-
     func allowNotifications() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-            if success {
-                self.enabled = true
-            } else if let error = error {
-                print(error.localizedDescription)
-            }
-        }
-    }
-
-    func setupNotification() {
         let content = UNMutableNotificationContent()
         content.title = NSLocalizedString(LocalizationKey.appTitle.rawValue, comment: "")
         content.body = NSLocalizedString(messages.randomElement()?.rawValue ?? "", comment: "")
@@ -63,13 +42,41 @@ class NotificationManager: NotiificationProtocol, ObservableObject {
         UNUserNotificationCenter.current().add(request2)
     }
 
+    func requestAuthorization() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { _, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
+    }
+
     func removeNotification() {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationIdentifier1])
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationIdentifier2])
-        enabled = false
     }
 }
 
+struct NotificationManager {
+    var allowNotifications: @Sendable () -> Void
+    var removeNotification: @Sendable () -> Void
+    var requestAuthorization: @Sendable () -> Void
+}
+
 extension NotificationManager: DependencyKey {
-    static var liveValue: any NotiificationProtocol = NotificationManager.shared
+    static var liveValue = Self(
+        allowNotifications: {
+            NotificationProvider.shared.allowNotifications()
+        },
+        removeNotification: {
+            NotificationProvider.shared.removeNotification()
+        },
+        requestAuthorization: {
+            NotificationProvider.shared.requestAuthorization()
+        }
+    )
+    static var testValue = Self(
+        allowNotifications: {},
+        removeNotification: {},
+        requestAuthorization: {}
+    )
 }

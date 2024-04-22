@@ -58,6 +58,13 @@
             ReferencedContainer = "container:Athlete Zone.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "CG_CONTEXT_SHOW_BACKTRACE"
+            value = "YES"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <StoreKitConfigurationFileReference
          identifier = "../AthleteZone/Athlete Zone/Models/Subscription/Athlete Zone.storekit">
       </StoreKitConfigurationFileReference>

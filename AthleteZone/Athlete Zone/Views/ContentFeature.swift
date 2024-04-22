@@ -72,7 +72,7 @@ struct ContentFeature {
                     }
                     await send(.languageChanged(appStorageManager.getLanguage()))
                     if appStorageManager.getNotificationsEnabled() {
-                        notificationManager.allowNotifications()
+                        notificationManager.requestAuthorization()
                     }
                     await send(.launchScreenStateChanged(.secondStep))
                     try? await Task.sleep(for: Duration.seconds(1))

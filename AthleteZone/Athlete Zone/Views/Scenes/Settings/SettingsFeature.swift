@@ -85,13 +85,13 @@ struct SettingsFeature {
                 if enabled == state.notificationsEnabled {
                     return .none
                 }
+                state.notificationsEnabled = enabled
                 if enabled {
                     notificationManager.allowNotifications()
                 } else {
                     notificationManager.removeNotification()
                 }
-                state.notificationsEnabled = enabled
-                appStorageManager.storeBoolToAppStorage(enabled, .notificationsEnabled)
+                appStorageManager.storeBoolToAppStorage(state.notificationsEnabled, .notificationsEnabled)
                 return .none
 
             case .backgroundRunChanged(let enabled):

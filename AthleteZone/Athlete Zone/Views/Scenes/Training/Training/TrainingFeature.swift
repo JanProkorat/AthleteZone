@@ -48,7 +48,7 @@ struct TrainingFeature {
 
     @Dependency(\.trainingRepository) var trainingRepository
     @Dependency(\.appStorageManager) var appStorageManager
-    @Dependency(\.watchConnectivityManager) var connectivityManager
+//    @Dependency(\.watchConnectivityManager) var connectivityManager
 
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -131,7 +131,7 @@ struct TrainingFeature {
 
             case .sentItemToWatch(let key, let data):
                 return .run { _ in
-                    connectivityManager.sendValue([key.rawValue: data.encode() ?? ""])
+//                    connectivityManager.sendValue([key.rawValue: data.encode() ?? ""])
                 }
 
             case .workoutForDetailChanged(let workout):
