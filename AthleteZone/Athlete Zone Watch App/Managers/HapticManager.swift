@@ -5,17 +5,15 @@
 //  Created by Jan Prokorát on 17.02.2023.
 //
 
+import Dependencies
 import Foundation
 import WatchKit
 
-class HapticManager: HapticProtocol {
-    private let device = WKInterfaceDevice.current()
+struct HapticManager: DependencyKey {
+    var playHaptic: @Sendable (_ type: WKHapticType) -> Void
 
-    func playHaptic() {
-        self.device.play(.start)
-    }
-
-    func playFinishHaptic() {
-        self.device.play(.success)
-    }
+    static var liveValue = Self(
+        playHaptic: { type in
+            WKInterfaceDevice.current().play(type)
+        })
 }

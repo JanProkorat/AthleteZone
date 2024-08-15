@@ -7,13 +7,15 @@
 
 import ComposableArchitecture
 import Foundation
+import os
 import WatchConnectivity
 
-final class WatchConnectivityManager: NSObject, ObservableObject, WatchConnectivityProtocol {
-    var lastSentMessage: [String: Any]? // Not needed here, only for testing
-
-    static let shared = WatchConnectivityManager()
-
+final class ConnectivityManager: NSObject, ObservableObject {
+    static let shared = ConnectivityManager()
+    static let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: String(describing: ConnectivityManager.self)
+    )
     @Dependency(\.appStorageManager) var appStorageManager
     @Dependency(\.workoutRepository) var workoutRepository
     @Dependency(\.trainingRepository) var trainingRepository
@@ -22,7 +24,7 @@ final class WatchConnectivityManager: NSObject, ObservableObject, WatchConnectiv
         super.init()
 
         guard WCSession.isSupported() else {
-            print("WCSession Not supported")
+            ConnectivityManager.logger.info("WCSession Not supported")
             return
         }
 
@@ -33,7 +35,7 @@ final class WatchConnectivityManager: NSObject, ObservableObject, WatchConnectiv
 
 // MARK: - Is paired app installed
 
-extension WatchConnectivityManager {
+extension ConnectivityManager {
     func checkIfPairedAppInstalled() -> Bool {
         return WCSession.default.isWatchAppInstalled
     }
@@ -41,7 +43,7 @@ extension WatchConnectivityManager {
 
 // MARK: - WCSessionDelegate
 
-extension WatchConnectivityManager: WCSessionDelegate {
+extension ConnectivityManager: WCSessionDelegate {
     func sessionDidBecomeInactive(_ session: WCSession) {}
 
     func sessionDidDeactivate(_ session: WCSession) {
@@ -51,13 +53,14 @@ extension WatchConnectivityManager: WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         switch activationState {
         case .activated:
-            print("Phone Activated")
+            ConnectivityManager.logger.info("Phone Activated")
 
         case .notActivated:
-            print("Phone Not Activated")
+            ConnectivityManager.logger.info("Phone Not Activated")
 
         case .inactive:
-            print("Phone Inactive")
+            ConnectivityManager.logger.info("Phone Inactive")
+
         @unknown default:
             break
         }
@@ -69,24 +72,18 @@ extension WatchConnectivityManager: WCSessionDelegate {
     ///   - message: Message received from watch
     ///   - replyHandler: Handler to send back a reply
     func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
-        if message["data"] != nil {
+        if message[DefaultItem.initData.rawValue] != nil {
             let replyData = loadReplyData()
-            replyHandler(["data": replyData,
+            replyHandler([DefaultItem.initData.rawValue: replyData,
                           DefaultItem.language.rawValue: appStorageManager.getLanguage().rawValue,
-                          DefaultItem.soundsEnabled.rawValue: appStorageManager.getSoundsEnabled(),
                           DefaultItem.hapticsEnabled.rawValue: appStorageManager.getHapticsEnabled()])
         }
     }
 
     func loadReplyData() -> String {
-        do {
-            let workouts = try workoutRepository.loadAll()
-            let trainings = trainingRepository.loadAll()
-            return WatchDataDto(workouts: workouts, trainings: trainings).toJSONString() ?? ""
-        } catch {
-            print(error.localizedDescription)
-            return ""
-        }
+        let workouts = workoutRepository.loadAll()
+        let trainings = trainingRepository.loadAll()
+        return WatchDataDto(workouts: workouts, trainings: trainings).toJSONString() ?? ""
     }
 
     func sendValue(_ value: [String: Any]) {
@@ -96,6 +93,18 @@ extension WatchConnectivityManager: WCSessionDelegate {
     }
 }
 
+struct WatchConnectivityManager {
+    var sendValue: @Sendable (_ value: [String: Any]) -> Void
+    var checkIfPairedAppInstalled: @Sendable () -> Bool
+}
+
 extension WatchConnectivityManager: DependencyKey {
-    static var liveValue: any WatchConnectivityProtocol = WatchConnectivityManager.shared
+    static var liveValue = Self(
+        sendValue: {
+            ConnectivityManager.shared.sendValue($0)
+        },
+        checkIfPairedAppInstalled: {
+            ConnectivityManager.shared.checkIfPairedAppInstalled()
+        }
+    )
 }

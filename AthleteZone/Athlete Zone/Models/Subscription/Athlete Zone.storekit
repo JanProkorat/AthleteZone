@@ -10,7 +10,7 @@
     "_applicationInternalID" : "6474562071",
     "_developerTeamID" : "5SV4N2J8AG",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 728481870.52777302,
+    "_lastSynchronizedDate" : 745311852.86926401,
     "_locale" : "en_US",
     "_storefront" : "USA",
     "_storeKitErrors" : [
@@ -76,10 +76,10 @@
           "codeOffers" : [
             {
               "eligibility" : [
-                "existing",
-                "new"
+                "new",
+                "existing"
               ],
-              "internalID" : "128E8FD3",
+              "internalID" : "EEDBCDE8",
               "isStackable" : false,
               "numberOfPeriods" : 1,
               "paymentMode" : "free",
@@ -92,7 +92,7 @@
           "groupNumber" : 1,
           "internalID" : "6474853006",
           "introductoryOffer" : {
-            "internalID" : "6F09E9FA",
+            "internalID" : "8A621622",
             "numberOfPeriods" : 1,
             "paymentMode" : "free",
             "subscriptionPeriod" : "P1W"
@@ -132,7 +132,7 @@
           "groupNumber" : 2,
           "internalID" : "6474853394",
           "introductoryOffer" : {
-            "internalID" : "4B066AEA",
+            "internalID" : "955A14A0",
             "numberOfPeriods" : 1,
             "paymentMode" : "free",
             "subscriptionPeriod" : "P1W"
@@ -167,10 +167,10 @@
           "codeOffers" : [
             {
               "eligibility" : [
-                "existing",
-                "new"
+                "new",
+                "existing"
               ],
-              "internalID" : "97909B12",
+              "internalID" : "EA7695CD",
               "isStackable" : false,
               "numberOfPeriods" : 1,
               "paymentMode" : "free",
@@ -183,7 +183,7 @@
           "groupNumber" : 3,
           "internalID" : "6474853445",
           "introductoryOffer" : {
-            "internalID" : "F02AC443",
+            "internalID" : "25AB6C90",
             "numberOfPeriods" : 1,
             "paymentMode" : "free",
             "subscriptionPeriod" : "P1W"

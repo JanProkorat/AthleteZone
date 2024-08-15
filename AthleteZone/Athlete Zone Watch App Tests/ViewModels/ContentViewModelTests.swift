@@ -9,22 +9,22 @@
 import Nimble
 import XCTest
 
-class ContentViewModelTests: XCTestCase {
-    var viewModel: ContentViewModel!
-
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-
-        // Create and inject the mocked dependencies
-        viewModel = ContentViewModel()
-//        viewModel.router = ViewRouterMock()
-//        viewModel.notificationManager = NotificationManagerMock()
-//        viewModel.languageManager = LanguageManagerMock()
-//        viewModel.appStorageManager = AppStorageManagerMock()
-    }
-
-    override func tearDownWithError() throws {
-        viewModel = nil
-        try super.tearDownWithError()
-    }
-}
+// class ContentViewModelTests: XCTestCase {
+//    var viewModel: ContentViewModel!
+//
+//    override func setUpWithError() throws {
+//        try super.setUpWithError()
+//
+//        // Create and inject the mocked dependencies
+//        viewModel = ContentViewModel()
+////        viewModel.router = ViewRouterMock()
+////        viewModel.notificationManager = NotificationManagerMock()
+////        viewModel.languageManager = LanguageManagerMock()
+////        viewModel.appStorageManager = AppStorageManagerMock()
+//    }
+//
+//    override func tearDownWithError() throws {
+//        viewModel = nil
+//        try super.tearDownWithError()
+//    }
+// }

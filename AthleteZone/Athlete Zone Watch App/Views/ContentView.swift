@@ -5,99 +5,96 @@
 //  Created by Jan Prokorát on 08.01.2023.
 //
 
+import ComposableArchitecture
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var viewModel = ContentViewModel()
-    @State var selectedTab = 1
+    @Bindable var store: StoreOf<ContentFeature>
+    @ObservedObject var connectivityManager = ConnectivityManager.shared
 
     var body: some View {
-        ZStack {
-            TabView(selection: $selectedTab) {
-//                WorkOutView()
-//                    .tag(0)
+        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
+            List {
+                NavigationLink(state: ContentFeature.Path.State.workouts(WorkoutsFeature.State(workouts: store.workouts))) {
+                    SectionView(image: "figure.strengthtraining.traditional", label: .workout)
+                }
 
-                WatchLibraryView()
-                    .environmentObject(viewModel)
-                    .tag(1)
+                NavigationLink(state: ContentFeature.Path.State.trainings(TrainingsFeature.State(trainings: store.trainings))) {
+                    SectionView(image: "pencil.and.list.clipboard", label: .training)
+                }
 
-//                Group {
-//                    if viewModel.currentSection == .workout {
-//                WorkoutFiltersView()
-//                            .environmentObject(viewModel.workoutLibraryViewModel)
-//
-//                    } else {
-//                        TrainingFiltersView()
-//                            .environmentObject(viewModel.trainingLibraryViewModel)
-//                    }
-//                }
-//                .tag(2)
+                NavigationLink(state: ContentFeature.Path.State.stopwatch(StopwatchFeature.State())) {
+                    SectionView(image: "stopwatch", label: .stopWatch)
+                }
+
+                NavigationLink(state: ContentFeature.Path.State.timer(TimerFeature.State())) {
+                    SectionView(image: "timer", label: .timer)
+                }
             }
+            .padding([.leading, .trailing], 5)
+            .navigationTitle("Sections")
 
-//            if viewModel.launchScreenState != .finished {
-//                LaunchScreenView()
-            ////                    .environmentObject(viewModel.launchScreenStateManager)
-//            }
+        } destination: { store in
+            switch store.case {
+            case .workouts(let store):
+                WorkoutsView(store: store)
+                    .navigationTitle("Workouts")
+
+            case .trainings(let store):
+                TrainingsView(store: store)
+                    .navigationTitle("Trainings")
+
+            case .stopwatch(let store):
+                StopwatchView(store: store)
+                    .navigationTitle("Stopwatch")
+
+            case .timer(let store):
+                TimerView(store: store)
+                    .navigationTitle("Timer")
+
+            case .workoutRun(let store):
+                WorkoutRunView(store: store)
+                    .navigationBarBackButtonHidden(true)
+
+            case .trainingRun(let store):
+                TrainingRunView(store: store)
+                    .navigationBarBackButtonHidden(true)
+
+            case .stopwatchRun(let store):
+                StopwatchRunView(store: store)
+                    .navigationBarBackButtonHidden(true)
+
+            case .timerRun(let store):
+                TimerRunView(store: store)
+                    .navigationBarBackButtonHidden(true)
+            }
+        }
+        .background(Color(ComponentColor.darkBlue.rawValue))
+        .environment(\.locale, .init(identifier: "\(store.language)"))
+        .overlay {
+            if store.launchScreenState != .finished {
+                LaunchScreenView(launchScreenState: store.launchScreenState)
+            }
+        }
+        .onChange(of: connectivityManager.isSessionReachable) { _, newValue in
+            if newValue && store.launchScreenState == .firstStep {
+                store.send(.requestData)
+            }
+        }
+        .onChange(of: connectivityManager.receivedMessage) { oldValue, newValue in
+            if oldValue != newValue {
+                store.send(.dataReceived(newValue))
+            }
+        }
+        .onAppear {
+            store.send(.onAppear)
         }
     }
 }
 
 #Preview {
-    let viewModel = ContentViewModel()
-//    viewModel.workoutLibraryViewModel.library = [WorkOutDto(
-//        id: "sadsdsa",
-//        name: "Hodne dlouhy nazev",
-//        work: 30,
-//        rest: 15,
-//        series: 2,
-//        rounds: 4,
-//        reset: 60,
-//        createdDate: Date(),
-//        workoutLength: 40
-//    ),
-//    WorkOutDto(
-//        id: "1",
-//        name: "Prvni",
-//        work: 2,
-//        rest: 2,
-//        series: 2,
-//        rounds: 2,
-//        reset: 30,
-//        createdDate: Date(),
-//        workoutLength: 50
-//    ),
-//    WorkOutDto(
-//        id: "2",
-//        name: "Druhy",
-//        work: 3,
-//        rest: 3,
-//        series: 3,
-//        rounds: 3,
-//        reset: 30,
-//        createdDate: Date(),
-//        workoutLength: 50
-//    ),
-//    WorkOutDto(
-//        id: "3",
-//        name: "Treti",
-//        work: 2,
-//        rest: 2,
-//        series: 2,
-//        rounds: 2,
-//        reset: 30,
-//        createdDate: Date(),
-//        workoutLength: 50
-//    ),
-//    WorkOutDto(
-//        id: "4",
-//        name: "Ctvrty",
-//        work: 3,
-//        rest: 3,
-//        series: 3,
-//        rounds: 3,
-//        reset: 30,
-//        createdDate: Date(),
-//        workoutLength: 50
-//    )]
-    return ContentView(viewModel: viewModel)
+    ContentView(store: ComposableArchitecture.Store(initialState: ContentFeature.State(launchScreenState: .finished)) {
+        ContentFeature()
+            ._printChanges()
+    })
 }

@@ -5,20 +5,33 @@
 //  Created by Jan Prokorát on 02.09.2023.
 //
 
- import Foundation
- import HealthKit
+import Dependencies
+import Foundation
+import HealthKit
+import SwiftUI
 
- class HealthWorkouthManager: HealthManager {
+class WatchHealthhManager: HealthManager {
+    static let watchShared = WatchHealthhManager()
+
     @Published var averageHeartRate: Double = 0
     @Published var activeEnergy: Double = 0
-    @Published var baseEnergy: Double = 0
+    @Published var totalEnergy: Double = 0
     @Published var workout: HKWorkout?
     @Published var running = false
 
     var session: HKWorkoutSession?
     var builder: HKLiveWorkoutBuilder?
+    private var startDate: Date?
+    private var endDate: Date?
 
-    func startWorkout(workoutType: HKWorkoutActivityType, workoutName: String) {
+    var timeElapsed: TimeInterval {
+        if startDate == nil || endDate == nil {
+            return 0
+        }
+        return endDate!.timeIntervalSince(startDate!)
+    }
+
+    func startWorkout(workoutType: HKWorkoutActivityType, workoutName: String) async {
         let configuration = HKWorkoutConfiguration()
         configuration.activityType = workoutType
         configuration.locationType = .unknown
@@ -27,49 +40,57 @@
             session = try HKWorkoutSession(healthStore: healthStore, configuration: configuration)
             builder = session?.associatedWorkoutBuilder()
         } catch {
-            print(["Creating HKWorkoutBuilder error", error.localizedDescription])
+            logger.error("""
+            Creating HKWorkoutBuilder error: \(error.localizedDescription)
+            """)
             return
         }
 
         builder?.dataSource = HKLiveWorkoutDataSource(healthStore: healthStore, workoutConfiguration: configuration)
 
         let metadata = [
-            HKMetadataKeyWorkoutBrandName: workoutName as Any,
+            HKMetadataKeyWorkoutBrandName: "\(workoutName)",
             HKMetadataKeyIndoorWorkout: NSNumber(value: true) as Any
         ]
 
-        builder?.addMetadata(metadata, completion: { _, error in
-            if let locError = error {
-                print(["Error adding metadata: ", locError.localizedDescription])
-            }
-        })
+        do {
+            try await builder?.addMetadata(metadata)
+        } catch {
+            logger.error("""
+            Error adding metadata: \(error.localizedDescription)
+            """)
+        }
 
         session?.delegate = self
         builder?.delegate = self
 
         // Start the workout session and begin data collection.
-        let workoutStartDate = Date()
-        session?.startActivity(with: workoutStartDate)
-        builder?.beginCollection(withStart: workoutStartDate, completion: { _, error in
-            if let newError = error {
-                print(["Begin collection error", newError.localizedDescription])
-            }
-        })
-        running = true
+        startDate = Date()
+        session?.startActivity(with: startDate!)
+        do {
+            try await builder?.beginCollection(at: startDate!)
+            running = true
+        } catch {
+            logger.error("""
+            Begin collection error: \(error.localizedDescription)
+            """)
+        }
     }
 
     // MARK: - State Control
 
     var paused: Bool {
-        session?.state == .paused
+        session?.state == .notStarted
     }
 
-    func pause() {
+    private func pause() {
         session?.pause()
+        running = false
     }
 
-    func resume() {
+    private func resume() {
         session?.resume()
+        running = true
     }
 
     func togglePuase() {
@@ -81,8 +102,8 @@
     }
 
     func endWorkout() {
+        endDate = Date()
         session?.end()
-        resetWorkout()
     }
 
     func resetWorkout() {
@@ -91,13 +112,41 @@
         workout = nil
         activeEnergy = 0
         averageHeartRate = 0
-        baseEnergy = 0
+        totalEnergy = 0
+        running = false
+        startDate = nil
+        endDate = nil
     }
- }
+
+    private func setupAuthorizationObserver() {
+        let authorizationQuery = HKObserverQuery(
+            sampleType: HKQuantityType.workoutType(),
+            predicate: nil
+        ) { _, completionHandler, error in
+            guard error == nil else {
+                self.logger.error("Error observing authorization changes: \(error!.localizedDescription)")
+                completionHandler()
+                return
+            }
+
+            // Fetch the latest authorization status and update the hkAccessStatus
+            let status = self.checkAuthorizationStatus()
+            DispatchQueue.main.async {
+                self.hkAccessStatus = status
+            }
+
+            // Call the completion handler to indicate that the query has been processed
+            completionHandler()
+        }
+
+        // Execute the observer query
+        healthStore.execute(authorizationQuery)
+    }
+}
 
 // MARK: - HKWorkoutSessionDelegate
 
- extension HealthWorkouthManager: HKWorkoutSessionDelegate {
+extension WatchHealthhManager: HKWorkoutSessionDelegate {
     func workoutSession(
         _ workoutSession: HKWorkoutSession,
         didChangeTo toState: HKWorkoutSessionState,
@@ -120,11 +169,11 @@
     }
 
     func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) {}
- }
+}
 
 // MARK: - HKLiveWorkoutBuilderDelegate
 
- extension HealthWorkouthManager: HKLiveWorkoutBuilderDelegate {
+extension WatchHealthhManager: HKLiveWorkoutBuilderDelegate {
     func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) {}
 
     func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder, didCollectDataOf collectedTypes: Set<HKSampleType>) {
@@ -152,13 +201,72 @@
                 let energyUnit = HKUnit.kilocalorie()
                 self.activeEnergy = statistics.sumQuantity()?.doubleValue(for: energyUnit) ?? 0
 
-            case HKQuantityType.quantityType(forIdentifier: .basalEnergyBurned),
-                 HKQuantityType.quantityType(forIdentifier: .basalEnergyBurned):
+            case HKQuantityType.quantityType(forIdentifier: .basalEnergyBurned):
                 let energyUnit = HKUnit.kilocalorie()
-                self.baseEnergy = statistics.sumQuantity()?.doubleValue(for: energyUnit) ?? 0
+                self.totalEnergy = statistics.sumQuantity()?.doubleValue(for: energyUnit) ?? 0 + self.activeEnergy
 
             default: return
             }
         }
     }
- }
+}
+
+struct HealthTrackingManager {
+    var checkAuthorizationStatus: @Sendable () -> HKAuthorizationStatus
+    var requestAuthorization: @Sendable () -> Void
+    var startWorkout: @Sendable (_ workoutType: HKWorkoutActivityType, _ workoutName: String) async -> Void
+    var isPaused: @Sendable () -> Bool
+    var isRunning: @Sendable () -> Bool
+    var togglePuase: @Sendable () -> Void
+    var endWorkout: @Sendable () -> Void
+    var resetWorkout: @Sendable () -> Void
+    var getAuthorizationStatus: @Sendable () -> HKAuthorizationStatus
+    var getAverageHeartRate: @Sendable () -> Double
+    var getActiveEnergy: @Sendable () -> Double
+    var getTotalEnergy: @Sendable () -> Double
+    var getWorkoutDuration: @Sendable () -> TimeInterval
+}
+
+extension HealthTrackingManager: DependencyKey {
+    static var liveValue = Self(
+        checkAuthorizationStatus: {
+            WatchHealthhManager.watchShared.checkAuthorizationStatus()
+        },
+        requestAuthorization: {
+            WatchHealthhManager.watchShared.requestAuthorization()
+        },
+        startWorkout: { type, name in
+            await WatchHealthhManager.watchShared.startWorkout(workoutType: type, workoutName: name)
+        },
+        isPaused: {
+            WatchHealthhManager.watchShared.paused
+        },
+        isRunning: {
+            WatchHealthhManager.watchShared.running
+        },
+        togglePuase: {
+            WatchHealthhManager.watchShared.togglePuase()
+        },
+        endWorkout: {
+            WatchHealthhManager.watchShared.endWorkout()
+        },
+        resetWorkout: {
+            WatchHealthhManager.watchShared.resetWorkout()
+        },
+        getAuthorizationStatus: {
+            WatchHealthhManager.watchShared.hkAccessStatus
+        },
+        getAverageHeartRate: {
+            WatchHealthhManager.watchShared.averageHeartRate
+        },
+        getActiveEnergy: {
+            WatchHealthhManager.watchShared.activeEnergy
+        },
+        getTotalEnergy: {
+            WatchHealthhManager.watchShared.totalEnergy
+        },
+        getWorkoutDuration: {
+            WatchHealthhManager.watchShared.timeElapsed
+        }
+    )
+}

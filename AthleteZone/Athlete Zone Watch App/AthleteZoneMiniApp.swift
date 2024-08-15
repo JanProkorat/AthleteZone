@@ -5,17 +5,17 @@
 //  Created by Jan Prokorát on 08.01.2023.
 //
 
+import ComposableArchitecture
 import SwiftUI
 
 @main
 struct AthleteZoneMiniWatchAppApp: App {
-    @StateObject var settingsManager = SettingsManager.shared
-
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.colorScheme, .dark)
-                .environment(\.locale, .init(identifier: "\(settingsManager.currentLanguage)"))
+            ContentView(store: ComposableArchitecture.Store(initialState: ContentFeature.State()) {
+                ContentFeature()
+                    ._printChanges()
+            })
         }
     }
 }

@@ -14,7 +14,7 @@ import SwiftData
     @Attribute(.spotlight) var name: String
     var trainingDescription: String
     @Attribute(.spotlight) var createdDate = Date()
-    var workouts: [WorkoutInfo]
+    @Relationship(deleteRule: .cascade) var workouts: [WorkoutInfo]
 
     var workoutCount: Int {
         workouts.count
@@ -44,7 +44,7 @@ import SwiftData
 
     func addWorkOuts(_ workouts: [Workout]) {
         self.workouts.removeAll()
-        self.workouts = workouts.map { WorkoutInfo(id: $0.id, workoutLength: $0.workoutLength) }
+        self.workouts = workouts.map { WorkoutInfo(workoutId: $0.id, workoutLength: $0.workoutLength) }
     }
 
     private func getTrainingLength() -> Int {
@@ -68,9 +68,22 @@ extension Training {
             workouts: []
         )
     }
+
+    func toDto(workouts: [WorkoutDto]) -> TrainingDto {
+        return TrainingDto(
+            id: id.uuidString,
+            name: name,
+            trainingDescription: trainingDescription,
+            workoutsCount: workouts.count,
+            trainingLength: trainingLength,
+            createdDate: createdDate,
+            workouts: workouts
+        )
+    }
 }
 
 struct WorkoutInfo: Codable {
-    var id: UUID
+    var id = UUID()
+    var workoutId: UUID
     var workoutLength: Int
 }

@@ -11,11 +11,11 @@ import os
 import SwiftData
 
 struct WorkoutRepository {
-    var add: @Sendable (_ workout: Workout) throws -> Void
-    var load: @Sendable (_ primaryKey: String) throws -> WorkoutDto?
-    var loadAll: @Sendable () throws -> [WorkoutDto]
-    var delete: @Sendable (_ id: UUID) throws -> Void
-    var isWorkoutAssignedToTraining: @Sendable (_ id: String) -> Bool
+    var add: @Sendable (_ workout: Workout) -> Void
+    var load: @Sendable (_ primaryKey: String) -> WorkoutDto?
+    var loadAll: @Sendable () -> [WorkoutDto]
+    var delete: @Sendable (_ id: UUID) -> Void
+    var isWorkoutAssignedToTraining: @Sendable (_ id: UUID) -> Bool
 
     var update: @Sendable (
         _ id: UUID,
@@ -24,12 +24,12 @@ struct WorkoutRepository {
         _ rest: Int,
         _ series: Int,
         _ rounds: Int,
-        _ reset: Int) throws -> Void
+        _ reset: Int) -> Void
 
     var getSortedData: @Sendable (
         _ searchText: String,
         _ sortBy: WorkOutSortByProperty,
-        _ sortOrder: SortOrder) throws -> [WorkoutDto]
+        _ sortOrder: SortOrder) -> [WorkoutDto]
 }
 
 extension WorkoutRepository: DependencyKey {
@@ -82,21 +82,36 @@ extension WorkoutRepository: DependencyKey {
                 logger.error("\(error.localizedDescription)")
             }
         },
-        isWorkoutAssignedToTraining: { _ in
-            false
+        isWorkoutAssignedToTraining: { id in
+            do {
+                @Dependency(\.appContext.context) var context
+                let dbContext = try context()
+                let descriptor = FetchDescriptor<Training>()
+                let trainings = try dbContext.fetch(descriptor)
+                return trainings.contains { training in
+                    training.workouts.contains { workout in
+                        workout.workoutId == id
+                    }
+                }
+            } catch {
+                logger.error("\(error.localizedDescription)")
+                return false
+            }
         },
         update: { id, name, work, rest, series, rounds, reset in
             do {
                 @Dependency(\.appContext.context) var context
                 let dbContext = try context()
                 let descriptor = FetchDescriptor<Workout>(predicate: #Predicate { $0.id == id })
-                var itemToUpdate = try dbContext.fetch(descriptor).first!
-                itemToUpdate.name = name
-                itemToUpdate.work = work
-                itemToUpdate.rest = rest
-                itemToUpdate.series = series
-                itemToUpdate.rounds = rounds
-                itemToUpdate.reset = reset
+                if let itemToUpdate = try dbContext.fetch(descriptor).first {
+                    itemToUpdate.name = name
+                    itemToUpdate.work = work
+                    itemToUpdate.rest = rest
+                    itemToUpdate.series = series
+                    itemToUpdate.rounds = rounds
+                    itemToUpdate.reset = reset
+                    dbContext.insert(itemToUpdate)
+                }
             } catch {
                 logger.error("\(error.localizedDescription)")
             }

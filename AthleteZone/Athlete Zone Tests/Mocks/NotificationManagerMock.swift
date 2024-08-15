@@ -8,7 +8,7 @@
 @testable import Athlete_Zone
 import Foundation
 
-class NotificationManagerMock: NotiificationProtocol {
+class NotificationManagerMock {
     func allowNotifications() {
         enabled = true
     }

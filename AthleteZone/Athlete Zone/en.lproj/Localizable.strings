@@ -46,12 +46,14 @@
 "language" = "Language";
 "sounds" = "Sounds";
 "soundsDescription" = "Enables sound notification when time interval is comming to an end";
-"haptics" = "Haptics (Watch only)";
+"haptics" = "Haptics";
+"hapticsDescription" = "Enables the Apple Watch app to use haptic feedback to notify user about ending workout";
 "allowNotifications" = "Remind me to exercise";
 "allowNotificationsDescription" = "Get notifications reminding you to work out";
 "healthKitAccess" = "Health app Access";
 "healthKitAccessDescription1" = "Removing access can only be done in settings of the Health app";
 "healthKitAccessDescription2" = "Access denied in the settings of the Health app. It can only be reenabled from there";
+"healthKitAccessDescription3" = "Enables access to the Health app, allowing the Apple Watch app to track your workout data.";
 "runInBackground" = "Run in background";
 "runInBackgroundDescription" = "Keep timer running when display is turned off or when user is out of the app";
 
@@ -124,6 +126,9 @@
 "lastActivity" = "Last activity";
 "recent" = "Recent";
 "newActivity" = "New activity";
+"go" = "Go!";
+"paused" = "Paused";
+"finished" = "Finished";
 
 //Subscription
 "active" = "Active";

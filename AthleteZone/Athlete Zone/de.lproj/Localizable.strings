@@ -46,12 +46,14 @@
 "language" = "Sprache";
 "sounds" = "Töne";
 "soundsDescription" = "Ermöglicht akustische Benachrichtigungen, wenn das Zeitintervall dem Ende zugeht";
-"haptics" = "Haptik (nur Uhr)";
+"haptics" = "Haptik";
+"hapticsDescription" = "Ermöglicht der Apple Watch App, den Benutzer mithilfe haptischer Signale über das Beenden des Workouts zu benachrichtigen";
 "allowNotifications" = "Training erinnern";
 "allowNotificationsDescription" = "Benachrichtigungen mit Trainingserinnerungen";
 "healthKitAccess" = "Health app Zugang";
 "healthKitAccessDescription1" = "Der Zugang kann nur in den Einstellungen der Health app widerrufen werden";
 "healthKitAccessDescription2" = "Zugriff in den Einstellungen der Health-App verweigert. Nur von dort aus kann es wieder aktiviert werden";
+"healthKitAccessDescription3" = "Gewährt Zugriff auf die Health App und ermöglicht der Apple Watch App, Ihre Trainingsdaten aufzuzeichnen.";
 "runInBackground" = "Lauf im Hintergrund";
 "runInBackgroundDescription" = "Timer läuft im Hintergrund, auch bei ausgeschaltetem Bildschirm oder verlassenem App";
 
@@ -124,6 +126,9 @@
 "lastActivity" = "Letzte Aktivität";
 "recent" = "Letzte";
 "newActivity" = "Neue Aktivität";
+"go" = "Go!";
+"paused" = "Pause";
+"finished" = "Fertig";
 
 //Subscription
 "active" = "Aktiv";

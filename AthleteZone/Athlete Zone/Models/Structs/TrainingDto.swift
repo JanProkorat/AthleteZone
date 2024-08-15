@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TrainingDto: Codable, Identifiable {
+struct TrainingDto: Codable, Identifiable, Equatable {
     var id: String
 
     var name: String

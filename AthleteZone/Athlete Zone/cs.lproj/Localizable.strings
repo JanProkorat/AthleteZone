@@ -45,12 +45,14 @@
 "language" = "Jazyk";
 "sounds" = "Zvuky";
 "soundsDescription" = "Povolí zvukové notifikace, když se časový interval blíží ke konci";
-"haptics" = "Vibrace (Jen hodinky)";
+"haptics" = "Haptika";
+"hapticsDescription" = "Umožňuje aplikaci Apple Watch upozornit uživatele na ukončení tréninku pomocí haptické odezvy";
 "allowNotifications" = "Připoměň mi cvičení";
 "allowNotificationsDescription" = "Povolí notifikaci s připomínkou cvičení";
 "healthKitAccess" = "Přístup do aplikace Zdraví";
 "healthKitAccessDescription1" = "Odebrání přístupu lze provést pouze v nastavení aplikace Zdraví";
 "healthKitAccessDescription2" = "Přístup odepřen v nastavení aplikace Zdraví. Pouze odtud jej lze znovu aktivovat";
+"healthKitAccessDescription3" = "Povolí přístup k aplikaci Zdraví a umožní aplikaci Apple Watch zaznamenávat data o vašem tréninku.";
 "runInBackground" = "Běh na pozadí";
 "runInBackgroundDescription" = "Ponechá běžet časovač i při vypnutém displeji nebo když je uživatel mimo aplikaci";
 
@@ -124,6 +126,9 @@
 "lastActivity" = "Poslední aktivita";
 "recent" = "Nedávné";
 "newActivity" = "Nová aktivita";
+"go" = "Go!";
+"paused" = "Pozastaveno";
+"finished" = "Dokončeno";
 
 //Subscription
 "active" = "Aktivní";

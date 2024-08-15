@@ -11,6 +11,7 @@ import SwiftUI
 
 struct ContentView: View {
     @Bindable var store: StoreOf<ContentFeature>
+    @ObservedObject var connectivityManager = ConnectivityManager.shared
 
     @State var isOfferCodeRedepmtionPresented = false
 

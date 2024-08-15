@@ -5,19 +5,25 @@
 //  Created by Jan Prokorát on 22.11.2023.
 //
 
+import Dependencies
 import Foundation
+import os
 import WatchConnectivity
 
-final class ConnectivityManager: NSObject, WCSessionDelegate, ConnectivityProtocol {
+final class ConnectivityManager: NSObject, WCSessionDelegate, ObservableObject {
     static let shared = ConnectivityManager()
 
-    @Published var activationState: WCSessionActivationState = .notActivated
-    @Published var isSessionReachable = false
-    @Published var receivedMessage: [String: Any]?
+    private static let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: String(describing: ConnectivityManager.self)
+    )
 
-    var isSessionReachablePublisher: Published<Bool>.Publisher { self.$isSessionReachable }
-    var receivedMessagePublisher: Published<[String: Any]?>.Publisher { self.$receivedMessage }
-    var activationStatePublisher: Published<WCSessionActivationState>.Publisher { self.$activationState }
+    @Published var isSessionReachable = false
+    @Published var receivedMessage: [String: String]?
+
+//    var isSessionReachablePublisher: Published<Bool>.Publisher { self.$isSessionReachable }
+//    var receivedMessagePublisher: Published<[String: Any]?>.Publisher { self.$receivedMessage }
+//    var activationStatePublisher: Published<WCSessionActivationState>.Publisher { self.$activationState }
 
     override private init() {
         super.init()
@@ -25,59 +31,79 @@ final class ConnectivityManager: NSObject, WCSessionDelegate, ConnectivityProtoc
         WCSession.default.delegate = self
         WCSession.default.activate()
     }
-}
 
-// MARK: - WCSessionDelegate
-
-extension ConnectivityManager {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        self.activationState = activationState
         switch activationState {
         case .activated:
-            print("Watch Activated")
+            ConnectivityManager.logger.info("Watch Activated")
 
         case .notActivated:
-            print("Watch Not Activated")
+            ConnectivityManager.logger.info("Watch Not Activated")
 
         case .inactive:
-            print("Watch Inactive")
+            ConnectivityManager.logger.info("Watch Inactive")
+
         @unknown default:
             break
         }
     }
 
     func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
-        DispatchQueue.main.async {
-            self.receivedMessage = message
-        }
+//        DispatchQueue.main.async {
+        self.receivedMessage = message.mapValues { $0 as? String ?? "" }
+//        }
     }
 
     func requestData() {
         guard WCSession.default.activationState == .activated else {
-            print("Session not in active state")
+            ConnectivityManager.logger.error("Session not in active state")
             return
         }
 
         guard WCSession.default.isCompanionAppInstalled else {
-            print("iOS app not installed")
+            ConnectivityManager.logger.error("iOS app not installed")
             return
         }
 
-        WCSession.default.sendMessage(["data": "data"]) { newValue in
+        WCSession.default.sendMessage([DefaultItem.initData.rawValue: DefaultItem.initData.rawValue]) { newValue in
             DispatchQueue.main.async {
-                self.receivedMessage = newValue
+                self.receivedMessage = newValue.mapValues { $0 as? String ?? "" }
             }
-
         } errorHandler: { error in
-            print(["Error sending data request", error.localizedDescription])
+            ConnectivityManager.logger.error("Error sending data request: \(error.localizedDescription)")
         }
     }
 
     func sessionReachabilityDidChange(_ session: WCSession) {
-        self.isSessionReachable = session.isReachable
+        ConnectivityManager.logger.info("Session reachable: \(session.isReachable)")
+        DispatchQueue.main.async {
+            self.isSessionReachable = session.isReachable
+        }
     }
 
     func isIosAppInstalled() -> Bool {
         return WCSession.default.isCompanionAppInstalled
     }
+}
+
+struct WatchConnectivityManager {
+    var requestData: @Sendable () -> Void
+    var isIosAppInstalled: @Sendable () -> Bool
+    var isSessionRachable: @Sendable () -> Bool
+    var getManager: @Sendable () -> ConnectivityManager
+}
+
+extension WatchConnectivityManager: DependencyKey {
+    static var liveValue = Self(
+        requestData: {
+            ConnectivityManager.shared.requestData()
+        },
+        isIosAppInstalled: {
+            ConnectivityManager.shared.isIosAppInstalled()
+        },
+        isSessionRachable: {
+            ConnectivityManager.shared.isSessionReachable
+        },
+        getManager: { ConnectivityManager.shared }
+    )
 }

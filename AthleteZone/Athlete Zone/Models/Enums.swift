@@ -36,7 +36,7 @@ enum WorkFlowType: String, Codable {
 }
 
 enum WorkFlowState: String, Codable {
-    case ready, running, paused, finished, quit
+    case ready, preparation, running, paused, finished, quit
 }
 
 enum LabelType {
@@ -185,6 +185,8 @@ enum Picture: String {
     case background2 = "Background2"
     case background3 = "Background3"
     case welcome = "Welcome"
+    case headline = "Headline"
+    case headline2 = "Headline2"
 }
 
 enum ComponentColor: String, CaseIterable, Codable {
@@ -208,6 +210,7 @@ enum ComponentColor: String, CaseIterable, Codable {
 }
 
 enum DefaultItem: String {
+    case initData
     case language
     case selectedWorkoutId
     case selectedTrainingId
@@ -283,9 +286,11 @@ enum LocalizationKey: String {
     case allowNotifications
     case allowNotificationsDescription
     case haptics
+    case hapticsDescription
     case healthKitAccess
     case healthKitAccessDescription1
     case healthKitAccessDescription2
+    case healthKitAccessDescription3
     case runInBackground
     case runInBackgroundDescription
 
@@ -355,6 +360,9 @@ enum LocalizationKey: String {
     case lastActivity
     case recent
     case newActivity
+    case go
+    case paused
+    case finished
 
     // Subscription
     case active

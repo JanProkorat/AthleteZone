@@ -8,9 +8,15 @@
 import Combine
 import Foundation
 import HealthKit
+import OSLog
 
-class HealthManager: NSObject, HealthProtocol {
+class HealthManager: NSObject, ObservableObject {
     static let shared = HealthManager()
+
+    let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: String(describing: HealthManager.self)
+    )
 
     public let healthStore = HKHealthStore()
     public let typesToRead: Set = [
@@ -32,10 +38,14 @@ class HealthManager: NSObject, HealthProtocol {
         hkAccessStatus = checkAuthorizationStatus()
     }
 
+    func getHealthAccessGranted() -> Bool {
+        return hkAccessStatus == .sharingAuthorized
+    }
+
     func requestAuthorization() {
         healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { _, error in
             if let newError = error {
-                print(["Workout request authorization error", newError.localizedDescription])
+                self.logger.error("Workout request authorization error: \(newError.localizedDescription)")
             } else {
                 self.setupAuthorizationObserver()
             }
@@ -54,7 +64,7 @@ class HealthManager: NSObject, HealthProtocol {
         ) { _, completionHandler, error in
 
             if let error = error {
-                print("Error observing authorization changes: \(error.localizedDescription)")
+                self.logger.error("Error observing authorization changes: \(error.localizedDescription)")
                 completionHandler()
                 return
             }

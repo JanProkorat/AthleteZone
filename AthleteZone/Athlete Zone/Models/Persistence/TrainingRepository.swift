@@ -47,7 +47,7 @@ extension TrainingRepository: DependencyKey {
                     var training = try dbContext.fetch(descriptor).first
                     var dto = training?.toDto()
                     try training?.workouts.forEach { info in
-                        let workoutDescriptor = FetchDescriptor<Workout>(predicate: #Predicate { $0.id == info.id })
+                        let workoutDescriptor = FetchDescriptor<Workout>(predicate: #Predicate { $0.id == info.workoutId })
                         if let workout = try dbContext.fetch(workoutDescriptor).first {
                             dto?.workouts.append(workout.toDto())
                         }
@@ -68,7 +68,7 @@ extension TrainingRepository: DependencyKey {
                 var trainings = try dbContext.fetch(descriptor)
                 return try trainings.map { item in
                     var dto = item.toDto()
-                    let workoutIds = item.workouts.map { $0.id }
+                    let workoutIds = item.workouts.map { $0.workoutId }
                     var workoutDescriptor = FetchDescriptor<Workout>(predicate: #Predicate { workout in
                         workoutIds.contains(workout.id)
                     })
@@ -133,7 +133,7 @@ extension TrainingRepository: DependencyKey {
                 return try trainings.map { item in
                     var dto = item.toDto()
                     try item.workouts.forEach { info in
-                        var workoutDescriptor = FetchDescriptor<Workout>(predicate: #Predicate { $0.id == info.id })
+                        var workoutDescriptor = FetchDescriptor<Workout>(predicate: #Predicate { $0.id == info.workoutId })
                         if let workout = try dbContext.fetch(workoutDescriptor).first {
                             dto.workouts.append(workout.toDto())
                         }

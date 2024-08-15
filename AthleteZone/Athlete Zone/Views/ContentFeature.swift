@@ -109,7 +109,7 @@ struct ContentFeature {
                             if tab == .library || tab == .settings {
                                 await send(.titleChanged("\(tab)"))
                             }
-                            await send(.destination(.presented(.workout(.tabChanged(tab)))))
+                            await send(.destination(.presented(.workout(.tabChanged(tab)))), animation: .default)
                         }
 
                     case .training:
@@ -117,7 +117,7 @@ struct ContentFeature {
                             if tab == .library || tab == .settings {
                                 await send(.titleChanged("\(tab)"))
                             }
-                            await send(.destination(.presented(.training(.tabChanged(tab)))))
+                            await send(.destination(.presented(.training(.tabChanged(tab)))), animation: .default)
                         }
 
                     case .stopWatch:
@@ -127,7 +127,7 @@ struct ContentFeature {
                             } else {
                                 await send(.titleChanged(section.rawValue))
                             }
-                            await send(.destination(.presented(.stopwatch(.tabChanged(tab)))))
+                            await send(.destination(.presented(.stopwatch(.tabChanged(tab)))), animation: .default)
                         }
                     }
                 }

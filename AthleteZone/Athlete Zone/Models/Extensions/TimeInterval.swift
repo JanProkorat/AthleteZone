@@ -41,4 +41,22 @@ extension TimeInterval {
             return String(format: "%02d:%02d", minutes, seconds, milliseconds)
         }
     }
+
+    func formatElapsedTime() -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .positional
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.zeroFormattingBehavior = [.pad]
+
+        return formatter.string(from: self) ?? "00:00:00"
+    }
+
+    func isTimeElapsedZero(withTolerance tolerance: TimeInterval = 1e-9) -> Bool {
+        return abs(self) < tolerance
+    }
+
+    func rounded(toPlaces places: Int) -> TimeInterval {
+        let multiplier = pow(10.0, Double(places))
+        return (self * multiplier).rounded() / multiplier
+    }
 }

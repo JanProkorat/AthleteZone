@@ -8,47 +8,61 @@
 import SwiftUI
 
 struct LaunchScreenView: View {
-    @EnvironmentObject private var launchScreenState: LaunchScreenStateManager
+    var launchScreenState: LaunchScreenStep
 
     @State private var scaleAnimation = false
     @State private var startFadeoutAnimation = false
+    @State var logoSize: CGFloat = 1
 
     private let animationTimer = Timer
         .publish(every: 0.5, on: .current, in: .common)
         .autoconnect()
 
+    var repeatingAnimation: Animation {
+        Animation
+            .easeInOut(duration: 0.5)
+            .repeatForever()
+    }
+
     var body: some View {
-        BaseView(title: "",
-                 content: {
-                     ZStack {
-                         background
-                         image
-                     }
-                     .onReceive(animationTimer) { _ in updateAnimation() }
-                     .opacity(startFadeoutAnimation ? 0 : 1)
-                 })
-                 .edgesIgnoringSafeArea(.all)
-                 .padding(-10)
-                 .padding(.bottom)
-    }
+        VStack(alignment: .center) {
+            ZStack {
+                Image(Picture.background3.rawValue)
+                    .resizable()
+                    .scaledToFill()
+                    .padding(.top, 50)
+                VStack {
+                    Image(Picture.logo2.rawValue)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 60)
+                        .padding(.top, 25)
+                        .scaleEffect(scaleAnimation ? 0 : logoSize)
+                        .onAppear {
+                            withAnimation(self.repeatingAnimation) { self.logoSize = 1.3 }
+                        }
 
-    @ViewBuilder
-    private var background: some View {
-        Image(Picture.background3.rawValue)
-            .resizable()
-    }
-
-    @ViewBuilder
-    private var image: some View {
-        Image(Picture.logo2.rawValue)
-            .resizable()
-            .scaledToFit()
-            .frame(height: 280)
-            .scaleEffect(scaleAnimation ? 0 : 1)
+                    Image(Picture.headline2.rawValue)
+                        .resizable()
+                        .scaledToFit()
+                        .padding(.top, 15)
+                }
+                .padding(.bottom, 15)
+            }
+            .onReceive(animationTimer) { _ in updateAnimation() }
+            .opacity(startFadeoutAnimation ? 0 : 1)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding([.leading, .trailing], 5)
+        }
+        .frame(maxWidth: .infinity)
+        .background(Color(ComponentColor.darkBlue.rawValue))
+        .edgesIgnoringSafeArea(.all)
+        .padding(-10)
+        .padding(.bottom)
     }
 
     private func updateAnimation() {
-        switch launchScreenState.state {
+        switch launchScreenState {
         case .firstStep:
             break
 
@@ -68,7 +82,6 @@ struct LaunchScreenView: View {
 
 struct LaunchScreenView_Previews: PreviewProvider {
     static var previews: some View {
-        LaunchScreenView()
-            .environmentObject(LaunchScreenStateManager())
+        LaunchScreenView(launchScreenState: .firstStep)
     }
 }

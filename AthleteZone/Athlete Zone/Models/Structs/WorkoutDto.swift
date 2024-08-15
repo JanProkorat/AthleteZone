@@ -58,9 +58,9 @@ extension WorkoutDto {
         }
     }
 
-    var workFlow: [WorkFlow] {
+    func toWorkflow() -> [WorkFlow] {
         var flow: [WorkFlow] = []
-        flow.append(WorkFlow(interval: 10, type: .preparation,
+        flow.append(WorkFlow(interval: Constants.PreparationTickInterval, type: .preparation,
                              round: 1, serie: 1,
                              totalSeries: series, totalRounds: rounds))
         var serieCount = 1
