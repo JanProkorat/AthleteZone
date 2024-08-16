@@ -13,17 +13,13 @@ import WatchConnectivity
 final class ConnectivityManager: NSObject, WCSessionDelegate, ObservableObject {
     static let shared = ConnectivityManager()
 
-    private static let logger = Logger(
+    private let logger = Logger(
         subsystem: Bundle.main.bundleIdentifier!,
         category: String(describing: ConnectivityManager.self)
     )
 
     @Published var isSessionReachable = false
     @Published var receivedMessage: [String: String]?
-
-//    var isSessionReachablePublisher: Published<Bool>.Publisher { self.$isSessionReachable }
-//    var receivedMessagePublisher: Published<[String: Any]?>.Publisher { self.$receivedMessage }
-//    var activationStatePublisher: Published<WCSessionActivationState>.Publisher { self.$activationState }
 
     override private init() {
         super.init()
@@ -35,13 +31,13 @@ final class ConnectivityManager: NSObject, WCSessionDelegate, ObservableObject {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         switch activationState {
         case .activated:
-            ConnectivityManager.logger.info("Watch Activated")
+            logger.info("Watch Activated")
 
         case .notActivated:
-            ConnectivityManager.logger.info("Watch Not Activated")
+            logger.info("Watch Not Activated")
 
         case .inactive:
-            ConnectivityManager.logger.info("Watch Inactive")
+            logger.info("Watch Inactive")
 
         @unknown default:
             break
@@ -49,19 +45,17 @@ final class ConnectivityManager: NSObject, WCSessionDelegate, ObservableObject {
     }
 
     func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
-//        DispatchQueue.main.async {
-        self.receivedMessage = message.mapValues { $0 as? String ?? "" }
-//        }
+        receivedMessage = message.mapValues { $0 as? String ?? "" }
     }
 
     func requestData() {
         guard WCSession.default.activationState == .activated else {
-            ConnectivityManager.logger.error("Session not in active state")
+            logger.error("Session not in active state")
             return
         }
 
         guard WCSession.default.isCompanionAppInstalled else {
-            ConnectivityManager.logger.error("iOS app not installed")
+            logger.error("iOS app not installed")
             return
         }
 
@@ -70,12 +64,12 @@ final class ConnectivityManager: NSObject, WCSessionDelegate, ObservableObject {
                 self.receivedMessage = newValue.mapValues { $0 as? String ?? "" }
             }
         } errorHandler: { error in
-            ConnectivityManager.logger.error("Error sending data request: \(error.localizedDescription)")
+            self.logger.error("Error sending data request: \(error.localizedDescription)")
         }
     }
 
     func sessionReachabilityDidChange(_ session: WCSession) {
-        ConnectivityManager.logger.info("Session reachable: \(session.isReachable)")
+        logger.info("Session reachable: \(session.isReachable)")
         DispatchQueue.main.async {
             self.isSessionReachable = session.isReachable
         }

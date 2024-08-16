@@ -76,8 +76,8 @@
           "codeOffers" : [
             {
               "eligibility" : [
-                "new",
-                "existing"
+                "existing",
+                "new"
               ],
               "internalID" : "EEDBCDE8",
               "isStackable" : false,
@@ -167,8 +167,8 @@
           "codeOffers" : [
             {
               "eligibility" : [
-                "new",
-                "existing"
+                "existing",
+                "new"
               ],
               "internalID" : "EA7695CD",
               "isStackable" : false,

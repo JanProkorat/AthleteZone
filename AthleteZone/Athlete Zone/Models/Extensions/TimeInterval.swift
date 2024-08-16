@@ -59,4 +59,8 @@ extension TimeInterval {
         let multiplier = pow(10.0, Double(places))
         return (self * multiplier).rounded() / multiplier
     }
+
+    func isWholeNumber() -> Bool {
+        self.truncatingRemainder(dividingBy: 1) == 0
+    }
 }

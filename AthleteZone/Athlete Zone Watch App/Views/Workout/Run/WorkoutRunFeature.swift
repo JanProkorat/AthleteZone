@@ -58,6 +58,7 @@ struct WorkoutRunFeature {
         case healthDestination(PresentationAction<HealthDestination.Action>)
         case timerDestination(PresentationAction<TimerDestination.Action>)
         case activityResultChanged(ActivityResultDto?)
+        case dismiss
     }
 
     @Dependency(\.hapticManager) var hapticManager
@@ -115,10 +116,19 @@ struct WorkoutRunFeature {
                 return .send(.setupNextActivity(state.currentFlowIndex))
 
             case .pauseTapped:
-                return .run { [state = state.state, previousState = state.previousState] send in
-                    let newState = state == .running || state == .preparation ? .paused :
-                        state == .finished ? .preparation : previousState
-                    await send(.stateChanged(newState), animation: .default)
+                switch state.state {
+                case .finished:
+                    state.currentFlowIndex = 0
+                    return .run { send in
+                        await send(.setupNextActivity(0))
+                        await send(.stateChanged(.preparation))
+                    }
+
+                case .paused:
+                    return .send(.stateChanged(.running))
+
+                default:
+                    return .send(.stateChanged(.paused))
                 }
 
             case .quitTapped:
@@ -137,22 +147,16 @@ struct WorkoutRunFeature {
                     }
                     if state.currentActivity!.interval.isTimeElapsedZero() {
                         if appStorageManager.getHapticsEnabled() {
-                            return .run { [isLastRunning = state.isLastRunning] _ in
+                            return .run { [isLastRunning = state.isLastRunning] send in
                                 hapticManager.playHaptic(isLastRunning ? .success : .success)
+                                if isLastRunning {
+                                    await send(.stateChanged(.finished))
+                                }
                             }
                         }
                         return .none
                     }
-                    // Timer ticks to zero, handle next flow in row
                     if state.currentActivity!.interval < 0 {
-                        // Last interval is running, finish workout
-                        if state.isLastRunning {
-                            return .run { send in
-                                await send(.setupNextActivity(0))
-                                await send(.stateChanged(.finished))
-                            }
-                        }
-                        // Move to next interval in row
                         return .send(.forwardTapped)
                     }
                 }
@@ -161,6 +165,9 @@ struct WorkoutRunFeature {
             case .healthDestination(.presented(.health(.delegate(.trackingEnded(let result))))):
                 return .send(.activityResultChanged(result))
 
+            case .healthDestination(.presented(.health(.delegate(.quitInPreparation)))):
+                return .send(.dismiss)
+
             case .healthDestination:
                 return .none
 
@@ -168,7 +175,7 @@ struct WorkoutRunFeature {
                 let accessStatus = healthManager.getAuthorizationStatus()
                 state.healthDestination = .health(HealthFeature.State(
                     hkAccessStatus: accessStatus,
-                    activityName: LocalizedStringKey(state.workout.name)))
+                    activityName: state.workout.name))
                 state.timerDestination = .timer(TimingFeature.State(timerTickInterval: state.timerTickInterval))
                 return .none
 
@@ -179,11 +186,14 @@ struct WorkoutRunFeature {
                 state.activityResult = result
                 if result == nil {
                     healthManager.resetWorkout()
-                    return .run { _ in
-                        await self.dismiss()
-                    }
+                    return .send(.dismiss)
                 }
                 return .none
+
+            case .dismiss:
+                return .run { _ in
+                    await self.dismiss()
+                }
             }
         }
         .ifLet(\.$healthDestination, action: \.healthDestination)

@@ -52,6 +52,14 @@ struct TimerRunFeature {
             return ComponentColor.lightPink
         }
 
+        var isLastRunning: Bool {
+            state == .running || (state != .preparation && previousState == .running)
+        }
+
+        var isFirstRunning: Bool {
+            state == .preparation || (state != .running && previousState == .preparation)
+        }
+
         @Presents var healthDestination: HealthDestination.State?
         @Presents var timerDestination: TimerDestination.State?
     }
@@ -61,12 +69,15 @@ struct TimerRunFeature {
         case stateChanged(WorkFlowState)
         case pauseTapped
         case quitTapped
+        case forwardTapped
+        case backTapped
         case selectedTabChanged(Int)
         case setupDestinations
         case healthDestination(PresentationAction<HealthDestination.Action>)
         case timerDestination(PresentationAction<TimerDestination.Action>)
         case timeRemainingChanged(TimeInterval)
         case activityResultChanged(ActivityResultDto?)
+        case dismiss
     }
 
     @Dependency(\.healthManager) var healthManager
@@ -130,34 +141,45 @@ struct TimerRunFeature {
                 return .none
 
             case .pauseTapped:
-                return .run { [state = state.state, previousState = state.previousState] send in
-                    let newState = state == .running || state == .preparation ? .paused :
-                        state == .finished ? .preparation : previousState
-                    await send(.stateChanged(newState), animation: .default)
+                switch state.state {
+                case .finished:
+                    state.timeRemaining = 10
+                    return .send(.stateChanged(.preparation))
+
+                case .paused:
+                    return .send(.stateChanged(.running))
+
+                default:
+                    return .send(.stateChanged(.paused))
                 }
 
             case .quitTapped:
-                return .run { send in
-                    await send(.stateChanged(.quit))
-                    await send(.activityResultChanged(
-                        ActivityResultDto(
-                            duration: healthManager.getWorkoutDuration(),
-                            heartRate: healthManager.getAverageHeartRate(),
-                            activeEnergy: healthManager.getActiveEnergy(),
-                            totalEnergy: healthManager.getTotalEnergy()
-                        )))
-                }
+                return .send(.stateChanged(.quit))
+
+            case .backTapped:
+                state.timeRemaining = 10
+                return .send(.stateChanged(.preparation))
+
+            case .forwardTapped:
+                state.timeRemaining = state.startTime
+                return .send(.stateChanged(.running))
 
             case .selectedTabChanged(let tabIndex):
                 state.selectedTab = tabIndex
                 return .none
+
+            case .healthDestination(.presented(.health(.delegate(.trackingEnded(let result))))):
+                return .send(.activityResultChanged(result))
+
+            case .healthDestination(.presented(.health(.delegate(.quitInPreparation)))):
+                return .send(.dismiss)
 
             case .healthDestination:
                 return .none
 
             case .setupDestinations:
                 let accessStatus = healthManager.getAuthorizationStatus()
-                let name = LocalizationKey.timer.localizedKey
+                let name = LocalizationKey.timer.stringValue
                 state.healthDestination = .health(HealthFeature.State(hkAccessStatus: accessStatus, activityName: name))
                 state.timerDestination = .timer(TimingFeature.State(timerTickInterval: state.timerTickInterval))
                 return .none
@@ -169,11 +191,14 @@ struct TimerRunFeature {
                 state.activityResult = result
                 if result == nil {
                     healthManager.resetWorkout()
-                    return .run { _ in
-                        await self.dismiss()
-                    }
+                    return .send(.dismiss)
                 }
                 return .none
+
+            case .dismiss:
+                return .run { _ in
+                    await self.dismiss()
+                }
             }
         }
         .ifLet(\.$healthDestination, action: \.healthDestination)

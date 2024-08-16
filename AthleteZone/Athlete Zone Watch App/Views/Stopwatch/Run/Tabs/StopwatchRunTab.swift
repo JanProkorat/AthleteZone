@@ -18,10 +18,12 @@ struct StopwatchRunTab: View {
                 splitTime: store.splitTimes.last,
                 state: store.state,
                 actionLabel: store.actionLabel,
-                actionColor: store.actionColor)
-                .onAddSplitTimeTab {
-                    store.send(.addSplitTime)
-                }
+                actionColor: store.actionColor,
+                isFirstRunning: store.isFirstRunning,
+                isLastRunning: store.isLastRunning)
+                .onAddSplitTimeTab { store.send(.addSplitTime) }
+                .onBackTap { store.send(.backTapped) }
+                .onForwardTap { store.send(.forwardTapped) }
 
             if let healthStore = store.scope(state: \.healthDestination?.health, action: \.healthDestination.health) {
                 HealthView(store: healthStore)

@@ -12,6 +12,11 @@ struct TimerTrackingTab: View {
     var actionLabel: LocalizationKey
     var timeElapsed: String
     var actionColor: ComponentColor
+    var isFirstRunning: Bool
+    var isLastRunning: Bool
+
+    var onBackTap: (() -> Void)?
+    var onForwardTap: (() -> Void)?
 
     var body: some View {
         VStack {
@@ -20,10 +25,33 @@ struct TimerTrackingTab: View {
                 color: .lightGreen
             )
 
-            Description(
-                title: "\(originalTime.toFormattedTimeForWorkout())",
-                color: .lightBlue
-            )
+            HStack {
+                Button {
+                    performAction(onBackTap)
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(Color(ComponentColor.lightBlue.rawValue))
+                }
+                .buttonStyle(.plain)
+                .disabled(isFirstRunning)
+
+                Description(
+                    title: "\(originalTime.toFormattedTimeForWorkout())",
+                    color: ComponentColor.lightBlue
+                )
+                .padding([.leading, .trailing], 2)
+
+                Button {
+                    performAction(onForwardTap)
+                } label: {
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(Color(ComponentColor.lightBlue.rawValue))
+                }
+                .buttonStyle(.plain)
+                .disabled(isLastRunning)
+            }
+            .roundedBackground(cornerRadius: 10, color: Color(ComponentColor.darkBlue.rawValue))
+            .padding(.top, 1)
 
             Text(actionLabel.localizedKey)
                 .font(.headline)
@@ -43,11 +71,27 @@ struct TimerTrackingTab: View {
     }
 }
 
+extension TimerTrackingTab {
+    func onBackTap(_ handler: @escaping () -> Void) -> TimerTrackingTab {
+        var new = self
+        new.onBackTap = handler
+        return new
+    }
+
+    func onForwardTap(_ handler: @escaping () -> Void) -> TimerTrackingTab {
+        var new = self
+        new.onForwardTap = handler
+        return new
+    }
+}
+
 #Preview {
     TimerTrackingTab(
         originalTime: 137,
         actionLabel: .go,
         timeElapsed: TimeInterval(98).toFormattedTimeForWorkout(),
-        actionColor: .lightPink
+        actionColor: .lightPink,
+        isFirstRunning: false,
+        isLastRunning: true
     )
 }

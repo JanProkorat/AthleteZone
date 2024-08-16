@@ -17,7 +17,11 @@ struct TimerRunTab: View {
                 originalTime: store.startTime,
                 actionLabel: store.actionLabel,
                 timeElapsed: store.timeRemaining.toFormattedTimeForWorkout(),
-                actionColor: store.actionColor)
+                actionColor: store.actionColor,
+                isFirstRunning: store.isFirstRunning,
+                isLastRunning: store.isLastRunning)
+                .onBackTap { store.send(.backTapped) }
+                .onForwardTap { store.send(.forwardTapped) }
 
             if let healthStore = store.scope(state: \.healthDestination?.health, action: \.healthDestination.health) {
                 HealthView(store: healthStore)

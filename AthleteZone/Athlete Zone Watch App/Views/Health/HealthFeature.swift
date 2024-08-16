@@ -18,7 +18,7 @@ struct HealthFeature {
         var hkAccessStatus: HKAuthorizationStatus = .notDetermined
         var timeElapsed: TimeInterval = 0
         var isTimerActive = false
-        var activityName: LocalizedStringKey
+        var activityName: String
         var state: WorkFlowState = .ready
     }
 
@@ -27,6 +27,7 @@ struct HealthFeature {
         case stopTimer
         case timerTicked
         case stateChanged(WorkFlowState, WorkFlowState)
+        case startWorkout
         case delegate(Delegate)
 
         enum Delegate {
@@ -60,15 +61,14 @@ struct HealthFeature {
                 state.timeElapsed += 0.01
                 return .none
 
-            case .stateChanged(let previous, let new):
+            case .stateChanged(_, let new):
                 state.state = new
                 switch new {
                 case .running:
-//                    startHealthWorkout(hkAccessStatus: state.hkAccessStatus, name: state.activityName)
                     state.isTimerActive = true
                     return .run { send in
-                        await healthManager.startWorkout(.other, "test")
                         await send(.startTimer)
+                        await send(.startWorkout)
                     }
 
                 case .paused:
@@ -82,24 +82,33 @@ struct HealthFeature {
                     return .send(.stopTimer)
 
                 case .quit:
-                    endWorkout(hkAccessStatus: state.hkAccessStatus)
                     state.isTimerActive = false
                     return .run { send in
                         await send(.stopTimer)
-                        if previous == .preparation {
-                            await send(.delegate(.quitInPreparation))
-                        } else {
+                        if healthManager.isRunning() {
+                            healthManager.endWorkout()
                             await send(.delegate(.trackingEnded(ActivityResultDto(
                                 duration: healthManager.getWorkoutDuration(),
                                 heartRate: healthManager.getAverageHeartRate(),
                                 activeEnergy: healthManager.getActiveEnergy(),
                                 totalEnergy: healthManager.getTotalEnergy()
                             ))))
+                        } else {
+                            await send(.delegate(.quitInPreparation))
                         }
                     }
 
                 default:
                     return .none
+                }
+
+            case .startWorkout:
+                return .run { [activityName = state.activityName] _ in
+                    if healthManager.isPaused() {
+                        healthManager.togglePuase()
+                    } else if !healthManager.isRunning() {
+                        await healthManager.startWorkout(.other, activityName)
+                    }
                 }
 
             case .delegate:
@@ -114,25 +123,5 @@ struct HealthFeature {
         }
 
         healthManager.togglePuase()
-    }
-
-    private func startHealthWorkout(hkAccessStatus: HKAuthorizationStatus, name: LocalizedStringKey) {
-        if hkAccessStatus != .sharingAuthorized {
-            return
-        }
-
-        if healthManager.isPaused() {
-            healthManager.togglePuase()
-        } else {
-//            healthManager.startWorkout(.traditionalStrengthTraining, "test")
-        }
-    }
-
-    private func endWorkout(hkAccessStatus: HKAuthorizationStatus) {
-        if hkAccessStatus != .sharingAuthorized {
-            return
-        }
-
-        healthManager.endWorkout()
     }
 }

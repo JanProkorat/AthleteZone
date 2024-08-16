@@ -17,48 +17,23 @@ struct TimerRunView: View {
                 TimerRunTab(store: store)
                     .tag(0)
 
-                HStack(alignment: .center, spacing: 20) {
-                    Button(action: {
-                        if store.state == .finished {
-                            store.send(.timeRemainingChanged(10))
-                        }
-                        store.send(.pauseTapped)
+                ActionsView(isFirstRunning: store.isFirstRunning, isLastRunning: store.isLastRunning, state: store.state)
+                    .onBackTap {
+                        store.send(.backTapped, animation: .default)
                         store.send(.selectedTabChanged(0), animation: .default)
-                    }, label: {
-                        if store.state == .finished {
-                            Image(systemName: "repeat.circle.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .foregroundColor(Color(ComponentColor.lightYellow.rawValue))
-                                .frame(width: 60, height: 60)
-                                .padding(.trailing, 4)
-                                .padding(.leading, 6)
-                                .padding(.top, 2)
-                        } else {
-                            Image(store.state == .running || store.state == .preparation ?
-                                Icon.actionsPause.rawValue : Icon.start.rawValue)
-                                .resizable()
-                                .scaledToFit()
-                                .foregroundColor(Color(ComponentColor.lightYellow.rawValue))
-                                .frame(width: 70, height: 70)
-                        }
-                    })
-                    .buttonStyle(PlainButtonStyle())
-                    .scaleEffect(x: 1.22, y: 1.22, anchor: .center)
-
-                    Button(action: {
+                    }
+                    .onForwardTap {
+                        store.send(.forwardTapped, animation: .default)
+                        store.send(.selectedTabChanged(0), animation: .default)
+                    }
+                    .onPauseTap {
+                        store.send(.pauseTapped, animation: .default)
+                        store.send(.selectedTabChanged(0), animation: .default)
+                    }
+                    .onQuitTap {
                         store.send(.quitTapped)
-                    }, label: {
-                        Image(Icon.stop.rawValue)
-                            .resizable()
-                            .scaledToFit()
-                            .foregroundColor(Color(ComponentColor.braun.rawValue))
-                            .frame(width: 70, height: 70)
-                    })
-                    .buttonStyle(PlainButtonStyle())
-                    .padding(.leading, 4)
-                }
-                .tag(1)
+                    }
+                    .tag(1)
             }
             .padding([.leading, .trailing], 5)
             .id("horizontal")

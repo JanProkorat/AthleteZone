@@ -242,6 +242,16 @@ enum LocalizationKey: String {
         LocalizedStringKey(rawValue)
     }
 
+    var stringValue: String {
+        let preferredLanguage = Bundle.main.preferredLocalizations.first ?? "en"
+        if let path = Bundle.main.path(forResource: preferredLanguage, ofType: "lproj"),
+           let bundle = Bundle(path: path)
+        {
+            return bundle.localizedString(forKey: rawValue, value: nil, table: nil)
+        }
+        return ""
+    }
+
     case appTitle
     case premiumSubscription = "Athlete Zone+"
 

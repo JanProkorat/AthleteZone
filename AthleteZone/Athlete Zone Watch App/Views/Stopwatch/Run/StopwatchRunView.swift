@@ -20,7 +20,22 @@ struct StopwatchRunView: View {
                 StopwatchRunTab(store: store)
                     .tag(1)
 
-                StopwatchActionsTab(store: store)
+                ActionsView(isFirstRunning: store.isFirstRunning, isLastRunning: store.isLastRunning, state: store.state)
+                    .onBackTap {
+                        store.send(.backTapped, animation: .default)
+                        store.send(.selectedTabChanged(1), animation: .default)
+                    }
+                    .onForwardTap {
+                        store.send(.forwardTapped, animation: .default)
+                        store.send(.selectedTabChanged(1), animation: .default)
+                    }
+                    .onPauseTap {
+                        store.send(.pauseTapped, animation: .default)
+                        store.send(.selectedTabChanged(1), animation: .default)
+                    }
+                    .onQuitTap {
+                        store.send(.quitTapped)
+                    }
                     .tag(2)
             }
             .padding([.leading, .trailing], 5)

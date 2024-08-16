@@ -121,7 +121,6 @@ struct TrainingRunFeature {
                     return .run { [currentWorkoutIndex = state.currentWorkoutIndex,
                                    workouts = state.training.workouts] send in
                             await send(.setWorkflow(workouts[currentWorkoutIndex]))
-                            await send(.stateChanged(.paused))
                     }
                 }
                 state.currentFlowIndex += 1
@@ -144,17 +143,26 @@ struct TrainingRunFeature {
                     return .run { [currentWorkoutIndex = state.currentWorkoutIndex,
                                    workouts = state.training.workouts] send in
                             await send(.setWorkflow(workouts[currentWorkoutIndex]))
-                            await send(.stateChanged(.paused))
                     }
                 }
                 state.currentFlowIndex -= 1
                 return .send(.setupNextActivity(state.currentFlowIndex))
 
             case .pauseTapped:
-                return .run { [state = state.state, previousState = state.previousState] send in
-                    let newState = state == .running || state == .preparation ? .paused :
-                        state == .finished ? .preparation : previousState
-                    await send(.stateChanged(newState), animation: .default)
+                switch state.state {
+                case .finished:
+                    state.currentFlowIndex = 0
+                    state.currentWorkoutIndex = 0
+                    return .run { [workouts = state.training.workouts] send in
+                        await send(.setWorkflow(workouts.first!))
+                        await send(.stateChanged(.preparation))
+                    }
+
+                case .paused:
+                    return .send(.stateChanged(state.previousState))
+
+                default:
+                    return .send(.stateChanged(.paused))
                 }
 
             case .quitTapped:
@@ -173,22 +181,16 @@ struct TrainingRunFeature {
                     }
                     if state.currentActivity!.interval.isTimeElapsedZero() {
                         if appStorageManager.getHapticsEnabled() {
-                            return .run { [isLastRunning = state.isLastRunning] _ in
+                            return .run { [isLastRunning = state.isLastRunning] send in
                                 hapticManager.playHaptic(isLastRunning ? .success : .success)
+                                if isLastRunning {
+                                    await send(.stateChanged(.finished))
+                                }
                             }
                         }
                         return .none
                     }
-                    // Timer ticks to zero, handle next flow in row
                     if state.currentActivity!.interval < 0 {
-                        // Last interval is running, finish workout
-                        if state.isLastRunning {
-                            return .run { [workouts = state.training.workouts] send in
-                                await send(.stateChanged(.finished))
-                                await send(.setWorkflow(workouts.first!))
-                            }
-                        }
-                        // Move to next interval in row
                         return .send(.forwardTapped)
                     }
                 }
@@ -207,7 +209,7 @@ struct TrainingRunFeature {
                 let accessStatus = healthManager.getAuthorizationStatus()
                 state.healthDestination = .health(HealthFeature.State(
                     hkAccessStatus: accessStatus,
-                    activityName: LocalizedStringKey(state.training.name)))
+                    activityName: state.training.name))
                 state.timerDestination = .timer(TimingFeature.State(timerTickInterval: state.timerTickInterval))
                 return .none
 

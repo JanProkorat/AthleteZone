@@ -56,7 +56,6 @@
 		7E33B661291435BE009E4C1C /* AthleteZoneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E33B660291435BE009E4C1C /* AthleteZoneApp.swift */; };
 		7E35D6A12B2A514200345198 /* StoreKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E35D6A02B2A514200345198 /* StoreKitManager.swift */; };
 		7E35D95B2C37F4F8005EAF58 /* StopwatchRunTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E35D95A2C37F4F8005EAF58 /* StopwatchRunTab.swift */; };
-		7E35D95D2C380151005EAF58 /* StopwatchActionsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E35D95C2C380151005EAF58 /* StopwatchActionsTab.swift */; };
 		7E35D95F2C383767005EAF58 /* StopwatchTrackingTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E35D95E2C383767005EAF58 /* StopwatchTrackingTab.swift */; };
 		7E35D9612C383D98005EAF58 /* SplitTimesTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E35D9602C383D98005EAF58 /* SplitTimesTab.swift */; };
 		7E35D9652C4694E2005EAF58 /* TimerRunTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E35D9642C4694E2005EAF58 /* TimerRunTab.swift */; };
@@ -369,7 +368,6 @@
 		7E33B66E291439A8009E4C1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "Athlete Zone/Shared Assets/Assets.xcassets"; sourceTree = SOURCE_ROOT; };
 		7E35D6A02B2A514200345198 /* StoreKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitManager.swift; sourceTree = "<group>"; };
 		7E35D95A2C37F4F8005EAF58 /* StopwatchRunTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopwatchRunTab.swift; sourceTree = "<group>"; };
-		7E35D95C2C380151005EAF58 /* StopwatchActionsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopwatchActionsTab.swift; sourceTree = "<group>"; };
 		7E35D95E2C383767005EAF58 /* StopwatchTrackingTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopwatchTrackingTab.swift; sourceTree = "<group>"; };
 		7E35D9602C383D98005EAF58 /* SplitTimesTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitTimesTab.swift; sourceTree = "<group>"; };
 		7E35D9642C4694E2005EAF58 /* TimerRunTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerRunTab.swift; sourceTree = "<group>"; };
@@ -865,7 +863,6 @@
 			isa = PBXGroup;
 			children = (
 				7E35D95A2C37F4F8005EAF58 /* StopwatchRunTab.swift */,
-				7E35D95C2C380151005EAF58 /* StopwatchActionsTab.swift */,
 				7E35D95E2C383767005EAF58 /* StopwatchTrackingTab.swift */,
 				7E35D9602C383D98005EAF58 /* SplitTimesTab.swift */,
 			);
@@ -1581,7 +1578,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					7E17246229CA123300B90E31 = {
 						CreatedOnToolsVersion = 14.2;
@@ -1949,7 +1946,6 @@
 				7E35D9672C4695C2005EAF58 /* TimerTrackingTab.swift in Sources */,
 				7EBE6B542AC5D4FC0007994D /* WorkoutDto.swift in Sources */,
 				7E0F895E2BF49E48004DD9DF /* TrainingsView.swift in Sources */,
-				7E35D95D2C380151005EAF58 /* StopwatchActionsTab.swift in Sources */,
 				7E35D9612C383D98005EAF58 /* SplitTimesTab.swift in Sources */,
 				7E2239182BF62DEE0004A84A /* WorkoutDetailView.swift in Sources */,
 				7E9FC0B02BFCC69E0076D341 /* Description.swift in Sources */,
@@ -2187,7 +2183,6 @@
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VALIDATE_PRODUCT = YES;
 				WATCHOS_DEPLOYMENT_TARGET = 10.0;

@@ -49,7 +49,7 @@ class WatchHealthhManager: HealthManager {
         builder?.dataSource = HKLiveWorkoutDataSource(healthStore: healthStore, workoutConfiguration: configuration)
 
         let metadata = [
-            HKMetadataKeyWorkoutBrandName: "\(workoutName)",
+            HKMetadataKeyWorkoutBrandName: workoutName,
             HKMetadataKeyIndoorWorkout: NSNumber(value: true) as Any
         ]
 
@@ -66,10 +66,9 @@ class WatchHealthhManager: HealthManager {
 
         // Start the workout session and begin data collection.
         startDate = Date()
-        session?.startActivity(with: startDate!)
         do {
+            session?.startActivity(with: startDate!)
             try await builder?.beginCollection(at: startDate!)
-            running = true
         } catch {
             logger.error("""
             Begin collection error: \(error.localizedDescription)
@@ -80,21 +79,19 @@ class WatchHealthhManager: HealthManager {
     // MARK: - State Control
 
     var paused: Bool {
-        session?.state == .notStarted
+        session?.state == .notStarted || session?.state == .paused
     }
 
     private func pause() {
         session?.pause()
-        running = false
     }
 
     private func resume() {
         session?.resume()
-        running = true
     }
 
     func togglePuase() {
-        if running == true {
+        if running {
             pause()
         } else {
             resume()
@@ -116,31 +113,6 @@ class WatchHealthhManager: HealthManager {
         running = false
         startDate = nil
         endDate = nil
-    }
-
-    private func setupAuthorizationObserver() {
-        let authorizationQuery = HKObserverQuery(
-            sampleType: HKQuantityType.workoutType(),
-            predicate: nil
-        ) { _, completionHandler, error in
-            guard error == nil else {
-                self.logger.error("Error observing authorization changes: \(error!.localizedDescription)")
-                completionHandler()
-                return
-            }
-
-            // Fetch the latest authorization status and update the hkAccessStatus
-            let status = self.checkAuthorizationStatus()
-            DispatchQueue.main.async {
-                self.hkAccessStatus = status
-            }
-
-            // Call the completion handler to indicate that the query has been processed
-            completionHandler()
-        }
-
-        // Execute the observer query
-        healthStore.execute(authorizationQuery)
     }
 }
 

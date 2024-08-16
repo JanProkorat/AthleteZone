@@ -13,8 +13,12 @@ struct StopwatchTrackingTab: View {
     var state: WorkFlowState
     var actionLabel: LocalizationKey
     var actionColor: ComponentColor
+    var isFirstRunning: Bool
+    var isLastRunning: Bool
 
     var onAddSplitTimeTab: (() -> Void)?
+    var onBackTap: (() -> Void)?
+    var onForwardTap: (() -> Void)?
 
     var body: some View {
         VStack {
@@ -24,34 +28,29 @@ struct StopwatchTrackingTab: View {
             )
 
             HStack {
-                description(
-                    title: splitTime?.toFormattedTime() ?? "_ _ / _ _"
-                )
-                .padding(.trailing, 3)
+                Button {
+                    performAction(onBackTap)
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(Color(ComponentColor.lightBlue.rawValue))
+                }
+                .buttonStyle(.plain)
+                .disabled(isFirstRunning)
+
+                description(title: splitTime?.toFormattedTime() ?? "_ _ / _ _")
+                    .padding([.leading, .trailing], 2)
 
                 Button {
-                    performAction(onAddSplitTimeTab)
+                    performAction(onForwardTap)
                 } label: {
-                    Image(systemName: "plus")
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundColor(Color(
-                            state == .running ? ComponentColor.lightBlue.rawValue :
-                                ComponentColor.grey.rawValue))
-                        .frame(maxWidth: 20, maxHeight: 20)
-                        .background(
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .frame(width: 30, height: 30)
-                                    .foregroundColor(Color(ComponentColor.darkGrey.rawValue))
-                            }
-                        )
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(Color(ComponentColor.lightBlue.rawValue))
                 }
-                .disabled(state == .paused || state == .preparation)
-                .buttonStyle(PlainButtonStyle())
-                .padding(.trailing, 5)
+                .buttonStyle(.plain)
+                .disabled(isLastRunning)
             }
-            .frame(maxWidth: .infinity)
+            .roundedBackground(cornerRadius: 10, color: Color(ComponentColor.darkBlue.rawValue))
+            .padding(.top, 1)
 
             Text(actionLabel.localizedKey)
                 .font(.headline)
@@ -72,20 +71,37 @@ struct StopwatchTrackingTab: View {
 
     @ViewBuilder
     func description(title: String) -> some View {
-        Text(title)
-            .frame(maxWidth: .infinity)
-            .font(.headline)
-            .foregroundColor(
-                Color(ComponentColor.lightBlue.rawValue))
-            .background(
-                ZStack {
-                    RoundedRectangle(cornerRadius: 10)
-                        .frame(height: 30)
-                        .foregroundColor(Color(ComponentColor.darkGrey.rawValue))
-                }
-            )
-            .frame(minWidth: 0, maxWidth: .infinity)
-            .frame(height: 30)
+        HStack {
+            Text(title)
+                .frame(maxWidth: .infinity)
+                .font(.headline)
+                .foregroundColor(
+                    Color(ComponentColor.lightBlue.rawValue))
+                .frame(height: 30)
+
+            Button {
+                performAction(onAddSplitTimeTab)
+            } label: {
+                Image(systemName: "plus")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(Color(
+                        state == .running ? ComponentColor.lightBlue.rawValue :
+                            ComponentColor.grey.rawValue))
+                    .frame(maxWidth: 15, maxHeight: 15)
+            }
+            .disabled(state == .paused || state == .preparation)
+            .padding(.trailing, 15)
+            .buttonStyle(PlainButtonStyle())
+        }
+        .background(
+            ZStack {
+                RoundedRectangle(cornerRadius: 10)
+                    .frame(height: 30)
+                    .foregroundColor(Color(ComponentColor.darkGrey.rawValue))
+            }
+        )
+        .frame(minWidth: 0, maxWidth: .infinity)
     }
 }
 
@@ -95,6 +111,18 @@ extension StopwatchTrackingTab {
         new.onAddSplitTimeTab = handler
         return new
     }
+
+    func onBackTap(_ handler: @escaping () -> Void) -> StopwatchTrackingTab {
+        var new = self
+        new.onBackTap = handler
+        return new
+    }
+
+    func onForwardTap(_ handler: @escaping () -> Void) -> StopwatchTrackingTab {
+        var new = self
+        new.onForwardTap = handler
+        return new
+    }
 }
 
 #Preview {
@@ -102,6 +130,8 @@ extension StopwatchTrackingTab {
         timeElapsed: 123.43.toFormattedTime(),
         state: .preparation,
         actionLabel: .go,
-        actionColor: .lightPink
+        actionColor: .lightPink,
+        isFirstRunning: false,
+        isLastRunning: true
     )
 }

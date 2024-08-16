@@ -144,12 +144,12 @@ struct WorkoutRunFeature {
                         return .none
                     }
                     if state.currentActivity!.interval == 0 {
-                        return .run { [isLastRUnning = state.isLastRunning, interval = state.currentActivity!.interval] send in
+                        return .run { [isLastRunning = state.isLastRunning, interval = state.currentActivity!.interval] send in
                             if appStorageManager.getSoundsEnabled() {
-                                await send(.playSound(isLastRUnning ? .fanfare : .gong, Int(interval)))
+                                await send(.playSound(isLastRunning ? .fanfare : .gong, Int(interval)))
                             }
                             // Last interval is running, finish workout
-                            if isLastRUnning {
+                            if isLastRunning {
                                 await send(.stateChanged(.finished))
                             }
                         }

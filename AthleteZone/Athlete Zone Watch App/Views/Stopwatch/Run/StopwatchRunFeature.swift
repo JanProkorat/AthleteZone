@@ -59,6 +59,14 @@ struct StopwatchRunFeature {
             return ComponentColor.lightPink
         }
 
+        var isLastRunning: Bool {
+            state == .running || (state != .preparation && previousState == .running)
+        }
+
+        var isFirstRunning: Bool {
+            state == .preparation || (state != .running && previousState == .preparation)
+        }
+
         @Presents var healthDestination: HealthDestination.State?
         @Presents var timerDestination: TimerDestination.State?
     }
@@ -68,6 +76,8 @@ struct StopwatchRunFeature {
         case stateChanged(WorkFlowState)
         case pauseTapped
         case quitTapped
+        case forwardTapped
+        case backTapped
         case addSplitTime
         case selectedTabChanged(Int)
         case timeElapsedChanged(TimeInterval)
@@ -75,6 +85,7 @@ struct StopwatchRunFeature {
         case healthDestination(PresentationAction<HealthDestination.Action>)
         case timerDestination(PresentationAction<TimerDestination.Action>)
         case activityResultChanged(ActivityResultDto?)
+        case dismiss
     }
 
     @Dependency(\.healthManager) var healthManager
@@ -116,20 +127,20 @@ struct StopwatchRunFeature {
                 }
 
             case .quitTapped:
-                return .run { send in
-                    await send(.stateChanged(.quit))
-                    await send(.activityResultChanged(
-                        ActivityResultDto(
-                            duration: healthManager.getWorkoutDuration(),
-                            heartRate: healthManager.getAverageHeartRate(),
-                            activeEnergy: healthManager.getActiveEnergy(),
-                            totalEnergy: healthManager.getTotalEnergy())))
-                }
+                return .send(.stateChanged(.quit))
+
+            case .backTapped:
+                state.timeElapsed = 10
+                return .send(.stateChanged(.preparation))
+
+            case .forwardTapped:
+                state.timeElapsed = 0
+                return .send(.stateChanged(.running))
 
             case .timerDestination(.presented(.timer(.delegate(.timerTick)))):
                 if state.state == .preparation {
                     state.preciseTimeElapsed -= state.timerTickInterval
-                    if state.preciseTimeElapsed.rounded(toPlaces: 2) == Double(state.timeElapsed - 1).rounded(toPlaces: 2) {
+                    if state.preciseTimeElapsed.rounded(toPlaces: 2).isWholeNumber() {
                         state.timeElapsed -= Constants.WorkoutTickInterval
                         if Constants.NotificationRange.contains(state.timeElapsed) {
                             return .run { _ in
@@ -148,7 +159,7 @@ struct StopwatchRunFeature {
                     }
                 } else {
                     state.preciseTimeElapsed += state.timerTickInterval
-                    if state.preciseTimeElapsed.rounded(toPlaces: 2) == Double(state.timeElapsed + 1).rounded(toPlaces: 2) {
+                    if state.preciseTimeElapsed.rounded(toPlaces: 2).isWholeNumber() {
                         state.timeElapsed += 1
                     }
                 }
@@ -166,6 +177,12 @@ struct StopwatchRunFeature {
                 state.selectedTab = tabIndex
                 return .none
 
+            case .healthDestination(.presented(.health(.delegate(.trackingEnded(let result))))):
+                return .send(.activityResultChanged(result))
+
+            case .healthDestination(.presented(.health(.delegate(.quitInPreparation)))):
+                return .send(.dismiss)
+
             case .healthDestination:
                 return .none
 
@@ -176,7 +193,7 @@ struct StopwatchRunFeature {
                 let accessStatus = healthManager.getAuthorizationStatus()
                 state.healthDestination = .health(HealthFeature.State(
                     hkAccessStatus: accessStatus,
-                    activityName: LocalizationKey.stopWatch.localizedKey))
+                    activityName: LocalizationKey.stopWatch.stringValue))
                 state.timerDestination = .timer(TimingFeature.State(timerTickInterval: state.timerTickInterval))
                 return .none
 
@@ -184,11 +201,14 @@ struct StopwatchRunFeature {
                 state.activityResult = result
                 if result == nil {
                     healthManager.resetWorkout()
-                    return .run { _ in
-                        await self.dismiss()
-                    }
+                    return .send(.dismiss)
                 }
                 return .none
+
+            case .dismiss:
+                return .run { _ in
+                    await self.dismiss()
+                }
             }
         }
         .ifLet(\.$healthDestination, action: \.healthDestination)

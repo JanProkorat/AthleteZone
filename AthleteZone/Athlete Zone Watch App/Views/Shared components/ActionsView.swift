@@ -54,11 +54,23 @@ struct ActionsView: View {
                     performAction(onPauseTap)
 
                 }, label: {
-                    Image(state == .running || state == .preparation ? Icon.actionsPause.rawValue : Icon.start.rawValue)
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundColor(Color(ComponentColor.lightYellow.rawValue))
-                        .frame(width: 70, height: 70)
+                    if state == .finished {
+                        Image(systemName: "repeat.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .foregroundColor(Color(ComponentColor.lightYellow.rawValue))
+                            .frame(width: 60, height: 60)
+                            .padding(.trailing, 4)
+                            .padding(.leading, 6)
+                            .padding(.top, 2)
+                    } else {
+                        Image(state == .running || state == .preparation ?
+                            Icon.actionsPause.rawValue : Icon.start.rawValue)
+                            .resizable()
+                            .scaledToFit()
+                            .foregroundColor(Color(ComponentColor.lightYellow.rawValue))
+                            .frame(width: 70, height: 70)
+                    }
                 })
                 .buttonStyle(PlainButtonStyle())
                 .scaleEffect(x: 1.22, y: 1.22, anchor: .center)
