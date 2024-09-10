@@ -15,7 +15,6 @@ struct ContentView: View {
 
     @State var isOfferCodeRedepmtionPresented = false
 
-    @Environment(\.scenePhase) var scenePhase
     @Environment(\.passIDs) private var passIDs
 
     var body: some View {

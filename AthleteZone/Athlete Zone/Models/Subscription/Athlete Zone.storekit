@@ -10,7 +10,7 @@
     "_applicationInternalID" : "6474562071",
     "_developerTeamID" : "5SV4N2J8AG",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 745311852.86926401,
+    "_lastSynchronizedDate" : 747654947.18509102,
     "_locale" : "en_US",
     "_storefront" : "USA",
     "_storeKitErrors" : [
@@ -76,10 +76,10 @@
           "codeOffers" : [
             {
               "eligibility" : [
-                "existing",
-                "new"
+                "new",
+                "existing"
               ],
-              "internalID" : "EEDBCDE8",
+              "internalID" : "5F3388C9",
               "isStackable" : false,
               "numberOfPeriods" : 1,
               "paymentMode" : "free",
@@ -92,7 +92,7 @@
           "groupNumber" : 1,
           "internalID" : "6474853006",
           "introductoryOffer" : {
-            "internalID" : "8A621622",
+            "internalID" : "3110A509",
             "numberOfPeriods" : 1,
             "paymentMode" : "free",
             "subscriptionPeriod" : "P1W"
@@ -127,12 +127,12 @@
           "codeOffers" : [
 
           ],
-          "displayPrice" : "9.99",
-          "familyShareable" : false,
+          "displayPrice" : "12.99",
+          "familyShareable" : true,
           "groupNumber" : 2,
           "internalID" : "6474853394",
           "introductoryOffer" : {
-            "internalID" : "955A14A0",
+            "internalID" : "5567BFEC",
             "numberOfPeriods" : 1,
             "paymentMode" : "free",
             "subscriptionPeriod" : "P1W"
@@ -170,7 +170,7 @@
                 "existing",
                 "new"
               ],
-              "internalID" : "EA7695CD",
+              "internalID" : "DBA9BB14",
               "isStackable" : false,
               "numberOfPeriods" : 1,
               "paymentMode" : "free",
@@ -183,7 +183,7 @@
           "groupNumber" : 3,
           "internalID" : "6474853445",
           "introductoryOffer" : {
-            "internalID" : "25AB6C90",
+            "internalID" : "903EAF01",
             "numberOfPeriods" : 1,
             "paymentMode" : "free",
             "subscriptionPeriod" : "P1W"

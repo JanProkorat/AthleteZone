@@ -41,7 +41,7 @@ struct TimerRunFeature {
             }
 
             return state == .preparation ? LocalizationKey.preparation :
-                LocalizationKey.go
+                LocalizationKey.work
         }
 
         var actionColor: ComponentColor {

@@ -25,23 +25,27 @@ struct TrainingRunView: View {
                 TrainingRunTab(store: store)
                     .tag(1)
 
-                ActionsView(isFirstRunning: store.isFirstRunning, isLastRunning: store.isLastRunning, state: store.state)
-                    .onBackTap {
-                        store.send(.backTapped, animation: .default)
-                        store.send(.selectedTabChanged(1), animation: .default)
-                    }
-                    .onForwardTap {
-                        store.send(.forwardTapped, animation: .default)
-                        store.send(.selectedTabChanged(1), animation: .default)
-                    }
-                    .onPauseTap {
-                        store.send(.pauseTapped, animation: .default)
-                        store.send(.selectedTabChanged(1), animation: .default)
-                    }
-                    .onQuitTap {
-                        store.send(.quitTapped)
-                    }
-                    .tag(2)
+                ActionsView(
+                    isFirstRunning: store.isFirstRunning,
+                    isLastRunning: store.isLastRunning,
+                    state: store.state
+                )
+                .onBackTap {
+                    store.send(.backTapped, animation: .default)
+                    store.send(.selectedTabChanged(1), animation: .default)
+                }
+                .onForwardTap {
+                    store.send(.forwardTapped, animation: .default)
+                    store.send(.selectedTabChanged(1), animation: .default)
+                }
+                .onPauseTap {
+                    store.send(.pauseTapped, animation: .default)
+                    store.send(.selectedTabChanged(1), animation: .default)
+                }
+                .onQuitTap {
+                    store.send(.quitTapped)
+                }
+                .tag(2)
             }
             .padding([.leading, .trailing], 5)
             .sheet(item: $store.activityResult.sending(\.activityResultChanged)) { result in

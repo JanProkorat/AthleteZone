@@ -37,7 +37,7 @@ struct SplitTimesTab: View {
                     }
                 }
                 if times.isEmpty {
-                    Text("No split times added. To add time, tap on '+' on tracking page")
+                    Text(LocalizationKey.noSplitTimeAdded.localizedKey)
                         .padding([.leading, .trailing])
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.top, -20)

@@ -126,10 +126,20 @@
 "lastActivity" = "Poslední aktivita";
 "recent" = "Nedávné";
 "newActivity" = "Nová aktivita";
-"go" = "Go!";
 "paused" = "Pozastaveno";
 "finished" = "Dokončeno";
 
 //Subscription
 "active" = "Aktivní";
 "subscriptionDescription" = "Zpřístupní všechny funkce.";
+
+//Watch
+"sections" = "Sekce";
+"trainings" = "Tréninky";
+"totalTime" = "Celkový čas";
+"activeCalories" = "Aktivní kalorie";
+"totalCalories" = "Celkové kalorie";
+"averageHeartRate" = "Průměrná tepová frekvence";
+"latestSplitTime" = "Poslední mezičas";
+"noSplitTimeAdded" = "Žádné mezičasy k zobrazení. Chcete-li přidat čas, klepněte na „+“ na trackovací stránce";
+"startTime" = "Začátek";

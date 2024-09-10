@@ -126,10 +126,23 @@
 "lastActivity" = "Letzte Aktivität";
 "recent" = "Letzte";
 "newActivity" = "Neue Aktivität";
-"go" = "Go!";
 "paused" = "Pause";
 "finished" = "Fertig";
 
 //Subscription
 "active" = "Aktiv";
 "subscriptionDescription" = "Gewährt Zugriff auf alle Funktionen";
+
+//Watch
+"sections" = "Sektionen";
+"trainings" = "Trainings";
+"totalTime" = "Gesamtzeit";
+"activeCalories" = "Aktive Kalorien";
+"totalCalories" = "Gesamte Kalorien";
+"averageHeartRate" = "Durchschnittliche Herzfrequenz";
+"latestSplitTime" = "Latest split time";
+"noSplitTimeAdded" = "No split times added. To add time, tap on '+' on tracking page";
+"startTime" = "Start time";
+"latestSplitTime" = "Letzte Zwischenzeit";
+"noSplitTimeAdded" = "Keine Zwischenzeiten hinzugefügt. Um Zeit hinzuzufügen, tippen Sie auf „+“ auf der Tracking-Seite";
+"startTime" = "Startzeit";

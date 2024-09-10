@@ -126,10 +126,20 @@
 "lastActivity" = "Last activity";
 "recent" = "Recent";
 "newActivity" = "New activity";
-"go" = "Go!";
 "paused" = "Paused";
 "finished" = "Finished";
 
 //Subscription
 "active" = "Active";
 "subscriptionDescription" = "Grants access to all functions.";
+
+//Watch
+"sections" = "Sections";
+"trainings" = "Trainings";
+"totalTime" = "Total time";
+"activeCalories" = "Active calories";
+"totalCalories" = "Total calories";
+"averageHeartRate" = "Average heart rate";
+"latestSplitTime" = "Latest split time";
+"noSplitTimeAdded" = "No split times added. To add time, tap on '+' on tracking page";
+"startTime" = "Start time";

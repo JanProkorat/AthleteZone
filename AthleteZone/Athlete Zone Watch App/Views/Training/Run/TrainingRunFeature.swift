@@ -118,19 +118,23 @@ struct TrainingRunFeature {
                 if state.currentFlowIndex == state.currentWorkflow.count - 1 {
                     state.currentWorkoutIndex += 1
                     state.currentFlowIndex = 0
-                    return .run { [currentWorkoutIndex = state.currentWorkoutIndex,
-                                   workouts = state.training.workouts] send in
-                            await send(.setWorkflow(workouts[currentWorkoutIndex]))
+                    return .run { [
+                        currentWorkoutIndex = state.currentWorkoutIndex,
+                        workouts = state.training.workouts
+                    ] send in
+                        await send(.setWorkflow(workouts[currentWorkoutIndex]))
                     }
                 }
                 state.currentFlowIndex += 1
-                return .run { [currentFlowIndex = state.currentFlowIndex,
-                               state = state.state,
-                               previousState = state.previousState] send in
-                        if state == .preparation || (state == .paused && previousState == .preparation) {
-                            await send(.stateChanged(.running))
-                        }
-                        await send(.setupNextActivity(currentFlowIndex))
+                return .run { [
+                    currentFlowIndex = state.currentFlowIndex,
+                    state = state.state,
+                    previousState = state.previousState
+                ] send in
+                    if state == .preparation || (state == .paused && previousState == .preparation) {
+                        await send(.stateChanged(.running))
+                    }
+                    await send(.setupNextActivity(currentFlowIndex))
                 }
 
             case .backTapped:

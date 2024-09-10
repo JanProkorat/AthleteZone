@@ -25,12 +25,14 @@ struct WorkoutLibraryTab: View {
                                 .padding(.leading, 10)
                                 .font(.footnote)
                                 .lineLimit(2)
-                                .foregroundStyle(workout.id == selectedId ? Color(ComponentColor.darkGrey.rawValue) : .white)
+                                .foregroundStyle(workout.id == selectedId ?
+                                    Color(ComponentColor.darkGrey.rawValue) : .white)
 
                             Text(workout.workoutLength.toFormattedTime())
                                 .padding(.trailing, 10)
                                 .font(.caption)
-                                .foregroundStyle(workout.id == selectedId ? Color(ComponentColor.darkGrey.rawValue) : .white)
+                                .foregroundStyle(workout.id == selectedId ?
+                                    Color(ComponentColor.darkGrey.rawValue) : .white)
                         }
                         .padding([.top, .bottom], 12)
                         .contentShape(Rectangle())

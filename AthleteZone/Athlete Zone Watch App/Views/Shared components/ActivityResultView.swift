@@ -13,36 +13,36 @@ struct ActivityResultView: View {
     var body: some View {
         NavigationView(content: {
             ScrollView {
-                label("Total time")
+                label(.totalTime)
                     .padding(.top, 5)
                 value(data.duration.toFormattedTime(), Color.yellow)
 
                 Divider()
 
-                label("Active calories")
-                value("\(data.activeEnergy.rounded(toPlaces: 2)) cal", Color.red)
+                label(.activeCalories)
+                value("\(data.activeEnergy.rounded(toPlaces: 2)) kcal", Color.red)
 
                 Divider()
 
-                label("Total calories")
-                value("\(data.totalEnergy.rounded(toPlaces: 2)) cal", Color.red)
+                label(.totalCalories)
+                value("\(data.totalEnergy.rounded(toPlaces: 2)) kcal", Color.red)
 
                 Divider()
 
-                label("Average heart rate")
+                label(.averageHeartRate)
                 value("\(Int(data.heartRate)) BPM", Color.green)
             }
             .frame(maxWidth: .infinity)
             .presentationBackground(Color(ComponentColor.darkBlue.rawValue))
-            .navigationTitle("Summary")
+            .navigationTitle(LocalizationKey.summary.localizedKey)
             .navigationBarTitleDisplayMode(.inline)
             .padding([.leading, .trailing])
         })
     }
 
     @ViewBuilder
-    func label(_ text: String) -> some View {
-        Text(text)
+    func label(_ text: LocalizationKey) -> some View {
+        Text(text.localizedKey)
             .font(.footnote)
             .frame(maxWidth: .infinity, alignment: .leading)
     }

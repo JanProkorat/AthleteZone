@@ -20,7 +20,10 @@ struct StopwatchRunView: View {
                 StopwatchRunTab(store: store)
                     .tag(1)
 
-                ActionsView(isFirstRunning: store.isFirstRunning, isLastRunning: store.isLastRunning, state: store.state)
+                ActionsView(
+                    isFirstRunning: store.isFirstRunning,
+                    isLastRunning: store.isLastRunning,
+                    state: store.state)
                     .onBackTap {
                         store.send(.backTapped, animation: .default)
                         store.send(.selectedTabChanged(1), animation: .default)

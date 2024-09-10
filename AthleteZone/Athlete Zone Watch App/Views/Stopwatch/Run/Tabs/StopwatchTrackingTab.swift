@@ -22,10 +22,7 @@ struct StopwatchTrackingTab: View {
 
     var body: some View {
         VStack {
-            Description(
-                title: "Latest split time",
-                color: .lightGreen
-            )
+            Description(title: LocalizationKey.latestSplitTime.localizedKey, color: .lightGreen)
 
             HStack {
                 Button {
@@ -129,7 +126,7 @@ extension StopwatchTrackingTab {
     StopwatchTrackingTab(
         timeElapsed: 123.43.toFormattedTime(),
         state: .preparation,
-        actionLabel: .go,
+        actionLabel: .work,
         actionColor: .lightPink,
         isFirstRunning: false,
         isLastRunning: true

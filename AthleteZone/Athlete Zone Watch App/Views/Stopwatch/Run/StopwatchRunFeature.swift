@@ -37,7 +37,7 @@ struct StopwatchRunFeature {
 
         var actionLabel: LocalizationKey {
             return state == .preparation ? LocalizationKey.preparation :
-                LocalizationKey.go
+                LocalizationKey.work
         }
 
         var formatedTime: String {

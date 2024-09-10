@@ -17,23 +17,27 @@ struct WorkoutRunView: View {
                 WorkoutRunTab(store: store)
                     .tag(0)
 
-                ActionsView(isFirstRunning: store.isFirstRunning, isLastRunning: store.isLastRunning, state: store.state)
-                    .onBackTap {
-                        store.send(.backTapped, animation: .default)
-                        store.send(.selectedTabChanged(0), animation: .default)
-                    }
-                    .onForwardTap {
-                        store.send(.forwardTapped, animation: .default)
-                        store.send(.selectedTabChanged(0), animation: .default)
-                    }
-                    .onPauseTap {
-                        store.send(.pauseTapped, animation: .default)
-                        store.send(.selectedTabChanged(0), animation: .default)
-                    }
-                    .onQuitTap {
-                        store.send(.quitTapped)
-                    }
-                    .tag(1)
+                ActionsView(
+                    isFirstRunning: store.isFirstRunning,
+                    isLastRunning: store.isLastRunning,
+                    state: store.state
+                )
+                .onBackTap {
+                    store.send(.backTapped, animation: .default)
+                    store.send(.selectedTabChanged(0), animation: .default)
+                }
+                .onForwardTap {
+                    store.send(.forwardTapped, animation: .default)
+                    store.send(.selectedTabChanged(0), animation: .default)
+                }
+                .onPauseTap {
+                    store.send(.pauseTapped, animation: .default)
+                    store.send(.selectedTabChanged(0), animation: .default)
+                }
+                .onQuitTap {
+                    store.send(.quitTapped)
+                }
+                .tag(1)
             }
             .padding([.leading, .trailing], 5)
             .sheet(item: $store.activityResult.sending(\.activityResultChanged)) { result in

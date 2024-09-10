@@ -72,11 +72,7 @@ struct TrainingEditFeature {
 
             case .sheetVisibleChanged(let visible):
                 if visible {
-                    do {
-                        state.workoutsLibrary = try realmManager.getSortedData("", .name, .ascending)
-                    } catch {
-                        print(error.localizedDescription)
-                    }
+                    state.workoutsLibrary = realmManager.getSortedData("", .name, .ascending)
                 }
                 state.isWorkoutsSheetVisible = visible
                 return .none

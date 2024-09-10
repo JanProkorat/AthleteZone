@@ -370,11 +370,21 @@ enum LocalizationKey: String {
     case lastActivity
     case recent
     case newActivity
-    case go
     case paused
     case finished
 
     // Subscription
     case active
     case subscriptionDescription
+
+    // Watch
+    case sections
+    case trainings
+    case totalTime
+    case activeCalories
+    case totalCalories
+    case averageHeartRate
+    case latestSplitTime
+    case noSplitTimeAdded
+    case startTime
 }

@@ -15,11 +15,15 @@ struct ContentView: View {
     var body: some View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
             List {
-                NavigationLink(state: ContentFeature.Path.State.workouts(WorkoutsFeature.State(workouts: store.workouts))) {
+                NavigationLink(state: ContentFeature.Path.State.workouts(
+                    WorkoutsFeature.State(workouts: store.workouts)))
+                {
                     SectionView(image: "figure.strengthtraining.traditional", label: .workout)
                 }
 
-                NavigationLink(state: ContentFeature.Path.State.trainings(TrainingsFeature.State(trainings: store.trainings))) {
+                NavigationLink(state: ContentFeature.Path.State.trainings(
+                    TrainingsFeature.State(trainings: store.trainings)))
+                {
                     SectionView(image: "pencil.and.list.clipboard", label: .training)
                 }
 
@@ -32,25 +36,25 @@ struct ContentView: View {
                 }
             }
             .padding([.leading, .trailing], 5)
-            .navigationTitle("Sections")
+            .navigationTitle(LocalizationKey.sections.localizedKey)
 
         } destination: { store in
             switch store.case {
             case .workouts(let store):
                 WorkoutsView(store: store)
-                    .navigationTitle("Workouts")
+                    .navigationTitle(LocalizationKey.workouts.localizedKey)
 
             case .trainings(let store):
                 TrainingsView(store: store)
-                    .navigationTitle("Trainings")
+                    .navigationTitle(LocalizationKey.trainings.localizedKey)
 
             case .stopwatch(let store):
                 StopwatchView(store: store)
-                    .navigationTitle("Stopwatch")
+                    .navigationTitle(LocalizationKey.stopWatch.localizedKey)
 
             case .timer(let store):
                 TimerView(store: store)
-                    .navigationTitle("Timer")
+                    .navigationTitle(LocalizationKey.timer.localizedKey)
 
             case .workoutRun(let store):
                 WorkoutRunView(store: store)

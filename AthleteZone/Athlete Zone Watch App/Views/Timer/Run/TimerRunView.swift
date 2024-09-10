@@ -17,7 +17,10 @@ struct TimerRunView: View {
                 TimerRunTab(store: store)
                     .tag(0)
 
-                ActionsView(isFirstRunning: store.isFirstRunning, isLastRunning: store.isLastRunning, state: store.state)
+                ActionsView(
+                    isFirstRunning: store.isFirstRunning,
+                    isLastRunning: store.isLastRunning,
+                    state: store.state)
                     .onBackTap {
                         store.send(.backTapped, animation: .default)
                         store.send(.selectedTabChanged(0), animation: .default)

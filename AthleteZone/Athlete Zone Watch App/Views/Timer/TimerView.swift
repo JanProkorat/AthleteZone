@@ -39,7 +39,9 @@ struct TimerView: View {
 
             Spacer()
 
-            NavigationLink(state: ContentFeature.Path.State.timerRun(TimerRunFeature.State(startTime: store.interval))) {
+            NavigationLink(state: ContentFeature.Path.State.timerRun(
+                TimerRunFeature.State(startTime: store.interval)))
+            {
                 Image(Icon.start.rawValue)
                     .resizable()
                     .scaledToFit()

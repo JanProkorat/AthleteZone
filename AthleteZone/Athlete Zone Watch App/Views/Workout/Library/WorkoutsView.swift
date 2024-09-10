@@ -15,7 +15,9 @@ struct WorkoutsView: View {
         NavigationView {
             List {
                 ForEach(store.workouts, id: \.id) { workout in
-                    NavigationLink(state: ContentFeature.Path.State.workoutRun(WorkoutRunFeature.State(workout: workout))) {
+                    NavigationLink(state: ContentFeature.Path.State.workoutRun(
+                        WorkoutRunFeature.State(workout: workout)))
+                    {
                         HStack {
                             VStack {
                                 Text(workout.name)

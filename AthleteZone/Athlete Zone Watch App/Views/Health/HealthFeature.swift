@@ -20,6 +20,7 @@ struct HealthFeature {
         var isTimerActive = false
         var activityName: String
         var state: WorkFlowState = .ready
+        var previousState: WorkFlowState = .ready
     }
 
     enum Action {
@@ -28,6 +29,7 @@ struct HealthFeature {
         case timerTicked
         case stateChanged(WorkFlowState, WorkFlowState)
         case startWorkout
+        case endWorkout
         case delegate(Delegate)
 
         enum Delegate {
@@ -61,7 +63,8 @@ struct HealthFeature {
                 state.timeElapsed += 0.01
                 return .none
 
-            case .stateChanged(_, let new):
+            case .stateChanged(let old, let new):
+                state.previousState = old
                 state.state = new
                 switch new {
                 case .running:
@@ -85,17 +88,7 @@ struct HealthFeature {
                     state.isTimerActive = false
                     return .run { send in
                         await send(.stopTimer)
-                        if healthManager.isRunning() {
-                            healthManager.endWorkout()
-                            await send(.delegate(.trackingEnded(ActivityResultDto(
-                                duration: healthManager.getWorkoutDuration(),
-                                heartRate: healthManager.getAverageHeartRate(),
-                                activeEnergy: healthManager.getActiveEnergy(),
-                                totalEnergy: healthManager.getTotalEnergy()
-                            ))))
-                        } else {
-                            await send(.delegate(.quitInPreparation))
-                        }
+                        await send(.endWorkout)
                     }
 
                 default:
@@ -109,6 +102,23 @@ struct HealthFeature {
                     } else if !healthManager.isRunning() {
                         await healthManager.startWorkout(.other, activityName)
                     }
+                }
+
+            case .endWorkout:
+                if healthManager.isRunning() {
+                    healthManager.endWorkout()
+                }
+                switch state.previousState {
+                case .preparation:
+                    return .send(.delegate(.quitInPreparation))
+
+                default:
+                    return .send(.delegate(.trackingEnded(ActivityResultDto(
+                        duration: healthManager.getWorkoutDuration(),
+                        heartRate: healthManager.getAverageHeartRate(),
+                        activeEnergy: healthManager.getActiveEnergy(),
+                        totalEnergy: healthManager.getTotalEnergy()
+                    ))))
                 }
 
             case .delegate:

@@ -20,10 +20,7 @@ struct TimerTrackingTab: View {
 
     var body: some View {
         VStack {
-            Description(
-                title: "Start time",
-                color: .lightGreen
-            )
+            Description(title: LocalizationKey.startTime.localizedKey, color: .lightGreen)
 
             HStack {
                 Button {
@@ -88,7 +85,7 @@ extension TimerTrackingTab {
 #Preview {
     TimerTrackingTab(
         originalTime: 137,
-        actionLabel: .go,
+        actionLabel: .work,
         timeElapsed: TimeInterval(98).toFormattedTimeForWorkout(),
         actionColor: .lightPink,
         isFirstRunning: false,

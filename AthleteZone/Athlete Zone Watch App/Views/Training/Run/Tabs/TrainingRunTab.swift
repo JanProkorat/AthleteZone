@@ -15,9 +15,13 @@ struct TrainingRunTab: View {
         if let flow = store.currentActivity {
             TimelineView(.periodic(from: .now, by: 0.5)) { _ in
                 TabView {
-                    WorkoutTrackingView(flow: flow, isFirstRunning: store.isFirstRunning, isLastRunning: store.isLastRunning)
-                        .onBackTap { store.send(.backTapped) }
-                        .onForwardTap { store.send(.forwardTapped) }
+                    WorkoutTrackingView(
+                        flow: flow,
+                        isFirstRunning: store.isFirstRunning,
+                        isLastRunning: store.isLastRunning
+                    )
+                    .onBackTap { store.send(.backTapped) }
+                    .onForwardTap { store.send(.forwardTapped) }
 
                     if let healthStore = store.scope(state: \.healthDestination?.health, action: \.healthDestination.health) {
                         HealthView(store: healthStore)

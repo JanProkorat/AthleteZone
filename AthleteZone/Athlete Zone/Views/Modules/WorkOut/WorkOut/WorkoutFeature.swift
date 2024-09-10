@@ -64,12 +64,8 @@ struct WorkoutFeature {
             switch action {
             case .onAppear:
                 if !appStorageManager.getSelectedWorkoutId().isEmpty {
-                    do {
-                        let workout = try workoutRepository.load(appStorageManager.getSelectedWorkoutId())
-                        return .send(.workoutChanged(workout))
-                    } catch {
-                        WorkoutFeature.logger.error("\(error.localizedDescription)")
-                    }
+                    let workout = workoutRepository.load(appStorageManager.getSelectedWorkoutId())
+                    return .send(.workoutChanged(workout))
                 }
                 return .send(.nameUpdated(""))
 
@@ -95,11 +91,7 @@ struct WorkoutFeature {
                 let name, let work, let rest, let series, let rounds, let reset
             ))))):
                 let workout = Workout(name, work, rest, series, rounds, reset)
-                do {
-                    try workoutRepository.add(workout)
-                } catch {
-                    WorkoutFeature.logger.error("\(error.localizedDescription)")
-                }
+                workoutRepository.add(workout)
 //                connectivityManager.sendValue([TransferDataKey.workoutAdd.rawValue: workout.toDto().encode() ?? ""])
                 return .send(.workoutChanged(workout.toDto()))
 
