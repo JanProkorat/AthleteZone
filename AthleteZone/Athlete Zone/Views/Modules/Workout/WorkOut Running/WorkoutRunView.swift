@@ -50,32 +50,20 @@ struct WorkoutRunView: View {
                                     store.send(.backTapped)
                                 }
                                 .disabled(store.currentFlowIndex == 0)
+                                .padding(.top, store.state == .finished ? 3 : 0)
 
-                                if store.state != .finished {
-                                    IconButton(
-                                        id: "repeat.circle.fill",
-                                        image: store.state == .running ? Icon.actionsPause.rawValue : Icon.start.rawValue,
-                                        color: ComponentColor.action,
-                                        width: geo.size.height * 0.2,
-                                        height: geo.size.height * 0.2
-                                    )
-                                    .onTab {
-                                        store.send(.pauseTapped)
-                                    }
-                                    .padding([.leading, .trailing])
-                                } else {
-                                    IconButton(
-                                        id: "repeat.circle.fill",
-                                        color: ComponentColor.action,
-                                        width: geo.size.height * 0.16,
-                                        height: geo.size.height * 0.16,
-                                        hasSystemIcon: true
-                                    )
-                                    .onTab {
-                                        store.send(.pauseTapped)
-                                    }
-                                    .padding([.leading, .trailing])
+                                IconButton(
+                                    id: "start",
+                                    image: store.state.getIcon().rawValue,
+                                    color: ComponentColor.action,
+                                    width: geo.size.height * 0.2,
+                                    height: geo.size.height * 0.2
+                                )
+                                .onTab {
+                                    store.send(.pauseTapped)
                                 }
+                                .padding([.leading, .trailing])
+                                .padding(.top, store.state == .finished ? -3 : 0)
 
                                 IconButton(
                                     id: "forward",
@@ -88,6 +76,7 @@ struct WorkoutRunView: View {
                                     store.send(.forwardTapped)
                                 }
                                 .disabled(store.isLastRunning)
+                                .padding(.top, store.state == .finished ? 3 : 0)
                             }
 
                             Button {
@@ -95,7 +84,7 @@ struct WorkoutRunView: View {
                             } label: {
                                 cancelButton(height: geo.size.height * 0.08)
                             }
-                            .padding(.top)
+                            .padding(.top, store.state == .finished ? 19 : 16)
                         }
                         .frame(maxWidth: .infinity)
                     }
@@ -119,7 +108,9 @@ struct WorkoutRunView: View {
             if store.backgroundRunAllowed {
                 return
             }
-            if oldValue == ScenePhase.active && (newValue == ScenePhase.inactive || newValue == ScenePhase.background) {
+            if store.state == .running && oldValue == ScenePhase.active &&
+                (newValue == ScenePhase.inactive || newValue == ScenePhase.background)
+            {
                 store.send(.pauseTapped)
             }
         }

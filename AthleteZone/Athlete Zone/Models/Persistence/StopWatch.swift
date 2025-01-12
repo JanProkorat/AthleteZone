@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model class StopWatch: Identifiable {
-    @Attribute(.unique) let id = UUID()
+    @Attribute(.unique) var id = UUID()
     @Attribute(.spotlight) var name = "Activity"
     var startDate: Date
     var endDate: Date

@@ -19,18 +19,18 @@ struct DescriptionLabel: View {
             .foregroundColor(Color(color.rawValue))
             .background(
                 ZStack {
-                    RoundedRectangle(cornerRadius: 20)
+                    RoundedRectangle(cornerRadius: 15)
                         .stroke(Color(ComponentColor.darkBlue.rawValue), lineWidth: 3)
-                        .frame(height: 60)
+                        .frame(height: 50)
                         .foregroundColor(Color(ComponentColor.darkGrey.rawValue))
-                    RoundedRectangle(cornerRadius: 20)
-                        .frame(height: 60)
+                    RoundedRectangle(cornerRadius: 15)
+                        .frame(height: 50)
                         .foregroundColor(Color(ComponentColor.darkGrey.rawValue))
                 }
             )
             .frame(minWidth: 0, maxWidth: .infinity)
-            .frame(height: 60)
-            .padding([.top, .bottom], 3)
+            .frame(height: 50)
+//            .padding([.top, .bottom], 3)
     }
 }
 

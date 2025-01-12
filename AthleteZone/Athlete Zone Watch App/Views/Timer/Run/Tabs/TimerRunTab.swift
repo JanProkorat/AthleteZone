@@ -16,7 +16,7 @@ struct TimerRunTab: View {
             TimerTrackingTab(
                 originalTime: store.startTime,
                 actionLabel: store.actionLabel,
-                timeElapsed: store.timeRemaining.toFormattedTimeForWorkout(),
+                timeElapsed: store.timeRemaining,
                 actionColor: store.actionColor,
                 isFirstRunning: store.isFirstRunning,
                 isLastRunning: store.isLastRunning)

@@ -132,28 +132,29 @@ struct TrainingView: View {
                                 id: "createTraining",
                                 image: Icon.addLarge.rawValue,
                                 color: ComponentColor.mainText,
-                                width: 100,
-                                height: 100
+                                width: 70,
+                                height: 70
                             )
                             .onTab {
                                 store.send(.addTapped)
                             }
+                            .padding(.trailing, 15)
 
                             IconButton(
                                 id: "pickTraining",
                                 image: Icon.bookLarge.rawValue,
                                 color: ComponentColor.mainText,
-                                width: 100,
-                                height: 100
+                                width: 70,
+                                height: 70
                             )
                             .onTab {
                                 store.send(.libraryTapped)
                             }
-                            .padding(.leading)
+                            .padding(.leading, 15)
                             .padding(.top, 5)
                         }
                         Text(LocalizationKey.noTrainingSelected.localizedKey)
-                            .padding(.top)
+                            .padding([.top, .leading, .trailing])
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }

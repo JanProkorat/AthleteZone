@@ -13,16 +13,23 @@ import Foundation
 struct TimerRunFeature {
     @ObservableState
     struct State {
-        var interval: TimeInterval = 0
+        /// Time changing every tick
+        var timeRemaining: TimeInterval = Constants.PreparationTickInterval
+
+        /// Initial time set when feature was creating
+        var startTime: TimeInterval = 0
         var originalInterval: TimeInterval = 0
+        var previousState: WorkFlowState = .ready
         var state: WorkFlowState = .ready
         var isTimerActive = false
         var backgroundRunAllowed = false
-        var timerTickInterval: TimeInterval = 1
+        var timerTickInterval: TimeInterval = Constants.TimerTickInterval
 
         var isPaused: Bool {
             state == .paused
         }
+
+        @Presents var timerDestination: TimerDestination.State?
     }
 
     enum Action {
@@ -31,11 +38,12 @@ struct TimerRunFeature {
         case pauseTapped
         case quitTapped
         case resetTapped
-        case timerTicked
-        case startTimer
-        case stopTimer
         case playSound(Sound, Int)
-        case setRunInBackground
+        case forwardTapped
+        case backTapped
+        case setupDestination
+        case timerDestination(PresentationAction<TimerDestination.Action>)
+        case timeRemainingChanged(TimeInterval)
     }
 
     enum CancelID {
@@ -44,41 +52,45 @@ struct TimerRunFeature {
 
     @Dependency(\.soundManager) var soundManager
     @Dependency(\.appStorageManager) var appStorageManager
-    @Dependency(\.continuousClock) var clock
     @Dependency(\.dismiss) var dismiss
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                state.originalInterval = state.interval
-                return .send(.stateChanged(.running))
+                state.originalInterval = state.timeRemaining
+                state.backgroundRunAllowed = appStorageManager.getRunInBackground()
+                return .run { send in
+                    await send(.setupDestination)
+                    await send(.stateChanged(.preparation))
+                }
 
             case .stateChanged(let newState):
+                state.previousState = state.state
                 state.state = newState
-                switch newState {
-                case .running:
-                    state.isTimerActive = true
-                    return .send(.startTimer)
+                return .run { [new = state.state] send in
+                    switch new {
+                    case .preparation, .running:
+                        await send(.timerDestination(.presented(.timer(.startTimer))))
 
-                case .paused:
-                    state.isTimerActive = false
-                    return .send(.stopTimer)
+                    case .paused, .finished, .quit:
+                        await send(.timerDestination(.presented(.timer(.stopTimer))))
 
-                case .finished:
-                    state.isTimerActive = false
-                    return .send(.stopTimer)
-
-                case .quit:
-                    state.isTimerActive = false
-                    return .send(.stopTimer)
-
-                default:
-                    return .none
+                    default:
+                        break
+                    }
                 }
 
             case .pauseTapped:
-                return .run { [state = state.state] send in
-                    await send(.stateChanged(state == .running ? .paused : .running))
+                switch state.state {
+                case .finished:
+                    state.timeRemaining = 10
+                    return .send(.stateChanged(.preparation))
+
+                case .paused:
+                    return .send(.stateChanged(.running))
+
+                default:
+                    return .send(.stateChanged(.paused))
                 }
 
             case .quitTapped:
@@ -87,42 +99,46 @@ struct TimerRunFeature {
                     await self.dismiss()
                 }
 
+            case .backTapped:
+                state.timeRemaining = 10
+                return .send(.stateChanged(.preparation))
+
+            case .forwardTapped:
+                state.timeRemaining = state.startTime
+                return .send(.stateChanged(.running))
+
             case .resetTapped:
-                state.interval = state.originalInterval
+                state.timeRemaining = state.originalInterval
                 if state.state == .finished {
                     return .send(.stateChanged(.ready))
                 }
                 return .none
 
-            case .timerTicked:
-                state.interval -= state.timerTickInterval
-                if state.interval <= 3, state.interval > 0 {
-                    return .run { [interval = state.interval] send in
+            case .timerDestination(.presented(.timer(.delegate(.timerTick)))):
+                state.timeRemaining -= state.timerTickInterval
+                if Constants.NotificationRange.contains(state.timeRemaining) {
+                    return .run { [interval = state.timeRemaining] send in
                         await send(.playSound(.beep, Int(interval - 1)))
                     }
                 }
-                if state.interval == 0 {
-                    return .run { send in
-                        await send(.stateChanged(.finished))
-                        await send(.playSound(.fanfare, 0))
+                if state.timeRemaining.isTimeElapsedZero() {
+                    return .run { [state = state.state, remaining = state.startTime] send in
+                        if appStorageManager.getSoundsEnabled() {
+                            await send(.playSound(.fanfare, 0))
+                        }
+                        if state == .preparation {
+                            await send(.timeRemainingChanged(remaining))
+                            await send(.stateChanged(.running))
+                        } else {
+                            await send(.stateChanged(.finished))
+                        }
                     }
                 }
                 return .none
 
-            case .startTimer:
-                return .run { [isTimerActive = state.isTimerActive, interval = state.timerTickInterval] send in
-                    guard isTimerActive else { return }
-                    for await _ in self.clock.timer(interval: .seconds(interval)) {
-                        await send(.timerTicked)
-                    }
-                }
-                .cancellable(id: CancelID.timerRunTimer, cancelInFlight: true)
-
-            case .stopTimer:
-                if soundManager.isPlaying() {
-                    soundManager.stopSound()
-                }
-                return .cancel(id: CancelID.timerRunTimer)
+            case .timeRemainingChanged(let interval):
+                state.timeRemaining = interval
+                return .none
 
             case .playSound(let sound, let numOfLoops):
                 if soundManager.isPlaying(), soundManager.selectedSound() == sound {
@@ -131,10 +147,21 @@ struct TimerRunFeature {
                 soundManager.playSound(sound, numOfLoops)
                 return .none
 
-            case .setRunInBackground:
-                state.backgroundRunAllowed = appStorageManager.getRunInBackground()
+            case .setupDestination:
+                state.timerDestination = .timer(TimingFeature.State(timerTickInterval: state.timerTickInterval))
+                return .none
+
+            case .timerDestination:
                 return .none
             }
         }
+        .ifLet(\.$timerDestination, action: \.timerDestination)
+    }
+}
+
+extension TimerRunFeature {
+    @Reducer
+    enum TimerDestination {
+        case timer(TimingFeature)
     }
 }

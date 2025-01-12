@@ -15,7 +15,7 @@ class WatchHealthhManager: HealthManager {
 
     @Published var averageHeartRate: Double = 0
     @Published var activeEnergy: Double = 0
-    @Published var totalEnergy: Double = 0
+    @Published var calmEnergy: Double = 0
     @Published var workout: HKWorkout?
     @Published var running = false
 
@@ -109,7 +109,7 @@ class WatchHealthhManager: HealthManager {
         workout = nil
         activeEnergy = 0
         averageHeartRate = 0
-        totalEnergy = 0
+        calmEnergy = 0
         running = false
         startDate = nil
         endDate = nil
@@ -175,7 +175,7 @@ extension WatchHealthhManager: HKLiveWorkoutBuilderDelegate {
 
             case HKQuantityType.quantityType(forIdentifier: .basalEnergyBurned):
                 let energyUnit = HKUnit.kilocalorie()
-                self.totalEnergy = statistics.sumQuantity()?.doubleValue(for: energyUnit) ?? 0 + self.activeEnergy
+                self.calmEnergy = statistics.sumQuantity()?.doubleValue(for: energyUnit) ?? 0
 
             default: return
             }
@@ -195,7 +195,7 @@ struct HealthTrackingManager {
     var getAuthorizationStatus: @Sendable () -> HKAuthorizationStatus
     var getAverageHeartRate: @Sendable () -> Double
     var getActiveEnergy: @Sendable () -> Double
-    var getTotalEnergy: @Sendable () -> Double
+    var getCalmEnergy: @Sendable () -> Double
     var getWorkoutDuration: @Sendable () -> TimeInterval
 }
 
@@ -234,8 +234,8 @@ extension HealthTrackingManager: DependencyKey {
         getActiveEnergy: {
             WatchHealthhManager.watchShared.activeEnergy
         },
-        getTotalEnergy: {
-            WatchHealthhManager.watchShared.totalEnergy
+        getCalmEnergy: {
+            WatchHealthhManager.watchShared.calmEnergy
         },
         getWorkoutDuration: {
             WatchHealthhManager.watchShared.timeElapsed

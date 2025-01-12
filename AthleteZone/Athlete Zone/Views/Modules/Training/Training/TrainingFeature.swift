@@ -129,7 +129,7 @@ struct TrainingFeature {
                 }
                 return .none
 
-            case .sentItemToWatch(let key, let data):
+            case .sentItemToWatch:
                 return .run { _ in
 //                    connectivityManager.sendValue([key.rawValue: data.encode() ?? ""])
                 }

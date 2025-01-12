@@ -7,6 +7,7 @@
 
 import Dependencies
 import Foundation
+import os
 import SwiftData
 
 struct TrainingRepository {
@@ -28,6 +29,10 @@ struct TrainingRepository {
 }
 
 extension TrainingRepository: DependencyKey {
+    private static let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: String(describing: TrainingRepository.self))
+
     static var liveValue = Self(
         add: { training in
             do {
@@ -35,7 +40,7 @@ extension TrainingRepository: DependencyKey {
                 let dbContext = try context()
                 dbContext.insert(training)
             } catch {
-                print(error.localizedDescription)
+                logger.error("\(error.localizedDescription)")
             }
         },
         load: { primaryKey in
@@ -56,7 +61,7 @@ extension TrainingRepository: DependencyKey {
                 }
                 return nil
             } catch {
-                print(error.localizedDescription)
+                logger.error("\(error.localizedDescription)")
                 return nil
             }
         },
@@ -76,7 +81,7 @@ extension TrainingRepository: DependencyKey {
                     return dto
                 }
             } catch {
-                print(error.localizedDescription)
+                logger.error("\(error.localizedDescription)")
                 return []
             }
         },
@@ -90,7 +95,7 @@ extension TrainingRepository: DependencyKey {
                     dbContext.delete(training)
                 }
             } catch {
-                print(error.localizedDescription)
+                logger.error("\(error.localizedDescription)")
             }
         },
         update: { id, name, description, workouts in
@@ -105,7 +110,7 @@ extension TrainingRepository: DependencyKey {
                     itemToUpdate.workouts = workouts
                 }
             } catch {
-                print(error.localizedDescription)
+                logger.error("\(error.localizedDescription)")
             }
         },
         getSortedData: { searchText, sortBy, sortOrder in
@@ -141,10 +146,8 @@ extension TrainingRepository: DependencyKey {
                     return dto
                 }
             } catch {
-                print(error.localizedDescription)
+                logger.error("\(error.localizedDescription)")
                 return []
             }
         })
-
-    static var testValue = liveValue
 }

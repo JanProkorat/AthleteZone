@@ -79,7 +79,9 @@ struct TimeTrackingFeature {
                             print(error.localizedDescription)
                         }
                     }
-                    state.destination = .runTimerSheet(TimerRunFeature.State(interval: interval == nil ? state.timerStartValue : interval!))
+                    state.destination = .runTimerSheet(
+                        TimerRunFeature.State(
+                            timeRemaining: interval == nil ? state.timerStartValue : interval!))
                     return .send(.destination(.presented(.runTimerSheet(.onAppear))))
                 }
 

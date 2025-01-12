@@ -20,13 +20,13 @@ struct StopwatchRunView: View {
                 GeometryReader { geo in
                     VStack {
                         CounterText(
-                            text: store.interval.toFormattedTime(),
+                            text: store.timeElapsed.toFormattedTime(),
                             size: geo.size.height * 0.2
                         )
                         .padding([.leading, .trailing, .bottom])
                         .foregroundColor(
                             Color(store.isPaused ?
-                                  ComponentColor.lightYellow.rawValue : ComponentColor.lightPink.rawValue))
+                                ComponentColor.lightYellow.rawValue : ComponentColor.lightPink.rawValue))
 
                         Text(LocalizationKey.splitTimes.localizedKey)
                             .font(.title2)
@@ -100,7 +100,9 @@ struct StopwatchRunView: View {
             if store.backgroundRunAllowed {
                 return
             }
-            if oldValue == ScenePhase.active && (newValue == ScenePhase.inactive || newValue == ScenePhase.background) {
+            if store.state == .running && oldValue == ScenePhase.active &&
+                (newValue == ScenePhase.inactive || newValue == ScenePhase.background)
+            {
                 store.send(.pauseTapped)
             }
         }

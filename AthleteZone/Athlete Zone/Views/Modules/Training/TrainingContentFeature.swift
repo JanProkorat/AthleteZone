@@ -70,7 +70,7 @@ struct TrainingContentFeature {
                 return .send(.delegate(.switchTab(.library)))
 
             case .destination(.presented(.library(.delegate(.trainingSelected)))):
-                return .send(.delegate(.switchTab(.home)))
+                return .send(.tabChanged(.home))
 
             case .destination(.presented(.training(.delegate(.setTitle(let title))))):
                 return .send(.delegate(.setTitle(title)))

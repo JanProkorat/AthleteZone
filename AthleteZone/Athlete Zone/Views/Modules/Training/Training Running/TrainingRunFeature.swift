@@ -18,11 +18,13 @@ struct TrainingRunFeature {
         var name: String
         var currentWorkout: WorkoutDto?
         var workouts: [WorkoutDto]
+        var previousState: WorkFlowState = .ready
         var state: WorkFlowState = .ready
         var currentWorkflow: [WorkFlow] = []
         var currentActivity: WorkFlow?
         var currentFlowIndex = 0
         var currentWorkoutIndex = 0
+        var timerTickInterval: TimeInterval = Constants.WorkoutTickInterval
 
         var isTimerActive = false
         var backgroundRunAllowed = false
@@ -39,6 +41,8 @@ struct TrainingRunFeature {
         var isFirstRunning: Bool {
             currentFlowIndex == 0 && currentWorkoutIndex == 0
         }
+
+        @Presents var timerDestination: TimerDestination.State?
     }
 
     enum Action {
@@ -50,11 +54,9 @@ struct TrainingRunFeature {
         case backTapped
         case pauseTapped
         case quitTapped
-        case timerTicked
-        case startTimer
-        case stopTimer
         case playSound(Sound, Int)
-        case setRunInBackground
+        case timerDestination(PresentationAction<TimerDestination.Action>)
+        case setupDestination
     }
 
     enum CancelID {
@@ -63,16 +65,16 @@ struct TrainingRunFeature {
 
     @Dependency(\.appStorageManager) var appStorageManager
     @Dependency(\.soundManager) var soundManager
-    @Dependency(\.continuousClock) var clock
     @Dependency(\.dismiss) var dismiss
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onAppear:
+                state.backgroundRunAllowed = appStorageManager.getRunInBackground()
                 return .run { [workouts = state.workouts] send in
+                    await send(.setupDestination)
                     await send(.setWorkflow(workouts.first!))
-                    await send(.stateChanged(.running))
-                    await send(.setRunInBackground)
+                    await send(.stateChanged(.preparation))
                 }
 
             case .setWorkflow(let workout):
@@ -87,33 +89,25 @@ struct TrainingRunFeature {
                 return .none
 
             case .stateChanged(let newState):
+                state.previousState = state.state
                 state.state = newState
-                switch newState {
-                case .ready:
-                    if state.isTimerActive {
-                        state.isTimerActive = false
-                        return .send(.stopTimer)
+                return .run { [previous = state.previousState, new = state.state] send in
+                    switch new {
+                    case .preparation, .running:
+                        await send(.timerDestination(.presented(.timer(.startTimer))))
+
+                    case .paused, .finished, .quit:
+                        await send(.timerDestination(.presented(.timer(.stopTimer))))
+
+                    case .ready:
+                        if previous == .running {
+                            await send(.timerDestination(.presented(.timer(.stopTimer))))
+                        }
                     }
-                    return .none
-
-                case .preparation, .running:
-                    state.isTimerActive = true
-                    return .send(.startTimer)
-
-                case .paused:
-                    state.isTimerActive = false
-                    return .send(.stopTimer)
-
-                case .finished:
-                    state.isTimerActive = false
-                    return .send(.stopTimer)
-
-                case .quit:
-                    state.isTimerActive = false
-                    return .send(.stopTimer)
                 }
 
             case .forwardTapped:
+                /// If last activity in workout is currently running, set up next in training
                 if state.currentFlowIndex == state.currentWorkflow.count - 1 {
                     state.currentWorkoutIndex += 1
                     state.currentFlowIndex = 0
@@ -124,22 +118,51 @@ struct TrainingRunFeature {
                     }
                 }
                 state.currentFlowIndex += 1
-                return .send(.setupNextActivity(state.currentFlowIndex))
+                return .run { [
+                    currentFlowIndex = state.currentFlowIndex,
+                    state = state.state,
+                    previousState = state.previousState
+                ] send in
+                    if state == .preparation || (state == .paused && previousState == .preparation) {
+                        await send(.stateChanged(.running))
+                    }
+                    await send(.setupNextActivity(currentFlowIndex))
+                }
 
             case .backTapped:
-                if !state.isFirstRunning, state.currentFlowIndex == 0 {
+                if state.isFirstRunning {
+                    return .none
+                }
+
+                if state.currentFlowIndex == 0 {
                     state.currentWorkoutIndex -= 1
-                    state.currentFlowIndex = 0
                     return .run { [currentWorkoutIndex = state.currentWorkoutIndex,
                                    workouts = state.workouts] send in
                             await send(.setWorkflow(workouts[currentWorkoutIndex]))
-                            await send(.stateChanged(.ready))
                     }
                 }
-                return .none
+                state.currentFlowIndex -= 1
+                return .send(.setupNextActivity(state.currentFlowIndex))
 
             case .pauseTapped:
-                return .send(.stateChanged(state.state == .running ? .paused : .running))
+                switch state.state {
+                case .finished:
+                    state.currentFlowIndex = 0
+                    state.currentWorkoutIndex = 0
+                    return .run { [workouts = state.workouts] send in
+                        await send(.setWorkflow(workouts.first!))
+                        await send(.stateChanged(.preparation))
+                    }
+
+                case .paused:
+                    return .send(.stateChanged(state.previousState))
+
+                case .ready:
+                    return .send(.stateChanged(.preparation))
+
+                default:
+                    return .send(.stateChanged(.paused))
+                }
 
             case .quitTapped:
                 return .run { send in
@@ -147,17 +170,21 @@ struct TrainingRunFeature {
                     await self.dismiss()
                 }
 
-            case .timerTicked:
+            case .timerDestination(.presented(.timer(.delegate(.timerTick)))):
                 if state.currentActivity != nil {
-                    state.currentActivity!.interval -= 1
-                    if state.currentActivity!.interval <= 3, state.currentActivity!.interval > 0 {
-                        return .send(.playSound(.beep, Int(state.currentActivity!.interval - 1)))
+                    state.currentActivity!.interval -= state.timerTickInterval
+                    if Constants.NotificationRange.contains(state.currentActivity!.interval) {
+                        if appStorageManager.getSoundsEnabled() {
+                            return .send(.playSound(.beep, Int(state.currentActivity!.interval - 1)))
+                        }
                     }
-                    if state.currentActivity!.interval == 0 {
-                        return .send(.playSound(
-                            state.isLastFlowRunning ? .fanfare : .gong,
-                            Int(state.currentActivity!.interval)
-                        ))
+                    if state.currentActivity!.interval.isTimeElapsedZero() {
+                        if appStorageManager.getSoundsEnabled() {
+                            return .send(.playSound(
+                                state.isLastFlowRunning ? .fanfare : .gong,
+                                Int(state.currentActivity!.interval)
+                            ))
+                        }
                     }
                     // Timer ticks to zero, handle next flow in row
                     if state.currentActivity!.interval < 0 {
@@ -171,33 +198,22 @@ struct TrainingRunFeature {
                 }
                 return .none
 
-            case .startTimer:
-                return .run { [isTimerActive = state.isTimerActive] send in
-                    guard isTimerActive else { return }
-                    for await _ in self.clock.timer(interval: .seconds(1)) {
-                        await send(.timerTicked, animation: .interpolatingSpring(stiffness: 3000, damping: 40))
-                    }
-                }
-                .cancellable(id: CancelID.trainingRunTimer, cancelInFlight: true)
-
-            case .stopTimer:
-                if soundManager.isPlaying(), soundManager.selectedSound() != .fanfare {
-                    soundManager.stopSound()
-                }
-                return .cancel(id: CancelID.trainingRunTimer)
-
-            case .setRunInBackground:
-                state.backgroundRunAllowed = appStorageManager.getRunInBackground()
-                return .none
-
             case .playSound(let sound, let numOfLoops):
                 if soundManager.isPlaying(), soundManager.selectedSound() == sound {
                     return .none
                 }
                 soundManager.playSound(sound, numOfLoops)
                 return .none
+
+            case .setupDestination:
+                state.timerDestination = .timer(TimingFeature.State(timerTickInterval: state.timerTickInterval))
+                return .none
+
+            case .timerDestination:
+                return .none
             }
         }
+        .ifLet(\.$timerDestination, action: \.timerDestination)
     }
 
     private func createFlow(workout: WorkoutDto, state: inout TrainingRunFeature.State) {
@@ -242,5 +258,12 @@ struct TrainingRunFeature {
         }
 
         state.currentWorkflow = flow
+    }
+}
+
+extension TrainingRunFeature {
+    @Reducer
+    enum TimerDestination {
+        case timer(TimingFeature)
     }
 }

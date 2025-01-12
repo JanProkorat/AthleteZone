@@ -66,7 +66,7 @@ struct ContentView: View {
                     switch store.currentSection {
                     case .workout:
                         if let store = store.scope(state: \.destination?.workout, action: \.destination.workout) {
-                            WorkOutContentView(store: store)
+                            WorkoutContentView(store: store)
                         }
 
                     case .training:

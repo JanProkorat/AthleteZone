@@ -37,7 +37,6 @@ struct ContentView: View {
             }
             .padding([.leading, .trailing], 5)
             .navigationTitle(LocalizationKey.sections.localizedKey)
-
         } destination: { store in
             switch store.case {
             case .workouts(let store):

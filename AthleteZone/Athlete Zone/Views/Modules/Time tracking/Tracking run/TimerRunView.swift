@@ -27,8 +27,9 @@ struct TimerRunView: View {
                         ZStack {
                             CircularProgressBar(
                                 color: store.isPaused ? ComponentColor.lightYellow : ComponentColor.lightPink,
-                                progress: Double(store.originalInterval - store.interval) / Double(store.originalInterval))
-                            CounterText(text: store.interval.toFormattedTimeForWorkout(), size: geo.size.height * 0.14)
+                                progress: Double(store.originalInterval - store.timeRemaining) / Double(store.originalInterval)
+                            )
+                            CounterText(text: store.timeRemaining.toFormattedTimeForWorkout(), size: geo.size.height * 0.14)
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
 
@@ -76,7 +77,9 @@ struct TimerRunView: View {
             if store.backgroundRunAllowed {
                 return
             }
-            if oldValue == ScenePhase.active && (newValue == ScenePhase.inactive || newValue == ScenePhase.background) {
+            if store.state == .running && oldValue == ScenePhase.active &&
+                (newValue == ScenePhase.inactive || newValue == ScenePhase.background)
+            {
                 store.send(.pauseTapped)
             }
         }
@@ -117,7 +120,7 @@ struct TimerRunView: View {
 }
 
 #Preview {
-    TimerRunView(store: ComposableArchitecture.Store(initialState: TimerRunFeature.State(interval: 18), reducer: {
+    TimerRunView(store: ComposableArchitecture.Store(initialState: TimerRunFeature.State(timeRemaining: 18), reducer: {
         TimerRunFeature()
             ._printChanges()
     }))

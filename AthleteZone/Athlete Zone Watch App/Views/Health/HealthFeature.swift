@@ -117,7 +117,7 @@ struct HealthFeature {
                         duration: healthManager.getWorkoutDuration(),
                         heartRate: healthManager.getAverageHeartRate(),
                         activeEnergy: healthManager.getActiveEnergy(),
-                        totalEnergy: healthManager.getTotalEnergy()
+                        totalEnergy: healthManager.getCalmEnergy()
                     ))))
                 }
 

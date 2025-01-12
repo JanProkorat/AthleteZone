@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model class TimerActivity: Identifiable {
-    @Attribute(.unique) let id = UUID()
+    @Attribute(.unique) var id = UUID()
     @Attribute(.spotlight) var interval: TimeInterval
     @Attribute(.spotlight) var createdDate = Date()
 

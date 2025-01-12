@@ -10,7 +10,7 @@ import SwiftUI
 struct TimerTrackingTab: View {
     var originalTime: TimeInterval
     var actionLabel: LocalizationKey
-    var timeElapsed: String
+    var timeElapsed: TimeInterval
     var actionColor: ComponentColor
     var isFirstRunning: Bool
     var isLastRunning: Bool
@@ -55,14 +55,16 @@ struct TimerTrackingTab: View {
                 .padding(.top, 10)
                 .frame(maxWidth: .infinity, alignment: .center)
 
-            Text(timeElapsed)
-                .font(Font.monospacedDigit(.title2.weight(.light))())
-                .scaledToFill()
-                .scaledToFit()
-                .minimumScaleFactor(0.01)
-                .lineLimit(1)
-                .foregroundColor(Color(actionColor.rawValue))
-                .padding(.top, 2)
+            TimelineView(MetricsTimelineSchedule(from: Date(), interval: 0.5)) { _ in
+                Text(timeElapsed.toFormattedTimeForWorkout())
+                    .font(Font.monospacedDigit(.title2.weight(.light))())
+                    .scaledToFill()
+                    .scaledToFit()
+                    .minimumScaleFactor(0.01)
+                    .lineLimit(1)
+                    .foregroundColor(Color(actionColor.rawValue))
+                    .padding(.top, 2)
+            }
         }
         .padding(.top, 15)
     }
@@ -86,7 +88,7 @@ extension TimerTrackingTab {
     TimerTrackingTab(
         originalTime: 137,
         actionLabel: .work,
-        timeElapsed: TimeInterval(98).toFormattedTimeForWorkout(),
+        timeElapsed: TimeInterval(98),
         actionColor: .lightPink,
         isFirstRunning: false,
         isLastRunning: true

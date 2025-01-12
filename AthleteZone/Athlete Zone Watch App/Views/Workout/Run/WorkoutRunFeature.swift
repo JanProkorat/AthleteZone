@@ -104,11 +104,7 @@ struct WorkoutRunFeature {
 
             case .forwardTapped:
                 state.currentFlowIndex += 1
-                return .run { [
-                    index = state.currentFlowIndex,
-                    state = state.state,
-                    previousState = state.previousState
-                ] send in
+                return .run { [index = state.currentFlowIndex, state = state.state, previousState = state.previousState] send in
                     if state == .preparation || (state == .paused && previousState == .preparation) {
                         await send(.stateChanged(.running))
                     }

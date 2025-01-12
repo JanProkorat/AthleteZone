@@ -7,108 +7,115 @@
 
 @testable import Athlete_Zone
 import ComposableArchitecture
-import Nimble
 import XCTest
 
-class ContentFeatureTests: XCTestCase {
-//    @MainActor
-//    func testSectionChanged() async {
-//        let store = TestStore(initialState: ContentFeature.State()) {
-//            ContentFeature()
-//        }
-//
-//        store.exhaustivity = .off
-//
-//        await store.send(.onAppear)
-//
-//        store.assert {
-//            $0.currentLanguage = .cze
-//        }
-    ////        await store.send(.sectionChanged(.training)) {
-    ////            $0.currentSection = .training
-    ////            $0.destination = .training(TrainingContentFeature.State())
-    ////            $0.destination?.training?.currentTab = .home
-    ////        }
-//
-    ////        await store.send(.destination(.presented(.training(.onAppear))))
-    ////        expect(store.state.currentSection).to(equal(Section.training))
-//    }
-
-    @MainActor
-    func test_onAppear() async {
+@MainActor
+final class ContentFeatureTests: XCTestCase {
+    func testOnAppear() async {
         let store = TestStore(initialState: ContentFeature.State()) {
             ContentFeature()
+        } withDependencies: {
+            $0.appStorageManager.getSelectedSection = { .workout }
+            $0.appStorageManager.getLanguage = { .en }
+            $0.appStorageManager.getNotificationsEnabled = { true }
+            $0.notificationManager.requestAuthorization = {}
         }
 
         await store.send(.onAppear)
-        store.assert {
-            $0.currentSection = .workout
-            $0.currentLanguage = .cze
-            $0.subscriptionActivated = true
-            $0.launchScreenState = .finished
-        }
 
-        await store.receive(.sectionChanged(.workout))
-        await store.receive(.destination(.presented(.workout(.onAppear))))
-        await store.finish()
+        await store.receive(\.sectionChanged, .workout)
+
+        await store.receive(\.languageChanged, .en)
+
+        await store.receive(\.launchScreenStateChanged, .secondStep)
+
+        // Wait for 1 second delay
+        try? await Task.sleep(for: Duration.seconds(1))
+        
+        await store.receive(\.launchScreenStateChanged, .finished)
     }
 
-//    func test_sectionChangedToTraining() {
-//        let store = TestStore(initialState: ContentFeature.State()) {
-//            ContentFeature()
-//        }
-//
-//        store.send(.sectionChanged(.training))
-//            .assert(state: { $0.currentSection == .training })
-//            .receive(.destination(.presented(.training(.onAppear))))
-//    }
-//
-//    func test_sectionChangedToStopWatch() {
-//        let store = TestStore(initialState: ContentFeature.State()) {
-//            ContentFeature()
-//        }
-//
-//        store.send(.sectionChanged(.stopWatch))
-//            .assert(state: { $0.currentSection == .stopWatch })
-//            .receive(.destination(.presented(.stopwatch(.onAppear))))
-//            .receive(.send(.titleChanged("\(ContentFeature.TimerType.stopWatch.rawValue)")))
-//            .assert(state: { $0.title == "Stopwatch" })
-//            .run { _ in
-//                XCTAssertTrue(appStorageManager.setSectionCalled)
-//                XCTAssertTrue(appStorageManager.setStopWatchTypeCalled)
-//            }
-//    }
-//
-//    func test_tabChanged() {
-//        let store = TestStore(initialState: ContentFeature.State()) {
-//            ContentFeature()
-//        }
-//
-//        store.send(.tabChanged(.home))
-//            .assert(state: { $0.currentTab == .home })
-//            .receive(.destination(.presented(.workout(.tabChanged(.home)))))
-//            .assert(state: { $0.title == "Home" }) // Assuming title updates in workout reducer
-//    }
-//
-//    func test_languageChanged() {
-//        let store = TestStore(initialState: ContentFeature.State()) {
-//            ContentFeature()
-//        }
-//
-//        store.send(.languageChanged(.fr))
-//            .assert(state: { $0.currentLanguage == .fr })
-//            .run { _ in
-//                XCTAssertTrue(appStorageManager.setLanguageCalled)
-//            }
-//    }
-//
-//    func test_subscriptionStatusChanged() {
-//        let store = TestStore(initialState: ContentFeature.State()) {
-//            ContentFeature()
-//        }
-//
-//        store.send(.subscriptionStatusChanged(true))
-//            .assert(state: { $0.subscriptionActivated == true })
-//            .receive(.destination(.presented(.workout(.subscriptionActivated(true)))))
-//    }
+    func testOnAppearWithStopWatch() async {
+        let store = TestStore(initialState: ContentFeature.State()) {
+            ContentFeature()
+        } withDependencies: {
+            $0.appStorageManager.getSelectedSection = { .stopWatch }
+            $0.appStorageManager.getStopWatchType = { .stopWatch }
+            $0.appStorageManager.getLanguage = { .en }
+            $0.appStorageManager.getNotificationsEnabled = { false }
+        }
+
+        await store.send(.onAppear)
+
+        await store.receive(\.sectionChanged, .stopWatch)
+
+        await store.receive(\.timeTractingSectionChanged, .stopWatch)
+
+        await store.receive(\.languageChanged, .en)
+
+        await store.receive(\.launchScreenStateChanged, .secondStep)
+
+        // Wait for 1 second delay
+        try? await Task.sleep(for: Duration.seconds(1))
+
+        await store.receive(\.launchScreenStateChanged, .finished)
+    }
+
+    func testSectionChangedToWorkout() async {
+        let store = TestStore(initialState: ContentFeature.State(currentSection: .training)) {
+            ContentFeature()
+        } withDependencies: {
+            $0.appStorageManager.storeSectionToAppStorage = { _ in }
+        }
+
+        await store.send(.sectionChanged(.workout)) {
+            $0.currentSection = .workout
+            $0.destination = .workout(WorkoutContentFeature.State(currentTab: .home))
+        }
+        
+        await store.receive(\.destination.presented.workout.onAppear)
+    }
+    
+    func testSectionChangedToTraining() async {
+        let store = TestStore(initialState: ContentFeature.State(currentSection: .workout)) {
+            ContentFeature()
+        } withDependencies: {
+            $0.appStorageManager.storeSectionToAppStorage = { _ in }
+        }
+
+        await store.send(.sectionChanged(.training)) {
+            $0.currentSection = .training
+            $0.destination = .training(TrainingContentFeature.State(currentTab: .home))
+        }
+
+        await store.receive(\.destination.presented.training.onAppear)
+    }
+
+    func testSectionChangedToStopWatch() async {
+        let store = TestStore(initialState: ContentFeature.State(currentSection: .workout)) {
+            ContentFeature()
+        } withDependencies: {
+            $0.appStorageManager.storeSectionToAppStorage = { _ in }
+        }
+
+        await store.send(.sectionChanged(.stopWatch)) {
+            $0.currentSection = .stopWatch
+            $0.destination = .stopwatch(TimeTrackingContentFeature.State(currentTab: .home))
+        }
+
+        await store.receive(\.destination.presented.stopwatch.onAppear)
+
+        await store.receive(\.titleChanged, "stopWatch")
+    }
+
+    func testSectionChangedToSameSection() async {
+        let store = TestStore(initialState: ContentFeature.State(currentSection: .workout)) {
+            ContentFeature()
+        } withDependencies: {
+            $0.appStorageManager.storeSectionToAppStorage = { _ in }
+        }
+
+        await store.send(.sectionChanged(.workout))
+        // No state changes or effects should occur
+    }
 }

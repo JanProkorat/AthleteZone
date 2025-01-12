@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import SwiftUI
 
-struct WorkOutContentView: View {
+struct WorkoutContentView: View {
     @Bindable var store: StoreOf<WorkoutContentFeature>
 
     var body: some View {
@@ -40,7 +40,7 @@ struct WorkOutContentView: View {
 
 struct ContentScene_Previews: PreviewProvider {
     static var previews: some View {
-        WorkOutContentView(store: ComposableArchitecture.Store(initialState: WorkoutContentFeature.State()) {
+        WorkoutContentView(store: ComposableArchitecture.Store(initialState: WorkoutContentFeature.State()) {
             WorkoutContentFeature()
                 ._printChanges()
         })

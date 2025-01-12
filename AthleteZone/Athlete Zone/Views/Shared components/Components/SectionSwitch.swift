@@ -18,12 +18,12 @@ struct SectionSwitch: View {
         Menu {
             ForEach(Section.allCases.sorted(by: { $0.rawValue > $1.rawValue }), id: \.self) { section in
                 Button(action: {
-                    if !subscriptionActivated {
-                        pendingSection = section
-                        subscriptionSheetVisible.toggle()
-                    } else {
-                        currentSection = section
-                    }
+//                    if !subscriptionActivated {
+//                        pendingSection = section
+//                        subscriptionSheetVisible.toggle()
+//                    } else {
+                    currentSection = section
+//                    }
                 }, label: {
                     HStack {
                         Text(LocalizedStringKey(section.rawValue))

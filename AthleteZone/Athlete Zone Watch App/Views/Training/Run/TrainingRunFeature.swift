@@ -123,6 +123,7 @@ struct TrainingRunFeature {
                         workouts = state.training.workouts
                     ] send in
                         await send(.setWorkflow(workouts[currentWorkoutIndex]))
+                        await send(.stateChanged(.ready))
                     }
                 }
                 state.currentFlowIndex += 1

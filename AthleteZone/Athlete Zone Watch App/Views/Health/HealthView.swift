@@ -21,7 +21,7 @@ struct HealthView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            TimelineView(MetricsTimelineSchedule(from: Date())) { context in
+            TimelineView(MetricsTimelineSchedule(from: Date(), interval: 0.5)) { context in
                 Text(store.timeElapsed.toFormattedTime(showSubSeconds: context.cadence == .live))
                     .font(.title2)
                     .foregroundColor(.yellow)
@@ -91,8 +91,8 @@ struct HealthView: View {
             }
             .padding(.top, 20)
             .padding(.leading)
-            .onChange(of: healthManager.totalEnergy) { _, newValue in
-                totalEnergy = newValue
+            .onChange(of: healthManager.calmEnergy) { _, newValue in
+                totalEnergy = newValue + healthManager.activeEnergy
             }
             .onChange(of: healthManager.activeEnergy) { _, newValue in
                 activeEnergy = newValue
@@ -101,19 +101,6 @@ struct HealthView: View {
                 heartRate = newValue
             }
         }
-    }
-}
-
-private struct MetricsTimelineSchedule: TimelineSchedule {
-    var startDate: Date
-    
-    init(from startDate: Date) {
-        self.startDate = startDate
-    }
-    
-    func entries(from startDate: Date, mode: TimelineScheduleMode) -> PeriodicTimelineSchedule.Entries {
-        PeriodicTimelineSchedule(from: self.startDate, by: mode == .lowFrequency ? 1.0 : 1.0 / 30.0)
-            .entries(from: startDate, mode: mode)
     }
 }
 

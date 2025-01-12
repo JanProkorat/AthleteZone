@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model class Workout: Identifiable {
-    @Attribute(.unique) let id = UUID()
+    @Attribute(.unique) var id = UUID()
 
     @Attribute(.spotlight) var name: String
     @Attribute(.spotlight) var work: Int

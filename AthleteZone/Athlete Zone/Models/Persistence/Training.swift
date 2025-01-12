@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model class Training: Identifiable {
-    @Attribute(.unique) let id = UUID()
+    @Attribute(.unique) var id = UUID()
 
     @Attribute(.spotlight) var name: String
     var trainingDescription: String
