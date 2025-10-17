@@ -14,7 +14,7 @@ import Foundation
 @Reducer
 struct TrainingEditFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
         var headerText: LocalizationKey
         var name = ""
         var description = ""
@@ -45,6 +45,7 @@ struct TrainingEditFeature {
     }
 
     @Dependency(\.workoutRepository) var realmManager
+    @Dependency(\.appStateManager) var appStateManager
     @Dependency(\.dismiss) var dismiss
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -54,6 +55,7 @@ struct TrainingEditFeature {
                     .concatenate(with: .send(.cancelTapped))
 
             case .cancelTapped:
+                appStateManager.updateSaveTapped(false)
                 return .run { _ in await self.dismiss() }
 
             case .delegate:

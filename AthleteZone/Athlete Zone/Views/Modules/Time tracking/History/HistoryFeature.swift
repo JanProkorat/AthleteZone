@@ -8,10 +8,11 @@
 import ComposableArchitecture
 import Foundation
 
+// swiftlint:disable pattern_matching_keywords
 @Reducer
 struct HistoryFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
         var library: [StopwatchDto] = []
         var searchText = ""
         var sortOrder: SortOrder = .descending
@@ -33,10 +34,12 @@ struct HistoryFeature {
     }
 
     @Dependency(\.stopWatchRepository) var stopWatchRepository
+    @Dependency(\.appStateManager) var appStateManager
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onAppear:
+                appStateManager.updateTitle(LocalizationKey.history.rawValue)
                 return .send(.displayData)
 
             case .searchTextChanged(let text):

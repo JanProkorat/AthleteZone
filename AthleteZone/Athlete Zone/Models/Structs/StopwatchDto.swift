@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct StopwatchDto: Identifiable {
+struct StopwatchDto: Equatable, Identifiable {
     var id: String
     var name: String
     var startDate: Date

@@ -9,11 +9,10 @@ import ComposableArchitecture
 import Foundation
 import HealthKit
 
-// swiftlint:disable nesting
 @Reducer
 struct SettingsFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
         var isSubscriptionActive = false
         var language: Language = .en
         var soundsEnabled = false
@@ -37,15 +36,12 @@ struct SettingsFeature {
         case watchAppInstalledChanged(Bool)
         case subscriptionSheetVisibilityChanged
         case subscriptionChanged(Bool)
-        case delegate(Delegate)
 
-        enum Delegate: Equatable {
-            case seubscriptionSheetVisibilityChanged
-            case languageChanged(Language)
-        }
+        case observeSubscriptionActive
     }
 
     @Dependency(\.appStorageManager) var appStorageManager
+    @Dependency(\.appStateManager) var appStateManager
     @Dependency(\.watchConnectivityManager) var connectivityManager
     @Dependency(\.healthManager) var healthManager
     @Dependency(\.notificationManager) var notificationManager
@@ -54,6 +50,7 @@ struct SettingsFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
+                appStateManager.updateTitle("\(Tab.settings)")
                 state.healthKitAccess = healthManager.getHealthAccessGranted()
                 return .run { send in
                     await send(.languageChanged(appStorageManager.getLanguage()))
@@ -64,19 +61,15 @@ struct SettingsFeature {
                     await send(.subscriptionChanged(subscriptionManager.subscriptionActivated))
                     await send(.watchAppInstalledChanged(connectivityManager.checkIfPairedAppInstalled()))
                     await send(.hkAccessStatusChanged)
+                    await send(.observeSubscriptionActive)
                 }
-
-            case .delegate:
-                return .none
 
             case .languageChanged(let language):
-                if language == state.language {
-                    return .none
-                }
                 state.language = language
                 connectivityManager.sendValue([TransferDataKey.language.rawValue: language.rawValue])
                 appStorageManager.storeLanguageToAppStorage(language)
-                return .send(.delegate(.languageChanged(language)))
+                appStateManager.updateLanguage(language)
+                return .none
 
             case .soundsChanged(let enabled):
                 state.soundsEnabled = enabled
@@ -135,11 +128,19 @@ struct SettingsFeature {
                 return .none
 
             case .subscriptionSheetVisibilityChanged:
-                return .send(.delegate(.seubscriptionSheetVisibilityChanged))
+                appStateManager.updateIsSubscriptionSheetVisible()
+                return .none
 
             case .subscriptionChanged(let active):
                 state.isSubscriptionActive = active
                 return .none
+
+            case .observeSubscriptionActive:
+                return .run { send in
+                    for await value in appStateManager.$isSubscriptionActive.values {
+                        await send(.subscriptionChanged(value), animation: .default)
+                    }
+                }
             }
         }
     }

@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-enum Tab: Int, CaseIterable {
+enum Tab: Int, Equatable, CaseIterable {
     case home = 0
     case library = 1
     case settings = 2
@@ -35,7 +35,7 @@ enum WorkFlowType: String, Codable {
     case reset
 }
 
-enum WorkFlowState: String, Codable {
+enum WorkFlowState: String, Equatable, Codable {
     case ready, preparation, running, paused, finished, quit
 }
 
@@ -53,7 +53,7 @@ enum Language: String, Equatable, CaseIterable, Codable {
     case en = "EN"
 }
 
-enum SortOrder: String, CaseIterable, Identifiable {
+enum SortOrder: String, Equatable, CaseIterable, Identifiable {
     var id: Int {
         hashValue
     }
@@ -62,7 +62,7 @@ enum SortOrder: String, CaseIterable, Identifiable {
     case descending
 }
 
-protocol SortByProperty: CaseIterable, Hashable, Identifiable {}
+protocol SortByProperty: Equatable, CaseIterable, Hashable, Identifiable {}
 
 enum WorkOutSortByProperty: String, SortByProperty {
     var id: Int {
@@ -90,7 +90,7 @@ enum TrainingSortByProperty: String, SortByProperty {
     case createdDate
 }
 
-enum StopWatchSortByProperty: String, SortByProperty {
+enum StopWatchSortByProperty: String, Equatable, SortByProperty {
     var id: Int {
         hashValue
     }
@@ -111,7 +111,7 @@ enum Section: String, CaseIterable, Codable, Identifiable {
     case stopWatch
 }
 
-enum LaunchScreenStep {
+enum LaunchScreenStep: Equatable {
     case firstStep
     case secondStep
     case finished
@@ -130,7 +130,7 @@ enum TransferDataKey: String {
     case trainingRemove
 }
 
-enum TimerType: String, Identifiable {
+enum TimerType: String, Equatable, Identifiable {
     var id: Int {
         hashValue
     }
@@ -237,7 +237,7 @@ enum UserDefaultValues: String {
     case widgetId = "AthleteZoneWidget"
 }
 
-enum LocalizationKey: String {
+enum LocalizationKey: String, Equatable {
     var localizedKey: LocalizedStringKey {
         LocalizedStringKey(rawValue)
     }
@@ -372,6 +372,7 @@ enum LocalizationKey: String {
     case newActivity
     case paused
     case finished
+    case trackedTime
 
     // Subscription
     case active

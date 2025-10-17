@@ -15,15 +15,22 @@ struct StopwatchRunView: View {
     var body: some View {
         VStack {
             VStack(alignment: .center, spacing: 5) {
-                TitleText(text: TimerType.stopWatch.rawValue, alignment: .center)
+                DescriptionLabel(title: LocalizationKey.stopWatch.localizedKey, color: ComponentColor.lightGreen)
                     .padding(.top)
+
+                Text(LocalizedStringKey(store.state.rawValue))
+                    .font(.headline)
+                    .bold()
+                    .padding(.top, 10)
+                    .frame(maxWidth: .infinity, alignment: .center)
+
                 GeometryReader { geo in
                     VStack {
                         CounterText(
-                            text: store.timeElapsed.toFormattedTime(),
-                            size: geo.size.height * 0.2
+                            text: store.timeElapsed.toFormattedTime(showSubSeconds: false),
+                            size: geo.size.height * 0.15
                         )
-                        .padding([.leading, .trailing, .bottom])
+                        .padding(.bottom)
                         .foregroundColor(
                             Color(store.isPaused ?
                                 ComponentColor.lightYellow.rawValue : ComponentColor.lightPink.rawValue))
@@ -34,7 +41,6 @@ struct StopwatchRunView: View {
 
                         Divider()
                             .overlay(Color.white)
-                            .padding([.leading, .trailing])
 
                         ScrollView {
                             ForEach(store.splitTimes.indices, id: \.self) { index in
@@ -55,7 +61,6 @@ struct StopwatchRunView: View {
 
                         Divider()
                             .overlay(Color.white)
-                            .padding([.leading, .trailing])
 
                         HStack {
                             splitTimeButton(size: geo.size.height * 0.16)
@@ -63,7 +68,7 @@ struct StopwatchRunView: View {
                             Button {
                                 store.send(.pauseTapped)
                             } label: {
-                                Image(!store.isPaused ? Icon.actionsPause.rawValue : Icon.start.rawValue)
+                                Image(getButtonIcon(store.state).rawValue)
                                     .resizable()
                                     .scaledToFill()
                                     .foregroundColor(.buttonGreen)
@@ -83,6 +88,7 @@ struct StopwatchRunView: View {
                     .padding(.top)
                 }
             }
+            .padding([.leading, .trailing], 5)
         }
         .background(Color(ComponentColor.darkBlue.rawValue))
         .environment(\.colorScheme, .dark)
@@ -136,11 +142,21 @@ struct StopwatchRunView: View {
                 .resizable()
                 .scaledToFill()
                 .foregroundColor(Color(
-                    !store.isPaused ? ComponentColor.lightBlue.rawValue :
+                    !store.isSplitButtonDisabled ? ComponentColor.lightBlue.rawValue :
                         ComponentColor.grey.rawValue))
                 .frame(maxWidth: size, maxHeight: size)
         }
-        .disabled(store.isPaused)
+        .disabled(store.isSplitButtonDisabled)
+    }
+
+    func getButtonIcon(_ state: WorkFlowState) -> Icon {
+        switch state {
+        case .preparation, .running:
+            return Icon.actionsPause
+
+        case .paused, .ready, .finished, .quit:
+            return Icon.start
+        }
     }
 }
 

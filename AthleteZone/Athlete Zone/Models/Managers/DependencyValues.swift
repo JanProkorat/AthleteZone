@@ -63,6 +63,11 @@ extension DependencyValues {
         get { self[SoundManager.self] }
         set { self[SoundManager.self] = newValue }
     }
+
+    var appStateManager: AppStateManager {
+        get { self[AppStateManager.self] }
+        set { self[AppStateManager.self] = newValue }
+    }
 }
 
 extension HealthManager: DependencyKey {

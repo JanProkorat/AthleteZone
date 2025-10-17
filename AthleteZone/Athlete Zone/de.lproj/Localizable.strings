@@ -128,6 +128,7 @@
 "newActivity" = "Neue Aktivität";
 "paused" = "Pause";
 "finished" = "Fertig";
+"running" = "Arbeit";
 
 //Subscription
 "active" = "Aktiv";
@@ -146,3 +147,4 @@
 "latestSplitTime" = "Letzte Zwischenzeit";
 "noSplitTimeAdded" = "Keine Zwischenzeiten hinzugefügt. Um Zeit hinzuzufügen, tippen Sie auf „+“ auf der Tracking-Seite";
 "startTime" = "Startzeit";
+"trackedTime" = "Erfasste Zeit";

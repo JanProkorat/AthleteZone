@@ -7,44 +7,36 @@
 
 import ComposableArchitecture
 import Foundation
+import UIKit
 
 @Reducer
 struct ContentFeature {
     @ObservableState
     struct State: Equatable {
-        var id = UUID()
+        var featureId = UUID()
         static func == (lhs: ContentFeature.State, rhs: ContentFeature.State) -> Bool {
-            lhs.id == rhs.id
+            lhs.featureId == rhs.featureId
         }
 
         var currentSection: Section = .workout
         var currentLanguage: Language = .en
         var launchScreenState: LaunchScreenStep = .firstStep
         var currentTab: Tab = .home
+        var timeTractingSection: TimerType = .stopWatch
         var subscriptionActivated = false
         var subscriptionSheetVisible = false
         var title = ""
-        var timeTractingSection: TimerType = .stopWatch
 
         @Presents var destination: Destination.State?
         @Presents var subscriptionSheet: SubscriptionFeature.State?
     }
 
-    enum Action: Equatable, Identifiable {
-        var id: UUID {
-            UUID()
-        }
-
-        static func == (lhs: ContentFeature.Action, rhs: ContentFeature.Action) -> Bool {
-            lhs.id == rhs.id
-        }
-
+    enum Action {
         case onAppear
         case sectionChanged(Section)
         case languageChanged(Language)
         case launchScreenStateChanged(LaunchScreenStep)
         case tabChanged(Tab)
-        case observeTransactions
         case purchaseCompleted
         case subscriptionStatusChanged(Bool)
         case subscriptionSheetVisibilityChanged(Bool)
@@ -54,9 +46,24 @@ struct ContentFeature {
 
         case destination(PresentationAction<Destination.Action>)
         case subscriptionSheet(PresentationAction<SubscriptionFeature.Action>)
+
+        case observeTransactions
+        case observeTitleChange
+        case observeTabChange
+        case observeLanguageChange
+        case observeSubscriptionSheetVisibilityChange
+        case cancelAllObservers
+    }
+
+    enum CancelID {
+        case observeTitleChange
+        case observeTabChange
+        case observeLanguageChange
+        case observeSubscriptionSheetVisibilityChange
     }
 
     @Dependency(\.appStorageManager) var appStorageManager
+    @Dependency(\.appStateManager) var appStateManager
     @Dependency(\.notificationManager) var notificationManager
     @Dependency(\.subscriptionManager) var subscriptionManager
 
@@ -64,13 +71,14 @@ struct ContentFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
+                appStateManager.updateLanguage(appStorageManager.getLanguage())
                 return .run { send in
                     let section = appStorageManager.getSelectedSection()
                     await send(.sectionChanged(section))
-                    if section == .stopWatch {
-                        await send(.timeTractingSectionChanged(appStorageManager.getStopWatchType()))
-                    }
-                    await send(.languageChanged(appStorageManager.getLanguage()))
+                    await send(.observeTabChange)
+                    await send(.observeTitleChange)
+                    await send(.observeLanguageChange)
+                    await send(.observeSubscriptionSheetVisibilityChange)
                     if appStorageManager.getNotificationsEnabled() {
                         notificationManager.requestAuthorization()
                     }
@@ -95,96 +103,70 @@ struct ContentFeature {
                     case .stopWatch:
                         state.destination = .stopwatch(TimeTrackingContentFeature.State(currentTab: state.currentTab))
                         return .send(.destination(.presented(.stopwatch(.onAppear))))
-                            .concatenate(with: .send(.titleChanged("\(state.timeTractingSection)")))
                     }
                 }
                 return .none
 
             case .tabChanged(let tab):
-                if tab != state.currentTab {
-                    state.currentTab = tab
-                    switch state.currentSection {
-                    case .workout:
-                        return .run { send in
-                            if tab == .library || tab == .settings {
-                                await send(.titleChanged("\(tab)"))
-                            }
-                            await send(.destination(.presented(.workout(.tabChanged(tab)))), animation: .default)
-                        }
+                state.currentTab = tab
+                appStateManager.updateTab(tab)
+                return .none
 
-                    case .training:
-                        return .run { send in
-                            if tab == .library || tab == .settings {
-                                await send(.titleChanged("\(tab)"))
-                            }
-                            await send(.destination(.presented(.training(.tabChanged(tab)))), animation: .default)
-                        }
-
-                    case .stopWatch:
-                        return .run { [section = state.timeTractingSection] send in
-                            if tab == .library || tab == .settings {
-                                await send(.titleChanged("\(tab)"))
-                            } else {
-                                await send(.titleChanged(section.rawValue))
-                            }
-                            await send(.destination(.presented(.stopwatch(.tabChanged(tab)))), animation: .default)
-                        }
+            case .observeTitleChange:
+                return .run { send in
+                    for await value in appStateManager.$title.values {
+                        await send(.titleChanged(value), animation: .default)
                     }
                 }
-                if tab == .library || tab == .settings {
-                    return .send(.titleChanged("\(tab)"))
+                .cancellable(id: CancelID.observeTitleChange)
+
+            case .observeLanguageChange:
+                return .run { send in
+                    for await value in appStateManager.$language.values {
+                        await send(.languageChanged(value), animation: .default)
+                    }
                 }
+                .cancellable(id: CancelID.observeLanguageChange)
+
+            case .observeTabChange:
+                return .run { send in
+                    for await value in appStateManager.$currentTab.values {
+                        await send(.tabChanged(value), animation: .default)
+                    }
+                }
+                .cancellable(id: CancelID.observeTabChange)
+
+            case .observeSubscriptionSheetVisibilityChange:
+                return .run { send in
+                    for await value in appStateManager.$isSubscriptionSheetVisible.values {
+                        await send(.subscriptionSheetVisibilityChanged(value), animation: .default)
+                    }
+                }
+                .cancellable(id: CancelID.observeSubscriptionSheetVisibilityChange)
+
+            case .titleChanged(let title):
+                state.title = title
                 return .none
 
             case .languageChanged(let language):
                 state.currentLanguage = language
-                appStorageManager.storeLanguageToAppStorage(language)
+                return .none
+
+            case .subscriptionSheetVisibilityChanged(let visible):
+                if visible {
+                    state.subscriptionSheet = SubscriptionFeature.State()
+                }
                 return .none
 
             case .launchScreenStateChanged(let launchScreenState):
                 state.launchScreenState = launchScreenState
                 return .none
 
-// MARK: Workout actions
-
-            case .destination(.presented(.workout(.delegate(.setTitle(let title))))):
-                return .send(.titleChanged(title))
-
-            case .destination(.presented(.workout(.delegate(.switchTab(let tab))))):
-                return .send(.tabChanged(tab))
-
-            case .destination(.presented(.workout(.delegate(.subscriptionSheetVisibilityChanged)))):
-                return .send(.subscriptionSheetVisibilityChanged(!state.subscriptionSheetVisible))
-
-            case .destination(.presented(.workout(.delegate(.languageChanged(let language))))):
-                return .send(.languageChanged(language))
-
-// MARK: Training actions
-
-            case .destination(.presented(.training(.delegate(.switchTab(let tab))))):
-                return .send(.tabChanged(tab))
-
-            case .destination(.presented(.training(.delegate(.setTitle(let title))))):
-                return .send(.titleChanged(title))
-
-            case .destination(.presented(.training(.delegate(.languageChanged(let language))))):
-                return .send(.languageChanged(language))
-
-// MARK: Tracking actions
-
-            case .destination(.presented(.stopwatch(.delegate(.switchTab(let tab))))):
-                return .send(.tabChanged(tab))
-
-            case .destination(.presented(.stopwatch(.delegate(.languageChanged(let language))))):
-                return .send(.languageChanged(language))
-
             case .timeTractingSectionChanged(let section):
                 state.timeTractingSection = section
                 appStorageManager.storeStopWatchTypeToAppStorage(section)
-                return .run { send in
-                    await send(.destination(.presented(.stopwatch(.sectionChanged(section)))))
-                    await send(.titleChanged(section.rawValue))
-                }
+                appStateManager.updateTimeTrackingType(section)
+                return .none
 
             case .destination:
                 return .none
@@ -198,12 +180,6 @@ struct ContentFeature {
             case .subscriptionSheet:
                 return .none
 
-            case .subscriptionSheetVisibilityChanged(let visible):
-                if visible {
-                    state.subscriptionSheet = SubscriptionFeature.State()
-                }
-                return .none
-
             case .purchaseCompleted:
                 state.subscriptionSheet = nil
                 return .none
@@ -215,37 +191,20 @@ struct ContentFeature {
 
                 state.subscriptionActivated = activated
                 subscriptionManager.subscriptionActivated = activated
-                switch state.currentSection {
-                case .workout:
-                    return .send(.destination(.presented(.workout(.subscriptionActivated(activated)))))
-
-                case .training:
-                    return .send(.destination(.presented(.training(.subscriptionActivated(activated)))))
-
-                case .stopWatch:
-                    return .send(.destination(.presented(.stopwatch(.subscriptionActivated(activated)))))
-                }
+                appStateManager.updateIsSubsccriptionActive(activated)
+                return .none
 
             case .saveTapped:
-                switch state.currentSection {
-                case .workout:
-                    return .run { send in
-                        await send(.destination(.presented(.workout(.saveTapped))))
-                    }
-
-                case .training:
-                    return .run { send in
-                        await send(.destination(.presented(.training(.saveTapped))))
-                    }
-
-                case .stopWatch:
-                    break
-                }
+                appStateManager.updateSaveTapped(true)
                 return .none
 
-            case .titleChanged(let title):
-                state.title = title
-                return .none
+            case .cancelAllObservers:
+                return .cancel(id: [
+                    CancelID.observeTitleChange,
+                    CancelID.observeLanguageChange,
+                    CancelID.observeTabChange,
+                    CancelID.observeSubscriptionSheetVisibilityChange
+                ])
             }
         }
         .ifLet(\.$destination, action: \.destination)
