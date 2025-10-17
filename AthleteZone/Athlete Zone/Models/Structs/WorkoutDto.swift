@@ -8,10 +8,6 @@
 import Foundation
 
 struct WorkoutDto: Codable, Identifiable, Equatable {
-    static func == (lhs: WorkoutDto, rhs: WorkoutDto) -> Bool {
-        lhs.id == rhs.id
-    }
-
     var id: UUID
 
     var name: String

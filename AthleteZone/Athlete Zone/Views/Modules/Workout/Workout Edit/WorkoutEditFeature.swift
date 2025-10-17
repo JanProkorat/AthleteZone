@@ -13,7 +13,7 @@ import Foundation
 @Reducer
 struct WorkoutEditFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
         var headerText: LocalizationKey
         var name = ""
         var work = 30
@@ -48,11 +48,13 @@ struct WorkoutEditFeature {
         }
     }
 
+    @Dependency(\.appStateManager) var appStateManager
     @Dependency(\.dismiss) var dismiss
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .cancelTapped:
+                appStateManager.updateSaveTapped(false)
                 return .run { _ in await self.dismiss() }
 
             case .saveTapped:

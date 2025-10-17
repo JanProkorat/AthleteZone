@@ -8,12 +8,15 @@
 import ComposableArchitecture
 import Foundation
 
-// swiftlint:disable nesting
-// swiftlint:disable pattern_matching_keywords
 @Reducer
 struct TrainingLibraryFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
+        var featureId = UUID()
+        static func == (lhs: TrainingLibraryFeature.State, rhs: TrainingLibraryFeature.State) -> Bool {
+            lhs.featureId == rhs.featureId
+        }
+
         var searchText = ""
         var sortBy = TrainingSortByProperty.name
         var sortOrder = SortOrder.ascending
@@ -34,21 +37,23 @@ struct TrainingLibraryFeature {
         case addTapped
         case deleteTapped(String)
         case destination(PresentationAction<Destination.Action>)
-        case delegate(Delegate)
 
-        enum Delegate: Equatable {
-            case trainingSelected
-        }
+        case observeAddTapped
     }
 
     @Dependency(\.appStorageManager) var appStorageManager
+    @Dependency(\.appStateManager) var appStateManager
     @Dependency(\.trainingRepository) var trainingRepository
 
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                return .send(.displayData)
+                appStateManager.updateTitle("\(Tab.library)")
+                return .run { send in
+                    await send(.observeAddTapped)
+                    await send(.displayData)
+                }
 
             case .searchTextChanged(let text):
                 state.searchText = text
@@ -92,9 +97,8 @@ struct TrainingLibraryFeature {
 
             case .selectTapped(let trainingId):
                 appStorageManager.storeStringToAppStorage(trainingId, .selectedTrainingId)
-                return .run { send in
-                    await send(.delegate(.trainingSelected), animation: .default)
-                }
+                appStateManager.updateTab(.home)
+                return .none
 
             case .deleteTapped(let trainingId):
                 do {
@@ -103,9 +107,6 @@ struct TrainingLibraryFeature {
                     print(error.localizedDescription)
                 }
                 return .send(.displayData)
-
-            case .delegate:
-                return .none
 
             case .editTapped(let training):
                 state.trainingToEditId = training.id
@@ -120,6 +121,13 @@ struct TrainingLibraryFeature {
             case .addTapped:
                 state.destination = .addSheet(TrainingEditFeature.State(headerText: .addTraining))
                 return .none
+
+            case .observeAddTapped:
+                return .run { send in
+                    for await value in appStateManager.$saveTapped.values where value == true {
+                        await send(.addTapped, animation: .default)
+                    }
+                }
             }
         }
         .ifLet(\.$destination, action: \.destination)

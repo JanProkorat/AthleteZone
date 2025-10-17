@@ -12,7 +12,12 @@ import Foundation
 @Reducer
 struct WorkoutRunFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
+        var featureId = UUID()
+        static func == (lhs: WorkoutRunFeature.State, rhs: WorkoutRunFeature.State) -> Bool {
+            lhs.featureId == rhs.featureId
+        }
+
         var name: String
         var work: Int
         var rest: Int

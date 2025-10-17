@@ -10,7 +10,7 @@ import Foundation
 import SwiftData
 
 struct TimerActivityRepository {
-    var load: @Sendable () throws -> [TimerDto]
+    var load: @Sendable () throws -> TimerDto?
     var add: @Sendable (_ interval: TimeInterval) throws -> Void
 }
 
@@ -21,10 +21,10 @@ extension TimerActivityRepository: DependencyKey {
                 @Dependency(\.appContext.context) var context
                 let dbContext = try context()
                 let descriptor = FetchDescriptor<TimerActivity>(sortBy: [SortDescriptor<TimerActivity>(\.createdDate, order: .reverse)])
-                return try dbContext.fetch(descriptor).map { $0.toDto() }
+                return try dbContext.fetch(descriptor).first?.toDto()
             } catch {
                 print(error.localizedDescription)
-                return []
+                return nil
             }
         },
         add: { interval in
@@ -32,13 +32,12 @@ extension TimerActivityRepository: DependencyKey {
                 @Dependency(\.appContext.context) var context
                 let dbContext = try context()
 
-                dbContext.insert(TimerActivity(interval: interval))
+                var newActivity = TimerActivity(interval: interval)
+                dbContext.insert(newActivity)
 
-                if try dbContext.fetchCount(FetchDescriptor<TimerActivity>()) > 5 {
-                    let descriptor = FetchDescriptor<TimerActivity>(
-                        sortBy: [SortDescriptor<TimerActivity>(\.createdDate, order: .forward)])
-                    let itemToDelete = try dbContext.fetch(descriptor).first!
-                    dbContext.delete(itemToDelete)
+                let idToKeep = newActivity.id
+                if try dbContext.fetchCount(FetchDescriptor<TimerActivity>()) > 1 {
+                    try dbContext.delete(model: TimerActivity.self, where: #Predicate { $0.id != idToKeep })
                 }
             } catch {
                 print(error.localizedDescription)

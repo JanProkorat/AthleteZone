@@ -8,11 +8,15 @@
 import ComposableArchitecture
 import Foundation
 
-// swiftlint:disable nesting
 @Reducer
 struct TimeTrackingContentFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
+        var featureId = UUID()
+        static func == (lhs: TimeTrackingContentFeature.State, rhs: TimeTrackingContentFeature.State) -> Bool {
+            lhs.featureId == rhs.featureId
+        }
+
         var currentTab: Tab = .home
         @Presents var destination: Destination.State?
     }
@@ -21,46 +25,49 @@ struct TimeTrackingContentFeature {
         case onAppear
         case sectionChanged(TimerType)
         case tabChanged(Tab)
-        case delegate(Delegate)
         case destination(PresentationAction<Destination.Action>)
-        case subscriptionActivated(Bool)
 
-        enum Delegate: Equatable {
-            case switchTab(Tab)
-            case languageChanged(Language)
-        }
+        case observeSectionChange
+        case observeTabChange
     }
+
+    @Dependency(\.appStateManager) var appStateManager
+    @Dependency(\.appStorageManager) var appStorageManager
 
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                return .send(.tabChanged(state.currentTab))
+                return .run { [currentTab = state.currentTab] send in
+                    await send(.observeSectionChange)
+                    await send(.observeTabChange)
+                    await send(.tabChanged(currentTab))
+                    await send(.sectionChanged(appStorageManager.getStopWatchType()))
+                }
+
+            case .observeTabChange:
+                return .run { send in
+                    for await value in appStateManager.$currentTab.values {
+                        await send(.tabChanged(value), animation: .default)
+                    }
+                }
 
             case .tabChanged(let tab):
                 state.currentTab = tab
+                appStateManager.updateTab(tab)
                 switch tab {
                 case .home:
                     state.destination = .timeTracting(TimeTrackingFeature.State())
-                    return .send(.delegate(.switchTab(tab)))
-                        .concatenate(with: .send(.destination(.presented(.timeTracting(.onAppear)))))
+                    return .send(.destination(.presented(.timeTracting(.onAppear))))
 
                 case .library:
                     state.destination = .library(HistoryFeature.State())
-                    return .send(.delegate(.switchTab(tab)))
-                        .concatenate(with: .send(.destination(.presented(.library(.onAppear)))))
+                    return .send(.destination(.presented(.library(.onAppear))))
 
                 case .settings:
                     state.destination = .settings(SettingsFeature.State())
-                    return .send(.delegate(.switchTab(tab)))
-                        .concatenate(with: .send(.destination(.presented(.settings(.onAppear)))))
+                    return .send(.destination(.presented(.settings(.onAppear))))
                 }
-
-            case .destination(.presented(.settings(.delegate(.languageChanged(let language))))):
-                return .send(.delegate(.languageChanged(language)))
-
-            case .delegate:
-                return .none
 
             case .destination:
                 return .none
@@ -68,11 +75,12 @@ struct TimeTrackingContentFeature {
             case .sectionChanged(let section):
                 return .send(.destination(.presented(.timeTracting(.sectionChanged(section)))))
 
-            case .subscriptionActivated(let activated):
-                if state.currentTab != .settings {
-                    return .none
+            case .observeSectionChange:
+                return .run { send in
+                    for await value in appStateManager.$timeTrackingType.values {
+                        await send(.sectionChanged(value), animation: .default)
+                    }
                 }
-                return .send(.destination(.presented(.settings(.subscriptionChanged(activated)))))
             }
         }
         .ifLet(\.$destination, action: \.destination)

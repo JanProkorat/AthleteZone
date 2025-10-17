@@ -10,10 +10,16 @@ import Foundation
 
 // swiftlint:disable enum_case_associated_values_count
 // swiftlint:disable nesting
+// swiftlint:disable pattern_matching_keywords
 @Reducer
 struct StopwatchRunFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
+        var featureId = UUID()
+        static func == (lhs: StopwatchRunFeature.State, rhs: StopwatchRunFeature.State) -> Bool {
+            lhs.featureId == rhs.featureId
+        }
+
         /// Time displayed to the user - starts on
         var timeElapsed: TimeInterval = Constants.PreparationTickInterval
 
@@ -31,6 +37,10 @@ struct StopwatchRunFeature {
             state == .paused
         }
 
+        var isSplitButtonDisabled: Bool {
+            state != .running
+        }
+
         @Presents var timerDestination: TimerDestination.State?
     }
 
@@ -39,8 +49,6 @@ struct StopwatchRunFeature {
         case stateChanged(WorkFlowState)
         case pauseTapped
         case quitTapped
-        case forwardTapped
-        case backTapped
         case addSplitTime
         case playSound(Sound, Int)
         case setupDestination
@@ -93,18 +101,23 @@ struct StopwatchRunFeature {
                 }
 
             case .quitTapped:
-                return .run { send in
+                return .run { [
+                    state = state.state, previousState = state.previousState, startDate = state.startDate,
+                    timeInterval = state.timerTickInterval, splitTimes = state.splitTimes
+                ] send in
                     await send(.stateChanged(.quit))
+
+                    if state == .running || previousState == .running {
+                        await send(.delegate(.save(
+                            startDate,
+                            Date(),
+                            timeInterval,
+                            splitTimes))
+                        )
+                    }
+
                     await self.dismiss()
                 }
-
-            case .backTapped:
-                state.timeElapsed = 10
-                return .send(.stateChanged(.preparation))
-
-            case .forwardTapped:
-                state.timeElapsed = 0
-                return .send(.stateChanged(.running))
 
             case .timerDestination(.presented(.timer(.delegate(.timerTick)))):
                 if state.state == .preparation {
@@ -117,9 +130,13 @@ struct StopwatchRunFeature {
                     }
 
                     if state.timeElapsed.isTimeElapsedZero() {
+                        // Set timeElapsed to exactly zero to ensure consistency
+                        state.timeElapsed = 0
+                        state.preciseTimeElapsed = 0
+
                         return .run { [timeElapsed = state.timeElapsed] send in
                             if appStorageManager.getSoundsEnabled() {
-                                await send(.playSound(.fanfare, Int(timeElapsed)))
+                                await send(.playSound(.gong, Int(timeElapsed)))
                             }
                             await send(.stateChanged(.running))
                         }

@@ -13,7 +13,12 @@ import Foundation
 @Reducer
 struct TrainingRunFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
+        var featureId = UUID()
+        static func == (lhs: TrainingRunFeature.State, rhs: TrainingRunFeature.State) -> Bool {
+            lhs.featureId == rhs.featureId
+        }
+
         var selectedTab = 1
         var name: String
         var currentWorkout: WorkoutDto?

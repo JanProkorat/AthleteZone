@@ -11,7 +11,7 @@ import Foundation
 @Reducer
 struct ActivitySheetFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
         var type: ActivityType
         var value: Int
     }

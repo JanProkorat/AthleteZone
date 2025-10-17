@@ -128,6 +128,7 @@
 "newActivity" = "Nová aktivita";
 "paused" = "Pozastaveno";
 "finished" = "Dokončeno";
+"running" = "Práce";
 
 //Subscription
 "active" = "Aktivní";
@@ -143,3 +144,4 @@
 "latestSplitTime" = "Poslední mezičas";
 "noSplitTimeAdded" = "Žádné mezičasy k zobrazení. Chcete-li přidat čas, klepněte na „+“ na trackovací stránce";
 "startTime" = "Začátek";
+"trackedTime" = "Stopovaný čas";

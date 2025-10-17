@@ -12,7 +12,12 @@ import Foundation
 @Reducer
 struct TimerRunFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
+        var featureId = UUID()
+        static func == (lhs: TimerRunFeature.State, rhs: TimerRunFeature.State) -> Bool {
+            lhs.featureId == rhs.featureId
+        }
+
         /// Time changing every tick
         var timeRemaining: TimeInterval = Constants.PreparationTickInterval
 

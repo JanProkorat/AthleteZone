@@ -12,11 +12,36 @@ import Foundation
 @Reducer
 struct TimeTrackingFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
+        var featureId = UUID()
+        static func == (lhs: TimeTrackingFeature.State, rhs: TimeTrackingFeature.State) -> Bool {
+            lhs.featureId == rhs.featureId
+        }
+
         var displayedType: TimerType = .stopWatch
         var lastActivity: StopwatchDto?
+        var lastTImer: TimeInterval = 0
         var timerStartValue: TimeInterval = 0
-        var recentTimers: [TimerDto] = []
+
+        var displayedTypeLabel: String {
+            self.displayedType == .stopWatch ? LocalizationKey.stopWatch.stringValue : LocalizationKey.timer.stringValue
+        }
+
+        var lastTrackedTime: String {
+            switch self.displayedType {
+            case .stopWatch:
+                guard let lastActivity = self.lastActivity else { return "_ _ / _ _" }
+                return lastActivity.endDate.timeIntervalSince(lastActivity.startDate).toFormattedTimeForTimer()
+
+            case .timer:
+                return self.lastTImer.toFormattedTimeForTimer()
+            }
+        }
+
+        var isRunDisabled: Bool {
+            self.displayedType == .timer && self.timerStartValue == 0
+        }
+
         @Presents var destination: Destination.State?
     }
 
@@ -25,28 +50,33 @@ struct TimeTrackingFeature {
         case sectionChanged(TimerType)
         case timerStartValueChanged(TimeInterval)
         case destination(PresentationAction<Destination.Action>)
-        case startTapped(TimeInterval? = nil)
+        case startTapped
         case setLastActivity(StopwatchDto?)
     }
 
     @Dependency(\.timerActivityRepository) var timerActivityRepository
     @Dependency(\.stopWatchRepository) var stopWatchRepository
     @Dependency(\.appStorageManager) var appStorageManager
+    @Dependency(\.appStateManager) var appStateManager
 
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onAppear:
                 do {
-                    state.recentTimers = try timerActivityRepository.load()
+                    let timer = try self.timerActivityRepository.load()
+                    if let loadedTimer = timer {
+                        state.lastTImer = loadedTimer.interval
+                    }
                 } catch {
                     print(error.localizedDescription)
                 }
-                state.displayedType = appStorageManager.getStopWatchType()
-                return .send(.setLastActivity(stopWatchRepository.loadLast()))
+                state.displayedType = self.appStorageManager.getStopWatchType()
+                return .send(.setLastActivity(self.stopWatchRepository.loadLast()))
 
             case .sectionChanged(let section):
                 state.displayedType = section
+                self.appStateManager.updateTitle("\(state.displayedType)")
                 return .none
 
             case .timerStartValueChanged(let value):
@@ -56,7 +86,7 @@ struct TimeTrackingFeature {
             case .destination(.presented(.runStopwatchSheet(.delegate(.save(let start, let end, let interval, let splitTimes))))):
                 let activity = StopWatch(startDate: start, endDate: end, interval: interval, splitTimes: splitTimes)
                 do {
-                    try stopWatchRepository.add(activity)
+                    try self.stopWatchRepository.add(activity)
                 } catch {
                     print(error.localizedDescription)
                 }
@@ -65,23 +95,14 @@ struct TimeTrackingFeature {
             case .destination:
                 return .none
 
-            case .startTapped(let interval):
+            case .startTapped:
                 switch state.displayedType {
                 case .stopWatch:
                     state.destination = .runStopwatchSheet(StopwatchRunFeature.State())
                     return .send(.destination(.presented(.runStopwatchSheet(.onAppear))))
 
                 case .timer:
-                    if interval == nil {
-                        do {
-                            try timerActivityRepository.add(state.timerStartValue)
-                        } catch {
-                            print(error.localizedDescription)
-                        }
-                    }
-                    state.destination = .runTimerSheet(
-                        TimerRunFeature.State(
-                            timeRemaining: interval == nil ? state.timerStartValue : interval!))
+                    state.destination = .runTimerSheet(TimerRunFeature.State(timeRemaining: state.timerStartValue))
                     return .send(.destination(.presented(.runTimerSheet(.onAppear))))
                 }
 

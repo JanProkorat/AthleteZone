@@ -8,12 +8,16 @@
 import ComposableArchitecture
 import Foundation
 
-// swiftlint:disable nesting
 // swiftlint:disable pattern_matching_keywords
 @Reducer
 struct TrainingFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
+        var featureId = UUID()
+        static func == (lhs: TrainingFeature.State, rhs: TrainingFeature.State) -> Bool {
+            lhs.featureId == rhs.featureId
+        }
+
         var selectedTraining: TrainingDto?
         var workoutForDetail: WorkoutDto?
 
@@ -29,7 +33,6 @@ struct TrainingFeature {
         case onAppear
         case move(IndexSet, Int)
         case trainingChanged(TrainingDto?)
-        case nameUpdated(String)
         case editTapped
         case addTapped
         case startTapped
@@ -38,16 +41,13 @@ struct TrainingFeature {
         case workoutForDetailChanged(WorkoutDto?)
         case sentItemToWatch(TransferDataKey, TrainingDto)
         case destination(PresentationAction<Destination.Action>)
-        case delegate(Delegate)
 
-        enum Delegate: Equatable {
-            case moveToLibrary
-            case setTitle(String)
-        }
+        case observeSaveTapped
     }
 
     @Dependency(\.trainingRepository) var trainingRepository
     @Dependency(\.appStorageManager) var appStorageManager
+    @Dependency(\.appStateManager) var appStateManager
 //    @Dependency(\.watchConnectivityManager) var connectivityManager
 
     var body: some ReducerOf<Self> {
@@ -56,23 +56,34 @@ struct TrainingFeature {
             case .onAppear:
                 if !appStorageManager.getSelectedTrainingId().isEmpty {
                     if let training = trainingRepository.load(appStorageManager.getSelectedTrainingId()) {
-                        return .send(.trainingChanged(training))
+                        return
+                            .run { send in
+                                await send(.observeSaveTapped)
+                                await send(.trainingChanged(training))
+                            }
                     }
-                    return .send(.nameUpdated(""))
                 }
-                return .send(.nameUpdated(""))
+                appStateManager.updateTitle("")
+                return .run { send in
+                    await send(.observeSaveTapped)
+                }
 
             case .move(let from, let to):
                 state.selectedTraining?.workouts.move(fromOffsets: from, toOffset: to)
                 return .none
 
             case .trainingChanged(let training):
-                state.selectedTraining = training
+                if training == nil {
+                    if appStateManager.title.isEmpty {
+                        appStateManager.updateTitle("")
+                    }
+                    return .none
+                }
                 appStorageManager.storeStringToAppStorage(training!.id, .selectedTrainingId)
-                return .send(.nameUpdated(training?.name ?? ""))
+                appStateManager.updateTitle(training!.name)
 
-            case .nameUpdated(let name):
-                return .send(.delegate(.setTitle(name)))
+                state.selectedTraining = training
+                return .none
 
             case .editTapped:
                 return .send(.editSheetVisibilityChanged)
@@ -88,9 +99,7 @@ struct TrainingFeature {
                 return .send(.destination(.presented(.runSheet(.onAppear))))
 
             case .libraryTapped:
-                return .send(.delegate(.moveToLibrary))
-
-            case .delegate:
+                appStateManager.updateTab(.library)
                 return .none
 
             case .destination(.presented(.editSheet(.delegate(.save(let name, let description, let workouts))))):
@@ -137,6 +146,13 @@ struct TrainingFeature {
             case .workoutForDetailChanged(let workout):
                 state.workoutForDetail = workout
                 return .none
+
+            case .observeSaveTapped:
+                return .run { send in
+                    for await value in appStateManager.$saveTapped.values where value == true {
+                        await send(.editTapped, animation: .default)
+                    }
+                }
             }
         }
         .ifLet(\.$destination, action: \.destination)

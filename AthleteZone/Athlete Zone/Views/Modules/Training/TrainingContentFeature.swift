@@ -8,11 +8,15 @@
 import ComposableArchitecture
 import Foundation
 
-// swiftlint:disable nesting
 @Reducer
 struct TrainingContentFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
+        var featureId = UUID()
+        static func == (lhs: TrainingContentFeature.State, rhs: TrainingContentFeature.State) -> Bool {
+            lhs.featureId == rhs.featureId
+        }
+
         var currentTab: Tab = .home
 
         @Presents var destination: Destination.State?
@@ -21,80 +25,47 @@ struct TrainingContentFeature {
     enum Action {
         case onAppear
         case tabChanged(Tab)
-        case delegate(Delegate)
         case destination(PresentationAction<Destination.Action>)
-        case saveTapped
-        case subscriptionActivated(Bool)
 
-        @CasePathable
-        enum Delegate: Equatable {
-            case switchSection(Section)
-            case switchTab(Tab)
-            case setTitle(String)
-            case languageChanged(Language)
-        }
+        case observeTabChange
     }
+
+    @Dependency(\.appStateManager) var appStateManager
 
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                return .send(.tabChanged(state.currentTab))
+                return .run { send in
+                    await send(.observeTabChange)
+                }
+
+            case .observeTabChange:
+                return .run { send in
+                    for await value in appStateManager.$currentTab.values {
+                        await send(.tabChanged(value), animation: .default)
+                    }
+                }
 
             case .tabChanged(let tab):
                 state.currentTab = tab
+                appStateManager.updateTab(tab)
                 switch tab {
                 case .home:
                     state.destination = .training(TrainingFeature.State())
-                    return .send(.delegate(.switchTab(tab)))
-                        .concatenate(with:
-                            .send(.destination(.presented(.training(.onAppear)))))
+                    return .send(.destination(.presented(.training(.onAppear))))
 
                 case .library:
                     state.destination = .library(TrainingLibraryFeature.State())
-                    return .send(.delegate(.switchTab(tab)))
-                        .concatenate(with:
-                            .send(.destination(.presented(.library(.onAppear)))))
+                    return .send(.destination(.presented(.library(.onAppear))))
 
                 case .settings:
                     state.destination = .settings(SettingsFeature.State())
-                    return .send(.delegate(.switchTab(tab)))
-                        .concatenate(with:
-                            .send(.destination(.presented(.settings(.onAppear)))))
+                    return .send(.destination(.presented(.settings(.onAppear))))
                 }
-
-            case .delegate:
-                return .none
-
-            case .destination(.presented(.training(.delegate(.moveToLibrary)))):
-                return .send(.delegate(.switchTab(.library)))
-
-            case .destination(.presented(.library(.delegate(.trainingSelected)))):
-                return .send(.tabChanged(.home))
-
-            case .destination(.presented(.training(.delegate(.setTitle(let title))))):
-                return .send(.delegate(.setTitle(title)))
-
-            case .destination(.presented(.settings(.delegate(.languageChanged(let language))))):
-                return .send(.delegate(.languageChanged(language)))
 
             case .destination:
                 return .none
-
-            case .saveTapped:
-                switch state.currentTab {
-                case .library:
-                    return .send(.destination(.presented(.library(.addTapped))))
-
-                default:
-                    return .send(.destination(.presented(.training(.editTapped))))
-                }
-
-            case .subscriptionActivated(let activated):
-                if state.currentTab != .settings {
-                    return .none
-                }
-                return .send(.destination(.presented(.settings(.subscriptionChanged(activated)))))
             }
         }
         .ifLet(\.$destination, action: \.destination)
